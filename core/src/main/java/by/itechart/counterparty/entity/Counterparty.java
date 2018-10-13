@@ -7,6 +7,8 @@ import by.itechart.counterparty.enums.CounterpartyType;
 
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 
 @Entity
@@ -14,6 +16,7 @@ public class Counterparty extends BaseEntity {
 
     @ManyToOne
     private Company company;
+    @Enumerated(EnumType.STRING)
     private CounterpartyType counterpartyType;
     private String name;
     private String taxNumber;

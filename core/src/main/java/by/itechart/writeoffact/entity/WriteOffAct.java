@@ -3,8 +3,11 @@ package by.itechart.writeoffact.entity;
 import by.itechart.common.entity.BaseEntity;
 import by.itechart.common.entity.User;
 import by.itechart.company.entity.Company;
+import by.itechart.writeoffact.enums.WriteOffType;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import java.time.LocalDate;
@@ -22,6 +25,12 @@ public class WriteOffAct extends BaseEntity {
     private Integer totalAmount;
     @OneToMany
     private List<AGoods> aGoodsList;
+    @Enumerated(EnumType.STRING)
+    private WriteOffType writeOffType;
+
+
+    public WriteOffAct() {
+    }
 
     public Company getCompany() {
         return company;
@@ -69,5 +78,13 @@ public class WriteOffAct extends BaseEntity {
 
     public void setAGoodsList(List<AGoods> aGoodsList) {
         this.aGoodsList = aGoodsList;
+    }
+
+    public WriteOffType getWriteOffType() {
+        return writeOffType;
+    }
+
+    public void setWriteOffType(WriteOffType writeOffType) {
+        this.writeOffType = writeOffType;
     }
 }

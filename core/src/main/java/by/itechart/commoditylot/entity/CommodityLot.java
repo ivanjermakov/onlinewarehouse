@@ -6,6 +6,8 @@ import by.itechart.company.entity.Company;
 import by.itechart.counterparty.entity.Counterparty;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import java.util.List;
@@ -19,6 +21,7 @@ public class CommodityLot extends BaseEntity {
     private List<CLGoods> clGoodsList;
     @ManyToOne
     private Counterparty counterparty;
+    @Enumerated(EnumType.STRING)
     private CommodityLotType commodityLotType;
 
     public Company getCompany() {

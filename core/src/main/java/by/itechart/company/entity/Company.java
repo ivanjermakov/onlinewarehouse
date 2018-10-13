@@ -7,6 +7,8 @@ import by.itechart.company.enums.WorkStatus;
 import by.itechart.warehouse.entity.Warehouse;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.OneToMany;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -18,7 +20,9 @@ public class Company extends BaseEntity {
     private List<Warehouse> warehouses;
     @OneToMany
     private List<User> users;
+    @Enumerated(EnumType.STRING)
     private CompanySize companySize;
+    @Enumerated(EnumType.STRING)
     private WorkStatus workStatus;
     private LocalDateTime createDateTime;
 

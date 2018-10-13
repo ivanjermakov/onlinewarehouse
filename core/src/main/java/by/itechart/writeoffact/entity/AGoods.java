@@ -4,13 +4,18 @@ import by.itechart.common.entity.BaseEntity;
 import by.itechart.common.entity.Goods;
 import by.itechart.writeoffact.enums.WriteOffType;
 
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 
+@Entity
 public class AGoods extends BaseEntity {
 
     @ManyToOne
     private Goods goods;
     private Integer count;
+    @Enumerated(EnumType.STRING)
     private WriteOffType writeOffType;
 
     public Goods getGoods() {

@@ -7,6 +7,8 @@ import by.itechart.company.entity.Company;
 
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import java.util.List;
@@ -20,6 +22,7 @@ public class Carrier extends BaseEntity {
     private String taxNumber;
     @Embedded
     private Address address;
+    @Enumerated(EnumType.STRING)
     private CarrierType carrierType;
     @OneToMany
     private List<Driver> drivers;

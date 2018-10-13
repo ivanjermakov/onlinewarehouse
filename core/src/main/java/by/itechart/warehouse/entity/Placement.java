@@ -1,16 +1,22 @@
 package by.itechart.warehouse.entity;
 
+import by.itechart.common.entity.BaseEntity;
 import by.itechart.common.enums.UnitOfMeasurement;
 import by.itechart.common.enums.PlacementType;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.OneToMany;
 import java.util.List;
 
 @Entity
-public class Placement {
+public class Placement extends BaseEntity {
+
     private Integer size;
+    @Enumerated(EnumType.STRING)
     private PlacementType placementType;
+    @Enumerated(EnumType.STRING)
     private UnitOfMeasurement unitOfMeasurement;
     private Integer costOfStorage;
     @OneToMany

@@ -4,6 +4,8 @@ import by.itechart.common.enums.PlacementType;
 import by.itechart.company.entity.Company;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 
 @Entity
@@ -13,6 +15,7 @@ public class Goods extends BaseEntity {
     private String labelling;
     private String name;
     private Double weight;
+    @Enumerated(EnumType.STRING)
     private PlacementType placementType;
     private Integer cost;
     @ManyToOne

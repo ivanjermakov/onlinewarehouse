@@ -8,6 +8,8 @@ import by.itechart.consignmentnote.enums.ConsignmentNoteType;
 import by.itechart.counterparty.entity.Counterparty;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import java.time.LocalDate;
@@ -31,6 +33,7 @@ public class ConsignmentNote extends BaseEntity {
     private LocalDateTime registrationDateTime;
     @OneToMany
     private List<CNGoods> cnGoodsList;
+    @Enumerated(EnumType.STRING)
     private ConsignmentNoteType consignmentNoteType;
 
     public Company getCompany() {

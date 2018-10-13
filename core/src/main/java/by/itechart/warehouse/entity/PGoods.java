@@ -1,12 +1,13 @@
 package by.itechart.warehouse.entity;
 
+import by.itechart.common.entity.BaseEntity;
 import by.itechart.common.entity.Goods;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class PGoods {
+public class PGoods extends BaseEntity {
 
     @ManyToOne
     private Goods goods;
