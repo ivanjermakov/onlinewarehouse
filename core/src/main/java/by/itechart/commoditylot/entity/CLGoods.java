@@ -1,4 +1,4 @@
-package by.itechart.commodityLot.entity;
+package by.itechart.commoditylot.entity;
 
 import by.itechart.common.entity.BaseEntity;
 import by.itechart.common.entity.Goods;

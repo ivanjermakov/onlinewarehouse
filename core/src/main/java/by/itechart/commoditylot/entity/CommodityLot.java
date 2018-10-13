@@ -1,6 +1,6 @@
-package by.itechart.commodityLot.entity;
+package by.itechart.commoditylot.entity;
 
-import by.itechart.commodityLot.enums.CommodityLotType;
+import by.itechart.commoditylot.enums.CommodityLotType;
 import by.itechart.common.entity.BaseEntity;
 import by.itechart.company.entity.Company;
 import by.itechart.counterparty.entity.Counterparty;
