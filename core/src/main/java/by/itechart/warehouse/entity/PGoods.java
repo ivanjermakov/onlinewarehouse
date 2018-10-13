@@ -3,9 +3,12 @@ package by.itechart.warehouse.entity;
 import by.itechart.common.entity.Goods;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class PGoods {
+
+    @ManyToOne
     private Goods goods;
     private Integer count;
     private Integer storageTimeDays;

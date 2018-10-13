@@ -3,12 +3,12 @@ package by.itechart.consignmentnote.entity;
 import by.itechart.common.entity.Goods;
 
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class CNGoods {
 
-    @OneToMany
+    @OneToOne
     private Goods goods;
     private Integer count;
 

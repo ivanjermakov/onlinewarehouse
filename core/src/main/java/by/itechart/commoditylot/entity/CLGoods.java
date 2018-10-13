@@ -4,10 +4,12 @@ import by.itechart.common.entity.BaseEntity;
 import by.itechart.common.entity.Goods;
 
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 
 @Entity
 public class CLGoods extends BaseEntity {
 
+    @OneToOne
     private Goods goods;
     private Integer count;
 

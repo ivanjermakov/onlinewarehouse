@@ -7,13 +7,16 @@ import by.itechart.company.enums.WorkStatus;
 import by.itechart.warehouse.entity.Warehouse;
 
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
 public class Company extends BaseEntity {
 
+    @OneToMany
     private List<Warehouse> warehouses;
+    @OneToMany
     private List<User> users;
     private CompanySize companySize;
     private WorkStatus workStatus;
