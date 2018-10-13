@@ -3,6 +3,8 @@ package by.itechart.company.entity;
 import by.itechart.common.entity.BaseEntity;
 import by.itechart.company.enums.CompanySize;
 import by.itechart.company.enums.WorkStatus;
+import by.itechart.warehouse.entity.Warehouse;
+
 import javax.persistence.Entity;
 import java.time.LocalDateTime;
 import java.util.List;

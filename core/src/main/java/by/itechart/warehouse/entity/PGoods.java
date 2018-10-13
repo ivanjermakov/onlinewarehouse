@@ -1,5 +1,7 @@
 package by.itechart.warehouse.entity;
 
+import by.itechart.common.entity.Goods;
+
 import javax.persistence.Entity;
 
 @Entity
