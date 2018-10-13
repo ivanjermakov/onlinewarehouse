@@ -32,4 +32,84 @@ public class ConsignmentNote extends BaseEntity {
     @OneToMany
     private List<CNGoods> cnGoodsList;
     private ConsignmentNoteType consignmentNoteType;
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
+    public LocalDate getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(LocalDate createDate) {
+        this.createDate = createDate;
+    }
+
+    public Counterparty getCounterparty() {
+        return counterparty;
+    }
+
+    public void setCounterparty(Counterparty counterparty) {
+        this.counterparty = counterparty;
+    }
+
+    public Carrier getCarrier() {
+        return carrier;
+    }
+
+    public void setCarrier(Carrier carrier) {
+        this.carrier = carrier;
+    }
+
+    public String getVehicleNumber() {
+        return vehicleNumber;
+    }
+
+    public void setVehicleNumber(String vehicleNumber) {
+        this.vehicleNumber = vehicleNumber;
+    }
+
+    public User getCreator() {
+        return creator;
+    }
+
+    public void setCreator(User creator) {
+        this.creator = creator;
+    }
+
+    public LocalDateTime getRegistrationDateTime() {
+        return registrationDateTime;
+    }
+
+    public void setRegistrationDateTime(LocalDateTime registrationDateTime) {
+        this.registrationDateTime = registrationDateTime;
+    }
+
+    public List<CNGoods> getCnGoodsList() {
+        return cnGoodsList;
+    }
+
+    public void setCnGoodsList(List<CNGoods> cnGoodsList) {
+        this.cnGoodsList = cnGoodsList;
+    }
+
+    public ConsignmentNoteType getConsignmentNoteType() {
+        return consignmentNoteType;
+    }
+
+    public void setConsignmentNoteType(ConsignmentNoteType consignmentNoteType) {
+        this.consignmentNoteType = consignmentNoteType;
+    }
 }
