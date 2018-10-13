@@ -3,3 +3,6 @@ onlinewarehouse.iml
 web/.mvn/
 web/mvnw
 web/mvnw.cmd
+web/web.iml
+core/core.iml
+online-warehouse.iml
