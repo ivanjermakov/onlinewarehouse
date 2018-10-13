@@ -6,8 +6,10 @@ import by.itechart.company.entity.Company;
 import by.itechart.counterparty.enums.CounterpartyType;
 
 import javax.persistence.Embedded;
+import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
+@Entity
 public class Counterparty extends BaseEntity {
 
     @ManyToOne

@@ -3,14 +3,11 @@ package by.itechart.company.entity;
 import by.itechart.common.entity.BaseEntity;
 import by.itechart.company.enums.CompanySize;
 import by.itechart.company.enums.WorkStatus;
-
 import javax.persistence.Entity;
-import javax.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table()
 public class Company extends BaseEntity {
 
     private List<Warehouse> warehouses;

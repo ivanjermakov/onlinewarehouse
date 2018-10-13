@@ -6,10 +6,12 @@ import by.itechart.common.entity.BaseEntity;
 import by.itechart.company.entity.Company;
 
 import javax.persistence.Embedded;
+import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import java.util.List;
 
+@Entity
 public class Carrier extends BaseEntity {
 
     @ManyToOne
@@ -20,7 +22,7 @@ public class Carrier extends BaseEntity {
     private Address address;
     private CarrierType carrierType;
     @OneToMany
-    List<Driver> drivers;
+    private List<Driver> drivers;
 
     public Company getCompany() {
         return company;
