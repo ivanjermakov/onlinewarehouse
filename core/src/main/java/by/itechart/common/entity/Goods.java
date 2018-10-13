@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Goods {
+public class Goods extends BaseEntity {
 
     private String description;
     private String labelling;

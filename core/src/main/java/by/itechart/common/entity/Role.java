@@ -3,7 +3,7 @@ package by.itechart.common.entity;
 import javax.persistence.Entity;
 
 @Entity
-public class Role {
+public class Role extends BaseEntity {
 
     private String role;
 
