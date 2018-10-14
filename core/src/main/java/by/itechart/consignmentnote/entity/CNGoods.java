@@ -1,12 +1,13 @@
 package by.itechart.consignmentnote.entity;
 
+import by.itechart.common.entity.BaseEntity;
 import by.itechart.common.entity.Goods;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 
 @Entity
-public class CNGoods {
+public class CNGoods extends BaseEntity {
 
     @OneToOne
     private Goods goods;
