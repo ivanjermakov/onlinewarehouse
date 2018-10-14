@@ -13,7 +13,7 @@ create table goods (
   name           varchar(70) NOT NULL,
   placement_type varchar(20) NOT NULL,
   weight         real        NOT NULL,
-  company_id     bigserial REFERENCES company (id)
+  company_id     bigint REFERENCES company (id)
 );
 
 create table "user" (
@@ -29,7 +29,7 @@ create table "user" (
   middle_name varchar(255),
   login       varchar(30) NOT NULL,
   password    varchar(30) NOT NULL,
-  company_id  bigserial REFERENCES company (id)
+  company_id  bigint REFERENCES company (id)
 );
 
 create table role (
@@ -38,8 +38,8 @@ create table role (
 );
 
 create table user_role (
-  user_id bigserial REFERENCES "user" (id),
-  role_id bigserial REFERENCES role (id),
+  user_id bigint REFERENCES "user" (id),
+  role_id bigint REFERENCES role (id),
   PRIMARY KEY (user_id, role_id)
 );
 
@@ -52,7 +52,7 @@ create table counterparty (
   counterparty_type varchar(15) NOT NULL,
   name              varchar(50) NOT NULL,
   tax_number        varchar(15) NOT NULL,
-  company_id        bigserial REFERENCES company (id)
+  company_id        bigint REFERENCES company (id)
 );
 
 create table carrier (
@@ -64,27 +64,27 @@ create table carrier (
   carrier_type varchar(20) NOT NULL,
   name         varchar(50) NOT NULL,
   tax_number   varchar(15) NOT NULL,
-  company_id   bigserial REFERENCES company (id)
+  company_id   bigint REFERENCES company (id)
 );
 
 create table driver (
   id          bigserial PRIMARY KEY,
   driver_info varchar(70) NOT NULL,
-  carrier_id  bigserial REFERENCES carrier (id)
+  carrier_id  bigint REFERENCES carrier (id)
 );
 
 create table warehouse (
   id         bigserial PRIMARY KEY,
-  company_id bigserial REFERENCES company (id)
+  company_id bigint REFERENCES company (id)
 );
 
 create table placement (
   id                  bigserial PRIMARY KEY,
-  cost_of_storage     serial      NOT NULL,
+  cost_of_storage     integer     NOT NULL,
   placement_type      varchar(20) NOT NULL,
-  size                serial      NOT NULL,
+  size                integer     NOT NULL,
   unit_of_measurement varchar(20) NOT NULL,
-  warehouse_id        bigserial REFERENCES warehouse (id)
+  warehouse_id        bigint REFERENCES warehouse (id)
 );
 
 create table consignment_note (
@@ -94,55 +94,55 @@ create table consignment_note (
   number                 varchar(15) NOT NULL,
   registration_date_time timestamp   NOT NULL,
   vehicle_number         varchar(15) NOT NULL,
-  carrier_id             bigserial REFERENCES carrier (id),
-  company_id             bigserial REFERENCES company (id),
-  counterparty_id        bigserial REFERENCES counterparty (id),
-  creator_id             bigserial REFERENCES "user" (id)
+  carrier_id             bigint REFERENCES carrier (id),
+  company_id             bigint REFERENCES company (id),
+  counterparty_id        bigint REFERENCES counterparty (id),
+  creator_id             bigint REFERENCES "user" (id)
 );
 
 create table commodity_lot (
   id                 bigserial PRIMARY KEY,
   commodity_lot_type varchar(20) NOT NULL,
-  company_id         bigserial REFERENCES company (id),
-  counterparty_id    bigserial REFERENCES counterparty (id)
+  company_id         bigint REFERENCES company (id),
+  counterparty_id    bigint REFERENCES counterparty (id)
 );
 
 create table write_off_act (
   id                 bigserial PRIMARY KEY,
   create_date        date         NOT NULL,
   responsible_person varchar(100) NOT NULL,
-  total_amount       serial       NOT NULL,
+  total_amount       integer      NOT NULL,
   write_off_act_type varchar(20)  NOT NULL,
-  company_id         bigserial REFERENCES company (id),
-  creator_id         bigserial REFERENCES "user" (id)
+  company_id         bigint REFERENCES company (id),
+  creator_id         bigint REFERENCES "user" (id)
 );
 
 create table c_n_goods (
   id                  bigserial PRIMARY KEY,
-  count               serial NOT NULL,
-  goods_id            bigserial REFERENCES goods (id),
-  consignment_note_id bigserial REFERENCES consignment_note (id)
+  count               integer   NOT NULL,
+  goods_id            bigint REFERENCES goods (id),
+  consignment_note_id bigint REFERENCES consignment_note (id)
 );
 
 create table a_goods (
   id               bigserial PRIMARY KEY,
-  count            serial      NOT NULL,
+  count            integer     NOT NULL,
   write_off_type   varchar(20) NOT NULL,
-  goods_id         bigserial REFERENCES goods (id),
-  write_off_act_id bigserial REFERENCES write_off_act (id)
+  goods_id         bigint REFERENCES goods (id),
+  write_off_act_id bigint REFERENCES write_off_act (id)
 );
 
 create table c_l_goods (
   id               bigserial PRIMARY KEY,
-  count            serial NOT NULL,
-  goods_id         bigserial REFERENCES goods (id),
-  commodity_lot_id bigserial REFERENCES commodity_lot (id)
+  count            integer NOT NULL,
+  goods_id         bigint REFERENCES goods (id),
+  commodity_lot_id bigint REFERENCES commodity_lot (id)
 );
 
 create table p_goods (
   id                bigserial PRIMARY KEY,
-  count             serial      NOT NULL,
-  storage_time_days serial      NOT NULL,
-  goods_id          bigserial REFERENCES goods (id),
-  placement_id      bigserial REFERENCES placement (id)
+  count             integer     NOT NULL,
+  storage_time_days integer     NOT NULL,
+  goods_id          bigint REFERENCES goods (id),
+  placement_id      bigint REFERENCES placement (id)
 );
