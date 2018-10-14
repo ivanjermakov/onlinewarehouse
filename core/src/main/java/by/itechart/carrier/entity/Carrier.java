@@ -5,26 +5,39 @@ import by.itechart.common.entity.Address;
 import by.itechart.common.entity.BaseEntity;
 import by.itechart.company.entity.Company;
 
+import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.List;
 
 @Entity
+@Table(name = "carrier")
 public class Carrier extends BaseEntity {
 
     @ManyToOne
+    @JoinColumn(name = "company_id")
     private Company company;
+
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "tax_number")
     private String taxNumber;
+
     @Embedded
     private Address address;
+
+    @Column(name = "carrier_type")
     @Enumerated(EnumType.STRING)
     private CarrierType carrierType;
-    @OneToMany
+
+    @OneToMany(mappedBy = "carrier")
     private List<Driver> drivers;
 
     public Company getCompany() {

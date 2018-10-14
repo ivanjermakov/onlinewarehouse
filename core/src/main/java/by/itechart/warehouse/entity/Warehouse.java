@@ -4,16 +4,21 @@ import by.itechart.common.entity.BaseEntity;
 import by.itechart.company.entity.Company;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.List;
 
 @Entity
+@Table(name = "warehouse")
 public class Warehouse extends BaseEntity {
 
     @ManyToOne
+    @JoinColumn(name = "company_id")
     private Company company;
-    @OneToMany
+
+    @OneToMany(mappedBy = "warehouse")
     private List<Placement> placements;
 
     public Company getCompany() {

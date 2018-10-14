@@ -6,24 +6,34 @@ import by.itechart.company.enums.CompanySize;
 import by.itechart.company.enums.WorkStatus;
 import by.itechart.warehouse.entity.Warehouse;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
+@Table(name = "company")
 public class Company extends BaseEntity {
 
-    @OneToMany
+    @OneToMany(mappedBy = "company")
     private List<Warehouse> warehouses;
-    @OneToMany
+
+    @OneToMany(mappedBy = "company")
     private List<User> users;
+
+    @Column(name = "company_size")
     @Enumerated(EnumType.STRING)
     private CompanySize companySize;
+
+    @Column(name = "work_status")
     @Enumerated(EnumType.STRING)
     private WorkStatus workStatus;
+
+    @Column(name = "create_date_time")
     private LocalDateTime createDateTime;
 
     public List<Warehouse> getWarehouses() {

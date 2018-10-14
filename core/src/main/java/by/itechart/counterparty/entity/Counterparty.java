@@ -5,21 +5,33 @@ import by.itechart.common.entity.BaseEntity;
 import by.itechart.company.entity.Company;
 import by.itechart.counterparty.enums.CounterpartyType;
 
+import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "counterparty")
 public class Counterparty extends BaseEntity {
 
     @ManyToOne
+    @JoinColumn(name = "company_id")
     private Company company;
+
+    @Column(name = "counterparty_type")
     @Enumerated(EnumType.STRING)
     private CounterpartyType counterpartyType;
+
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "tax_number")
     private String taxNumber;
+
     @Embedded
     private Address address;
 

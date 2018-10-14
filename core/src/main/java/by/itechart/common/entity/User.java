@@ -2,28 +2,54 @@ package by.itechart.common.entity;
 
 import by.itechart.company.entity.Company;
 
+import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-public class User {
+@Table(name = "\"user\"")
+public class User extends BaseEntity{
 
     @ManyToOne
+    @JoinColumn(name = "company_id")
     private Company company;
+
+    @Column(name = "first_name")
     private String firstName;
+
+    @Column(name = "last_name")
     private String lastName;
+
+    @Column(name = "middle_name")
     private String middleName;
+
+    @Column(name = "birth_date")
     private LocalDate birthDate;
+
+    @Column(name = "email")
     private String email;
+
     @Embedded
     private Address address;
+
     @ManyToMany
+    @JoinTable(name = "user_role",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
     private List<Role> roles;
+
+    @Column(name = "login")
     private String login;
+
+    @Column(name = "password")
     private String password;
 
     public Company getCompany() {
