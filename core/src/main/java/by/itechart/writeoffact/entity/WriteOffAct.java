@@ -3,31 +3,47 @@ package by.itechart.writeoffact.entity;
 import by.itechart.common.entity.BaseEntity;
 import by.itechart.common.entity.User;
 import by.itechart.company.entity.Company;
+import by.itechart.writeoffact.enums.WriteOffActType;
 import by.itechart.writeoffact.enums.WriteOffType;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.time.LocalDate;
 import java.util.List;
 
 @Entity
+@Table(name = "write_off_act")
 public class WriteOffAct extends BaseEntity {
 
     @ManyToOne
+    @JoinColumn(name = "company_id")
     private Company company;
-    private LocalDate createDate;
-    @ManyToOne
-    private User creator;
-    private String responsiblePerson;
-    private Integer totalAmount;
-    @OneToMany
-    private List<AGoods> aGoodsList;
-    @Enumerated(EnumType.STRING)
-    private WriteOffType writeOffType;
 
+    @Column(name = "create_date")
+    private LocalDate createDate;
+
+    @ManyToOne
+    @JoinColumn(name = "creator_id")
+    private User creator;
+
+    @Column(name = "responsible_person")
+    private String responsiblePerson;
+
+    @Column(name = "total_amount")
+    private Integer totalAmount;
+
+    @OneToMany(mappedBy = "writeOffAct")
+    private List<AGoods> aGoodsList;
+
+    @Column(name = "write_off_act_type")
+    @Enumerated(EnumType.STRING)
+    private WriteOffActType writeOffActType;
 
     public WriteOffAct() {
     }
@@ -80,11 +96,11 @@ public class WriteOffAct extends BaseEntity {
         this.aGoodsList = aGoodsList;
     }
 
-    public WriteOffType getWriteOffType() {
-        return writeOffType;
+    public WriteOffActType getWriteOffActType() {
+        return writeOffActType;
     }
 
-    public void setWriteOffType(WriteOffType writeOffType) {
-        this.writeOffType = writeOffType;
+    public void setWriteOffActType(WriteOffActType writeOffActType) {
+        this.writeOffActType = writeOffActType;
     }
 }

@@ -3,22 +3,39 @@ package by.itechart.common.entity;
 import by.itechart.common.enums.PlacementType;
 import by.itechart.company.entity.Company;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "goods")
 public class Goods extends BaseEntity {
 
+    @Column(name = "description")
     private String description;
+
+    @Column(name = "labelling")
     private String labelling;
+
+    @Column(name = "name")
     private String name;
-    private Double weight;
+
+    @Column(name = "weight")
+    private Float weight;
+
+    @Column(name = "placement_type")
     @Enumerated(EnumType.STRING)
     private PlacementType placementType;
+
+    @Column(name = "cost")
     private Integer cost;
+
     @ManyToOne
+    @JoinColumn(name = "company_id")
     private Company company;
 
     public String getDescription() {
@@ -45,11 +62,11 @@ public class Goods extends BaseEntity {
         this.name = name;
     }
 
-    public Double getWeight() {
+    public Float getWeight() {
         return weight;
     }
 
-    public void setWeight(Double weight) {
+    public void setWeight(Float weight) {
         this.weight = weight;
     }
 
