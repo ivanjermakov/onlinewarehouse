@@ -7,7 +7,7 @@ create table company (
 
 create table goods (
   id             bigserial PRIMARY KEY,
-  cost           serial      NOT NULL,
+  cost           integer     NOT NULL,
   description    text        NOT NULL,
   labelling      varchar(50) NOT NULL,
   name           varchar(70) NOT NULL,
