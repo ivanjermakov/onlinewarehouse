@@ -1,46 +1,49 @@
 create table company (
-  id               bigserial PRIMARY KEY,
-  name             varchar (40) NOT NULL,
-  company_size     varchar(10)  NOT NULL
+  id        bigserial PRIMARY KEY,
+  name      varchar(40) NOT NULL,
+  size_type varchar(10) NOT NULL
 );
 
 create table company_action (
-  id               bigserial PRIMARY KEY,
-  change_timestamp timestamp   NOT NULL,
-  action_type      varchar(20) NOT NULL,
-  company_id       bigint REFERENCES company (id)
+  id          bigserial PRIMARY KEY,
+  company_id  bigint references company (id),
+  change      timestamp   NOT NULL,
+  action_type varchar(20) NOT NULL
 );
 
 create table goods (
   id             bigserial PRIMARY KEY,
-  cost           integer     NOT NULL,
-  description    text        NOT NULL,
-  labelling      varchar(50) NOT NULL,
+  company_id     bigint references company (id),
   name           varchar(70) NOT NULL,
   placement_type varchar(20) NOT NULL,
+  cost           integer     NOT NULL,
   weight         real        NOT NULL,
-  company_id     bigint REFERENCES company (id)
+  labelling      varchar(50) NOT NULL,
+  description    text
 );
 
 create table address (
-  id      bigserial PRIMARY KEY,
-  city    varchar(50) NOT NULL,
-  street  varchar(50) NOT NULL,
-  house   varchar(15) NOT NULL,
-  flat    varchar(15) NOT NULL
+  id       bigserial PRIMARY KEY,
+  country  varchar(30) NOT NULL,
+  region   varchar(50) NOT NULL,
+  locality varchar(50) NOT NULL
 );
 
 create table "user" (
-  id          bigserial PRIMARY KEY,
-  address_id  bigint REFERENCES address (id),
-  birth_date  date        NOT NULL,
-  email       varchar(50) NOT NULL,
-  first_name  varchar(30) NOT NULL,
-  last_name   varchar(30) NOT NULL,
-  middle_name varchar(255),
-  login       varchar(30) NOT NULL,
-  password    varchar(30) NOT NULL,
-  company_id  bigint REFERENCES company (id)
+  id         bigserial PRIMARY KEY,
+  company_id bigint references company (id),
+  address_id bigint references address (id),
+  first_name varchar(30) NOT NULL,
+  last_name  varchar(30) NOT NULL,
+  patronymic varchar(255),
+  birth      date        NOT NULL,
+  email      varchar(50)
+);
+
+create table credentials (
+  user_id bigint references "user" (id),
+  login   varchar(30) NOT NULL,
+  hash    varchar(60) NOT NULL
 );
 
 create table role (
@@ -49,105 +52,105 @@ create table role (
 );
 
 create table user_role (
-  user_id bigint REFERENCES "user" (id),
-  role_id bigint REFERENCES role (id),
+  user_id bigint references "user" (id),
+  role_id bigint references role (id),
   PRIMARY KEY (user_id, role_id)
 );
 
 create table counterparty (
   id                bigserial PRIMARY KEY,
-  address_id        bigint REFERENCES address (id),
-  counterparty_type varchar(15) NOT NULL,
+  address_id        bigint references address (id),
+  company_id        bigint references company (id),
   name              varchar(50) NOT NULL,
-  tax_number        varchar(15) NOT NULL,
-  company_id        bigint REFERENCES company (id)
+  counterparty_type varchar(15) NOT NULL,
+  tax_number        varchar(15) NOT NULL
 );
 
 create table carrier (
   id           bigserial PRIMARY KEY,
-  address_id   bigint REFERENCES address (id),
-  carrier_type varchar(20) NOT NULL,
+  address_id   bigint references address (id),
+  company_id   bigint references company (id),
   name         varchar(50) NOT NULL,
-  tax_number   varchar(15) NOT NULL,
-  company_id   bigint REFERENCES company (id)
+  carrier_type varchar(20) NOT NULL,
+  tax_number   varchar(15) NOT NULL
 );
 
 create table driver (
-  id          bigserial PRIMARY KEY,
-  driver_info varchar(70) NOT NULL,
-  carrier_id  bigint REFERENCES carrier (id)
+  id         bigserial PRIMARY KEY,
+  carrier_id bigint references carrier (id),
+  info       varchar(70) NOT NULL
 );
 
 create table warehouse (
   id         bigserial PRIMARY KEY,
-  company_id bigint REFERENCES company (id)
+  company_id bigint references company (id)
 );
 
 create table placement (
-  id                  bigserial PRIMARY KEY,
-  cost_of_storage     integer     NOT NULL,
-  placement_type      varchar(20) NOT NULL,
-  size                integer     NOT NULL,
-  unit_of_measurement varchar(20) NOT NULL,
-  warehouse_id        bigint REFERENCES warehouse (id)
+  id               bigserial PRIMARY KEY,
+  warehouse_id     bigint references warehouse (id),
+  placement_type   varchar(20) NOT NULL,
+  storage_cost     integer     NOT NULL,
+  size             integer     NOT NULL,
+  measurement_unit varchar(20) NOT NULL
 );
 
 create table consignment_note (
-  id                     bigserial PRIMARY KEY,
-  consignment_note_type  varchar(5)  NOT NULL,
-  create_date            date        NOT NULL,
-  number                 varchar(15) NOT NULL,
-  registration_date_time timestamp   NOT NULL,
-  vehicle_number         varchar(15) NOT NULL,
-  carrier_id             bigint REFERENCES carrier (id),
-  company_id             bigint REFERENCES company (id),
-  counterparty_id        bigint REFERENCES counterparty (id),
-  creator_id             bigint REFERENCES "user" (id)
+  id                    bigserial PRIMARY KEY,
+  company_id            bigint references company (id),
+  carrier_id            bigint references carrier (id),
+  counterparty_id       bigint references counterparty (id),
+  creator_id            bigint references "user" (id),
+  number                varchar(15) NOT NULL,
+  consignment_note_type varchar(5)  NOT NULL,
+  shipment              date        NOT NULL,
+  registration          date        NOT NULL,
+  vehicle_number        varchar(15) NOT NULL
 );
 
 create table commodity_lot (
   id                 bigserial PRIMARY KEY,
-  commodity_lot_type varchar(20) NOT NULL,
-  company_id         bigint REFERENCES company (id),
-  counterparty_id    bigint REFERENCES counterparty (id)
+  company_id         bigint references company (id),
+  counterparty_id    bigint references counterparty (id),
+  commodity_lot_type varchar(20) NOT NULL
 );
 
 create table write_off_act (
   id                 bigserial PRIMARY KEY,
-  create_date        date         NOT NULL,
-  responsible_person varchar(100) NOT NULL,
-  total_amount       integer      NOT NULL,
+  company_id         bigint references company (id),
+  creator_id         bigint references "user" (id),
   write_off_act_type varchar(20)  NOT NULL,
-  company_id         bigint REFERENCES company (id),
-  creator_id         bigint REFERENCES "user" (id)
+  creation           date         NOT NULL,
+  total_amount       integer      NOT NULL,
+  responsible_person varchar(100) NOT NULL
 );
 
-create table c_n_goods (
+create table consignment_note_goods (
   id                  bigserial PRIMARY KEY,
-  count               integer   NOT NULL,
-  goods_id            bigint REFERENCES goods (id),
-  consignment_note_id bigint REFERENCES consignment_note (id)
+  goods_id            bigint references goods (id),
+  consignment_note_id bigint references consignment_note (id),
+  amout               integer NOT NULL
 );
 
-create table a_goods (
+create table write_off_act_goods (
   id               bigserial PRIMARY KEY,
-  count            integer     NOT NULL,
+  goods_id         bigint references goods (id),
+  write_off_act_id bigint references write_off_act (id),
   write_off_type   varchar(20) NOT NULL,
-  goods_id         bigint REFERENCES goods (id),
-  write_off_act_id bigint REFERENCES write_off_act (id)
+  amount           integer     NOT NULL
 );
 
-create table c_l_goods (
+create table commodity_lot_goods (
   id               bigserial PRIMARY KEY,
-  count            integer NOT NULL,
-  goods_id         bigint REFERENCES goods (id),
-  commodity_lot_id bigint REFERENCES commodity_lot (id)
+  goods_id         bigint references goods (id),
+  commodity_lot_id bigint references commodity_lot (id),
+  amount           integer NOT NULL
 );
 
-create table p_goods (
+create table placement_goods (
   id                bigserial PRIMARY KEY,
-  count             integer     NOT NULL,
-  storage_time_days integer     NOT NULL,
-  goods_id          bigint REFERENCES goods (id),
-  placement_id      bigint REFERENCES placement (id)
+  goods_id          bigint references goods (id),
+  placement_id      bigint references placement (id),
+  amount            integer NOT NULL,
+  storage_time_days integer NOT NULL
 );
