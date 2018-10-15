@@ -3,12 +3,12 @@ package by.itechart.common.entity;
 import by.itechart.company.entity.Company;
 
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.time.LocalDate;
 import java.util.List;
@@ -36,7 +36,8 @@ public class User extends BaseEntity{
     @Column(name = "email")
     private String email;
 
-    @Embedded
+    @OneToOne
+    @JoinColumn(name = "address_id")
     private Address address;
 
     @ManyToMany

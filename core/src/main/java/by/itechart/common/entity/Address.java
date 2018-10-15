@@ -1,10 +1,12 @@
 package by.itechart.common.entity;
 
 import javax.persistence.Column;
-import javax.persistence.Embeddable;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
-@Embeddable
-public class Address {
+@Entity
+@Table(name = "address")
+public class Address extends BaseEntity{
 
     @Column(name = "city")
     private String city;

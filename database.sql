@@ -1,8 +1,14 @@
 create table company (
   id               bigserial PRIMARY KEY,
-  company_size     varchar(10) NOT NULL,
-  create_date_time timestamp   NOT NULL,
-  work_status      varchar(10) NOT NULL
+  name             varchar (40) NOT NULL,
+  company_size     varchar(10)  NOT NULL
+);
+
+create table company_action (
+  id               bigserial PRIMARY KEY,
+  change_timestamp timestamp   NOT NULL,
+  action_type      varchar(20) NOT NULL,
+  company_id       bigint REFERENCES company (id)
 );
 
 create table goods (
@@ -16,12 +22,17 @@ create table goods (
   company_id     bigint REFERENCES company (id)
 );
 
+create table address (
+  id      bigserial PRIMARY KEY,
+  city    varchar(50) NOT NULL,
+  street  varchar(50) NOT NULL,
+  house   varchar(15) NOT NULL,
+  flat    varchar(15) NOT NULL
+);
+
 create table "user" (
   id          bigserial PRIMARY KEY,
-  city        varchar(50) NOT NULL,
-  street      varchar(50) NOT NULL,
-  house       varchar(15) NOT NULL,
-  flat        varchar(15),
+  address_id  bigint REFERENCES address (id),
   birth_date  date        NOT NULL,
   email       varchar(50) NOT NULL,
   first_name  varchar(30) NOT NULL,
@@ -45,10 +56,7 @@ create table user_role (
 
 create table counterparty (
   id                bigserial PRIMARY KEY,
-  city              varchar(50) NOT NULL,
-  street            varchar(50) NOT NULL,
-  house             varchar(15) NOT NULL,
-  flat              varchar(15),
+  address_id        bigint REFERENCES address (id),
   counterparty_type varchar(15) NOT NULL,
   name              varchar(50) NOT NULL,
   tax_number        varchar(15) NOT NULL,
@@ -57,10 +65,7 @@ create table counterparty (
 
 create table carrier (
   id           bigserial PRIMARY KEY,
-  city         varchar(50) NOT NULL,
-  street       varchar(50) NOT NULL,
-  house        varchar(15) NOT NULL,
-  flat         varchar(15),
+  address_id   bigint REFERENCES address (id),
   carrier_type varchar(20) NOT NULL,
   name         varchar(50) NOT NULL,
   tax_number   varchar(15) NOT NULL,

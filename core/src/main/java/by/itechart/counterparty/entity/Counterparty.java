@@ -6,12 +6,12 @@ import by.itechart.company.entity.Company;
 import by.itechart.counterparty.enums.CounterpartyType;
 
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -32,7 +32,8 @@ public class Counterparty extends BaseEntity {
     @Column(name = "tax_number")
     private String taxNumber;
 
-    @Embedded
+    @OneToOne
+    @JoinColumn(name = "address_id")
     private Address address;
 
     public Company getCompany() {

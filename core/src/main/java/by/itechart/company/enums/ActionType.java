@@ -1,5 +1,5 @@
 package by.itechart.company.enums;
 
-public enum WorkStatus {
+public enum ActionType {
     ENABLED, DISABLED
 }

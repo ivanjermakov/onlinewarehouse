@@ -6,13 +6,13 @@ import by.itechart.common.entity.BaseEntity;
 import by.itechart.company.entity.Company;
 
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.util.List;
 
@@ -30,7 +30,8 @@ public class Carrier extends BaseEntity {
     @Column(name = "tax_number")
     private String taxNumber;
 
-    @Embedded
+    @OneToOne
+    @JoinColumn(name = "address_id")
     private Address address;
 
     @Column(name = "carrier_type")
