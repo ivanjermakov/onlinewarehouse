@@ -41,9 +41,8 @@ create table "user" (
 );
 
 create table credentials (
-  id      bigserial PRIMARY KEY,
   user_id bigint references "user" (id),
-  login   varchar(30) NOT NULL,
+  login   varchar(30) PRIMARY KEY,
   hash    varchar(60) NOT NULL
 );
 
