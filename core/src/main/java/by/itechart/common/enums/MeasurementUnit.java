@@ -1,4 +1,4 @@
 package by.itechart.common.enums;
 
-public enum UnitOfMeasurement {
+public enum MeasurementUnit {
 }

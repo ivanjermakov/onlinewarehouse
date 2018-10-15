@@ -17,8 +17,8 @@ public class WriteOffAct extends BaseEntity {
     @JoinColumn(name = "company_id")
     private Company company;
 
-    @Column(name = "create_date")
-    private LocalDate createDate;
+    @Column(name = "creation")
+    private LocalDate creation;
 
     @ManyToOne
     @JoinColumn(name = "creator_id")
@@ -48,12 +48,12 @@ public class WriteOffAct extends BaseEntity {
         this.company = company;
     }
 
-    public LocalDate getCreateDate() {
-        return createDate;
+    public LocalDate getCreation() {
+        return creation;
     }
 
-    public void setCreateDate(LocalDate createDate) {
-        this.createDate = createDate;
+    public void setCreation(LocalDate creation) {
+        this.creation = creation;
     }
 
     public User getCreator() {

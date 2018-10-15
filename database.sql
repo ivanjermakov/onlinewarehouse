@@ -41,6 +41,7 @@ create table "user" (
 );
 
 create table credentials (
+  id      bigserial PRIMARY KEY,
   user_id bigint references "user" (id),
   login   varchar(30) NOT NULL,
   hash    varchar(60) NOT NULL
@@ -87,12 +88,12 @@ create table warehouse (
 );
 
 create table placement (
-  id               bigserial PRIMARY KEY,
-  warehouse_id     bigint references warehouse (id),
-  placement_type   varchar(20) NOT NULL,
-  storage_cost     integer     NOT NULL,
-  size             integer     NOT NULL,
-  measurement_unit varchar(20) NOT NULL
+  id                    bigserial PRIMARY KEY,
+  warehouse_id          bigint references warehouse (id),
+  placement_type        varchar(20) NOT NULL,
+  storage_cost          integer     NOT NULL,
+  size                  integer     NOT NULL,
+  measurement_unit_type varchar(20) NOT NULL
 );
 
 create table consignment_note (
@@ -129,7 +130,7 @@ create table consignment_note_goods (
   id                  bigserial PRIMARY KEY,
   goods_id            bigint references goods (id),
   consignment_note_id bigint references consignment_note (id),
-  amout               integer NOT NULL
+  amount              integer NOT NULL
 );
 
 create table write_off_act_goods (

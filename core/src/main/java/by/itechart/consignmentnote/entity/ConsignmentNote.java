@@ -7,9 +7,15 @@ import by.itechart.company.entity.Company;
 import by.itechart.consignmentnote.enums.ConsignmentNoteType;
 import by.itechart.counterparty.entity.Counterparty;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -23,8 +29,8 @@ public class ConsignmentNote extends BaseEntity {
     @Column(name = "number")
     private String number;
 
-    @Column(name = "create_date")
-    private LocalDate createDate;
+    @Column(name = "shipment")
+    private LocalDate shipment;
 
     @ManyToOne
     @JoinColumn(name = "counterparty_id")
@@ -41,8 +47,8 @@ public class ConsignmentNote extends BaseEntity {
     @JoinColumn(name = "creator_id")
     private User creator;
 
-    @Column(name = "registration_date_time")
-    private LocalDateTime registrationDateTime;
+    @Column(name = "registration")
+    private LocalDate registration;
 
     @OneToMany(mappedBy = "consignmentNote")
     private List<ConsignmentNoteGoods> consignmentNoteGoodsList;
@@ -67,12 +73,12 @@ public class ConsignmentNote extends BaseEntity {
         this.number = number;
     }
 
-    public LocalDate getCreateDate() {
-        return createDate;
+    public LocalDate getShipment() {
+        return shipment;
     }
 
-    public void setCreateDate(LocalDate createDate) {
-        this.createDate = createDate;
+    public void setShipment(LocalDate shipment) {
+        this.shipment = shipment;
     }
 
     public Counterparty getCounterparty() {
@@ -107,12 +113,12 @@ public class ConsignmentNote extends BaseEntity {
         this.creator = creator;
     }
 
-    public LocalDateTime getRegistrationDateTime() {
-        return registrationDateTime;
+    public LocalDate getRegistration() {
+        return registration;
     }
 
-    public void setRegistrationDateTime(LocalDateTime registrationDateTime) {
-        this.registrationDateTime = registrationDateTime;
+    public void setRegistration(LocalDate registration) {
+        this.registration = registration;
     }
 
     public List<ConsignmentNoteGoods> getConsignmentNoteGoodsList() {

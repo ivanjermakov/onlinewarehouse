@@ -2,7 +2,7 @@ package by.itechart.warehouse.entity;
 
 import by.itechart.common.entity.BaseEntity;
 import by.itechart.common.enums.PlacementType;
-import by.itechart.common.enums.UnitOfMeasurement;
+import by.itechart.common.enums.MeasurementUnit;
 
 import javax.persistence.*;
 import java.util.List;
@@ -22,12 +22,12 @@ public class Placement extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private PlacementType placementType;
 
-    @Column(name = "unit_of_measurement")
+    @Column(name = "measurement_unit_type")
     @Enumerated(EnumType.STRING)
-    private UnitOfMeasurement unitOfMeasurement;
+    private MeasurementUnit measurementUnit;
 
-    @Column(name = "cost_of_storage")
-    private Integer costOfStorage;
+    @Column(name = "storage_cost")
+    private Integer storageCost;
 
     @OneToMany(mappedBy = "placement")
     private List<PlacementGoods> placementGoodsList;
@@ -56,20 +56,20 @@ public class Placement extends BaseEntity {
         this.placementType = placementType;
     }
 
-    public UnitOfMeasurement getUnitOfMeasurement() {
-        return unitOfMeasurement;
+    public MeasurementUnit getMeasurementUnit() {
+        return measurementUnit;
     }
 
-    public void setUnitOfMeasurement(UnitOfMeasurement unitOfMeasurement) {
-        this.unitOfMeasurement = unitOfMeasurement;
+    public void setMeasurementUnit(MeasurementUnit measurementUnit) {
+        this.measurementUnit = measurementUnit;
     }
 
-    public Integer getCostOfStorage() {
-        return costOfStorage;
+    public Integer getStorageCost() {
+        return storageCost;
     }
 
-    public void setCostOfStorage(Integer costOfStorage) {
-        this.costOfStorage = costOfStorage;
+    public void setStorageCost(Integer storageCost) {
+        this.storageCost = storageCost;
     }
 
     public List<PlacementGoods> getPlacementGoodsList() {
