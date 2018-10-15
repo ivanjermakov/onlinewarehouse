@@ -4,7 +4,6 @@ import by.itechart.common.entity.BaseEntity;
 import by.itechart.common.entity.User;
 import by.itechart.company.entity.Company;
 import by.itechart.writeoffact.enums.WriteOffActType;
-import by.itechart.writeoffact.enums.WriteOffType;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -39,7 +38,7 @@ public class WriteOffAct extends BaseEntity {
     private Integer totalAmount;
 
     @OneToMany(mappedBy = "writeOffAct")
-    private List<AGoods> aGoodsList;
+    private List<WriteOffActGoods> writeOffActGoodsList;
 
     @Column(name = "write_off_act_type")
     @Enumerated(EnumType.STRING)
@@ -88,12 +87,12 @@ public class WriteOffAct extends BaseEntity {
         this.totalAmount = totalAmount;
     }
 
-    public List<AGoods> getAGoodsList() {
-        return aGoodsList;
+    public List<WriteOffActGoods> getAGoodsList() {
+        return writeOffActGoodsList;
     }
 
-    public void setAGoodsList(List<AGoods> aGoodsList) {
-        this.aGoodsList = aGoodsList;
+    public void setAGoodsList(List<WriteOffActGoods> writeOffActGoodsList) {
+        this.writeOffActGoodsList = writeOffActGoodsList;
     }
 
     public WriteOffActType getWriteOffActType() {

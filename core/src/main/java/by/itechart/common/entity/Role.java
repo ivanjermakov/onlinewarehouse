@@ -11,6 +11,9 @@ public class Role extends BaseEntity {
     @Column(name = "role")
     private String role;
 
+    public Role() {
+    }
+
     public String getRole() {
         return role;
     }

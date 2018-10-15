@@ -5,17 +5,19 @@ import by.itechart.common.entity.User;
 import by.itechart.company.enums.CompanySize;
 import by.itechart.warehouse.entity.Warehouse;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "company")
 public class Company extends BaseEntity {
+
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "size_type")
+    @Enumerated(EnumType.STRING)
+    private CompanySize sizeType;
 
     @OneToMany(mappedBy = "company")
     private List<Warehouse> warehouses;
@@ -23,12 +25,24 @@ public class Company extends BaseEntity {
     @OneToMany(mappedBy = "company")
     private List<User> users;
 
-    @Column(name = "name")
-    private String name;
+    public Company() {
+    }
 
-    @Column(name = "company_size")
-    @Enumerated(EnumType.STRING)
-    private CompanySize companySize;
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public CompanySize getSizeType() {
+        return sizeType;
+    }
+
+    public void setSizeType(CompanySize sizeType) {
+        this.sizeType = sizeType;
+    }
 
     public List<Warehouse> getWarehouses() {
         return warehouses;
@@ -44,21 +58,5 @@ public class Company extends BaseEntity {
 
     public void setUsers(List<User> users) {
         this.users = users;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public CompanySize getCompanySize() {
-        return companySize;
-    }
-
-    public void setCompanySize(CompanySize companySize) {
-        this.companySize = companySize;
     }
 }

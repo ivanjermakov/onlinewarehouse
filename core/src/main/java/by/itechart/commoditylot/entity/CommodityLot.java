@@ -5,14 +5,7 @@ import by.itechart.common.entity.BaseEntity;
 import by.itechart.company.entity.Company;
 import by.itechart.counterparty.entity.Counterparty;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
@@ -23,9 +16,6 @@ public class CommodityLot extends BaseEntity {
     @JoinColumn(name = "company_id")
     private Company company;
 
-    @OneToMany(mappedBy = "commodityLot")
-    private List<CLGoods> clGoodsList;
-
     @ManyToOne
     @JoinColumn(name = "counterparty_id")
     private Counterparty counterparty;
@@ -34,20 +24,18 @@ public class CommodityLot extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private CommodityLotType commodityLotType;
 
+    @OneToMany(mappedBy = "commodityLot")
+    private List<CommodityLotGoods> commodityLotGoodsList;
+
+    public CommodityLot() {
+    }
+
     public Company getCompany() {
         return company;
     }
 
     public void setCompany(Company company) {
         this.company = company;
-    }
-
-    public List<CLGoods> getClGoodsList() {
-        return clGoodsList;
-    }
-
-    public void setClGoodsList(List<CLGoods> clGoodsList) {
-        this.clGoodsList = clGoodsList;
     }
 
     public Counterparty getCounterparty() {
@@ -64,5 +52,13 @@ public class CommodityLot extends BaseEntity {
 
     public void setCommodityLotType(CommodityLotType commodityLotType) {
         this.commodityLotType = commodityLotType;
+    }
+
+    public List<CommodityLotGoods> getCommodityLotGoodsList() {
+        return commodityLotGoodsList;
+    }
+
+    public void setCommodityLotGoodsList(List<CommodityLotGoods> commodityLotGoodsList) {
+        this.commodityLotGoodsList = commodityLotGoodsList;
     }
 }

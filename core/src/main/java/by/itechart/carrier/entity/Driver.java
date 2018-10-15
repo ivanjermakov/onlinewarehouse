@@ -2,30 +2,18 @@ package by.itechart.carrier.entity;
 
 import by.itechart.common.entity.BaseEntity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "driver")
 public class Driver extends BaseEntity {
 
-    @Column(name = "driver_info")
-    private String driverInfo;
-
     @ManyToOne
     @JoinColumn(name = "carrier_id")
     private Carrier carrier;
 
-    public String getDriverInfo() {
-        return driverInfo;
-    }
-
-    public void setDriverInfo(String driverInfo) {
-        this.driverInfo = driverInfo;
-    }
+    @Column(name = "info")
+    private String info;
 
     public Carrier getCarrier() {
         return carrier;
@@ -33,5 +21,13 @@ public class Driver extends BaseEntity {
 
     public void setCarrier(Carrier carrier) {
         this.carrier = carrier;
+    }
+
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
     }
 }

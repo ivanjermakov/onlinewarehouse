@@ -52,7 +52,7 @@ public class ConsignmentNote extends BaseEntity {
     private LocalDateTime registrationDateTime;
 
     @OneToMany(mappedBy = "consignmentNote")
-    private List<CNGoods> cnGoodsList;
+    private List<ConsignmentNoteGoods> consignmentNoteGoodsList;
 
     @Column(name = "consignment_note_type")
     @Enumerated(EnumType.STRING)
@@ -122,12 +122,12 @@ public class ConsignmentNote extends BaseEntity {
         this.registrationDateTime = registrationDateTime;
     }
 
-    public List<CNGoods> getCnGoodsList() {
-        return cnGoodsList;
+    public List<ConsignmentNoteGoods> getConsignmentNoteGoodsList() {
+        return consignmentNoteGoodsList;
     }
 
-    public void setCnGoodsList(List<CNGoods> cnGoodsList) {
-        this.cnGoodsList = cnGoodsList;
+    public void setConsignmentNoteGoodsList(List<ConsignmentNoteGoods> consignmentNoteGoodsList) {
+        this.consignmentNoteGoodsList = consignmentNoteGoodsList;
     }
 
     public ConsignmentNoteType getConsignmentNoteType() {

@@ -5,20 +5,16 @@ import by.itechart.common.entity.Address;
 import by.itechart.common.entity.BaseEntity;
 import by.itechart.company.entity.Company;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "carrier")
 public class Carrier extends BaseEntity {
+
+    @OneToOne
+    @JoinColumn(name = "address_id")
+    private Address address;
 
     @ManyToOne
     @JoinColumn(name = "company_id")
@@ -27,19 +23,26 @@ public class Carrier extends BaseEntity {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "tax_number")
-    private String taxNumber;
-
-    @OneToOne
-    @JoinColumn(name = "address_id")
-    private Address address;
-
     @Column(name = "carrier_type")
     @Enumerated(EnumType.STRING)
     private CarrierType carrierType;
 
+    @Column(name = "tax_number")
+    private String taxNumber;
+
     @OneToMany(mappedBy = "carrier")
     private List<Driver> drivers;
+
+    public Carrier() {
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
 
     public Company getCompany() {
         return company;
@@ -57,28 +60,20 @@ public class Carrier extends BaseEntity {
         this.name = name;
     }
 
-    public String getTaxNumber() {
-        return taxNumber;
-    }
-
-    public void setTaxNumber(String taxNumber) {
-        this.taxNumber = taxNumber;
-    }
-
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
-    }
-
     public CarrierType getCarrierType() {
         return carrierType;
     }
 
     public void setCarrierType(CarrierType carrierType) {
         this.carrierType = carrierType;
+    }
+
+    public String getTaxNumber() {
+        return taxNumber;
+    }
+
+    public void setTaxNumber(String taxNumber) {
+        this.taxNumber = taxNumber;
     }
 
     public List<Driver> getDrivers() {

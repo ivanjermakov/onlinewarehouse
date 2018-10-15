@@ -3,26 +3,25 @@ package by.itechart.commoditylot.entity;
 import by.itechart.common.entity.BaseEntity;
 import by.itechart.common.entity.Goods;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
-@Table(name = "c_l_goods")
-public class CLGoods extends BaseEntity {
+@Table(name = "commodity_lot_goods")
+public class CommodityLotGoods extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "goods_id")
     private Goods goods;
 
-    @Column(name = "count")
-    private Integer count;
-
     @ManyToOne
     @JoinColumn(name = "commodity_lot_id")
     private CommodityLot commodityLot;
+
+    @Column(name = "amount")
+    private Integer amount;
+
+    public CommodityLotGoods() {
+    }
 
     public Goods getGoods() {
         return goods;
@@ -32,19 +31,19 @@ public class CLGoods extends BaseEntity {
         this.goods = goods;
     }
 
-    public Integer getCount() {
-        return count;
-    }
-
-    public void setCount(Integer count) {
-        this.count = count;
-    }
-
     public CommodityLot getCommodityLot() {
         return commodityLot;
     }
 
     public void setCommodityLot(CommodityLot commodityLot) {
         this.commodityLot = commodityLot;
+    }
+
+    public Integer getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Integer amount) {
+        this.amount = amount;
     }
 }

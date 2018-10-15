@@ -37,7 +37,7 @@ public class Placement extends BaseEntity {
     private Integer costOfStorage;
 
     @OneToMany(mappedBy = "placement")
-    private List<PGoods> pGoodsList;
+    private List<PlacementGoods> placementGoodsList;
 
     public Integer getSize() {
         return size;
@@ -79,11 +79,11 @@ public class Placement extends BaseEntity {
         this.costOfStorage = costOfStorage;
     }
 
-    public List<PGoods> getpGoodsList() {
-        return pGoodsList;
+    public List<PlacementGoods> getPlacementGoodsList() {
+        return placementGoodsList;
     }
 
-    public void setpGoodsList(List<PGoods> pGoodsList) {
-        this.pGoodsList = pGoodsList;
+    public void setPlacementGoodsList(List<PlacementGoods> placementGoodsList) {
+        this.placementGoodsList = placementGoodsList;
     }
 }

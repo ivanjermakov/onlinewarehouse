@@ -6,49 +6,41 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "address")
-public class Address extends BaseEntity{
+public class Address extends BaseEntity {
 
-    @Column(name = "city")
-    private String city;
+    @Column(name = "country")
+    private String country;
 
-    @Column(name = "street")
-    private String street;
+    @Column(name = "region")
+    private String region;
 
-    @Column(name = "house")
-    private String house;
+    @Column(name = "locality")
+    private String locality;
 
-    @Column(name = "flat")
-    private String flat;
-
-    public String getCity() {
-        return city;
+    public Address() {
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public String getCountry() {
+        return country;
     }
 
-    public String getStreet() {
-        return street;
+    public void setCountry(String country) {
+        this.country = country;
     }
 
-    public void setStreet(String street) {
-        this.street = street;
+    public String getRegion() {
+        return region;
     }
 
-    public String getHouse() {
-        return house;
+    public void setRegion(String region) {
+        this.region = region;
     }
 
-    public void setHouse(String house) {
-        this.house = house;
+    public String getLocality() {
+        return locality;
     }
 
-    public String getFlat() {
-        return flat;
-    }
-
-    public void setFlat(String flat) {
-        this.flat = flat;
+    public void setLocality(String locality) {
+        this.locality = locality;
     }
 }

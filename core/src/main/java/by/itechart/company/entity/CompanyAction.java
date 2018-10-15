@@ -3,44 +3,25 @@ package by.itechart.company.entity;
 import by.itechart.common.entity.BaseEntity;
 import by.itechart.company.enums.ActionType;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "company_action")
-public class CompanyAction extends BaseEntity{
-
-    @Column(name = "change_timestamp")
-    private LocalDateTime changeTimestamp;
-
-    @Column(name = "action_type")
-    @Enumerated(EnumType.STRING)
-    private ActionType actionType;
+public class CompanyAction extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "company_id")
     private Company company;
 
-    public LocalDateTime getChangeTimestamp() {
-        return changeTimestamp;
-    }
+    @Column(name = "change")
+    private LocalDateTime change;
 
-    public void setChangeTimestamp(LocalDateTime changeTimestamp) {
-        this.changeTimestamp = changeTimestamp;
-    }
+    @Column(name = "action_type")
+    @Enumerated(EnumType.STRING)
+    private ActionType actionType;
 
-    public ActionType getActionType() {
-        return actionType;
-    }
-
-    public void setActionType(ActionType actionType) {
-        this.actionType = actionType;
+    public CompanyAction() {
     }
 
     public Company getCompany() {
@@ -49,5 +30,21 @@ public class CompanyAction extends BaseEntity{
 
     public void setCompany(Company company) {
         this.company = company;
+    }
+
+    public LocalDateTime getChange() {
+        return change;
+    }
+
+    public void setChange(LocalDateTime change) {
+        this.change = change;
+    }
+
+    public ActionType getActionType() {
+        return actionType;
+    }
+
+    public void setActionType(ActionType actionType) {
+        this.actionType = actionType;
     }
 }
