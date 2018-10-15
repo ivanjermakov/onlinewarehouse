@@ -1,6 +1,5 @@
 package by.itechart.auth.entity;
 
-import by.itechart.common.entity.Address;
 import by.itechart.common.entity.User;
 
 import javax.persistence.*;

@@ -1,17 +1,10 @@
 package by.itechart.warehouse.entity;
 
 import by.itechart.common.entity.BaseEntity;
-import by.itechart.common.enums.UnitOfMeasurement;
 import by.itechart.common.enums.PlacementType;
+import by.itechart.common.enums.UnitOfMeasurement;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
