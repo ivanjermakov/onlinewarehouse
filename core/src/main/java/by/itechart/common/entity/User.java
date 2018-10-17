@@ -40,6 +40,9 @@ public class User extends BaseEntity {
     )
     private List<Role> roles;
 
+    @Column(name = "deleted")
+    private LocalDate deleted;
+
     public User() {
     }
 
@@ -105,5 +108,13 @@ public class User extends BaseEntity {
 
     public void setRoles(List<Role> roles) {
         this.roles = roles;
+    }
+
+    public LocalDate getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(LocalDate deleted) {
+        this.deleted = deleted;
     }
 }

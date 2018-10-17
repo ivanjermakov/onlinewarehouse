@@ -19,7 +19,8 @@ create table goods (
   cost           integer     NOT NULL,
   weight         real        NOT NULL,
   labelling      varchar(50) NOT NULL,
-  description    text
+  description    text,
+  deleted        date
 );
 
 create table address (
@@ -37,7 +38,8 @@ create table "user" (
   last_name  varchar(30) NOT NULL,
   patronymic varchar(255),
   birth      date        NOT NULL,
-  email      varchar(50)
+  email      varchar(50),
+  deleted    date
 );
 
 create table credentials (
@@ -63,7 +65,8 @@ create table counterparty (
   company_id        bigint references company (id),
   name              varchar(50) NOT NULL,
   counterparty_type varchar(15) NOT NULL,
-  tax_number        varchar(15) NOT NULL
+  tax_number        varchar(15) NOT NULL,
+  deleted           date
 );
 
 create table carrier (
@@ -72,18 +75,22 @@ create table carrier (
   company_id   bigint references company (id),
   name         varchar(50) NOT NULL,
   carrier_type varchar(20) NOT NULL,
-  tax_number   varchar(15) NOT NULL
+  tax_number   varchar(15) NOT NULL,
+  trusted      boolean NOT NULL,
+  deleted      date
 );
 
 create table driver (
   id         bigserial PRIMARY KEY,
   carrier_id bigint references carrier (id),
-  info       varchar(70) NOT NULL
+  info       varchar(70) NOT NULL,
+  deleted    date
 );
 
 create table warehouse (
   id         bigserial PRIMARY KEY,
-  company_id bigint references company (id)
+  company_id bigint references company (id),
+  deleted    date
 );
 
 create table placement (
@@ -92,7 +99,8 @@ create table placement (
   placement_type        varchar(20) NOT NULL,
   storage_cost          integer     NOT NULL,
   size                  integer     NOT NULL,
-  measurement_unit_type varchar(20) NOT NULL
+  measurement_unit_type varchar(20) NOT NULL,
+  deleted               date
 );
 
 create table consignment_note (
@@ -151,6 +159,8 @@ create table placement_goods (
   id                bigserial PRIMARY KEY,
   goods_id          bigint references goods (id),
   placement_id      bigint references placement (id),
+  counterparty_id   bigint references counterparty (id),
   amount            integer NOT NULL,
-  storage_time_days integer NOT NULL
+  storage_time_days integer NOT NULL,
+  deleted           date
 );

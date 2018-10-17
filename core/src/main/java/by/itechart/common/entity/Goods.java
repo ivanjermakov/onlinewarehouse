@@ -4,6 +4,7 @@ import by.itechart.common.enums.PlacementType;
 import by.itechart.company.entity.Company;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "goods")
@@ -31,6 +32,9 @@ public class Goods extends BaseEntity {
 
     @Column(name = "description")
     private String description;
+
+    @Column(name = "deleted")
+    private LocalDate deleted;
 
     public Goods() {
     }
@@ -89,5 +93,13 @@ public class Goods extends BaseEntity {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public LocalDate getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(LocalDate deleted) {
+        this.deleted = deleted;
     }
 }

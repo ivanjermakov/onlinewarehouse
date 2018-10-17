@@ -4,6 +4,7 @@ import by.itechart.common.entity.BaseEntity;
 import by.itechart.company.entity.Company;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -16,6 +17,9 @@ public class Warehouse extends BaseEntity {
 
     @OneToMany(mappedBy = "warehouse")
     private List<Placement> placements;
+
+    @Column(name = "deleted")
+    private LocalDate deleted;
 
     public Warehouse() {
     }
@@ -34,5 +38,13 @@ public class Warehouse extends BaseEntity {
 
     public void setPlacements(List<Placement> placements) {
         this.placements = placements;
+    }
+
+    public LocalDate getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(LocalDate deleted) {
+        this.deleted = deleted;
     }
 }
