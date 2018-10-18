@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,7 +31,7 @@ public class UserController {
     }
 
     @PostMapping("/{companyId}/users")
-    public Long saveUser(@PathVariable long companyId, @RequestParam User user){
+    public Long saveUser(@PathVariable long companyId, @RequestBody User user){
         //save user and return id
         Long userId = new Long(15);
         return userId;
