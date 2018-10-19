@@ -90,6 +90,7 @@ create table driver (
 create table warehouse (
   id         bigserial PRIMARY KEY,
   company_id bigint references company (id),
+  name       varchar(20),
   deleted    date
 );
 
