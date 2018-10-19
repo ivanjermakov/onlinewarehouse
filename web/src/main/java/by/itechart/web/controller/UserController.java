@@ -45,7 +45,7 @@ public class UserController {
     }
 
     @PutMapping("/{companyId}/users/{userId}")
-    public Long editUser(@PathVariable long companyId, @PathVariable long userId, @RequestParam User user){
+    public Long editUser(@PathVariable long companyId, @PathVariable long userId, @RequestBody User user){
         //edit user
         return userId;
     }
