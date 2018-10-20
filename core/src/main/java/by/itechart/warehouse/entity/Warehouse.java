@@ -18,6 +18,9 @@ public class Warehouse extends BaseEntity {
     @OneToMany(mappedBy = "warehouse")
     private List<Placement> placements;
 
+    @Column(name = "name")
+    private String name;
+
     @Column(name = "deleted")
     private LocalDate deleted;
 
@@ -38,6 +41,14 @@ public class Warehouse extends BaseEntity {
 
     public void setPlacements(List<Placement> placements) {
         this.placements = placements;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public LocalDate getDeleted() {
