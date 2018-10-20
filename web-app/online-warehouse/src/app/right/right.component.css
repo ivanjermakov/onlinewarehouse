@@ -1,0 +1,20 @@
+.right {
+  grid-column: 2;
+  grid-row: 2;
+
+  height: calc(100vh - 60px);
+
+  overflow-y: auto;
+
+  padding: 10px;
+}
+
+.not-chosen {
+  display: flex;
+
+  height: 100%;
+  color: #7b7b7b;
+
+  align-items: center;
+  justify-content: center;
+}

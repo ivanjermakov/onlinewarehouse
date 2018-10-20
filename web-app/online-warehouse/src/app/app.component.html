@@ -1,0 +1,14 @@
+<div class="content">
+  <header class="header-left">
+    <img class="logo" src="#">
+    <div class="logo-name">Имя компании</div>
+  </header>
+
+  <header class="header-right">
+    <div *ngIf="currentMenuName !== null" class="action-name">{{currentMenuName}}</div>
+  </header>
+
+  <app-left [currentMenuName]="currentMenuName" (onClick)="changeCurrentMenu($event)"></app-left>
+  <app-right [currentMenuName]="currentMenuName"></app-right>
+
+</div>
