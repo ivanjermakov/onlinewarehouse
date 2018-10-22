@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Random;
 
 @RestController
-@RequestMapping("/companies/{companyId}/warehouses/{warehouseId}/placements")
+@RequestMapping("/company/{companyId}/warehouse/{warehouseId}/placement")
 public class PlacementController {
 
     @GetMapping

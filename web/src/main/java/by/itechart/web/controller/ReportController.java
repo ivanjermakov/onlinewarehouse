@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.time.LocalDate;
 
 @RestController
-@RequestMapping("/reports/companies")
+@RequestMapping("/report/company")
 public class ReportController {
 
     @GetMapping

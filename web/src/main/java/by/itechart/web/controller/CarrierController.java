@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Random;
 
 @RestController
-@RequestMapping("/companies/{companyId}/carriers")
+@RequestMapping("/company/{companyId}/carrier")
 public class CarrierController {
 
     @GetMapping

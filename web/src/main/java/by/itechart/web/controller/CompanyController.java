@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Random;
 
 @RestController
-@RequestMapping("/companies")
+@RequestMapping("/company")
 public class CompanyController {
 
     @GetMapping

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/companies/{companyId}/consignment-note")
+@RequestMapping("/company/{companyId}/consignment-note")
 public class ConsignmentNoteController {
 
     @GetMapping

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/companies")
+@RequestMapping("/company")
 public class UserController {
 
     @GetMapping("/{companyId}/users")
@@ -31,20 +31,20 @@ public class UserController {
         return userId;
     }
 
-    @GetMapping("/{companyId}/users/{userId}")
+    @GetMapping("/{companyId}/user/{userId}")
     public User getUser(@PathVariable long companyId, @PathVariable long userId) {
         //get user
         User user = createUser(userId);
         return user;
     }
 
-    @PutMapping("/{companyId}/users/{userId}")
+    @PutMapping("/{companyId}/user/{userId}")
     public Long editUser(@PathVariable long companyId, @PathVariable long userId, @RequestParam User user) {
         //edit user
         return userId;
     }
 
-    @DeleteMapping("/{companyId}/users/{userId}")
+    @DeleteMapping("/{companyId}/user/{userId}")
     public ResponseEntity deleteUser(@PathVariable long companyId, @PathVariable long userId) {
         //delete user
         return ResponseEntity.ok(null);
