@@ -1,8 +1,8 @@
 package by.itechart.warehouse.entity;
 
 import by.itechart.common.entity.BaseEntity;
-import by.itechart.common.enums.PlacementType;
 import by.itechart.common.enums.MeasurementUnit;
+import by.itechart.common.enums.PlacementType;
 
 import javax.persistence.*;
 import java.time.LocalDate;

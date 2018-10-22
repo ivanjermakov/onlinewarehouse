@@ -14,9 +14,9 @@ public class WriteOffActController {
 
     @GetMapping
     public List<WriteOffAct> getWriteOffActs(@PathVariable long companyId,
-                                                 @RequestParam WriteOffActType writeOffActType,
-                                                 @RequestParam(value = "from", required = false) LocalDate from,
-                                                 @RequestParam(value = "to", required = false) LocalDate to) {
+                                             @RequestParam WriteOffActType writeOffActType,
+                                             @RequestParam(value = "from", required = false) LocalDate from,
+                                             @RequestParam(value = "to", required = false) LocalDate to) {
         List<WriteOffAct> writeOffActs = new ArrayList<>();
         // return list of writeOffActs with WriteOffActType and in this period of time
         for (int i = 0; i < 10; i++) {
