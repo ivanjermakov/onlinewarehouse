@@ -1,17 +1,33 @@
-<div class="content-wrapper">
-  <app-auth *ngIf="isAuth === true"></app-auth>
+<div class="content">
+  <header class="header-left">
+    <img class="logo" src="#">
+    <div class="logo-name">Имя компании</div>
+  </header>
 
-  <div class="content" *ngIf="isAuth === false">
-    <header class="header-left">
-      <img class="logo" src="#">
-      <div class="logo-name">Имя компании</div>
-    </header>
+  <header class="header-right">
+    <div *ngIf="currentComponentName !== null" class="action-name">{{currentComponentName}}</div>
+  </header>
 
-    <header class="header-right">
-      <div *ngIf="currentMenuName !== null" class="action-name">{{currentMenuName}}</div>
-    </header>
+  <div class="left">
+    <div class="roles-wrapper">
+      <div class="role" *ngFor="let role of menu.roles">
+        <div class="role-name">{{role.name}}</div>
+        <div class="role-actions-wrapper">
+          <div class="role-action" *ngFor="let action of role.actions">
+            <a routerLink="{{action.url}}" routerLinkActive="action-active" [routerLinkActiveOptions]="{exist: true}" (click)="changeCurrentComponentName(action.name)">{{action.name}}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-    <app-left [currentMenuName]="currentMenuName" (onClick)="changeCurrentMenu($event)"></app-left>
-    <app-right [currentMenuName]="currentMenuName"></app-right>
+
+  <div class="right">
+    <div class="not-chosen">
+      <router-outlet></router-outlet>
+    </div>
   </div>
 </div>
+
+
+

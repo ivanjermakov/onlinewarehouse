@@ -1,0 +1,18 @@
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Address</th>
+    <th>Email</th>
+    <th>Birth date</th>
+    <th>Roles</th>
+    <th>View</th>
+  </tr>
+  <tr *ngFor="let user of users; let i = index">
+    <td>{{user.firstName}} {{user.lastName}}</td>
+    <td>{{user.address.country}} {{user.address.locality}} {{user.address.region}}</td>
+    <td>{{user.email}}</td>
+    <td>{{user.birth}}</td>
+    <td></td>
+    <td><a routerLink="{{'/user/' + i}}">View</a></td>
+  </tr>
+</table>

@@ -1,26 +1,32 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-import {FormsModule} from '@angular/forms';
-import {HttpModule} from '@angular/http';
 
 import {AppComponent} from './app.component';
-import {LeftComponent} from './left/left.component';
-import {RightComponent} from './right/right.component';
-import { AuthComponent } from './auth/auth.component';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {HttpClientModule} from '@angular/common/http';
+import {ViewUsersComponent} from './view-users/view-users.component';
+import {AppRoutingModule} from './app-routing.module';
+import {HomeComponent} from './home/home.component';
+import {UserComponent} from './user/user.component';
+
+export const API_BASE_URL = 'http://localhost:8080';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LeftComponent,
-    RightComponent,
-    AuthComponent
+    ViewUsersComponent,
+    HomeComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule
+    ReactiveFormsModule,
+    AppRoutingModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [{provide: API_BASE_URL, useValue: 'localhost:8080'}],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
