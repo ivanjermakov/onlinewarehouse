@@ -6,6 +6,7 @@ import by.itechart.common.entity.BaseEntity;
 import by.itechart.company.entity.Company;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -32,6 +33,12 @@ public class Carrier extends BaseEntity {
 
     @OneToMany(mappedBy = "carrier")
     private List<Driver> drivers;
+
+    @Column(name = "trusted")
+    private Boolean trusted;
+
+    @Column(name = "deleted")
+    private LocalDate deleted;
 
     public Carrier() {
     }
@@ -82,5 +89,21 @@ public class Carrier extends BaseEntity {
 
     public void setDrivers(List<Driver> drivers) {
         this.drivers = drivers;
+    }
+
+    public Boolean getTrusted() {
+        return trusted;
+    }
+
+    public void setTrusted(Boolean trusted) {
+        this.trusted = trusted;
+    }
+
+    public LocalDate getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(LocalDate deleted) {
+        this.deleted = deleted;
     }
 }

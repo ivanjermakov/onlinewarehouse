@@ -6,6 +6,7 @@ import by.itechart.company.entity.Company;
 import by.itechart.counterparty.enums.CounterpartyType;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "counterparty")
@@ -28,6 +29,9 @@ public class Counterparty extends BaseEntity {
 
     @Column(name = "tax_number")
     private String taxNumber;
+
+    @Column(name = "deleted")
+    private LocalDate deleted;
 
     public Counterparty() {
     }
@@ -70,5 +74,13 @@ public class Counterparty extends BaseEntity {
 
     public void setTaxNumber(String taxNumber) {
         this.taxNumber = taxNumber;
+    }
+
+    public LocalDate getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(LocalDate deleted) {
+        this.deleted = deleted;
     }
 }

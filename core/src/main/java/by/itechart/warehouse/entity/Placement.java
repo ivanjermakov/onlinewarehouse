@@ -1,10 +1,11 @@
 package by.itechart.warehouse.entity;
 
 import by.itechart.common.entity.BaseEntity;
-import by.itechart.common.enums.PlacementType;
 import by.itechart.common.enums.MeasurementUnit;
+import by.itechart.common.enums.PlacementType;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -31,6 +32,9 @@ public class Placement extends BaseEntity {
 
     @OneToMany(mappedBy = "placement")
     private List<PlacementGoods> placementGoodsList;
+
+    @Column(name = "deleted")
+    private LocalDate deleted;
 
     public Integer getSize() {
         return size;
@@ -78,5 +82,13 @@ public class Placement extends BaseEntity {
 
     public void setPlacementGoodsList(List<PlacementGoods> placementGoodsList) {
         this.placementGoodsList = placementGoodsList;
+    }
+
+    public LocalDate getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(LocalDate deleted) {
+        this.deleted = deleted;
     }
 }
