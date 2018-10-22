@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/company/{companyId}/counterparty")
+@RequestMapping("/companies/{companyId}/counterparties")
 public class CounterpartyController {
 
     @GetMapping

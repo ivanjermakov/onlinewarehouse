@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 
 @RestController
-@RequestMapping("/report/company")
+@RequestMapping("/reports/companies")
 public class ReportController {
 
     @GetMapping
@@ -22,7 +22,7 @@ public class ReportController {
         return ResponseEntity.status(HttpStatus.OK).headers(fileHeaders).body(new byte[100]);
     }
 
-    @GetMapping("/{companyId}/warehouse/{warehouseId}/arrival")
+    @GetMapping("/{companyId}/warehouses/{warehouseId}/arrival")
     public ResponseEntity getWarehouseArrival(@PathVariable long companyId, @PathVariable long warehouseId,
                                               @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,
                                               @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to) {
@@ -33,7 +33,7 @@ public class ReportController {
         return ResponseEntity.status(HttpStatus.OK).headers(fileHeaders).body(new byte[100]);
     }
 
-    @GetMapping("/{companyId}/warehouse/{warehouseId}/loss/act")
+    @GetMapping("/{companyId}/warehouses/{warehouseId}/loss/act")
     public ResponseEntity getWarehouseLossByAct(@PathVariable long companyId, @PathVariable long warehouseId,
                                                 @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,
                                                 @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to) {
@@ -44,7 +44,7 @@ public class ReportController {
         return ResponseEntity.status(HttpStatus.OK).headers(fileHeaders).body(new byte[100]);
     }
 
-    @GetMapping("/{companyId}/warehouse/{warehouseId}/loss/responsible-person")
+    @GetMapping("/{companyId}/warehouses/{warehouseId}/loss/responsible-person")
     public ResponseEntity getWarehouseLossByResponsiblePerson(@PathVariable long companyId, @PathVariable long warehouseId,
                                                               @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,
                                                               @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to) {
@@ -55,7 +55,7 @@ public class ReportController {
         return ResponseEntity.status(HttpStatus.OK).headers(fileHeaders).body(new byte[100]);
     }
 
-    @GetMapping("/{companyId}/warehouse/{warehouseId}/profit")
+    @GetMapping("/{companyId}/warehouses/{warehouseId}/profit")
     public ResponseEntity getWarehouseProfit(@PathVariable long companyId, @PathVariable long warehouseId,
                                              @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,
                                              @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to) {

@@ -11,10 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/company")
+@RequestMapping("/companies/{companyId}/users")
 public class UserController {
 
-    @GetMapping("/{companyId}/users")
+    @GetMapping
     public List<User> getUsersList(@PathVariable long companyId, @RequestParam(required = false) Pageable pageable) {
         ArrayList<User> users = new ArrayList<>();
         //get users by pageable and return page. Pageable = ?page=1&size=5 for example
@@ -24,27 +24,27 @@ public class UserController {
         return users;
     }
 
-    @PostMapping("/{companyId}/users")
+    @PostMapping
     public Long saveUser(@PathVariable long companyId, @RequestBody User user) {
         //save user and return id
         Long userId = new Long(15);
         return userId;
     }
 
-    @GetMapping("/{companyId}/user/{userId}")
+    @GetMapping("/{userId}")
     public User getUser(@PathVariable long companyId, @PathVariable long userId) {
         //get user
         User user = createUser(userId);
         return user;
     }
 
-    @PutMapping("/{companyId}/user/{userId}")
+    @PutMapping("/{userId}")
     public Long editUser(@PathVariable long companyId, @PathVariable long userId, @RequestParam User user) {
         //edit user
         return userId;
     }
 
-    @DeleteMapping("/{companyId}/user/{userId}")
+    @DeleteMapping("/{userId}")
     public ResponseEntity deleteUser(@PathVariable long companyId, @PathVariable long userId) {
         //delete user
         return ResponseEntity.ok(null);
