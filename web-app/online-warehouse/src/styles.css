@@ -12,6 +12,24 @@ body {
   background: #f3f3f3;
 }
 
+input {
+  border: 1px solid silver;
+  border-radius: 3px;
+  padding: 2px;
+  margin: 4px;
+}
+
+input[type=submit] {
+  background: #66a2cc;
+  color: white;
+  border: none;
+  padding: 6px;
+}
+
+.heading {
+  margin: 4px;
+}
+
 /*CONTENT MAIN*/
 .content {
   display: grid;

@@ -1,0 +1,39 @@
+.auth-wrapper {
+  display: flex;
+
+  flex-direction: column;
+  justify-content: center;
+
+  width: 100vw;
+  height: 100vh;
+
+  color: white;
+
+  cursor: auto;
+}
+
+.auth {
+  display: flex;
+
+  flex-direction: column;
+  align-self: center;
+
+  max-width: 400px;
+
+  padding: 10px;
+
+  background: white;
+  border-radius: 4px;
+}
+
+.auth .heading {
+  color: black;
+}
+
+.auth-form {
+  display: flex;
+
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

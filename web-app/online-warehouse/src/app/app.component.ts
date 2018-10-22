@@ -7,6 +7,7 @@ import {Component} from '@angular/core';
 })
 export class AppComponent {
   currentMenuName = null;
+  isAuth = false;
 
   changeCurrentMenu(e) {
     this.currentMenuName = e;

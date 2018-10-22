@@ -6,12 +6,14 @@ import {HttpModule} from '@angular/http';
 import {AppComponent} from './app.component';
 import {LeftComponent} from './left/left.component';
 import {RightComponent} from './right/right.component';
+import { AuthComponent } from './auth/auth.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LeftComponent,
-    RightComponent
+    RightComponent,
+    AuthComponent
   ],
   imports: [
     BrowserModule,
