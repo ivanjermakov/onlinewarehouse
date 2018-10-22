@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Random;
 
 @RestController
-@RequestMapping("/company/{companyId}/warehouse")
+@RequestMapping("/companies/{companyId}/warehouses")
 public class WarehouseController {
 
     @GetMapping

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/company/{companyId}/commodity-lot")
+@RequestMapping("/companies/{companyId}/commodity-lots")
 public class CommodityLotController {
 
     @GetMapping

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/companies/{companyId}/write-off-act")
+@RequestMapping("/companies/{companyId}/write-off-acts")
 public class WriteOffActController {
 
     @GetMapping
