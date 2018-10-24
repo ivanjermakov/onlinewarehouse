@@ -60,7 +60,7 @@ INSERT INTO write_off_act (company_id, creator_id, write_off_act_type, creation,
 -- указываем количество товаров и причину (на TEST забейте, нужно статусы описать)
 INSERT INTO write_off_act_goods(goods_id, write_off_act_id, write_off_type, amount) VALUES (1, 1, 'CARRIER_LOSS', 1);
 --одновременно создается товарая партия
-INSERT INTO commodity_lot (company_id, counterparty_id, commodity_lot_type) VALUES (2, 1, 'IN');
+INSERT INTO commodity_lot (company_id, counterparty_id, creation, commodity_lot_type) VALUES (2, 1, '2018-10-24', 'IN');
 --c товарами (вычитаем единицу товара "Some goods 1 name" из акта итого 9 товара "Some goods 1 name")
 INSERT INTO commodity_lot_goods (goods_id, commodity_lot_id, amount) VALUES (1, 1, 9);
 INSERT INTO commodity_lot_goods (goods_id, commodity_lot_id, amount) VALUES (2, 1, 15);
@@ -94,7 +94,7 @@ INSERT INTO consignment_note_goods (goods_id, consignment_note_id, amount) VALUE
 INSERT INTO consignment_note_goods (goods_id, consignment_note_id, amount) VALUES (2, 2, 10);
 
 -- контролер идет проверять наличие товара, все ок, и он создает товарную партию
-INSERT INTO commodity_lot (company_id, counterparty_id, commodity_lot_type) VALUES (2, 2, 'OUT');
+INSERT INTO commodity_lot (company_id, counterparty_id, creation, commodity_lot_type) VALUES (2, 2, '2018-10-28', 'OUT');
 --c товарами (вычитаем единицу товара "Some goods 1 name" из акта итого 9 товара "Some goods 1 name")
 INSERT INTO commodity_lot_goods (goods_id, commodity_lot_id, amount) VALUES (1, 2, 7);
 INSERT INTO commodity_lot_goods (goods_id, commodity_lot_id, amount) VALUES (2, 2, 10);
