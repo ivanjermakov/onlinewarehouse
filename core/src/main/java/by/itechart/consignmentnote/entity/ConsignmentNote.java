@@ -6,6 +6,10 @@ import by.itechart.common.entity.User;
 import by.itechart.company.entity.Company;
 import by.itechart.consignmentnote.enums.ConsignmentNoteType;
 import by.itechart.counterparty.entity.Counterparty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -22,6 +26,8 @@ public class ConsignmentNote extends BaseEntity {
     @Column(name = "number")
     private String number;
 
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     @Column(name = "shipment")
     private LocalDate shipment;
 
@@ -40,6 +46,8 @@ public class ConsignmentNote extends BaseEntity {
     @JoinColumn(name = "creator_id")
     private User creator;
 
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     @Column(name = "registration")
     private LocalDate registration;
 

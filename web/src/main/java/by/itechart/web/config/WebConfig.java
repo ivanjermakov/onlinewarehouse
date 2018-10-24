@@ -2,6 +2,7 @@ package by.itechart.web.config;
 
 import by.itechart.config.CoreConfig;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -24,7 +25,7 @@ public class WebConfig implements WebMvcConfigurer {
         ObjectMapper mapper = new ObjectMapper();
         //Registering Hibernate4Module to support lazy objects
         mapper.registerModule(new Hibernate5Module());
-
+        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         messageConverter.setObjectMapper(mapper);
         return messageConverter;
     }
