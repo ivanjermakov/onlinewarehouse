@@ -1,4 +1,4 @@
-<table>
+<table class="table table-bordered">
   <tr>
     <th>Name</th>
     <th>Address</th>
@@ -13,6 +13,6 @@
     <td>{{user.email}}</td>
     <td>{{user.birth}}</td>
     <td></td>
-    <td><a routerLink="{{'/user/' + i}}">View</a></td>
+    <td><a routerLink="{{'/user/' + user.id}}">View</a></td>
   </tr>
 </table>

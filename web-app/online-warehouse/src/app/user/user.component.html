@@ -1,37 +1,37 @@
 <form [formGroup]="userForm">
 
   <label>First name:
-    <input type="text" formControlName="firstName">
+    <input type="text" formControlName="firstName" class="input input-border">
   </label>
   <br>
   <label>Last name:
-    <input type="text" formControlName="lastName">
+    <input type="text" formControlName="lastName" class="input input-border">
   </label>
   <br>
   <label>Patronymic:
-    <input type="text" formControlName="patronymic">
+    <input type="text" formControlName="patronymic" class="input input-border">
   </label>
   <br>
   <label>Country
-    <input type="text" formControlName="country">
+    <input type="text" formControlName="country" class="input input-border">
   </label>
   <br>
   <label>Region
-    <input type="text" formControlName="region">
+    <input type="text" formControlName="region" class="input input-border">
   </label>
   <br>
   <label>Locality
-    <input type="text" formControlName="locality">
+    <input type="text" formControlName="locality" class="input input-border">
   </label>
   <br>
   <label>Birth date
-    <input type="date" formControlName="birthDate">
+    <input type="date" formControlName="birthDate" class="input input-border">
   </label>
   <br>
   <label>Email
-    <input type="email" formControlName="email">
+    <input type="email" formControlName="email" class="input input-border">
   </label>
 </form>
 <br>
-<button (click)="goBack()">Back</button>
-<button (click)="save()">Save</button>
+<button (click)="goBack()" class="button button-blue-grey">Back</button>
+<button (click)="save()" class="button button-cyan">Save</button>

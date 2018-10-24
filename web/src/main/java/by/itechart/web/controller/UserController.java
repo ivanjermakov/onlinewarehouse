@@ -12,7 +12,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RestController
-@RequestMapping("/company")
+@RequestMapping("/companies/{companyId}/users")
 public class UserController {
 
     private final UserService userService;
@@ -41,7 +41,7 @@ public class UserController {
         return userService.saveOrUpdateUser(user);
     }
 
-    @GetMapping("/{companyId}/user/{userId}")
+    @GetMapping("/{userId}")
     public User getUser(@PathVariable long companyId, @PathVariable long userId) {
         //get user
 //        User user = createUser(userId);
@@ -49,7 +49,7 @@ public class UserController {
         return userService.getUser(userId);
     }
 
-    @PutMapping("/{companyId}/user/{userId}")
+    @PutMapping("/{userId}")
     public Long editUser(@PathVariable long companyId, @PathVariable long userId, @RequestParam User user) {
         //edit user
 //        return userId;

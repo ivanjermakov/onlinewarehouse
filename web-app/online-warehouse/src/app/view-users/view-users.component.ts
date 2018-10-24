@@ -13,6 +13,6 @@ export class ViewUsersComponent implements OnInit {
   }
 
   ngOnInit() {
-    this._userService.getAllUsers(1).subscribe(users => this.users = users);
+    this._userService.getAllUsers(2).subscribe(users => this.users = users);
   }
 }

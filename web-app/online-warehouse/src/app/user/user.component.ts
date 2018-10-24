@@ -62,7 +62,7 @@ export class UserComponent implements OnInit {
   }
 
   private getUserByIdAndSetFields(): void {
-    this.userService.getUserById(1, this.userId).subscribe(user => {
+    this.userService.getUserById(2, this.userId).subscribe(user => {
       this.user = user;
       this.setUserFields();
     });
@@ -76,7 +76,7 @@ export class UserComponent implements OnInit {
       country: new FormControl(this.user.address.country),
       region: new FormControl(this.user.address.region),
       locality: new FormControl(this.user.address.locality),
-      birthDate: new FormControl(this.user.birth.join('-')),
+      birthDate: new FormControl(this.user.birth),
       email: new FormControl(this.user.email)
     });
   }
