@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CompanyServiceImpl implements CompanyService {
+
     private CompanyRepository companyRepository;
     private CompanyActionRepository companyActionRepository;
 

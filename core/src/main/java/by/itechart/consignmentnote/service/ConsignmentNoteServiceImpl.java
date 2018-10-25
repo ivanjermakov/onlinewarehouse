@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ConsignmentNoteServiceImpl implements ConsignmentNoteService {
+
     private ConsignmentNoteRepository consignmentNoteRepository;
 
     @Autowired

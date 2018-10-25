@@ -2,7 +2,6 @@ package by.itechart.commoditylot.service;
 
 import by.itechart.commoditylot.entity.CommodityLot;
 import by.itechart.commoditylot.enums.CommodityLotType;
-import by.itechart.commoditylot.repository.CommodityLotGoodsRepository;
 import by.itechart.commoditylot.repository.CommodityLotRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,14 +15,11 @@ import java.time.LocalDate;
 public class CommodityLotServiceImpl implements CommodityLotService {
 
     private final CommodityLotRepository commodityLotRepository;
-    private final CommodityLotGoodsRepository commodityLotGoodsRepository;
 
     @Autowired
-    public CommodityLotServiceImpl(CommodityLotRepository commodityLotRepository, CommodityLotGoodsRepository commodityLotGoodsRepository) {
+    public CommodityLotServiceImpl(CommodityLotRepository commodityLotRepository) {
         this.commodityLotRepository = commodityLotRepository;
-        this.commodityLotGoodsRepository = commodityLotGoodsRepository;
     }
-
 
     @Transactional(readOnly = true)
     @Override

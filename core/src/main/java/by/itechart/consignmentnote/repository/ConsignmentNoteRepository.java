@@ -8,6 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ConsignmentNoteRepository extends JpaRepository<ConsignmentNote, Long> {
 
-    Page<ConsignmentNote> findAllByConsignmentNoteType(ConsignmentNoteType consignmentNoteType,
-                                                       Pageable pageable);
+    Page<ConsignmentNote> findAllByConsignmentNoteType(ConsignmentNoteType consignmentNoteType, Pageable pageable);
 }

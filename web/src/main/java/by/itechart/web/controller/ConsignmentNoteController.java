@@ -13,7 +13,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/companies/{companyId}/consignment-notes")
 public class ConsignmentNoteController {
-    // TODO companyID
+
+    // TODO companyID (companyId what?)
     private ConsignmentNoteService consignmentNoteService;
 
     @Autowired

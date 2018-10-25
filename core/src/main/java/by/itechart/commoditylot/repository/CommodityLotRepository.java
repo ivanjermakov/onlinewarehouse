@@ -17,5 +17,4 @@ public interface CommodityLotRepository extends CrudRepository<CommodityLot, Lon
     Page<CommodityLot> findAllByCompany_IdAndCommodityLotTypeAndCreationBefore(Long companyId, CommodityLotType commodityLotType, LocalDate to, Pageable pageable);
 
     Page<CommodityLot> findAllByCompany_IdAndCommodityLotType(Long companyId, CommodityLotType commodityLotType, Pageable pageable);
-
 }
