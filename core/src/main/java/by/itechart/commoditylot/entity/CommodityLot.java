@@ -4,8 +4,13 @@ import by.itechart.commoditylot.enums.CommodityLotType;
 import by.itechart.common.entity.BaseEntity;
 import by.itechart.company.entity.Company;
 import by.itechart.counterparty.entity.Counterparty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -23,6 +28,11 @@ public class CommodityLot extends BaseEntity {
     @Column(name = "commodity_lot_type")
     @Enumerated(EnumType.STRING)
     private CommodityLotType commodityLotType;
+
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @Column(name = "creation")
+    private LocalDate creation;
 
     @OneToMany(mappedBy = "commodityLot")
     private List<CommodityLotGoods> commodityLotGoodsList;
@@ -52,6 +62,14 @@ public class CommodityLot extends BaseEntity {
 
     public void setCommodityLotType(CommodityLotType commodityLotType) {
         this.commodityLotType = commodityLotType;
+    }
+
+    public LocalDate getCreation() {
+        return creation;
+    }
+
+    public void setCreation(LocalDate creation) {
+        this.creation = creation;
     }
 
     public List<CommodityLotGoods> getCommodityLotGoodsList() {

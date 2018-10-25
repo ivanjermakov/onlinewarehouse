@@ -4,6 +4,10 @@ import by.itechart.carrier.enums.CarrierType;
 import by.itechart.common.entity.Address;
 import by.itechart.common.entity.BaseEntity;
 import by.itechart.company.entity.Company;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -37,6 +41,8 @@ public class Carrier extends BaseEntity {
     @Column(name = "trusted")
     private Boolean trusted;
 
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     @Column(name = "deleted")
     private LocalDate deleted;
 
