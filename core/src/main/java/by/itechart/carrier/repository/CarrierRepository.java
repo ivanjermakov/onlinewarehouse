@@ -14,7 +14,7 @@ public interface CarrierRepository extends PagingAndSortingRepository<Carrier, L
 
     Page<Carrier> findAllCarriersByCompanyIdAndDeletedIsFalse(Long companyId, Pageable page);
     Page<Carrier> findCarriersByCarrierTypeAndTrusted(CarrierType carrierType, Boolean trusted, Pageable page);
-    Page<Carrier> findAllByNameStartingWith(String name);
+    Page<Carrier> findAllByNameStartingWith(String name, Pageable pageable);
 
     @Modifying
     @Query("update Carrier c set c.trusted = :trusted where c.id = :id")

@@ -50,7 +50,7 @@
   },
   "defaults": {
     "serve": {
-      "port": 8080
+      "port": 4200
     },
     "styleExt": "css",
     "prefixInterfaces": false,

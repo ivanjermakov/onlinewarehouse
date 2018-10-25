@@ -9,6 +9,6 @@ import org.springframework.data.repository.query.Param;
 
 public interface CompanyActionRepository extends JpaRepository<CompanyAction, Long> {
     @Modifying
-    @Query("update CompanyAction c set c.action_type = :actionType where c.company_id = :companyId")
+    @Query("update CompanyAction c set c.actionType = :actionType where c.company = :companyId")
     void changeActionType(@Param("companyId") Long companyId, @Param("actionType") ActionType actionType);
 }
