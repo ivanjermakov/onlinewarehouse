@@ -10,10 +10,10 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 public interface CarrierRepository extends PagingAndSortingRepository<Carrier, Long> {
 
-
-
     Page<Carrier> findAllCarriersByCompanyIdAndDeletedIsFalse(Long companyId, Pageable page);
+
     Page<Carrier> findCarriersByCarrierTypeAndTrusted(CarrierType carrierType, Boolean trusted, Pageable page);
+
     Page<Carrier> findAllByNameStartingWith(String name, Pageable pageable);
 
     @Modifying
@@ -23,5 +23,4 @@ public interface CarrierRepository extends PagingAndSortingRepository<Carrier, L
     @Modifying
     @Query("update Carrier c set c.deleted = current_date where c.id = :id")
     void setDeleted(Long id);
-
 }

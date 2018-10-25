@@ -2,16 +2,13 @@ package by.itechart.web.controller;
 
 import by.itechart.company.entity.Company;
 import by.itechart.company.enums.ActionType;
-import by.itechart.company.enums.CompanySize;
 import by.itechart.company.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 @RestController
 @RequestMapping("/companies")

@@ -6,9 +6,7 @@ import by.itechart.company.service.CompanyService;
 import by.itechart.config.CoreConfig;
 import by.itechart.config.PersistenceConfig;
 import by.itechart.config.ServiceConfig;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.data.domain.Page;
 
 /**
  * Hello world!
