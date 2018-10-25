@@ -51,7 +51,6 @@ public class CarrierController {
         // delete carrier
     }
 
-
     private Carrier createCarrier(long i) {
         Address address = new Address();
         address.setCountry("country");

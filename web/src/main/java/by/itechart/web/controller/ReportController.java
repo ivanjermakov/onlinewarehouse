@@ -65,6 +65,4 @@ public class ReportController {
         // xls report with profit of warehouse
         return ResponseEntity.status(HttpStatus.OK).headers(fileHeaders).body(new byte[100]);
     }
-
-
 }

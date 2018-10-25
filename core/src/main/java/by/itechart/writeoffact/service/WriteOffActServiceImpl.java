@@ -2,7 +2,6 @@ package by.itechart.writeoffact.service;
 
 import by.itechart.writeoffact.entity.WriteOffAct;
 import by.itechart.writeoffact.enums.WriteOffActType;
-import by.itechart.writeoffact.repository.WriteOffActGoodsRepository;
 import by.itechart.writeoffact.repository.WriteOffActRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,12 +15,10 @@ import java.time.LocalDate;
 public class WriteOffActServiceImpl implements WriteOffActService {
 
     private final WriteOffActRepository writeOffActRepository;
-    private final WriteOffActGoodsRepository writeOffActGoodsRepository;
 
     @Autowired
-    public WriteOffActServiceImpl(WriteOffActRepository writeOffActRepository, WriteOffActGoodsRepository writeOffActGoodsRepository) {
+    public WriteOffActServiceImpl(WriteOffActRepository writeOffActRepository) {
         this.writeOffActRepository = writeOffActRepository;
-        this.writeOffActGoodsRepository = writeOffActGoodsRepository;
     }
 
     @Transactional(readOnly = true)
