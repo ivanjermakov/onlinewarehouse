@@ -8,11 +8,17 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "carrier")
 public class Carrier extends BaseEntity {
@@ -46,70 +52,4 @@ public class Carrier extends BaseEntity {
     @Column(name = "deleted")
     private LocalDate deleted;
 
-    public Carrier() {
-    }
-
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
-    }
-
-    public Company getCompany() {
-        return company;
-    }
-
-    public void setCompany(Company company) {
-        this.company = company;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public CarrierType getCarrierType() {
-        return carrierType;
-    }
-
-    public void setCarrierType(CarrierType carrierType) {
-        this.carrierType = carrierType;
-    }
-
-    public String getTaxNumber() {
-        return taxNumber;
-    }
-
-    public void setTaxNumber(String taxNumber) {
-        this.taxNumber = taxNumber;
-    }
-
-    public List<Driver> getDrivers() {
-        return drivers;
-    }
-
-    public void setDrivers(List<Driver> drivers) {
-        this.drivers = drivers;
-    }
-
-    public Boolean getTrusted() {
-        return trusted;
-    }
-
-    public void setTrusted(Boolean trusted) {
-        this.trusted = trusted;
-    }
-
-    public LocalDate getDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(LocalDate deleted) {
-        this.deleted = deleted;
-    }
 }

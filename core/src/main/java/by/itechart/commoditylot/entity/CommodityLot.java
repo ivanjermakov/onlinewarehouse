@@ -8,11 +8,17 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "commodity_lot")
 public class CommodityLot extends BaseEntity {
@@ -37,46 +43,4 @@ public class CommodityLot extends BaseEntity {
     @OneToMany(mappedBy = "commodityLot")
     private List<CommodityLotGoods> commodityLotGoodsList;
 
-    public CommodityLot() {
-    }
-
-    public Company getCompany() {
-        return company;
-    }
-
-    public void setCompany(Company company) {
-        this.company = company;
-    }
-
-    public Counterparty getCounterparty() {
-        return counterparty;
-    }
-
-    public void setCounterparty(Counterparty counterparty) {
-        this.counterparty = counterparty;
-    }
-
-    public CommodityLotType getCommodityLotType() {
-        return commodityLotType;
-    }
-
-    public void setCommodityLotType(CommodityLotType commodityLotType) {
-        this.commodityLotType = commodityLotType;
-    }
-
-    public LocalDate getCreation() {
-        return creation;
-    }
-
-    public void setCreation(LocalDate creation) {
-        this.creation = creation;
-    }
-
-    public List<CommodityLotGoods> getCommodityLotGoodsList() {
-        return commodityLotGoodsList;
-    }
-
-    public void setCommodityLotGoodsList(List<CommodityLotGoods> commodityLotGoodsList) {
-        this.commodityLotGoodsList = commodityLotGoodsList;
-    }
 }

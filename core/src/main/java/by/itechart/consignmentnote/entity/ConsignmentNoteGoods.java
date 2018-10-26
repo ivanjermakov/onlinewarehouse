@@ -2,9 +2,15 @@ package by.itechart.consignmentnote.entity;
 
 import by.itechart.common.entity.BaseEntity;
 import by.itechart.common.entity.Goods;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "consignment_note_goods")
 public class ConsignmentNoteGoods extends BaseEntity {
@@ -20,30 +26,4 @@ public class ConsignmentNoteGoods extends BaseEntity {
     @Column(name = "amount")
     private Integer amount;
 
-    public ConsignmentNoteGoods() {
-    }
-
-    public Goods getGoods() {
-        return goods;
-    }
-
-    public void setGoods(Goods goods) {
-        this.goods = goods;
-    }
-
-    public ConsignmentNote getConsignmentNote() {
-        return consignmentNote;
-    }
-
-    public void setConsignmentNote(ConsignmentNote consignmentNote) {
-        this.consignmentNote = consignmentNote;
-    }
-
-    public Integer getAmount() {
-        return amount;
-    }
-
-    public void setAmount(Integer amount) {
-        this.amount = amount;
-    }
 }

@@ -2,10 +2,16 @@ package by.itechart.company.entity;
 
 import by.itechart.common.entity.BaseEntity;
 import by.itechart.company.enums.ActionType;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "company_action")
 public class CompanyAction extends BaseEntity {
@@ -21,30 +27,4 @@ public class CompanyAction extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private ActionType actionType;
 
-    public CompanyAction() {
-    }
-
-    public Company getCompany() {
-        return company;
-    }
-
-    public void setCompany(Company company) {
-        this.company = company;
-    }
-
-    public LocalDateTime getChange() {
-        return change;
-    }
-
-    public void setChange(LocalDateTime change) {
-        this.change = change;
-    }
-
-    public ActionType getActionType() {
-        return actionType;
-    }
-
-    public void setActionType(ActionType actionType) {
-        this.actionType = actionType;
-    }
 }

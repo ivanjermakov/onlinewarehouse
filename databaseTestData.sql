@@ -47,9 +47,9 @@ INSERT INTO counterparty (address_id, company_id, name, counterparty_type, tax_n
 --пришла ТТН, диспетчер регистрирует ее (и отправитель, и перевозчик уже были в базе)
 INSERT INTO consignment_note (company_id, carrier_id, counterparty_id, creator_id, number, consignment_note_type, shipment, registration, vehicle_number) VALUES (2, 1, 1, 3, '12302143', 'IN', '2018-10-23', '2018-10-24', '1754-ВС 7');
 -- товары которые были в ТТН, добавляем в справочник
-INSERT INTO goods (company_id, name, placement_type, cost, weight, labelling, description) VALUES (2, 'Some goods 1 name', 'FREEZER', 10, 1, 'some label', 'some description');
-INSERT INTO goods (company_id, name, placement_type, cost, weight, labelling, description) VALUES (2, 'Some goods 2 name', 'UNHEATED', 1, 0.2, 'some label', 'some description');
-INSERT INTO goods (company_id, name, placement_type, cost, weight, labelling, description) VALUES (2, 'Some goods 3 name', 'UNHEATED', 3, 15, 'some label', 'some description');
+INSERT INTO goods (company_id, name, placement_type, measurement_unit_type, cost, weight, labelling, description) VALUES (2, 'Some goods 1 name', 'FREEZER', 'TEST', 10, 1, 'some label', 'some description');
+INSERT INTO goods (company_id, name, placement_type, measurement_unit_type, cost, weight, labelling, description) VALUES (2, 'Some goods 2 name', 'UNHEATED', 'TEST', 1, 0.2, 'some label', 'some description');
+INSERT INTO goods (company_id, name, placement_type, measurement_unit_type, cost, weight, labelling, description) VALUES (2, 'Some goods 3 name', 'UNHEATED', 'TEST', 3, 15, 'some label', 'some description');
 -- и добавляем в список к ТТНке
 INSERT INTO consignment_note_goods (goods_id, consignment_note_id, amount) VALUES (1, 1, 10);
 INSERT INTO consignment_note_goods (goods_id, consignment_note_id, amount) VALUES (2, 1, 15);

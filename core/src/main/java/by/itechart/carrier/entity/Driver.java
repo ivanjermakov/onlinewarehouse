@@ -5,10 +5,16 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "driver")
 public class Driver extends BaseEntity {
@@ -25,27 +31,4 @@ public class Driver extends BaseEntity {
     @Column(name = "deleted")
     private LocalDate deleted;
 
-    public Carrier getCarrier() {
-        return carrier;
-    }
-
-    public void setCarrier(Carrier carrier) {
-        this.carrier = carrier;
-    }
-
-    public String getInfo() {
-        return info;
-    }
-
-    public void setInfo(String info) {
-        this.info = info;
-    }
-
-    public LocalDate getDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(LocalDate deleted) {
-        this.deleted = deleted;
-    }
 }

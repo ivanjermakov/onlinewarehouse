@@ -6,11 +6,17 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "warehouse")
 public class Warehouse extends BaseEntity {
@@ -30,38 +36,4 @@ public class Warehouse extends BaseEntity {
     @Column(name = "deleted")
     private LocalDate deleted;
 
-    public Warehouse() {
-    }
-
-    public Company getCompany() {
-        return company;
-    }
-
-    public void setCompany(Company company) {
-        this.company = company;
-    }
-
-    public List<Placement> getPlacements() {
-        return placements;
-    }
-
-    public void setPlacements(List<Placement> placements) {
-        this.placements = placements;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public LocalDate getDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(LocalDate deleted) {
-        this.deleted = deleted;
-    }
 }

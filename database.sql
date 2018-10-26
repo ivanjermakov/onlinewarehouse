@@ -12,15 +12,16 @@ create table company_action (
 );
 
 create table goods (
-  id             bigserial PRIMARY KEY,
-  company_id     bigint references company (id),
-  name           varchar(70) NOT NULL,
-  placement_type varchar(20) NOT NULL,
-  cost           integer     NOT NULL,
-  weight         real        NOT NULL,
-  labelling      varchar(50) NOT NULL,
-  description    text,
-  deleted        date
+  id                    bigserial PRIMARY KEY,
+  company_id            bigint references company (id),
+  name                  varchar(70) NOT NULL,
+  placement_type        varchar(20) NOT NULL,
+  measurement_unit_type varchar(20) NOT NULL,
+  cost                  integer     NOT NULL,
+  weight                real        NOT NULL,
+  labelling             varchar(50) NOT NULL,
+  description           text,
+  deleted               date
 );
 
 create table address (

@@ -8,11 +8,17 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "write_off_act")
 public class WriteOffAct extends BaseEntity {
@@ -43,62 +49,4 @@ public class WriteOffAct extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private WriteOffActType writeOffActType;
 
-    public WriteOffAct() {
-    }
-
-    public Company getCompany() {
-        return company;
-    }
-
-    public void setCompany(Company company) {
-        this.company = company;
-    }
-
-    public LocalDate getCreation() {
-        return creation;
-    }
-
-    public void setCreation(LocalDate creation) {
-        this.creation = creation;
-    }
-
-    public User getCreator() {
-        return creator;
-    }
-
-    public void setCreator(User creator) {
-        this.creator = creator;
-    }
-
-    public String getResponsiblePerson() {
-        return responsiblePerson;
-    }
-
-    public void setResponsiblePerson(String responsiblePerson) {
-        this.responsiblePerson = responsiblePerson;
-    }
-
-    public Integer getTotalAmount() {
-        return totalAmount;
-    }
-
-    public void setTotalAmount(Integer totalAmount) {
-        this.totalAmount = totalAmount;
-    }
-
-    public List<WriteOffActGoods> getAGoodsList() {
-        return writeOffActGoodsList;
-    }
-
-    public void setAGoodsList(List<WriteOffActGoods> writeOffActGoodsList) {
-        this.writeOffActGoodsList = writeOffActGoodsList;
-    }
-
-    public WriteOffActType getWriteOffActType() {
-        return writeOffActType;
-    }
-
-    public void setWriteOffActType(WriteOffActType writeOffActType) {
-        this.writeOffActType = writeOffActType;
-    }
 }

@@ -8,10 +8,16 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "counterparty")
 public class Counterparty extends BaseEntity {
@@ -39,54 +45,4 @@ public class Counterparty extends BaseEntity {
     @Column(name = "deleted")
     private LocalDate deleted;
 
-    public Counterparty() {
-    }
-
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
-    }
-
-    public Company getCompany() {
-        return company;
-    }
-
-    public void setCompany(Company company) {
-        this.company = company;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public CounterpartyType getCounterpartyType() {
-        return counterpartyType;
-    }
-
-    public void setCounterpartyType(CounterpartyType counterpartyType) {
-        this.counterpartyType = counterpartyType;
-    }
-
-    public String getTaxNumber() {
-        return taxNumber;
-    }
-
-    public void setTaxNumber(String taxNumber) {
-        this.taxNumber = taxNumber;
-    }
-
-    public LocalDate getDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(LocalDate deleted) {
-        this.deleted = deleted;
-    }
 }

@@ -1,15 +1,22 @@
 package by.itechart.common.entity;
 
+import by.itechart.common.enums.MeasurementUnit;
 import by.itechart.common.enums.PlacementType;
 import by.itechart.company.entity.Company;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "goods")
 public class Goods extends BaseEntity {
@@ -24,6 +31,10 @@ public class Goods extends BaseEntity {
     @Column(name = "placement_type")
     @Enumerated(EnumType.STRING)
     private PlacementType placementType;
+
+    @Column(name = "measurement_unit_type")
+    @Enumerated(EnumType.STRING)
+    private MeasurementUnit measurementUnit;
 
     @Column(name = "cost")
     private Integer cost;
@@ -42,70 +53,4 @@ public class Goods extends BaseEntity {
     @Column(name = "deleted")
     private LocalDate deleted;
 
-    public Goods() {
-    }
-
-    public Company getCompany() {
-        return company;
-    }
-
-    public void setCompany(Company company) {
-        this.company = company;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public PlacementType getPlacementType() {
-        return placementType;
-    }
-
-    public void setPlacementType(PlacementType placementType) {
-        this.placementType = placementType;
-    }
-
-    public Integer getCost() {
-        return cost;
-    }
-
-    public void setCost(Integer cost) {
-        this.cost = cost;
-    }
-
-    public Float getWeight() {
-        return weight;
-    }
-
-    public void setWeight(Float weight) {
-        this.weight = weight;
-    }
-
-    public String getLabelling() {
-        return labelling;
-    }
-
-    public void setLabelling(String labelling) {
-        this.labelling = labelling;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public LocalDate getDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(LocalDate deleted) {
-        this.deleted = deleted;
-    }
 }

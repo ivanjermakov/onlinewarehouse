@@ -2,9 +2,15 @@ package by.itechart.commoditylot.entity;
 
 import by.itechart.common.entity.BaseEntity;
 import by.itechart.common.entity.Goods;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "commodity_lot_goods")
 public class CommodityLotGoods extends BaseEntity {
@@ -20,30 +26,4 @@ public class CommodityLotGoods extends BaseEntity {
     @Column(name = "amount")
     private Integer amount;
 
-    public CommodityLotGoods() {
-    }
-
-    public Goods getGoods() {
-        return goods;
-    }
-
-    public void setGoods(Goods goods) {
-        this.goods = goods;
-    }
-
-    public CommodityLot getCommodityLot() {
-        return commodityLot;
-    }
-
-    public void setCommodityLot(CommodityLot commodityLot) {
-        this.commodityLot = commodityLot;
-    }
-
-    public Integer getAmount() {
-        return amount;
-    }
-
-    public void setAmount(Integer amount) {
-        this.amount = amount;
-    }
 }
