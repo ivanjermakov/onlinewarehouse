@@ -18,7 +18,7 @@ export class CompanyService {
     return this.http.get(path);
   }
 
-  saveCompany(companyId: number, createCompanyDto: CreateCompanyDto) {
+  saveCompany(companyId: number, createCompanyDto: CreateCompanyDto):Observable<number> {
     const path: string = this.baseApi;
     return this.http.post(path, createCompanyDto);
   }
