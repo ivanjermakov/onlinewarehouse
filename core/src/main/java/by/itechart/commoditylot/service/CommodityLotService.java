@@ -1,17 +1,17 @@
 package by.itechart.commoditylot.service;
 
-import by.itechart.commoditylot.entity.CommodityLot;
-import by.itechart.commoditylot.enums.CommodityLotType;
+import by.itechart.commoditylot.dto.CommodityLotDto;
+import by.itechart.commoditylot.dto.CommodityLotFilter;
+import by.itechart.commoditylot.dto.CommodityLotListDto;
+import by.itechart.commoditylot.dto.CreateCommodityLotDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.time.LocalDate;
-
 public interface CommodityLotService {
 
-    Page<CommodityLot> getCommodityLots(Long companyId, Pageable pageable, CommodityLotType commodityLotType, LocalDate from, LocalDate to);
+    Page<CommodityLotListDto> getCommodityLots(Long companyId, Pageable pageable, CommodityLotFilter commodityLotFilter);
 
-    Long saveCommodityLot(CommodityLot commodityLot);
+    Long saveCommodityLot(CreateCommodityLotDto createCommodityLotDto, Long companyId);
 
-    CommodityLot getCommodityLot(Long commodityLotId);
+    CommodityLotDto getCommodityLot(Long commodityLotId, Long companyId);
 }

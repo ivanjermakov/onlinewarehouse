@@ -1,12 +1,10 @@
 package by.itechart.consignmentnote.repository;
 
 import by.itechart.consignmentnote.entity.ConsignmentNote;
-import by.itechart.consignmentnote.enums.ConsignmentNoteType;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 
-public interface ConsignmentNoteRepository extends JpaRepository<ConsignmentNote, Long> {
+public interface ConsignmentNoteRepository extends JpaRepository<ConsignmentNote, Long>, QuerydslPredicateExecutor<ConsignmentNote> {
 
-    Page<ConsignmentNote> findAllByConsignmentNoteType(ConsignmentNoteType consignmentNoteType, Pageable pageable);
+    ConsignmentNote findByCompanyIdAndId(long companyId, long consignmentNoteId);
 }
