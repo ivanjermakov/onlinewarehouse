@@ -1,11 +1,3 @@
 .idea/
 onlinewarehouse.iml
-core/core.iml
-core/target
-core/src/main/resources/database.properties
-web/.mvn/
-web/mvnw
-web/mvnw.cmd
-web/web.iml
-web/target
 online-warehouse.iml
