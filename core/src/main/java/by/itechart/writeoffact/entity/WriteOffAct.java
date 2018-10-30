@@ -49,4 +49,7 @@ public class WriteOffAct extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private WriteOffActType writeOffActType;
 
+    public WriteOffAct(Long id) {
+        super(id);
+    }
 }

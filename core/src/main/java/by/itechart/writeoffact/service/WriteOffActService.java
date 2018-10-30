@@ -1,5 +1,7 @@
 package by.itechart.writeoffact.service;
 
+import by.itechart.writeoffact.dto.CreateWriteOffActDto;
+import by.itechart.writeoffact.dto.WriteOffActDto;
 import by.itechart.writeoffact.entity.WriteOffAct;
 import by.itechart.writeoffact.enums.WriteOffActType;
 import org.springframework.data.domain.Page;
@@ -11,7 +13,7 @@ public interface WriteOffActService {
 
     Page<WriteOffAct> getWriteOffActs(Long companyId, Pageable pageable, WriteOffActType writeOffActType, LocalDate from, LocalDate to);
 
-    Long saveWriteOffAct(WriteOffAct writeOffAct);
+    Long saveWriteOffAct(CreateWriteOffActDto writeOffAct);
 
-    WriteOffAct getWriteOffAct(Long writeOffActId);
+    WriteOffActDto getWriteOffAct(Long writeOffActId);
 }
