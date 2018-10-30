@@ -1,6 +1,6 @@
 package by.itechart.web.controller;
 
-import by.itechart.counterparty.entity.Counterparty;
+import by.itechart.counterparty.dto.CounterpartyDto;
 import by.itechart.counterparty.enums.CounterpartyType;
 import by.itechart.counterparty.service.CounterpartyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,40 +21,29 @@ public class CounterpartyController {
     }
 
     @GetMapping
-    public List<Counterparty> getCounterparties(@PathVariable long companyId,
-                                                @RequestParam CounterpartyType counterpartyType,
-                                                @RequestParam(required = false) Pageable pageable) {
-//        List<Counterparty> counterparties = new ArrayList<>();
-//        // return list of counterparties with CounterpartyType
-//        for (int i = 0; i < 10; i++) {
-//            counterparties.add(createCounterparty(i));
-//        }
-//        return counterparties;
+    public List<CounterpartyDto> getCounterparties(@PathVariable long companyId,
+                                                   @RequestParam CounterpartyType counterpartyType,
+                                                   @RequestParam(required = false) Pageable pageable) {
         return counterpartyService.getCounterparties(companyId, counterpartyType, pageable).getContent();
     }
 
     @PostMapping
-    public Long saveCounterparty(@PathVariable long companyId, @RequestBody Counterparty counterparty) {
+    public Long saveCounterparty(@PathVariable long companyId, @RequestBody CounterpartyDto counterparty) {
         // save counterparty and return generated counterparty id
-//        Long id = 10L;
-//        return id;
         return counterpartyService.saveOrUpdateCounterparty(counterparty);
     }
 
+    //    why we need companyId here if counterparty itself has it's own id?
     @GetMapping("/{counterpartyId}")
-    public Counterparty getCounterparty(@PathVariable long companyId, @PathVariable long counterpartyId) {
-        Counterparty counterparty = createCounterparty(counterpartyId);
+    public CounterpartyDto getCounterparty(@PathVariable long companyId, @PathVariable long counterpartyId) {
         // return counterparty with companyId and counterpartyId
-//        return counterparty;
         return counterpartyService.getCounterparty(counterpartyId);
     }
 
     @PutMapping("/{counterpartyId}")
     public Long updateCounterparty(@PathVariable long companyId, @PathVariable long counterpartyId,
-                                   @RequestBody Counterparty counterparty) {
+                                   @RequestBody CounterpartyDto counterparty) {
         // update counterparty and return counterparty id
-//        Long id = 10L;
-//        return id;
         return counterpartyService.saveOrUpdateCounterparty(counterparty);
     }
 
@@ -62,12 +51,5 @@ public class CounterpartyController {
     public void deleteCounterparty(@PathVariable long companyId, @PathVariable long counterpartyId) {
 //         delete counterparty with companyId and counterpartyId
         counterpartyService.deleteCounterparty(counterpartyId);
-    }
-
-    private Counterparty createCounterparty(long id) {
-        Counterparty counterparty = new Counterparty();
-        counterparty.setId(id);
-        counterparty.setCounterpartyType(CounterpartyType.CONSIGNEE);
-        return counterparty;
     }
 }
