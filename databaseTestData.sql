@@ -15,7 +15,7 @@ INSERT INTO "user" (company_id, address_id, first_name, last_name, patronymic, b
 -- Зарегали компанию
 INSERT INTO company (name, size_type) values ('First Company', 'LARGE');
 -- одноверменно указали что создали
-INSERT INTO company_action (company_id, change, action_type) VALUES (1, current_timestamp, 'ENABLED');
+INSERT INTO company_action (company_id, change, action_type) VALUES (2, current_timestamp, 'ENABLED');
 -- одновременно создали админа компании
 INSERT INTO address (country, region, locality) VALUES ('Belarus', 'Minsk', 'Tolstogo str. 10');
 INSERT INTO "user" (company_id, address_id, first_name, last_name, patronymic, birth, email) VALUES (2, 2, 'Kaskin', 'Iliya', 'Ivanovich', '1987-10-17', 'testemail1@mail.ru');

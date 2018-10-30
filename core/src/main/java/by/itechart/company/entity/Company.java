@@ -31,4 +31,11 @@ public class Company extends BaseEntity {
     @OneToMany(mappedBy = "company")
     private List<User> users;
 
+    @OneToMany(mappedBy = "company")
+    private List<CompanyAction> companyActions;
+
+    public Company(Long id) {
+        super(id);
+    }
+
 }

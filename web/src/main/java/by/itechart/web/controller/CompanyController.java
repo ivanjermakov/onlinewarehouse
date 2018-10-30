@@ -1,6 +1,7 @@
 package by.itechart.web.controller;
 
-import by.itechart.company.entity.Company;
+import by.itechart.company.dto.CompanyDto;
+import by.itechart.company.dto.CreateCompanyDto;
 import by.itechart.company.enums.ActionType;
 import by.itechart.company.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,24 +23,31 @@ public class CompanyController {
     }
 
     @GetMapping
-    public List<Company> getCompanies(Pageable pageable) {
+    public List<CompanyDto> getCompanies(@RequestParam(required = false) Pageable pageable) {
         return companyService.getCompanies(pageable).getContent();
     }
 
+//    @GetMapping("/test")
+//    public CreateCompanyDto test(){
+//        CreateCompanyDto createCompanyDto = new CreateCompanyDto();
+//        createCompanyDto
+//        return
+//    }
+
     @PostMapping
-    public Long saveCompany(@RequestBody Company company) {
-        return companyService.saveOrUpdateUser(company);
+    public Long saveCompany(@RequestBody CreateCompanyDto createCompanyDto) {
+        return companyService.saveCompany(createCompanyDto);
     }
 
     @PatchMapping("/{id}/disable")
     @ResponseStatus(value = HttpStatus.OK)
     public void disableCompany(@PathVariable long id) {
-        companyService.changeActionType(id, ActionType.DISABLED);
+        companyService.newCompanyAction(id, ActionType.DISABLED);
     }
 
     @PatchMapping("/{id}/enable")
     @ResponseStatus(value = HttpStatus.OK)
     public void enableCompany(@PathVariable long id) {
-        companyService.changeActionType(id, ActionType.ENABLED);
+        companyService.newCompanyAction(id, ActionType.ENABLED);
     }
 }
