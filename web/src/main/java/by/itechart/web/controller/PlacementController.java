@@ -1,7 +1,11 @@
 package by.itechart.web.controller;
 
 import by.itechart.common.enums.PlacementType;
+import by.itechart.warehouse.dto.CreatePlacementDto;
+import by.itechart.warehouse.dto.PlacementDto;
 import by.itechart.warehouse.entity.Placement;
+import by.itechart.warehouse.service.PlacementService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -14,47 +18,41 @@ import java.util.Random;
 @RequestMapping("/companies/{companyId}/warehouses/{warehouseId}/placements")
 public class PlacementController {
 
+    private PlacementService placementService;
+
+    @Autowired
+    public PlacementController(PlacementService placementService) {
+        this.placementService = placementService;
+    }
+
     @GetMapping
-    public List<Placement> getPlacementList(@PathVariable long companyId, @PathVariable long warehouseId,
-                                            Pageable pageable) {
-        ArrayList<Placement> placements = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            placements.add(createPlacement());
-        }
-        return placements;
+    public List<PlacementDto> getPlacementList(@PathVariable long companyId, @PathVariable long warehouseId,
+                                               Pageable pageable) {
+        return placementService.getPlacements(companyId, warehouseId, pageable).getContent();
     }
 
     @PostMapping
-    public Long savePlacement(@PathVariable long companyId, @PathVariable long warehouseId,
-                              @RequestBody Placement placement) {
-        Long placementId = new Long(7);
-        return placementId;
+    public PlacementDto savePlacement(@PathVariable long companyId, @PathVariable long warehouseId,
+                              @RequestBody CreatePlacementDto placement) {
+        return placementService.savePlacement(placement, companyId, warehouseId);
     }
 
     @GetMapping("/{placementId}")
-    public Placement getPlacement(@PathVariable long companyId, @PathVariable long warehouseId,
+    public PlacementDto getPlacement(@PathVariable long companyId, @PathVariable long warehouseId,
                                   @PathVariable long placementId) {
-        Placement placement = createPlacement();
-        return placement;
+        return placementService.getPlacement(companyId, warehouseId, placementId);
     }
 
     @PutMapping("/{placementId}")
-    public Long editPlacement(@PathVariable long companyId, @PathVariable long warehouseId,
-                              @PathVariable long placementId, @RequestBody Placement placement) {
-        return placementId;
+    public PlacementDto editPlacement(@PathVariable long companyId, @PathVariable long warehouseId,
+                              @PathVariable long placementId, @RequestBody CreatePlacementDto placement) {
+        return placementService.editPlacement(placement, companyId, warehouseId, placementId);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("/{placementId}")
     public void deletePlacement(@PathVariable long companyId, @PathVariable long warehouseId,
                                 @PathVariable long placementId) {
-    }
-
-    private Placement createPlacement() {
-        Placement placement = new Placement();
-        placement.setPlacementType(PlacementType.values()[new Random().nextInt(4)]);
-        placement.setSize(new Random().nextInt(100));
-        placement.setStorageCost(new Random().nextInt(100));
-        return placement;
+        placementService.deletePlacement(placementId);
     }
 }

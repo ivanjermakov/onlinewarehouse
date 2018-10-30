@@ -16,7 +16,7 @@ export class CommodityLotService {
   getCommodityLots(filter: CommodityLotFilter, companyId: number): Observable<CommodityLotListDto> {
     const path: string = this.baseApi + companyId + '/commodity-lots';
     let data = {};
-    Object.assign(data, filter);
+    //Object.assign(data, filter);
     return this.http.get(path, {params: data});
   }
 

@@ -16,7 +16,7 @@ export class CarrierService {
   getCarriers(filter: CarrierFilter, companyId: number): Observable<CarrierListDto> {
     const path: string = this.baseApi + '/' + companyId + '/carriers';
     let data = {};
-    Object.assign(data, filter);
+    //Object.assign(data, filter);
     return this.http.get(path, {params: data});
   }
 
