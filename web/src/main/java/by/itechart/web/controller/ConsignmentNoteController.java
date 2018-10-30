@@ -1,5 +1,7 @@
 package by.itechart.web.controller;
 
+import by.itechart.consignmentnote.dto.ConsignmentNoteDto;
+import by.itechart.consignmentnote.dto.CreateConsignmentNoteDto;
 import by.itechart.consignmentnote.entity.ConsignmentNote;
 import by.itechart.consignmentnote.enums.ConsignmentNoteType;
 import by.itechart.consignmentnote.service.ConsignmentNoteService;
@@ -14,7 +16,6 @@ import java.util.List;
 @RequestMapping("/companies/{companyId}/consignment-notes")
 public class ConsignmentNoteController {
 
-    // TODO companyID (companyId what?)
     private ConsignmentNoteService consignmentNoteService;
 
     @Autowired
@@ -23,21 +24,22 @@ public class ConsignmentNoteController {
     }
 
     @GetMapping
-    public List<ConsignmentNote> getConsignmentNotes(@PathVariable long companyId,
+    public List<ConsignmentNoteDto> getConsignmentNotes(@PathVariable long companyId,
                                                      @RequestParam ConsignmentNoteType consignmentNoteType,
                                                      @RequestParam(value = "from", required = false) LocalDate from,
                                                      @RequestParam(value = "to", required = false) LocalDate to,
                                                      Pageable pageable) {
-        return consignmentNoteService.getConsignmentNotes(consignmentNoteType, pageable).getContent(); //TODO Date
+        return consignmentNoteService.getConsignmentNotes(companyId, consignmentNoteType, from, to, pageable).getContent();
     }
 
     @GetMapping("/{consignmentNoteId}")
-    public ConsignmentNote getConsignmentNote(@PathVariable long companyId, @PathVariable long consignmentNoteId) {
-        return consignmentNoteService.getConsignmentNote(consignmentNoteId);
+    public ConsignmentNoteDto getConsignmentNote(@PathVariable long companyId, @PathVariable long consignmentNoteId) {
+        return consignmentNoteService.getConsignmentNote(companyId, consignmentNoteId);
     }
 
     @PostMapping
-    public Long saveCompany(@PathVariable long companyId, @RequestBody ConsignmentNote consignmentNote) {
-        return consignmentNoteService.saveOrUpdateConsignmentNote(consignmentNote);
+    public ConsignmentNoteDto saveConsignmentNote(@PathVariable long companyId,
+                                                  @RequestBody CreateConsignmentNoteDto consignmentNote) {
+        return consignmentNoteService.saveConsignmentNote(consignmentNote, companyId);
     }
 }

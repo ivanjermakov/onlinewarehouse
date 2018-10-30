@@ -9,6 +9,7 @@ import {AppRoutingModule} from './app-routing.module';
 import {HomeComponent} from './home/home.component';
 import {UserComponent} from './user/user.component';
 import { PlacementComponent } from './placement/placement.component';
+import { ConsignmentNoteComponent } from './consignment-note/consignment-note.component';
 
 export const API_BASE_URL = 'http://localhost:8080';
 
@@ -18,7 +19,8 @@ export const API_BASE_URL = 'http://localhost:8080';
     ViewUsersComponent,
     HomeComponent,
     UserComponent,
-    PlacementComponent
+    PlacementComponent,
+    ConsignmentNoteComponent
   ],
   imports: [
     BrowserModule,

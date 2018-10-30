@@ -1,8 +1,8 @@
 package by.itechart.carrier.service;
 
 import by.itechart.carrier.dto.CarrierDto;
-import by.itechart.carrier.dto.CarrierListDto;
 import by.itechart.carrier.dto.CarrierFilter;
+import by.itechart.carrier.dto.CarrierListDto;
 import by.itechart.carrier.dto.CreateCarrierDto;
 import by.itechart.carrier.entity.Carrier;
 import by.itechart.carrier.repository.CarrierRepository;

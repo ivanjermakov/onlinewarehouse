@@ -6,7 +6,6 @@ import by.itechart.warehouse.entity.PlacementGoods;
 import by.itechart.warehouse.entity.Warehouse;
 import lombok.Data;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Data
