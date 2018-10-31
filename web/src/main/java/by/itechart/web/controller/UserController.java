@@ -1,7 +1,7 @@
 package by.itechart.web.controller;
 
 import by.itechart.common.entity.Address;
-import by.itechart.common.entity.user.User;
+import by.itechart.common.entity.User;
 import by.itechart.common.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
