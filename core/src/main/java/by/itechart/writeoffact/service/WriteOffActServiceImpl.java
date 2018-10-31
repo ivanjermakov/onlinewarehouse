@@ -1,5 +1,7 @@
 package by.itechart.writeoffact.service;
 
+import by.itechart.writeoffact.dto.CreateWriteOffActDto;
+import by.itechart.writeoffact.dto.WriteOffActDto;
 import by.itechart.writeoffact.entity.WriteOffAct;
 import by.itechart.writeoffact.enums.WriteOffActType;
 import by.itechart.writeoffact.repository.WriteOffActRepository;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 @Service
 public class WriteOffActServiceImpl implements WriteOffActService {
@@ -40,13 +43,21 @@ public class WriteOffActServiceImpl implements WriteOffActService {
 
     @Transactional
     @Override
-    public Long saveWriteOffAct(WriteOffAct writeOffAct) {
+    public Long saveWriteOffAct(CreateWriteOffActDto createWriteOffActDto) {
+        WriteOffAct writeOffAct = new WriteOffAct(null);
+        writeOffAct.setCompany(createWriteOffActDto.getCompany());
+        writeOffAct.setCreation(createWriteOffActDto.getCreation());
+        writeOffAct.setCreator(createWriteOffActDto.getCreator());
+        writeOffAct.setResponsiblePerson(createWriteOffActDto.getResponsiblePerson());
+        writeOffAct.setTotalAmount(createWriteOffActDto.getTotalAmount());
+
         return writeOffActRepository.save(writeOffAct).getId();
     }
 
     @Transactional(readOnly = true)
     @Override
-    public WriteOffAct getWriteOffAct(Long writeOffActId) {
-        return writeOffActRepository.findById(writeOffActId).orElse(null);
+    public WriteOffActDto getWriteOffAct(Long writeOffActId) {
+        Optional<WriteOffAct> byId = writeOffActRepository.findById(writeOffActId);
+        return byId.map(WriteOffActDto::new).orElse(null);
     }
 }

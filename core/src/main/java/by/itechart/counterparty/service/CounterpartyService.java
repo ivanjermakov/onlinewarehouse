@@ -1,17 +1,17 @@
 package by.itechart.counterparty.service;
 
-import by.itechart.counterparty.entity.Counterparty;
+import by.itechart.counterparty.dto.CounterpartyDto;
 import by.itechart.counterparty.enums.CounterpartyType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface CounterpartyService {
 
-    Page<Counterparty> getCounterparties(Long companyId, CounterpartyType counterpartyType, Pageable pageable);
+    Page<CounterpartyDto> getCounterparties(Long companyId, CounterpartyType counterpartyType, Pageable pageable);
 
-    Long saveOrUpdateCounterparty(Counterparty counterparty);
+    Long saveOrUpdateCounterparty(CounterpartyDto counterparty);
 
-    Counterparty getCounterparty(Long counterpartyId);
+    CounterpartyDto getCounterparty(Long counterpartyId);
 
     void deleteCounterparty(Long counterpartyId);
 }
