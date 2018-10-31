@@ -1,6 +1,7 @@
 package by.itechart.warehouse.service;
 
-import by.itechart.warehouse.QPlacement;
+
+import by.itechart.warehouse.entity.QPlacement;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 
