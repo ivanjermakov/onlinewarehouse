@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {API_BASE_URL} from "../../app.module";
 import {Observable} from "rxjs";
+import {map} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -13,14 +14,23 @@ export class CompanyService {
 
   private baseApi: string = API_BASE_URL + '/companies';
 
-  getAllCompanies(): Observable<CompanyDto> {
+  getAllCompanies(): Observable<CompanyDto[]> {
     const path: string = this.baseApi;
-    return this.http.get(path);
+    return this.http.get(path).pipe(
+      map((data: any[]) => data.map(item => new CompanyDto(
+        item.id,
+        item.name,
+        item.sizeType,
+        item.change,
+        item.actionType)))
+    );
   }
 
   saveCompany(companyId: number, createCompanyDto: CreateCompanyDto):Observable<number> {
     const path: string = this.baseApi;
-    return this.http.post(path, createCompanyDto);
+    return this.http.post(path, createCompanyDto).pipe(
+      map((data: number) => data)
+    );
   }
 
   setCompanyDisabled(companyId: number): void {

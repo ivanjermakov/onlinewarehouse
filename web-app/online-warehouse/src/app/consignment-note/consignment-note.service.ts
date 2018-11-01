@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {API_BASE_URL} from "../../app.module";
+import {API_BASE_URL} from "../app.module";
 import {Observable} from "rxjs";
 import {Pageable} from "../shared/pagination/pageable";
 import HttpParamsBuilder from "../shared/http/http-params-builder";
