@@ -1,0 +1,22 @@
+<div *ngIf="goodsList === undefined" class="loader"></div>
+<table *ngIf="goodsList !== undefined" class="table table-shadow">
+  <tr>
+    <th>Name</th>
+    <th>Placement Type</th>
+    <th>Measurement Unit</th>
+    <th>Cost</th>
+    <th>Weight</th>
+    <th>Labelling</th>
+    <th>Description</th>
+  </tr>
+  <tr *ngFor="let goods of goodsList" (click)="clickOnGoods(goods)">
+    <td>{{goods.name}}</td>
+    <td>{{goods.placementType}}</td>
+    <td>{{goods.measurementUnit}}</td>
+    <td>{{goods.cost}}</td>
+    <td>{{goods.weight}}</td>
+    <td>{{goods.labelling}}</td>
+    <td>{{goods.description}}</td>
+  </tr>
+</table>
+

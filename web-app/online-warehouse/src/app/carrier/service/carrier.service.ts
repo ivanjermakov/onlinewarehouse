@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {API_BASE_URL} from "../../app.module";
 import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
+import {API_BASE_URL} from "../../base-server-url";
 
 @Injectable({
   providedIn: 'root'

@@ -1,10 +1,9 @@
-class CreateCompanyDto {
-  name: string;
-  sizeType: string;
+import {CompanySizeEnum} from "./enum/company-size.enum";
 
-
-  constructor(name: string, sizeType: string) {
-    this.name = name;
-    this.sizeType = sizeType;
+export class CreateCompanyDto {
+  constructor(
+    public name: string,
+    public sizeType: CompanySizeEnum
+  ) {
   }
 }

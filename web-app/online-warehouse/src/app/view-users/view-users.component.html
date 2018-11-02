@@ -1,4 +1,5 @@
-<table class="table table-bordered">
+<div *ngIf="users === undefined" class="loader"></div>
+<table *ngIf="users !== undefined" class="table table-shadow">
   <tr>
     <th>Name</th>
     <th>Address</th>
@@ -7,7 +8,7 @@
     <th>Roles</th>
     <th>View</th>
   </tr>
-  <tr *ngFor="let user of users; let i = index">
+  <tr *ngFor="let user of users">
     <td>{{user.firstName}} {{user.lastName}}</td>
     <td>{{user.address.country}} {{user.address.locality}} {{user.address.region}}</td>
     <td>{{user.email}}</td>

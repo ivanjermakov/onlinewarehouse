@@ -1,8 +1,10 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {API_BASE_URL} from "../../app.module";
 import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
+import {CompanyDto} from "../dto/company.dto";
+import {CreateCompanyDto} from "../dto/create-company.dto";
+import {API_BASE_URL} from "../../base-server-url";
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +18,7 @@ export class CompanyService {
 
   getAllCompanies(): Observable<CompanyDto[]> {
     const path: string = this.baseApi;
-    return this.http.get(path).pipe(
+    return this.http.get(path, {params: {page: '0', size: '20'}}).pipe(
       map((data: any[]) => data.map(item => new CompanyDto(
         item.id,
         item.name,
@@ -26,7 +28,7 @@ export class CompanyService {
     );
   }
 
-  saveCompany(companyId: number, createCompanyDto: CreateCompanyDto):Observable<number> {
+  saveCompany(createCompanyDto: CreateCompanyDto):Observable<number> {
     const path: string = this.baseApi;
     return this.http.post(path, createCompanyDto).pipe(
       map((data: number) => data)
@@ -34,13 +36,13 @@ export class CompanyService {
   }
 
   setCompanyDisabled(companyId: number): void {
-    const path: string = this.baseApi + companyId + '/disable';
-    this.http.get(path);
+    const path: string = this.baseApi + '/' + companyId + '/disable';
+    this.http.patch(path, null).subscribe();
   }
 
   setCompanyEnabled(companyId: number): void {
-    const path: string = this.baseApi + companyId + '/enable';
-    this.http.get(path);
+    const path: string = this.baseApi + '/' + companyId + '/enable';
+    this.http.patch(path, null).subscribe();
   }
 
 }

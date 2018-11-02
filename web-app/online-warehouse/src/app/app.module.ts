@@ -8,10 +8,12 @@ import {ViewUsersComponent} from './view-users/view-users.component';
 import {AppRoutingModule} from './app-routing.module';
 import {HomeComponent} from './home/home.component';
 import {UserComponent} from './user/user.component';
-import { PlacementComponent } from './placement/placement.component';
-import { ConsignmentNoteComponent } from './consignment-note/consignment-note.component';
+import {PlacementComponent} from './placement/placement.component';
+import {ConsignmentNoteComponent} from './consignment-note/consignment-note.component';
+import {CompanyListComponent} from './company/company-list/company-list.component';
+import {CreateCompanyComponent} from './company/create-company/create-company.component';
+import {GoodsListComponent} from "./shared/goods/goods-list/goods-list.component";
 
-export const API_BASE_URL = 'http://localhost:8080';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,10 @@ export const API_BASE_URL = 'http://localhost:8080';
     HomeComponent,
     UserComponent,
     PlacementComponent,
-    ConsignmentNoteComponent
+    ConsignmentNoteComponent,
+    CompanyListComponent,
+    CreateCompanyComponent,
+    GoodsListComponent
   ],
   imports: [
     BrowserModule,
@@ -29,7 +34,6 @@ export const API_BASE_URL = 'http://localhost:8080';
     AppRoutingModule,
     HttpClientModule
   ],
-  providers: [{provide: API_BASE_URL, useValue: 'localhost:8080'}],
   bootstrap: [AppComponent]
 })
 export class AppModule {

@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {API_BASE_URL} from './app.module';
+import {HttpClient} from "@angular/common/http";
+import {API_BASE_URL} from "./base-server-url";
+
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +10,7 @@ export class UserService {
 
   constructor(private _http: HttpClient) {
   }
+
   baseApi = API_BASE_URL + '/companies/';
 
   getAllUsers(companyId) {

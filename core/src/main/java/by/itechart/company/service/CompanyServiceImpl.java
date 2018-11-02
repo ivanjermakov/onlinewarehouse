@@ -38,6 +38,7 @@ public class CompanyServiceImpl implements CompanyService {
         Page<Company> all = companyRepository.findAll(pageable);
         List<CompanyDto> companyDtoList = all.getContent().stream().filter(company -> !company.getId().equals(1L)).map(company -> {
             CompanyDto companyDto = new CompanyDto();
+            companyDto.setId(company.getId());
             companyDto.setName(company.getName());
             companyDto.setSizeType(company.getSizeType());
             CompanyAction lastCompanyAction = company.getCompanyActions().get(company.getCompanyActions().size() - 1); // may work not correctly, because sequence may be incorrect(or not?)

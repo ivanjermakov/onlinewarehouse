@@ -19,27 +19,97 @@ export class AppComponent {
             'url': ''
           },
           {
-            'name': 'viewUsers',
+            'name': 'Посмотреть все компании',
+            'url': '/list-companies'
+          },
+          {
+            'name': 'Создать компанию',
+            'url': '/create-company'
+          },
+          {
+            'name': 'Test',
+            'url': '/test'
+          }
+        ]
+      },
+      {
+        'name': 'company admin',
+        'actions': [
+          {
+            'name': 'Посмотреть пользователей',
             'url': '/view-users'
           },
           {
-            'name': 'createUser',
+            'name': 'Создать пользователя',
             'url': '/user'
           }
         ]
       },
       {
-        'name': 'user',
+        'name': 'warehouse owner',
         'actions': [
           {
-            'name': 'Home',
+            'name': 'Отчет прибыли',
             'url': ''
           },
           {
-            'name': 'viewUsers',
-            'url': '/view-users'
+            'name': 'Отчет краж',
+            'url': ''
+          },
+          {
+            'name': 'Еще какой-то отчет',
+            'url': ''
           }
+        ]
+      },
+      {
+        'name': 'dispatcher',
+        'actions': [
+          {
+            'name': 'Зарегистрировать ТТН',
+            'url': ''
+          },
+          // {
+          //   'name': 'viewUsers',
+          //   'url': '/view-users'
+          // }
           // ,
+          // {
+          //   'name': 'name3',
+          //   'url': 'componentName3'
+          // }
+        ]
+      },
+      {
+        'name': 'manager',
+        'actions': [
+          {
+            'name': 'Создать ТТН',
+            'url': ''
+          },
+          {
+            'name': 'Товарные партии к размещению',
+            'url': ''
+          }
+          ,
+          // {
+          //   'name': 'name3',
+          //   'url': 'componentName3'
+          // }
+        ]
+      },
+      {
+        'name': 'inspector',
+        'actions': [
+          {
+            'name': 'Зарегестрированные ТТН',
+            'url': ''
+          },
+          {
+            'name': 'Создать акт',
+            'url': ''
+          }
+          ,
           // {
           //   'name': 'name3',
           //   'url': 'componentName3'

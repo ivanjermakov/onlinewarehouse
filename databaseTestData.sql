@@ -4,6 +4,7 @@ INSERT INTO company (name, size_type) values ('Online warehouse Company', 'SMALL
 -- Добавляем роли, должно быть в скрипте базы
 INSERT INTO role (role) VALUES ('ADMIN');
 INSERT INTO role (role) VALUES ('COMPANY_ADMIN');
+INSERT INTO role (role) VALUES ('WAREHOUSE_OWNER');
 INSERT INTO role (role) VALUES ('DISPATCHER');
 INSERT INTO role (role) VALUES ('MANAGER');
 INSERT INTO role (role) VALUES ('INSPECTOR');

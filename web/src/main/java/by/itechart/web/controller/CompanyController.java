@@ -23,7 +23,7 @@ public class CompanyController {
     }
 
     @GetMapping
-    public List<CompanyDto> getCompanies(@RequestParam(required = false) Pageable pageable) {
+    public List<CompanyDto> getCompanies(Pageable pageable) {
         return companyService.getCompanies(pageable).getContent();
     }
 

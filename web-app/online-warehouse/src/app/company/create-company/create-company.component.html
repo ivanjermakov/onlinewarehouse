@@ -1,0 +1,16 @@
+<form [formGroup]="createCompanyForm"
+      (ngSubmit)="onSubmit(createCompanyForm)">
+
+  <label>Company name:
+    <input type="text" [formControl]="createCompanyForm.controls['name']" class="input input-border">
+  </label>
+  <br>
+  <label>Company size:
+    <select name="sizeType"
+            [formControl]="createCompanyForm.controls['sizeType']">
+      <option *ngFor="let type of getSizeTypes()" [value]="type">{{type}}</option>
+    </select>
+  </label>
+  <br>
+  <button type="submit">Purchase</button>
+</form>

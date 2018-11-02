@@ -1,0 +1,22 @@
+<div *ngIf="companyList === undefined" class="loader"></div>
+<table *ngIf="companyList !== undefined" class="table table-shadow">
+  <tr>
+    <th>Id</th>
+    <th>Name</th>
+    <th>Size</th>
+    <th>Current status</th>
+    <th>Updated</th>
+    <th>Change status</th>
+  </tr>
+  <tr *ngFor="let company of companyList">
+    <td>{{company.id}}</td>
+    <td>{{company.name}}</td>
+    <td>{{company.sizeType}}</td>
+    <td>{{company.actionType}}</td>
+    <td>{{company.change}}</td>
+    <td *ngIf="company.actionType === actionType.ENABLED" (click)="disableCompany(company.id)">Disable</td>
+    <td *ngIf="company.actionType === actionType.DISABLED" (click)="enableCompany(company.id)">Enable</td>
+  </tr>
+</table>
+
+
