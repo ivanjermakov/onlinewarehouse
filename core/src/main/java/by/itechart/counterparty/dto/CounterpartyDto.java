@@ -1,6 +1,7 @@
 package by.itechart.counterparty.dto;
 
 import by.itechart.common.entity.Address;
+import by.itechart.company.dto.CompanyDto;
 import by.itechart.company.entity.Company;
 import by.itechart.counterparty.entity.Counterparty;
 import by.itechart.counterparty.enums.CounterpartyType;
@@ -11,7 +12,7 @@ public class CounterpartyDto {
 
     private Long id;
     private Address address;
-    private Company company;
+    private CompanyDto company;
     private String name;
     private CounterpartyType counterpartyType;
     private String taxNumber;
@@ -19,7 +20,7 @@ public class CounterpartyDto {
     public CounterpartyDto(Counterparty counterparty) {
         id = counterparty.getId();
         address = counterparty.getAddress();
-        company = counterparty.getCompany();
+        company = new CompanyDto(counterparty.getCompany());
         name = counterparty.getName();
         counterpartyType = counterparty.getCounterpartyType();
         taxNumber = counterparty.getTaxNumber();
@@ -30,7 +31,7 @@ public class CounterpartyDto {
 
         counterparty.setId(id);
         counterparty.setAddress(address);
-        counterparty.setCompany(company);
+        counterparty.setCompany(new Company(company));
         counterparty.setName(name);
         counterparty.setCounterpartyType(counterpartyType);
         setTaxNumber(taxNumber);
