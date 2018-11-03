@@ -30,4 +30,5 @@ public class CompanyDto {
         name = company.getName();
         sizeType = company.getSizeType();
     }
+
 }

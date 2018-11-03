@@ -1,5 +1,6 @@
 package by.itechart.writeoffact.service;
 
+import by.itechart.company.entity.Company;
 import by.itechart.writeoffact.dto.CreateWriteOffActDto;
 import by.itechart.writeoffact.dto.WriteOffActDto;
 import by.itechart.writeoffact.entity.WriteOffAct;
@@ -45,7 +46,7 @@ public class WriteOffActServiceImpl implements WriteOffActService {
     @Override
     public Long saveWriteOffAct(CreateWriteOffActDto createWriteOffActDto) {
         WriteOffAct writeOffAct = new WriteOffAct(null);
-        writeOffAct.setCompany(createWriteOffActDto.getCompany());
+        writeOffAct.setCompany(new Company(createWriteOffActDto.getCompany()));
         writeOffAct.setCreation(createWriteOffActDto.getCreation());
         writeOffAct.setCreator(createWriteOffActDto.getCreator());
         writeOffAct.setResponsiblePerson(createWriteOffActDto.getResponsiblePerson());
