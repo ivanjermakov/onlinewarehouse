@@ -1,7 +1,8 @@
 package by.itechart.web.controller;
 
 import by.itechart.writeoffact.dto.CreateWriteOffActDto;
-import by.itechart.writeoffact.dto.WriteOffActDto;
+import by.itechart.writeoffact.dto.WriteOffActFilter;
+import by.itechart.writeoffact.dto.WriteOffActListDto;
 import by.itechart.writeoffact.entity.WriteOffAct;
 import by.itechart.writeoffact.enums.WriteOffActType;
 import by.itechart.writeoffact.service.WriteOffActService;
@@ -25,21 +26,19 @@ public class WriteOffActController {
     }
 
     @GetMapping
-    public List<WriteOffAct> getWriteOffActs(@PathVariable long companyId,
-                                             @RequestParam WriteOffActType writeOffActType,
-                                             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,
-                                             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to,
-                                             @RequestParam(required = false) Pageable pageable) {
-        return writeOffActService.getWriteOffActs(companyId, pageable, writeOffActType, from, to).getContent();
+    public List<WriteOffActListDto> getWriteOffActs(@PathVariable long companyId,
+                                                    WriteOffActFilter filter,
+                                                    Pageable pageable) {
+        return writeOffActService.getWriteOffActs(companyId, pageable, filter).getContent();
     }
 
     @GetMapping("/{writeOffActId}")
-    public WriteOffActDto getWriteOffAct(@PathVariable long companyId, @PathVariable long writeOffActId) {
+    public WriteOffActListDto getWriteOffAct(@PathVariable long companyId, @PathVariable long writeOffActId) {
         return writeOffActService.getWriteOffAct(writeOffActId);
     }
 
     @PostMapping
-    public Long saveWriteOffAct(@PathVariable long companyId, @RequestBody CreateWriteOffActDto writeOffAct) {
-        return writeOffActService.saveWriteOffAct(writeOffAct);
+    public Long saveWriteOffAct(@PathVariable long companyId, @RequestBody CreateWriteOffActDto createWriteOffActDto) {
+        return writeOffActService.saveWriteOffAct(createWriteOffActDto, companyId);
     }
 }

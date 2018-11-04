@@ -1,19 +1,15 @@
 package by.itechart.writeoffact.dto;
 
-import by.itechart.common.entity.User;
-import by.itechart.company.entity.Company;
 import by.itechart.writeoffact.enums.WriteOffActType;
 import lombok.Data;
 
-import java.time.LocalDate;
+import java.util.List;
 
 @Data
 public class CreateWriteOffActDto {
 
-    private Company company;
-    private LocalDate creation;
-    private User creator;
+    private Long creatorId;
     private String responsiblePerson;
-    private Integer totalAmount;
     private WriteOffActType writeOffActType;
+    private List<WriteOffActGoodsDto> writeOffActGoodsDtoList;
 }

@@ -1,3 +1,5 @@
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
 /*WHOLEPAGE*/
 * {
   font-size: 20px;
@@ -161,6 +163,11 @@ body {
   height: 120px;
   -webkit-animation: spin 2s linear infinite; /* Safari */
   animation: spin 2s linear infinite;
+}
+
+.loader-container {
+  width: 159px;
+  height: 159px;
 }
 
 /* Safari */

@@ -1,0 +1,21 @@
+<div *ngIf="writeOffActList === undefined" class="loader"></div>
+<table *ngIf="writeOffActList !== undefined" class="table table-shadow">
+  <tr>
+    <th>Id</th>
+    <th>Creation</th>
+    <th>Creator Id</th>
+    <th>Responsible Person</th>
+    <th>Total Amount</th>
+    <th>Type</th>
+  </tr>
+  <tr *ngFor="let writeOffAct of writeOffActList">
+    <td>{{writeOffAct.id}}</td>
+    <td>{{writeOffAct.creation}}</td>
+    <td>{{writeOffAct.creatorId}}</td>
+    <td>{{writeOffAct.responsiblePerson}}</td>
+    <td>{{writeOffAct.totalAmount}}</td>
+    <td>{{writeOffAct.writeOffActType}}</td>
+  </tr>
+</table>
+
+

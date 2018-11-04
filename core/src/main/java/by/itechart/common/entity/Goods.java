@@ -53,4 +53,7 @@ public class Goods extends BaseEntity {
     @Column(name = "deleted")
     private LocalDate deleted;
 
+    public Goods(Long id) {
+        super(id);
+    }
 }

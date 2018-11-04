@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {GoodService} from "../good.service";
 import {GoodsDto} from "../goods.dto";
 
@@ -9,19 +9,20 @@ import {GoodsDto} from "../goods.dto";
 })
 export class GoodsListComponent implements OnInit {
 
+  @Output() goodsSelected: EventEmitter<GoodsDto> = new EventEmitter();
   goodsList: Array<GoodsDto>;
 
   constructor(private goodsService: GoodService) {
   }
 
   ngOnInit() {
-    this.goodsService.getAllCompanies(2).subscribe((goodsList: GoodsDto[]) => {
+    this.goodsService.getAllGoods(2).subscribe((goodsList: GoodsDto[]) => {
       this.goodsList = goodsList;
     })
   }
 
   clickOnGoods(goods: GoodsDto) {
-    console.log(goods);
+    this.goodsSelected.emit(goods);
   }
 
 }

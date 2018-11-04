@@ -1,0 +1,37 @@
+<form [formGroup]="createWriteOffActForm">
+
+  <label>Responsible person:
+    <input type="text" [formControl]="createWriteOffActForm.controls['responsiblePerson']" class="input input-border">
+  </label>
+  <br>
+  <label>Type:
+    <select name="writeOffActType"
+            [formControl]="createWriteOffActForm.controls['writeOffActType']" class="select input-border">
+      <option *ngFor="let type of getWriteOffActsTypes()" [value]="type">{{type}}</option>
+    </select>
+  </label>
+  <br>
+  <br>
+  <table *ngIf="goodsDtoList.length > 0" formArrayName="writeOffActGoodsDtoList">
+    <tr *ngFor="let goods of goodsDtoList; let i = index">
+      <td>{{goods.name}}</td>
+      <td>{{goods.placementType}}</td>
+      <td>{{goods.measurementUnit}}</td>
+      <td>{{goods.cost}}</td>
+      <td formGroupName="{{i}}" style="display: flex; justify-content: space-between">
+        <input type="hidden" formControlName="goodsId">
+        <select name="writeOffType"
+                formControlName="writeOffType" class="select input-border">
+          <option *ngFor="let type of getWriteOffTypes()" [value]="type">{{type}}</option>
+        </select>
+        <input type="number" formControlName="amount" class="select input-border">
+      </td>
+    </tr>
+  </table>
+  <br>
+</form>
+<button class="button button-cyan" (click)="openModal()">Add goods</button>
+<button class="button button-cyan" (click)="onSubmit(createWriteOffActForm)">Purchase</button>
+<!--<div>-->
+<!--<app-goods-list (goodsSelected)="addGoods($event)"></app-goods-list>-->
+<!--</div>-->

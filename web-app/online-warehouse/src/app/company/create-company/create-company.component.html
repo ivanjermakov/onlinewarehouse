@@ -7,10 +7,11 @@
   <br>
   <label>Company size:
     <select name="sizeType"
-            [formControl]="createCompanyForm.controls['sizeType']">
+            [formControl]="createCompanyForm.controls['sizeType']" class="select input-border">
       <option *ngFor="let type of getSizeTypes()" [value]="type">{{type}}</option>
     </select>
   </label>
   <br>
-  <button type="submit">Purchase</button>
+  <br>
+  <button type="submit" class="button button-cyan">Purchase</button>
 </form>

@@ -1,63 +1,76 @@
 package by.itechart.writeoffact.service;
 
+import by.itechart.common.service.GoodsService;
+import by.itechart.common.utils.ObjectMapperUtils;
+import by.itechart.company.entity.Company;
 import by.itechart.writeoffact.dto.CreateWriteOffActDto;
-import by.itechart.writeoffact.dto.WriteOffActDto;
+import by.itechart.writeoffact.dto.WriteOffActFilter;
+import by.itechart.writeoffact.dto.WriteOffActListDto;
 import by.itechart.writeoffact.entity.WriteOffAct;
-import by.itechart.writeoffact.enums.WriteOffActType;
+import by.itechart.writeoffact.entity.WriteOffActGoods;
+import by.itechart.writeoffact.repository.WriteOffActGoodsRepository;
 import by.itechart.writeoffact.repository.WriteOffActRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.Optional;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class WriteOffActServiceImpl implements WriteOffActService {
 
     private final WriteOffActRepository writeOffActRepository;
+    private final WriteOffActGoodsRepository writeOffActGoodsRepository;
+    private final GoodsService goodsService;
 
     @Autowired
-    public WriteOffActServiceImpl(WriteOffActRepository writeOffActRepository) {
+    public WriteOffActServiceImpl(WriteOffActRepository writeOffActRepository, WriteOffActGoodsRepository writeOffActGoodsRepository, GoodsService goodsService) {
         this.writeOffActRepository = writeOffActRepository;
+        this.writeOffActGoodsRepository = writeOffActGoodsRepository;
+        this.goodsService = goodsService;
     }
 
     @Transactional(readOnly = true)
     @Override
-    public Page<WriteOffAct> getWriteOffActs(Long companyId, Pageable pageable, WriteOffActType writeOffActType, LocalDate from, LocalDate to) {
-        if (from == null && to == null) {
-            return writeOffActRepository.findAllByCompany_IdAndWriteOffActType(companyId, writeOffActType, pageable);
-        }
-        if (from != null && to != null) {
-            return writeOffActRepository.findAllByCompany_IdAndWriteOffActTypeAndCreationBetween(companyId, writeOffActType, from, to, pageable);
-        } else {
-            if (from != null) {
-                return writeOffActRepository.findAllByCompany_IdAndWriteOffActTypeAndCreationAfter(companyId, writeOffActType, from, pageable);
-            } else {
-                return writeOffActRepository.findAllByCompany_IdAndWriteOffActTypeAndCreationBefore(companyId, writeOffActType, to, pageable);
-            }
-        }
+    public Page<WriteOffActListDto> getWriteOffActs(Long companyId, Pageable pageable, WriteOffActFilter writeOffActFilter) {
+        Page<WriteOffAct> writeOffActList =
+                writeOffActRepository.findAll(WriteOffActsPredicates.findByWriteOffActFilter(writeOffActFilter, companyId), pageable);
+        List<WriteOffActListDto> writeOffActListDto = ObjectMapperUtils.mapAll(writeOffActList.getContent(), WriteOffActListDto.class);
+        return new PageImpl<>(writeOffActListDto, pageable, writeOffActList.getTotalElements());
     }
 
     @Transactional
     @Override
-    public Long saveWriteOffAct(CreateWriteOffActDto createWriteOffActDto) {
-        WriteOffAct writeOffAct = new WriteOffAct(null);
-        writeOffAct.setCompany(createWriteOffActDto.getCompany());
-        writeOffAct.setCreation(createWriteOffActDto.getCreation());
-        writeOffAct.setCreator(createWriteOffActDto.getCreator());
-        writeOffAct.setResponsiblePerson(createWriteOffActDto.getResponsiblePerson());
-        writeOffAct.setTotalAmount(createWriteOffActDto.getTotalAmount());
-
-        return writeOffActRepository.save(writeOffAct).getId();
+    public Long saveWriteOffAct(CreateWriteOffActDto createWriteOffActDto, Long companyId) {
+        WriteOffAct writeOffAct = ObjectMapperUtils.map(createWriteOffActDto, WriteOffAct.class);
+        writeOffAct.setCompany(new Company(companyId));
+        writeOffAct.setId(null);
+        writeOffAct.setCreation(LocalDate.now());
+        Integer amount = createWriteOffActDto.getWriteOffActGoodsDtoList()
+                .stream()
+                .map(dto -> goodsService.getCost(dto.getGoodsId(), dto.getAmount()))//TODO: so many queries to database, should do it in one query
+                .reduce((result, cost) -> result + cost).orElse(0);
+        writeOffAct.setTotalAmount(amount);
+        Long id = writeOffActRepository.save(writeOffAct).getId();
+        List<WriteOffActGoods> writeOffActGoodsList = createWriteOffActDto.getWriteOffActGoodsDtoList().stream().map(dto -> {
+            WriteOffActGoods writeOffActGoods = ObjectMapperUtils.map(dto, WriteOffActGoods.class);
+            writeOffActGoods.setId(null);
+            writeOffActGoods.setWriteOffAct(new WriteOffAct(id));
+            return writeOffActGoods;
+        }).collect(Collectors.toList());
+        writeOffActGoodsRepository.saveAll(writeOffActGoodsList);
+        return id;
     }
 
     @Transactional(readOnly = true)
     @Override
-    public WriteOffActDto getWriteOffAct(Long writeOffActId) {
-        Optional<WriteOffAct> byId = writeOffActRepository.findById(writeOffActId);
-        return byId.map(WriteOffActDto::new).orElse(null);
+    public WriteOffActListDto getWriteOffAct(Long writeOffActId) {
+        //TODO: method
+        return null;
     }
 }

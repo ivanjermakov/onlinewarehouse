@@ -26,8 +26,7 @@ export class CreateCompanyComponent implements OnInit {
   }
 
   getSizeTypes(): Array<string> {
-    let keys = Object.keys(this.sizeTypes);
-    return keys.slice(keys.length / 2);
+    return Object.keys(this.sizeTypes);
   }
 
   onSubmit(createCompanyForm: FormGroup): void {
