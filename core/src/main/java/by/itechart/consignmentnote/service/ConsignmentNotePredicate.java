@@ -7,7 +7,8 @@ import com.querydsl.core.types.Predicate;
 
 import java.time.LocalDate;
 
-public class ConsignmentNotePedicate {
+public class ConsignmentNotePredicate {
+
     static Predicate findFilter(long companyId, ConsignmentNoteType consignmentNoteType,
                                 LocalDate from, LocalDate to) {
         BooleanBuilder predicate = new BooleanBuilder();

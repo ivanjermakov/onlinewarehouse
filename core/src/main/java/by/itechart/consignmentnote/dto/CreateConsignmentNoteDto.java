@@ -11,6 +11,7 @@ import java.time.LocalDate;
 
 @Data
 public class CreateConsignmentNoteDto {
+
     private Company company;
     private String number;
     private LocalDate shipment;

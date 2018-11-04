@@ -11,6 +11,7 @@ import java.time.LocalDate;
 
 @Data
 public class CommodityLotListDto {
+
     private Long id;
     private String counterpartyName;
     @JsonSerialize(using = LocalDateSerializer.class)

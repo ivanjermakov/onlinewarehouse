@@ -27,9 +27,9 @@ public class ConsignmentNoteServiceImpl implements ConsignmentNoteService {
     @Override
     @Transactional(readOnly = true)
     public Page<ConsignmentNoteDto> getConsignmentNotes(long companyId, ConsignmentNoteType consignmentNoteType,
-                                                     LocalDate from, LocalDate to, Pageable pageable) {
+                                                        LocalDate from, LocalDate to, Pageable pageable) {
         Page<ConsignmentNote> consignmentNotes = consignmentNoteRepository
-                .findAll(ConsignmentNotePedicate.findFilter(companyId, consignmentNoteType, from, to), pageable);
+                .findAll(ConsignmentNotePredicate.findFilter(companyId, consignmentNoteType, from, to), pageable);
         return consignmentNotes.map(consignmentNote -> ObjectMapperUtils.map(consignmentNote, ConsignmentNoteDto.class));
     }
 

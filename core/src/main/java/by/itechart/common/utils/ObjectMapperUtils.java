@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ObjectMapperUtils {
+
     private static ModelMapper modelMapper = new ModelMapper();
 
     private ObjectMapperUtils() {

@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 
 public interface PlacementRepository extends JpaRepository<Placement, Long>, QuerydslPredicateExecutor<Placement> {
+
     Placement findPlacementById(long id);
 
     @Modifying

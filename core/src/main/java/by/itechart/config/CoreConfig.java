@@ -6,4 +6,5 @@ import org.springframework.context.annotation.Import;
 @Configuration
 @Import({PersistenceConfig.class, ServiceConfig.class})
 public class CoreConfig {
+
 }

@@ -5,6 +5,7 @@ import lombok.Data;
 
 @Data
 public class CarrierFilter {
+
     private String name;
     private String taxNumber;
     private CarrierType carrierType;

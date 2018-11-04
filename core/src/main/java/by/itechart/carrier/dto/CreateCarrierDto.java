@@ -5,6 +5,7 @@ import lombok.Data;
 
 @Data
 public class CreateCarrierDto {
+
     private String addressCountry;
     private String addressRegion;
     private String addressLocality;
