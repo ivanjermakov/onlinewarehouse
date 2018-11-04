@@ -1,19 +1,16 @@
 package by.itechart.writeoffact.service;
 
 import by.itechart.writeoffact.dto.CreateWriteOffActDto;
-import by.itechart.writeoffact.dto.WriteOffActDto;
-import by.itechart.writeoffact.entity.WriteOffAct;
-import by.itechart.writeoffact.enums.WriteOffActType;
+import by.itechart.writeoffact.dto.WriteOffActListDto;
+import by.itechart.writeoffact.dto.WriteOffActFilter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.time.LocalDate;
-
 public interface WriteOffActService {
 
-    Page<WriteOffAct> getWriteOffActs(Long companyId, Pageable pageable, WriteOffActType writeOffActType, LocalDate from, LocalDate to);
+    Page<WriteOffActListDto> getWriteOffActs(Long companyId, Pageable pageable, WriteOffActFilter writeOffActFilter);
 
-    Long saveWriteOffAct(CreateWriteOffActDto writeOffAct);
+    Long saveWriteOffAct(CreateWriteOffActDto writeOffAct, Long companyId);
 
-    WriteOffActDto getWriteOffAct(Long writeOffActId);
+    WriteOffActListDto getWriteOffAct(Long writeOffActId);
 }

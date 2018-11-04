@@ -8,4 +8,8 @@ public interface GoodsService {
 
     Page<GoodsDto> getGoods(Pageable pageable, Long companyId);
 
+    void createGoods(GoodsDto goodsDto, Long companyId);
+
+    Integer getCost(Long goodsId, Integer amount);
+
 }

@@ -16,7 +16,7 @@ export class GoodService {
   constructor(private http: HttpClient) {
   }
 
-  getAllCompanies(companyId: number): Observable<GoodsDto[]> {
+  getAllGoods(companyId: number): Observable<GoodsDto[]> {
     const path: string = this.baseApi + '/' + companyId + '/goods';
     return this.http.get(path, {params: {page: '0', size: '20'}}).pipe(
       map((data: any[]) => data.map(item => new GoodsDto(

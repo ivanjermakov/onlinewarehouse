@@ -107,9 +107,13 @@ export class AppComponent {
           },
           {
             'name': 'Создать акт',
-            'url': ''
+            'url': 'create-write-off-act'
           }
-          ,
+          , {
+            'name': 'Список актов',
+            'url': 'list-write-off-acts'
+          }
+
           // {
           //   'name': 'name3',
           //   'url': 'componentName3'

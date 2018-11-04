@@ -30,4 +30,19 @@ public class GoodsServiceImpl implements GoodsService {
         List<GoodsDto> goodsDtoList = ObjectMapperUtils.mapAll(goodsPage.getContent(), GoodsDto.class);
         return new PageImpl<>(goodsDtoList, pageable, goodsPage.getTotalElements());
     }
+
+    @Transactional
+    @Override
+    public void createGoods(GoodsDto goodsDto, Long companyId) {
+        Goods goods = ObjectMapperUtils.map(goodsDto, Goods.class);
+        goodsRepository.save(goods);
+
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public Integer getCost(Long goodsId, Integer amount) {
+        Integer costById = goodsRepository.getCostById(goodsId);
+        return costById * amount;
+    }
 }
