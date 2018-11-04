@@ -6,6 +6,7 @@ import lombok.Data;
 
 @Data
 public class GoodsDto {
+
     private Long id;
     private String name;
     private PlacementType placementType;

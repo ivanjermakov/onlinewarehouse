@@ -10,6 +10,7 @@ import java.util.List;
 
 @Data
 public class CreatePlacementDto {
+
     private Warehouse warehouse;
     private Integer size;
     private PlacementType placementType;

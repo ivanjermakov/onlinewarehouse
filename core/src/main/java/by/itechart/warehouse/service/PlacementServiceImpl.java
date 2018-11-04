@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class PlacementServiceImpl implements PlacementService {
+
     private PlacementRepository placementRepository;
 
     @Autowired

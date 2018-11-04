@@ -12,6 +12,7 @@ import java.util.List;
 
 @Data
 public class CommodityLotDto {
+
     private Long id;
     private Long counterpartyId;
     private CommodityLotType commodityLotType;

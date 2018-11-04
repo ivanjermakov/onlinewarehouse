@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface PlacementService {
+
     Page<PlacementDto> getPlacements(long companyId, long warehouseId, Pageable pageable);
 
     PlacementDto savePlacement(CreatePlacementDto placementDto, long companyId, long warehouseId);

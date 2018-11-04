@@ -5,6 +5,7 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 
 final class GoodsPredicates {
+
     private GoodsPredicates() {
     }
 

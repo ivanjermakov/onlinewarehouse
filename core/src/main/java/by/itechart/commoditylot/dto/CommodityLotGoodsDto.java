@@ -6,6 +6,7 @@ import lombok.Data;
 
 @Data
 public class CommodityLotGoodsDto {
+
     private Integer amount;
     private Long goodsId;
     private String goodsName;

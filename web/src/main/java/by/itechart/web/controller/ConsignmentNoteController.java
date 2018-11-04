@@ -2,7 +2,6 @@ package by.itechart.web.controller;
 
 import by.itechart.consignmentnote.dto.ConsignmentNoteDto;
 import by.itechart.consignmentnote.dto.CreateConsignmentNoteDto;
-import by.itechart.consignmentnote.entity.ConsignmentNote;
 import by.itechart.consignmentnote.enums.ConsignmentNoteType;
 import by.itechart.consignmentnote.service.ConsignmentNoteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,10 +24,10 @@ public class ConsignmentNoteController {
 
     @GetMapping
     public List<ConsignmentNoteDto> getConsignmentNotes(@PathVariable long companyId,
-                                                     @RequestParam ConsignmentNoteType consignmentNoteType,
-                                                     @RequestParam(value = "from", required = false) LocalDate from,
-                                                     @RequestParam(value = "to", required = false) LocalDate to,
-                                                     Pageable pageable) {
+                                                        @RequestParam ConsignmentNoteType consignmentNoteType,
+                                                        @RequestParam(value = "from", required = false) LocalDate from,
+                                                        @RequestParam(value = "to", required = false) LocalDate to,
+                                                        Pageable pageable) {
         return consignmentNoteService.getConsignmentNotes(companyId, consignmentNoteType, from, to, pageable).getContent();
     }
 

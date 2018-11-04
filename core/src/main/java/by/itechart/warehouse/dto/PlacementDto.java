@@ -11,6 +11,7 @@ import java.util.List;
 
 @Data
 public class PlacementDto {
+
     private long id;
     private Warehouse warehouse;
     private Integer size;

@@ -8,6 +8,7 @@ import com.querydsl.core.types.Predicate;
 import org.apache.commons.lang3.StringUtils;
 
 final class CommodityLotPredicates {
+
     private CommodityLotPredicates() {
     }
 

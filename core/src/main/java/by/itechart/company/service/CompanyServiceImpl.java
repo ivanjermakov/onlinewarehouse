@@ -41,7 +41,10 @@ public class CompanyServiceImpl implements CompanyService {
             companyDto.setId(company.getId());
             companyDto.setName(company.getName());
             companyDto.setSizeType(company.getSizeType());
-            CompanyAction lastCompanyAction = company.getCompanyActions().get(company.getCompanyActions().size() - 1); // may work not correctly, because sequence may be incorrect(or not?)
+//            may work not correctly, because sequence may be incorrect(or not?)
+//            Tested: doesn't work and cause ArrayIndexOutOfBoundsException
+//            TODO: fix
+            CompanyAction lastCompanyAction = company.getCompanyActions().get(company.getCompanyActions().size() - 1);
             companyDto.setActionType(lastCompanyAction.getActionType());
             companyDto.setChange(lastCompanyAction.getChange());
             return companyDto;

@@ -12,6 +12,7 @@ import java.time.LocalDate;
 
 @Data
 public class CommodityLotFilter {
+
     private CommodityLotType commodityLotType;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @JsonSerialize(using = LocalDateSerializer.class)

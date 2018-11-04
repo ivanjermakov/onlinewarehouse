@@ -8,6 +8,7 @@ import java.util.List;
 
 @Data
 public class CarrierDto {
+
     private Long id;
     private String addressCountry;
     private String addressRegion;
