@@ -1,5 +1,6 @@
 package by.itechart.writeoffact.service;
 
+import by.itechart.common.utils.ObjectMapperUtils;
 import by.itechart.company.entity.Company;
 import by.itechart.writeoffact.dto.CreateWriteOffActDto;
 import by.itechart.writeoffact.dto.WriteOffActDto;
@@ -59,6 +60,6 @@ public class WriteOffActServiceImpl implements WriteOffActService {
     @Override
     public WriteOffActDto getWriteOffAct(Long writeOffActId) {
         Optional<WriteOffAct> byId = writeOffActRepository.findById(writeOffActId);
-        return byId.map(WriteOffActDto::new).orElse(null);
+        return byId.map(o -> ObjectMapperUtils.map(o, WriteOffActDto.class)).orElse(null);
     }
 }

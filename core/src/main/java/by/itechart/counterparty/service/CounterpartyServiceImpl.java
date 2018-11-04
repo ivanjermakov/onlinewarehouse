@@ -1,5 +1,6 @@
 package by.itechart.counterparty.service;
 
+import by.itechart.common.utils.ObjectMapperUtils;
 import by.itechart.counterparty.dto.CounterpartyDto;
 import by.itechart.counterparty.entity.Counterparty;
 import by.itechart.counterparty.enums.CounterpartyType;
@@ -26,19 +27,19 @@ public class CounterpartyServiceImpl implements CounterpartyService {
     @Override
     public Page<CounterpartyDto> getCounterparties(Long companyId, CounterpartyType counterpartyType, Pageable pageable) {
         return counterpartyRepository.findAllByCompany_IdAndCounterpartyType(companyId, counterpartyType, pageable)
-                .map(CounterpartyDto::new);
+                .map(c -> ObjectMapperUtils.map(c, CounterpartyDto.class));
     }
 
     @Override
     public Long saveOrUpdateCounterparty(CounterpartyDto counterparty) {
-        return counterpartyRepository.save(counterparty.mapToCounterparty()).getId();
+        return counterpartyRepository.save(ObjectMapperUtils.map(counterparty, Counterparty.class)).getId();
     }
 
     @Override
     public CounterpartyDto getCounterparty(Long counterpartyId) {
         Optional<Counterparty> byId = counterpartyRepository.findById(counterpartyId);
 
-        return byId.map(CounterpartyDto::new).orElse(null);
+        return byId.map(c -> ObjectMapperUtils.map(c, CounterpartyDto.class)).orElse(null);
     }
 
     @Override
