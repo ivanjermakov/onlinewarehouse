@@ -10,7 +10,6 @@ import {AppRoutingModule} from './app-routing.module';
 import {HomeComponent} from './home/home.component';
 import {UserComponent} from './user/user.component';
 import {PlacementComponent} from './placement/placement.component';
-import {ConsignmentNoteComponent} from './consignment-note/consignment-note.component';
 import {CompanyListComponent} from './company/company-list/company-list.component';
 import {CreateCompanyComponent} from './company/create-company/create-company.component';
 import {GoodsListComponent} from "./shared/goods/goods-list/goods-list.component";
@@ -18,6 +17,8 @@ import {WriteOffActListComponent} from './write-off-act/write-off-act-list/write
 import {CreateWriteOffActComponent} from './write-off-act/create-write-off-act/create-write-off-act.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {GoodsListDialogComponent} from './shared/goods/goods-list-dialog/goods-list-dialog.component';
+import { RegisterConsignmentNoteComponent } from './consignment-note/register-consignment-note/register-consignment-note.component';
+import { ConsignmentNoteListComponent } from './consignment-note/consignment-note-list/consignment-note-list.component';
 
 
 @NgModule({
@@ -27,13 +28,14 @@ import {GoodsListDialogComponent} from './shared/goods/goods-list-dialog/goods-l
     HomeComponent,
     UserComponent,
     PlacementComponent,
-    ConsignmentNoteComponent,
     CompanyListComponent,
     CreateCompanyComponent,
     GoodsListComponent,
     WriteOffActListComponent,
     CreateWriteOffActComponent,
-    GoodsListDialogComponent
+    GoodsListDialogComponent,
+    RegisterConsignmentNoteComponent,
+    ConsignmentNoteListComponent
   ],
   imports: [
     BrowserModule,

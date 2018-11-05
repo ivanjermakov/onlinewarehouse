@@ -1,11 +1,15 @@
-class CreateConsignmentNoteDto {
-  //company: Company;
+import {CounterpartyDto} from "../../counterparty/dto/counterparty.dto";
+import {CompanyDto} from "../../company/dto/company.dto";
+
+export class CreateConsignmentNoteDto {
   number: string;
   shipment: string;
-  //Counterparty: counterparty;
-  //Carrier: carrier;
+  counterparty: CounterpartyDto;
+  carrier: CarrierDto;
   vehicleNumber: string;
-  //creator: User;
+
+  company: CompanyDto;
+  // user: UserDto;
   registration: string;
   consignmentNoteType: string;
 }

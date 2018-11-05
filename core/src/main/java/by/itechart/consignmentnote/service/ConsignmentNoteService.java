@@ -1,6 +1,7 @@
 package by.itechart.consignmentnote.service;
 
 import by.itechart.consignmentnote.dto.ConsignmentNoteDto;
+import by.itechart.consignmentnote.dto.ConsignmentNoteFilter;
 import by.itechart.consignmentnote.dto.CreateConsignmentNoteDto;
 import by.itechart.consignmentnote.enums.ConsignmentNoteType;
 import org.springframework.data.domain.Page;
@@ -10,8 +11,7 @@ import java.time.LocalDate;
 
 public interface ConsignmentNoteService {
 
-    Page<ConsignmentNoteDto> getConsignmentNotes(long companyId, ConsignmentNoteType consignmentNoteType,
-                                                 LocalDate from, LocalDate to, Pageable pageable);
+    Page<ConsignmentNoteDto> getConsignmentNotes(ConsignmentNoteFilter consignmentNoteFilter, Pageable pageable);
 
     ConsignmentNoteDto getConsignmentNote(long companyId, long consignmentNoteId);
 

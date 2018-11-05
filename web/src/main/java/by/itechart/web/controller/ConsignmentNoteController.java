@@ -1,6 +1,7 @@
 package by.itechart.web.controller;
 
 import by.itechart.consignmentnote.dto.ConsignmentNoteDto;
+import by.itechart.consignmentnote.dto.ConsignmentNoteFilter;
 import by.itechart.consignmentnote.dto.CreateConsignmentNoteDto;
 import by.itechart.consignmentnote.enums.ConsignmentNoteType;
 import by.itechart.consignmentnote.service.ConsignmentNoteService;
@@ -23,12 +24,8 @@ public class ConsignmentNoteController {
     }
 
     @GetMapping
-    public List<ConsignmentNoteDto> getConsignmentNotes(@PathVariable long companyId,
-                                                        @RequestParam ConsignmentNoteType consignmentNoteType,
-                                                        @RequestParam(value = "from", required = false) LocalDate from,
-                                                        @RequestParam(value = "to", required = false) LocalDate to,
-                                                        Pageable pageable) {
-        return consignmentNoteService.getConsignmentNotes(companyId, consignmentNoteType, from, to, pageable).getContent();
+    public List<ConsignmentNoteDto> getConsignmentNotes(ConsignmentNoteFilter consignmentNoteFilter, Pageable pageable) {
+        return consignmentNoteService.getConsignmentNotes(consignmentNoteFilter, pageable).getContent();
     }
 
     @GetMapping("/{consignmentNoteId}")

@@ -1,0 +1,23 @@
+<form [formGroup]="consignmentNoteForm"
+      (ngSubmit)="onSubmit(consignmentNoteForm)">
+
+  <div class="field">
+    <label for="number">Number consignment note</label>
+    <input type="text"
+           id="number"
+           class="input input-border"
+           placeholder="CN Number"
+           [formControl]="consignmentNoteForm.controls['number']">
+  </div>
+
+  <div class="field">
+    <label for="shipment">Shipment</label>
+    <input type="date"
+           id="shipment"
+           class="input input-border"
+           placeholder="shipment"
+           [formControl]="consignmentNoteForm.controls['shipment']">
+  </div>
+
+  <button type="submit" class="button button-cyan" [disabled]="!consignmentNoteForm.valid">Register</button>
+</form>

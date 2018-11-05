@@ -67,7 +67,11 @@ export class AppComponent {
         'actions': [
           {
             'name': 'Зарегистрировать ТТН',
-            'url': ''
+            'url': '/register-consignment-note'
+          },
+          {
+            'name': 'Посмотреть ТТН',
+            'url': '/consignment-notes'
           },
           // {
           //   'name': 'viewUsers',

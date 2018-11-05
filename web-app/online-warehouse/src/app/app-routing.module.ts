@@ -8,6 +8,8 @@ import {CreateCompanyComponent} from "./company/create-company/create-company.co
 import {GoodsListComponent} from "./shared/goods/goods-list/goods-list.component";
 import {WriteOffActListComponent} from "./write-off-act/write-off-act-list/write-off-act-list.component";
 import {CreateWriteOffActComponent} from "./write-off-act/create-write-off-act/create-write-off-act.component";
+import {RegisterConsignmentNoteComponent} from "./consignment-note/register-consignment-note/register-consignment-note.component";
+import {ConsignmentNoteListComponent} from "./consignment-note/consignment-note-list/consignment-note-list.component";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -19,6 +21,8 @@ const routes: Routes = [
   {path: 'test', component: GoodsListComponent},
   {path: 'list-write-off-acts', component: WriteOffActListComponent},
   {path: 'create-write-off-act', component: CreateWriteOffActComponent},
+  {path: 'register-consignment-note', component: RegisterConsignmentNoteComponent},
+  {path: 'consignment-notes', component: ConsignmentNoteListComponent},
   // { path: 'heroes', component:  }
 ];
 

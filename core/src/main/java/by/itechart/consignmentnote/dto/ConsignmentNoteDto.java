@@ -11,7 +11,6 @@ import java.time.LocalDate;
 
 @Data
 public class ConsignmentNoteDto {
-
     private long id;
     private Company company;
     private String number;

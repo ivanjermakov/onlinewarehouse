@@ -44,9 +44,12 @@ INSERT INTO address (country, region, locality) VALUES ('Belarus', 'Minsk', 'Car
 INSERT INTO carrier (address_id, company_id, name, carrier_type, tax_number, trusted) VALUES (5, 2, 'Carrier 1', 'AUTOMOBILE', 'sdfsfdf', false);
 INSERT INTO address (country, region, locality) VALUES ('Belarus', 'Minsk', 'Counterparty Tolstogo str. 10');
 INSERT INTO counterparty (address_id, company_id, name, counterparty_type, tax_number) VALUES (6, 2, 'Counterparty 1', 'CONSIGNOR', 'assfdfdssdf');
+-- add 11.05
+INSERT INTO driver (carrier_id, info) VALUES (1, 'Good driver');
 
 --пришла ТТН, диспетчер регистрирует ее (и отправитель, и перевозчик уже были в базе)
-INSERT INTO consignment_note (company_id, carrier_id, counterparty_id, creator_id, number, consignment_note_type, shipment, registration, vehicle_number) VALUES (2, 1, 1, 3, '12302143', 'IN', '2018-10-23', '2018-10-24', '1754-ВС 7');
+INSERT INTO consignment_note (company_id, carrier_id, driver_id, counterparty_id, creator_id, number, consignment_note_type, shipment, registration, vehicle_number, consignment_note_status, description)
+VALUES (2, 1, 1, 1, 3, '12302143', 'IN', '2018-10-23', '2018-10-24', '1754-ВС 7', 'PROCESSED', 'ha');
 -- товары которые были в ТТН, добавляем в справочник
 INSERT INTO goods (company_id, name, placement_type, measurement_unit_type, cost, weight, labelling, description) VALUES (2, 'Some goods 1 name', 'FREEZER', 'TEST', 10, 1, 'some label', 'some description');
 INSERT INTO goods (company_id, name, placement_type, measurement_unit_type, cost, weight, labelling, description) VALUES (2, 'Some goods 2 name', 'UNHEATED', 'TEST', 1, 0.2, 'some label', 'some description');
@@ -88,8 +91,8 @@ INSERT INTO carrier (address_id, company_id, name, carrier_type, tax_number, tru
 INSERT INTO address (country, region, locality) VALUES ('Belarus', 'Minsk', 'Counterparty Nezavisimosti str. 158');
 INSERT INTO counterparty (address_id, company_id, name, counterparty_type, tax_number) VALUES (8, 2, 'Counterparty 1', 'CONSIGNEE', 'assfdfdssdf');
 --сама ТТН
-INSERT INTO consignment_note (company_id, carrier_id, counterparty_id, creator_id, number, consignment_note_type, shipment, registration, vehicle_number)
-VALUES (1, 2, 2, 4, '123124432', 'OUT', '2018-10-28', '2018-10-28', '1234-КР 7');
+INSERT INTO consignment_note (company_id, carrier_id, driver_id, counterparty_id, creator_id, number, consignment_note_type, shipment, registration, vehicle_number, consignment_note_status, description)
+VALUES (1, 2, 1, 2, 4, '123124432', 'OUT', '2018-10-28', '2018-10-28', '1234-КР 7', 'PROCESSED', 'ha');
 --и товары к ней
 INSERT INTO consignment_note_goods (goods_id, consignment_note_id, amount) VALUES (1, 2, 7);
 INSERT INTO consignment_note_goods (goods_id, consignment_note_id, amount) VALUES (2, 2, 10);
