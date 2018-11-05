@@ -1,10 +1,11 @@
 package by.itechart.common.dto;
 
-import by.itechart.common.entity.Goods;
 import by.itechart.common.enums.MeasurementUnit;
 import by.itechart.common.enums.PlacementType;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 @Data
 public class GoodsDto {
 
@@ -17,14 +18,4 @@ public class GoodsDto {
     private String labelling;
     private String description;
 
-    public GoodsDto(Goods goods) {
-        id = goods.getId();
-        name = goods.getName();
-        placementType = goods.getPlacementType();
-        measurementUnit = goods.getMeasurementUnit();
-        cost = goods.getCost();
-        weight = goods.getWeight();
-        labelling = goods.getLabelling();
-        description = goods.getDescription();
-    }
 }

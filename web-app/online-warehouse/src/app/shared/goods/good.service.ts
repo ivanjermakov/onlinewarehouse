@@ -2,8 +2,10 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {API_BASE_URL} from "../../base-server-url";
 import {Observable} from "rxjs";
-import {map} from "rxjs/operators";
 import {GoodsDto} from "./goods.dto";
+import {Pageable} from "../pagination/pageable";
+import {Page} from "../pagination/page";
+import HttpParamsBuilder from "../http/http-params-builder";
 
 @Injectable({
   providedIn: 'root'
@@ -16,18 +18,11 @@ export class GoodService {
   constructor(private http: HttpClient) {
   }
 
-  getAllGoods(companyId: number): Observable<GoodsDto[]> {
+  getAllGoods(companyId: number, pageable: Pageable): Observable<Page<GoodsDto>> {
     const path: string = this.baseApi + '/' + companyId + '/goods';
-    return this.http.get(path, {params: {page: '0', size: '20'}}).pipe(
-      map((data: any[]) => data.map(item => new GoodsDto(
-        item.id,
-        item.name,
-        item.placementType,
-        item.measurementUnit,
-        item.cost,
-        item.weight,
-        item.labelling,
-        item.description)))
-    );
+    let paramsBuilder = new HttpParamsBuilder();
+    pageable.toUrlParameters(paramsBuilder);
+    return this.http.get<Page<GoodsDto>>(path, {params: paramsBuilder.getHttpParams()});
   }
+
 }

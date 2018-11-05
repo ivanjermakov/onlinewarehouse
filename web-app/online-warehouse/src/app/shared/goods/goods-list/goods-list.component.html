@@ -1,24 +1,33 @@
-<div *ngIf="goodsList === undefined" class="loader-container">
+<div *ngIf="!page" class="loader-container">
   <div class="loader"></div>
 </div>
-<table *ngIf="goodsList !== undefined" class="table table-shadow">
-  <tr>
-    <th>Name</th>
-    <th>Placement Type</th>
-    <th>Measurement Unit</th>
-    <th>Cost</th>
-    <th>Weight</th>
-    <th>Labelling</th>
-    <th>Description</th>
-  </tr>
-  <tr *ngFor="let goods of goodsList" (click)="clickOnGoods(goods)">
-    <td>{{goods.name}}</td>
-    <td>{{goods.placementType}}</td>
-    <td>{{goods.measurementUnit}}</td>
-    <td>{{goods.cost}}</td>
-    <td>{{goods.weight}}</td>
-    <td>{{goods.labelling}}</td>
-    <td>{{goods.description}}</td>
-  </tr>
-</table>
+<div *ngIf="page">
+  <table class="table table-shadow">
+    <tr>
+      <th>Name</th>
+      <th>Placement Type</th>
+      <th>Measurement Unit</th>
+      <th>Cost</th>
+      <th>Weight</th>
+      <th>Labelling</th>
+      <th>Description</th>
+    </tr>
+    <tr *ngFor="let goods of page.content" (click)="clickOnGoods(goods)">
+      <td>{{goods.name}}</td>
+      <td>{{goods.placementType}}</td>
+      <td>{{goods.measurementUnit}}</td>
+      <td>{{goods.cost}}</td>
+      <td>{{goods.weight}}</td>
+      <td>{{goods.labelling}}</td>
+      <td>{{goods.description}}</td>
+    </tr>
+  </table>
+  <br>
+  <mat-paginator [length]="page.totalElements"
+                 [pageIndex]="pageable.page"
+                 [pageSize]="pageable.size"
+                 [pageSizeOptions]="pageSizeOptions"
+                 (page)="pageChanged($event)">
+  </mat-paginator>
+</div>
 

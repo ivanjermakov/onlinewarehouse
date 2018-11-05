@@ -4,6 +4,7 @@ import by.itechart.common.service.GoodsService;
 import by.itechart.common.utils.ObjectMapperUtils;
 import by.itechart.company.entity.Company;
 import by.itechart.writeoffact.dto.CreateWriteOffActDto;
+import by.itechart.writeoffact.dto.WriteOffActDto;
 import by.itechart.writeoffact.dto.WriteOffActFilter;
 import by.itechart.writeoffact.dto.WriteOffActListDto;
 import by.itechart.writeoffact.entity.WriteOffAct;
@@ -69,8 +70,8 @@ public class WriteOffActServiceImpl implements WriteOffActService {
 
     @Transactional(readOnly = true)
     @Override
-    public WriteOffActListDto getWriteOffAct(Long writeOffActId) {
-        //TODO: method
-        return null;
+    public WriteOffActDto getWriteOffAct(Long writeOffActId) {
+        WriteOffAct writeOffAct = writeOffActRepository.getOne(writeOffActId);
+        return ObjectMapperUtils.map(writeOffAct, WriteOffActDto.class);
     }
 }

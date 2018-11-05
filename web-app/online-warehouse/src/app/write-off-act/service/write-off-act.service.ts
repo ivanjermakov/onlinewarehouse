@@ -6,6 +6,7 @@ import {Observable} from "rxjs";
 import {WriteOffActListDto} from "../dto/write-off-act-list.dto";
 import {map} from "rxjs/operators";
 import {CreateWriteOffActDto} from "../dto/create-write-off-act.dto";
+import {WriteOffActDto} from "../dto/write-off-act.dto";
 
 @Injectable({
   providedIn: 'root'
@@ -41,5 +42,10 @@ export class WriteOffActService {
     return this.http.post(path, createWriteOffActDto).pipe(
       map((data: number) => data)
     );
+  }
+
+  getWriteOffAct(companyId: number, writeOffActId: number): Observable<WriteOffActDto> {
+    const path: string = this.baseApi + '/' + companyId + '/write-off-acts/' + writeOffActId;
+    return this.http.get<WriteOffActDto>(path);
   }
 }

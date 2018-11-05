@@ -1,5 +1,5 @@
 <div *ngIf="writeOffActList === undefined" class="loader"></div>
-<table *ngIf="writeOffActList !== undefined" class="table table-shadow">
+<table *ngIf="writeOffActList !== undefined" class="table table-shadow hoverable-table">
   <tr>
     <th>Id</th>
     <th>Creation</th>
@@ -8,7 +8,7 @@
     <th>Total Amount</th>
     <th>Type</th>
   </tr>
-  <tr *ngFor="let writeOffAct of writeOffActList">
+  <tr *ngFor="let writeOffAct of writeOffActList" (click)="navigateToPage(writeOffAct.id)">
     <td>{{writeOffAct.id}}</td>
     <td>{{writeOffAct.creation}}</td>
     <td>{{writeOffAct.creatorId}}</td>

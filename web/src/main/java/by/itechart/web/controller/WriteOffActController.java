@@ -1,17 +1,14 @@
 package by.itechart.web.controller;
 
 import by.itechart.writeoffact.dto.CreateWriteOffActDto;
+import by.itechart.writeoffact.dto.WriteOffActDto;
 import by.itechart.writeoffact.dto.WriteOffActFilter;
 import by.itechart.writeoffact.dto.WriteOffActListDto;
-import by.itechart.writeoffact.entity.WriteOffAct;
-import by.itechart.writeoffact.enums.WriteOffActType;
 import by.itechart.writeoffact.service.WriteOffActService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -33,7 +30,7 @@ public class WriteOffActController {
     }
 
     @GetMapping("/{writeOffActId}")
-    public WriteOffActListDto getWriteOffAct(@PathVariable long companyId, @PathVariable long writeOffActId) {
+    public WriteOffActDto getWriteOffAct(@PathVariable long companyId, @PathVariable long writeOffActId) {
         return writeOffActService.getWriteOffAct(writeOffActId);
     }
 

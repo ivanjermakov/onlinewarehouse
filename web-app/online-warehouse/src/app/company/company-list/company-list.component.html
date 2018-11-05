@@ -1,5 +1,5 @@
-<div *ngIf="companyList === undefined" class="loader"></div>
-<table *ngIf="companyList !== undefined" class="table table-shadow">
+<div *ngIf="!companyList" class="loader"></div>
+<table *ngIf="companyList" class="table table-shadow">
   <tr>
     <th>Id</th>
     <th>Name</th>
@@ -14,8 +14,12 @@
     <td>{{company.sizeType}}</td>
     <td>{{company.actionType}}</td>
     <td>{{company.change}}</td>
-    <td *ngIf="company.actionType === actionType.ENABLED" (click)="disableCompany(company.id)">Disable</td>
-    <td *ngIf="company.actionType === actionType.DISABLED" (click)="enableCompany(company.id)">Enable</td>
+    <td *ngIf="company.actionType === actionType.ENABLED" (click)="disableCompany(company.id)" class="hoverable-cell">
+      Disable
+    </td>
+    <td *ngIf="company.actionType === actionType.DISABLED" (click)="enableCompany(company.id)" class="hoverable-cell">
+      Enable
+    </td>
   </tr>
 </table>
 

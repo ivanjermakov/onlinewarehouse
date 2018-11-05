@@ -8,6 +8,7 @@ import {CreateCompanyComponent} from "./company/create-company/create-company.co
 import {GoodsListComponent} from "./shared/goods/goods-list/goods-list.component";
 import {WriteOffActListComponent} from "./write-off-act/write-off-act-list/write-off-act-list.component";
 import {CreateWriteOffActComponent} from "./write-off-act/create-write-off-act/create-write-off-act.component";
+import {GetWriteOffActComponent} from "./write-off-act/get-write-off-act/get-write-off-act.component";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -19,6 +20,7 @@ const routes: Routes = [
   {path: 'test', component: GoodsListComponent},
   {path: 'list-write-off-acts', component: WriteOffActListComponent},
   {path: 'create-write-off-act', component: CreateWriteOffActComponent},
+  {path: 'write-off-act/:id', component: GetWriteOffActComponent},
   // { path: 'heroes', component:  }
 ];
 

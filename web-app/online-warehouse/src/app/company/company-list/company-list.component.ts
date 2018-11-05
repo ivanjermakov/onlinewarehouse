@@ -17,17 +17,23 @@ export class CompanyListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.companyService.getAllCompanies().subscribe((companies: CompanyDto[]) => {
-      this.companyList = companies;
-    })
+    this.updateCompaniesList();
   }
 
   disableCompany(companyId: number) {
-    console.log("lol");
     this.companyService.setCompanyDisabled(companyId);
+    this.updateCompaniesList();
   }
 
   enableCompany(companyId: number) {
     this.companyService.setCompanyEnabled(companyId);
+    this.updateCompaniesList();
+  }
+
+  updateCompaniesList(): void {
+    this.companyList = null;
+    this.companyService.getAllCompanies().subscribe((companies: CompanyDto[]) => {
+      this.companyList = companies;
+    })
   }
 }

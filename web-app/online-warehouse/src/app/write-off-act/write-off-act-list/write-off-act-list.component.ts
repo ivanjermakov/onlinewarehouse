@@ -3,6 +3,7 @@ import {WriteOffActListDto} from "../dto/write-off-act-list.dto";
 import {WriteOffActTypeEnum} from "../dto/enum/write-off-act-type.enum";
 import {WriteOffActService} from "../service/write-off-act.service";
 import {WriteOffActFilter} from "../dto/write-off-act.filter";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-write-off-act-list',
@@ -12,7 +13,9 @@ import {WriteOffActFilter} from "../dto/write-off-act.filter";
 export class WriteOffActListComponent implements OnInit {
   writeOffActList: WriteOffActListDto[];
 
-  constructor(private writeOffActService: WriteOffActService) {
+  constructor(
+    private writeOffActService: WriteOffActService,
+    private router: Router) {
   }
 
   ngOnInit() {
@@ -21,5 +24,9 @@ export class WriteOffActListComponent implements OnInit {
       .subscribe((acts: WriteOffActListDto[]) => {
         this.writeOffActList = acts;
       })
+  }
+
+  navigateToPage(writeOffActId: number) {
+    this.router.navigate(['write-off-act/' + writeOffActId]);
   }
 }

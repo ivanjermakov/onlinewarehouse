@@ -15,8 +15,11 @@ export class Pageable {
   toUrlParameters(paramsBuilder: HttpParamsBuilder): HttpParamsBuilder {
     paramsBuilder.addIfNotEmpty('page', this.page);
     paramsBuilder.addIfNotEmpty('size', this.size);
-
-    return this.sort.toUrlParameters(paramsBuilder);
+    if (this.sort) {
+      return this.sort.toUrlParameters(paramsBuilder);
+    } else {
+      return paramsBuilder;
+    }
   }
 
   // server paging starts from 0 from the first page

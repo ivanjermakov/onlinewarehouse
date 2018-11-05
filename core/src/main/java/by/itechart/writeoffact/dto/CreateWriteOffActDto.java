@@ -11,5 +11,5 @@ public class CreateWriteOffActDto {
     private Long creatorId;
     private String responsiblePerson;
     private WriteOffActType writeOffActType;
-    private List<WriteOffActGoodsDto> writeOffActGoodsDtoList;
+    private List<CreateWriteOffActGoodsDto> writeOffActGoodsDtoList;
 }

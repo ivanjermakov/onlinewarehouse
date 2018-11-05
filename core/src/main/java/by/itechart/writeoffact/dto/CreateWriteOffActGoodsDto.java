@@ -1,13 +1,12 @@
 package by.itechart.writeoffact.dto;
 
-import by.itechart.common.dto.GoodsDto;
 import by.itechart.writeoffact.enums.WriteOffType;
 import lombok.Data;
 
 @Data
-public class WriteOffActGoodsDto {
+public class CreateWriteOffActGoodsDto {
 
-    private GoodsDto goods;
+    private Long goodsId;
     private WriteOffType writeOffType;
     private Integer amount;
 }

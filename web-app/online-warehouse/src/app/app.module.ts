@@ -4,7 +4,7 @@ import {NgModule} from '@angular/core';
 import {AppComponent} from './app.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
-import {MatDialogModule} from '@angular/material';
+import {MatDialogModule, MatPaginatorModule} from '@angular/material';
 import {ViewUsersComponent} from './view-users/view-users.component';
 import {AppRoutingModule} from './app-routing.module';
 import {HomeComponent} from './home/home.component';
@@ -18,6 +18,7 @@ import {WriteOffActListComponent} from './write-off-act/write-off-act-list/write
 import {CreateWriteOffActComponent} from './write-off-act/create-write-off-act/create-write-off-act.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {GoodsListDialogComponent} from './shared/goods/goods-list-dialog/goods-list-dialog.component';
+import {GetWriteOffActComponent} from './write-off-act/get-write-off-act/get-write-off-act.component';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import {GoodsListDialogComponent} from './shared/goods/goods-list-dialog/goods-l
     GoodsListComponent,
     WriteOffActListComponent,
     CreateWriteOffActComponent,
-    GoodsListDialogComponent
+    GoodsListDialogComponent,
+    GetWriteOffActComponent
   ],
   imports: [
     BrowserModule,
@@ -43,6 +45,7 @@ import {GoodsListDialogComponent} from './shared/goods/goods-list-dialog/goods-l
     HttpClientModule,
     BrowserAnimationsModule,
     MatDialogModule,
+    MatPaginatorModule
   ],
   bootstrap: [AppComponent],
   entryComponents: [GoodsListDialogComponent]

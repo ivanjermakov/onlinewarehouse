@@ -1,0 +1,47 @@
+<div *ngIf="!writeOffAct" class="loader-container">
+  <div class="loader"></div>
+</div>
+<div *ngIf="writeOffAct"
+     style="background-color: #fff;  box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.2), 0 4px 20px 0 rgba(0, 0, 0, 0.19)">
+  <table class="table">
+    <tr>
+      <td>Создатель</td>
+      <td>Date</td>
+      <td>responsiblePerson</td>
+      <td>totalAmount</td>
+      <td>writeOffActType</td>
+    </tr>
+    <tr>
+      <td>{{writeOffAct.creatorId}}</td>
+      <td>{{writeOffAct.creation}}</td>
+      <td>{{writeOffAct.responsiblePerson}}</td>
+      <td>{{writeOffAct.totalAmount}}</td>
+      <td>{{writeOffAct.writeOffActType}}</td>
+    </tr>
+  </table>
+  <span>Goods:</span>
+  <table class="table">
+    <tr>
+      <th>writeOffType</th>
+      <th>amount</th>
+      <th>Name</th>
+      <th>Placement Type</th>
+      <th>Measurement Unit</th>
+      <th>Cost</th>
+      <th>Weight</th>
+      <th>Labelling</th>
+      <th>Description</th>
+    </tr>
+    <tr *ngFor="let writeOffActGoods of writeOffAct.writeOffActGoodsList">
+      <td>{{writeOffActGoods.writeOffType}}</td>
+      <td>{{writeOffActGoods.amount}}</td>
+      <td>{{writeOffActGoods.goods.name}}</td>
+      <td>{{writeOffActGoods.goods.placementType}}</td>
+      <td>{{writeOffActGoods.goods.measurementUnit}}</td>
+      <td>{{writeOffActGoods.goods.cost}}</td>
+      <td>{{writeOffActGoods.goods.weight}}</td>
+      <td>{{writeOffActGoods.goods.labelling}}</td>
+      <td>{{writeOffActGoods.goods.description}}</td>
+    </tr>
+  </table>
+</div>
