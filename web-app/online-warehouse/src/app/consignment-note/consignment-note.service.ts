@@ -8,6 +8,7 @@ import {API_BASE_URL} from "../base-server-url";
 import {ConsignmentNoteDto} from "./dto/consignment-note-dto";
 import {CreateConsignmentNoteDto} from "./dto/create-consignment-note-dto";
 import {ConsignmentNoteFilter} from "./dto/consignment-note-filter";
+import {ConsignmentNoteListDto} from "./dto/consignment-note-list-dto";
 
 @Injectable({
   providedIn: 'root'
@@ -19,13 +20,13 @@ export class ConsignmentNoteService {
 
   private baseApi: string = API_BASE_URL + '/companies';
 
-  getConsignmentNotes(consignmentNoteFilter: ConsignmentNoteFilter, pageable: Pageable): Observable<Page<ConsignmentNoteDto>> {
-    const path: string = this.baseApi + '/' + 1 + '/consignment-notes';
+  getConsignmentNotes(companyId: number, consignmentNoteFilter: ConsignmentNoteFilter, pageable: Pageable): Observable<Page<ConsignmentNoteListDto>> {
+    const path: string = this.baseApi + '/' + companyId + '/consignment-notes';
     let paramsBuilder = new HttpParamsBuilder();
     consignmentNoteFilter.toUrlParameters(paramsBuilder);
     pageable.toUrlParameters(paramsBuilder);
 
-    return this.http.get<Page<ConsignmentNoteDto>>(path, {params: paramsBuilder.getHttpParams()});
+    return this.http.get<Page<ConsignmentNoteListDto>>(path, {params: paramsBuilder.getHttpParams()});
   }
 
   saveConsignmentNote(createConsignmentNoteDto: CreateConsignmentNoteDto, companyId: number): Observable<ConsignmentNoteDto> {

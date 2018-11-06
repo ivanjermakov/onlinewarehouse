@@ -1,13 +1,17 @@
 package by.itechart.consignmentnote.dto;
 
 import by.itechart.carrier.entity.Carrier;
+import by.itechart.carrier.entity.Driver;
 import by.itechart.common.entity.User;
 import by.itechart.company.entity.Company;
+import by.itechart.consignmentnote.entity.ConsignmentNoteGoods;
+import by.itechart.consignmentnote.enums.ConsignmentNoteStatus;
 import by.itechart.consignmentnote.enums.ConsignmentNoteType;
 import by.itechart.counterparty.entity.Counterparty;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 public class ConsignmentNoteDto {
@@ -20,5 +24,9 @@ public class ConsignmentNoteDto {
     private String vehicleNumber;
     private User creator;
     private LocalDate registration;
+    private List<ConsignmentNoteGoods> consignmentNoteGoodsList;
     private ConsignmentNoteType consignmentNoteType;
+    private Driver driver;
+    private ConsignmentNoteStatus consignmentNoteStatus;
+    private String description;
 }

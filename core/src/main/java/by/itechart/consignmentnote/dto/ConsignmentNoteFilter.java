@@ -8,7 +8,6 @@ import java.time.LocalDate;
 
 @Data
 public class ConsignmentNoteFilter {
-    private long companyId;
     private ConsignmentNoteType consignmentNoteType;
     private ConsignmentNoteStatus consignmentNoteStatus;
     private LocalDate from;

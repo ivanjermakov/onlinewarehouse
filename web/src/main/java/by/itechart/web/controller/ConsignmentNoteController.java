@@ -2,10 +2,12 @@ package by.itechart.web.controller;
 
 import by.itechart.consignmentnote.dto.ConsignmentNoteDto;
 import by.itechart.consignmentnote.dto.ConsignmentNoteFilter;
+import by.itechart.consignmentnote.dto.ConsignmentNoteListDto;
 import by.itechart.consignmentnote.dto.CreateConsignmentNoteDto;
 import by.itechart.consignmentnote.enums.ConsignmentNoteType;
 import by.itechart.consignmentnote.service.ConsignmentNoteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,8 +26,11 @@ public class ConsignmentNoteController {
     }
 
     @GetMapping
-    public List<ConsignmentNoteDto> getConsignmentNotes(ConsignmentNoteFilter consignmentNoteFilter, Pageable pageable) {
-        return consignmentNoteService.getConsignmentNotes(consignmentNoteFilter, pageable).getContent();
+    public Page<ConsignmentNoteListDto> getConsignmentNotes(@PathVariable long companyId,
+                                                            ConsignmentNoteFilter consignmentNoteFilter,
+                                                            Pageable pageable) {
+        System.out.println(consignmentNoteService.getConsignmentNotes(companyId, consignmentNoteFilter, pageable).getContent());
+        return consignmentNoteService.getConsignmentNotes(companyId, consignmentNoteFilter, pageable);
     }
 
     @GetMapping("/{consignmentNoteId}")

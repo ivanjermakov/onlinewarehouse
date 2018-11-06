@@ -119,7 +119,7 @@ create table consignment_note (
   registration          date        NOT NULL,
   vehicle_number        varchar(15) NOT NULL,
   consignment_note_status varchar(15) NOT NULL,
-             text NOT NULL
+  description           text NOT NULL
 );
 
 create table commodity_lot (

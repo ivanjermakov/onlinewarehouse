@@ -1,0 +1,20 @@
+<div class="pagination row" *ngIf="page">
+  <div class="col-md-2 d-flex flex-row align-items-center mb-1">
+    <div class="ml-4">per page</div>
+    <select class="form-control page-select ml-1" [(ngModel)]="pageable.size" name="pageSize"
+            (change)="getData()">
+      <option>5</option>
+      <option>10</option>
+      <option>25</option>
+      <option>50</option>
+    </select>
+  </div>
+
+  <div class="col-md-5 mb-3">
+    <ngb-pagination [collectionSize]="page.totalElements" [(page)]="pageable.page" [maxSize]="5"
+                    [pageSize]="pageable.size" class="d-flex justify-content-md-end justify-content-xs-start"
+                    [rotate]="true" [ellipses]="false" [boundaryLinks]="true"
+                    (pageChange)="getData($event)"></ngb-pagination>
+  </div>
+
+</div>

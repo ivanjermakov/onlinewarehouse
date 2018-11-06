@@ -10,7 +10,7 @@ import java.time.LocalDate;
 
 public class ConsignmentNotePredicate {
 
-    static Predicate findFilter(ConsignmentNoteFilter consignmentNoteFilter) {
+    static Predicate findFilter(long companyId, ConsignmentNoteFilter consignmentNoteFilter) {
         BooleanBuilder predicate = new BooleanBuilder();
 
         if (consignmentNoteFilter.getConsignmentNoteType() != null) {
@@ -25,7 +25,7 @@ public class ConsignmentNotePredicate {
         if (consignmentNoteFilter.getTo()  != null) {
             predicate.and(QConsignmentNote.consignmentNote.registration.before(consignmentNoteFilter.getTo()));
         }
-        QConsignmentNote.consignmentNote.company.id.eq(consignmentNoteFilter.getCompanyId());
+        QConsignmentNote.consignmentNote.company.id.eq(companyId);
 
         return predicate;
     }

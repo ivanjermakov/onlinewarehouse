@@ -1,6 +1,8 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+
 import {AppComponent} from './app.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
@@ -19,6 +21,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {GoodsListDialogComponent} from './shared/goods/goods-list-dialog/goods-list-dialog.component';
 import { RegisterConsignmentNoteComponent } from './consignment-note/register-consignment-note/register-consignment-note.component';
 import { ConsignmentNoteListComponent } from './consignment-note/consignment-note-list/consignment-note-list.component';
+import {PaginationComponent} from "./shared/pagination/pagination.component";
 
 
 @NgModule({
@@ -35,7 +38,8 @@ import { ConsignmentNoteListComponent } from './consignment-note/consignment-not
     CreateWriteOffActComponent,
     GoodsListDialogComponent,
     RegisterConsignmentNoteComponent,
-    ConsignmentNoteListComponent
+    ConsignmentNoteListComponent,
+    PaginationComponent
   ],
   imports: [
     BrowserModule,
@@ -45,6 +49,7 @@ import { ConsignmentNoteListComponent } from './consignment-note/consignment-not
     HttpClientModule,
     BrowserAnimationsModule,
     MatDialogModule,
+    NgbModule,
   ],
   bootstrap: [AppComponent],
   entryComponents: [GoodsListDialogComponent]

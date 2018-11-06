@@ -3,6 +3,7 @@ package by.itechart.consignmentnote.service;
 import by.itechart.common.utils.ObjectMapperUtils;
 import by.itechart.consignmentnote.dto.ConsignmentNoteDto;
 import by.itechart.consignmentnote.dto.ConsignmentNoteFilter;
+import by.itechart.consignmentnote.dto.ConsignmentNoteListDto;
 import by.itechart.consignmentnote.dto.CreateConsignmentNoteDto;
 import by.itechart.consignmentnote.entity.ConsignmentNote;
 import by.itechart.consignmentnote.enums.ConsignmentNoteType;
@@ -27,10 +28,10 @@ public class ConsignmentNoteServiceImpl implements ConsignmentNoteService {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<ConsignmentNoteDto> getConsignmentNotes(ConsignmentNoteFilter consignmentNoteFilter, Pageable pageable) {
+    public Page<ConsignmentNoteListDto> getConsignmentNotes(long companyId, ConsignmentNoteFilter consignmentNoteFilter, Pageable pageable) {
         Page<ConsignmentNote> consignmentNotes = consignmentNoteRepository
-                .findAll(ConsignmentNotePredicate.findFilter(consignmentNoteFilter), pageable);
-        return consignmentNotes.map(consignmentNote -> ObjectMapperUtils.map(consignmentNote, ConsignmentNoteDto.class));
+                .findAll(ConsignmentNotePredicate.findFilter(companyId, consignmentNoteFilter), pageable);
+        return consignmentNotes.map(consignmentNote -> ObjectMapperUtils.map(consignmentNote, ConsignmentNoteListDto.class));
     }
 
     @Override

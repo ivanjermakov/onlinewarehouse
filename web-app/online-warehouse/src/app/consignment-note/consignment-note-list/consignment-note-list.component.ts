@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Page} from "../../shared/pagination/page";
-import {ConsignmentNoteDto} from "../dto/consignment-note-dto";
 import {Pageable} from "../../shared/pagination/pageable";
-import {Router} from "@angular/router";
 import {ConsignmentNoteService} from "../consignment-note.service";
 import {ConsignmentNoteFilter} from "../dto/consignment-note-filter";
+import {ActivatedRoute} from "@angular/router";
+import {ConsignmentNoteListDto} from "../dto/consignment-note-list-dto";
 
 @Component({
   selector: 'app-consignment-note-list',
@@ -12,23 +12,24 @@ import {ConsignmentNoteFilter} from "../dto/consignment-note-filter";
   styleUrls: ['./consignment-note-list.component.css']
 })
 export class ConsignmentNoteListComponent implements OnInit {
-  consignmentNotes: Page<ConsignmentNoteDto> = new Page<ConsignmentNoteDto>();
+  consignmentNotes: Page<ConsignmentNoteListDto> = new Page<ConsignmentNoteListDto>();
   pageable: Pageable = new Pageable(1, 10);
   consignmentNoteFilter: ConsignmentNoteFilter = new ConsignmentNoteFilter();
 
-  constructor(
-    private consignmentNoteService: ConsignmentNoteService,
-    private router: Router
-  ) {
+  constructor(private consignmentNoteService: ConsignmentNoteService,
+              private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
-    this.getContacts();
+    this.getConsignmentNotes();
   }
 
-  getContacts(): void {
-    this.consignmentNoteService.getConsignmentNotes(this.consignmentNoteFilter.toServerFilter(), this.pageable.toServerPageable())
+  getConsignmentNotes(): void {
+    // const id = Number(this.route.snapshot.paramMap.get('companyId'));
+    const id = 1;
+    this.consignmentNoteService.getConsignmentNotes(id, this.consignmentNoteFilter.toServerFilter(), this.pageable.toServerPageable())
       .subscribe((consignmentNotes) => {
+        console.log(consignmentNotes);
         this.consignmentNotes = consignmentNotes;
       });
   }
