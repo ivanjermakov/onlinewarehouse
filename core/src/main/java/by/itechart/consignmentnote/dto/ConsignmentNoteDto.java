@@ -19,13 +19,11 @@ public class ConsignmentNoteDto {
     private long id;
     private Company company;
     private String number;
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate shipment;
     private Counterparty counterparty;
     private Carrier carrier;
     private String vehicleNumber;
     private User creator;
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate registration;
     private List<ConsignmentNoteGoods> consignmentNoteGoodsList;
     private ConsignmentNoteType consignmentNoteType;

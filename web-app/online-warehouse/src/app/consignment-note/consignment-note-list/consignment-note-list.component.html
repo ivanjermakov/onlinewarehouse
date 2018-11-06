@@ -60,7 +60,9 @@
     </thead>
     <tbody>
     <tr *ngFor="let consignmentNote of consignmentNotes.content">
-      <td>{{consignmentNote.number}}</td>
+      <td>
+        <a routerLink="{{consignmentNote.id}}" href="#">{{consignmentNote.number}}</a>
+      </td>
       <td>{{consignmentNote.company.name}}</td>
       <td>
         {{consignmentNote.registration.dayOfMonth}}

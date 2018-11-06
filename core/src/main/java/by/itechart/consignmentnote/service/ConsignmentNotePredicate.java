@@ -25,7 +25,7 @@ public class ConsignmentNotePredicate {
         if (consignmentNoteFilter.getTo()  != null) {
             predicate.and(QConsignmentNote.consignmentNote.registration.before(consignmentNoteFilter.getTo()));
         }
-        QConsignmentNote.consignmentNote.company.id.eq(companyId);
+        predicate.and(QConsignmentNote.consignmentNote.company.id.eq(companyId));
 
         return predicate;
     }

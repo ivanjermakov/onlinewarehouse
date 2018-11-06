@@ -10,9 +10,9 @@ import java.time.LocalDate;
 
 @Data
 public class ConsignmentNoteListDto {
+    private long id;
     private String number;
     private Company company;
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate registration;
     private ConsignmentNoteType consignmentNoteType;
     private ConsignmentNoteStatus consignmentNoteStatus;

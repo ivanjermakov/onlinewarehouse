@@ -26,8 +26,8 @@ export class ConsignmentNoteListComponent implements OnInit {
 
   getConsignmentNotes(): void {
     // const id = Number(this.route.snapshot.paramMap.get('companyId'));
-    const id = 1;
-    this.consignmentNoteService.getConsignmentNotes(id, this.consignmentNoteFilter.toServerFilter(), this.pageable.toServerPageable())
+    const companyId = 2;
+    this.consignmentNoteService.getConsignmentNotes(companyId, this.consignmentNoteFilter.toServerFilter(), this.pageable.toServerPageable())
       .subscribe((consignmentNotes) => {
         console.log(consignmentNotes);
         this.consignmentNotes = consignmentNotes;

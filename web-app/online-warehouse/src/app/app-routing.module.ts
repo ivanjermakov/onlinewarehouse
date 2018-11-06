@@ -10,6 +10,7 @@ import {WriteOffActListComponent} from "./write-off-act/write-off-act-list/write
 import {CreateWriteOffActComponent} from "./write-off-act/create-write-off-act/create-write-off-act.component";
 import {RegisterConsignmentNoteComponent} from "./consignment-note/register-consignment-note/register-consignment-note.component";
 import {ConsignmentNoteListComponent} from "./consignment-note/consignment-note-list/consignment-note-list.component";
+import {ConsignmentNoteDetailComponent} from "./consignment-note/consignment-note-list/consignment-note-detail/consignment-note-detail.component";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -23,7 +24,7 @@ const routes: Routes = [
   {path: 'create-write-off-act', component: CreateWriteOffActComponent},
   {path: 'register-consignment-note', component: RegisterConsignmentNoteComponent},
   {path: 'consignment-notes', component: ConsignmentNoteListComponent},
-  // { path: 'heroes', component:  }
+  {path: 'consignment-notes/:id', component: ConsignmentNoteDetailComponent},
 ];
 
 @NgModule({

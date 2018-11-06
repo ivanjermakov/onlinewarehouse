@@ -22,6 +22,7 @@ import {GoodsListDialogComponent} from './shared/goods/goods-list-dialog/goods-l
 import { RegisterConsignmentNoteComponent } from './consignment-note/register-consignment-note/register-consignment-note.component';
 import { ConsignmentNoteListComponent } from './consignment-note/consignment-note-list/consignment-note-list.component';
 import {PaginationComponent} from "./shared/pagination/pagination.component";
+import { ConsignmentNoteDetailComponent } from './consignment-note/consignment-note-list/consignment-note-detail/consignment-note-detail.component';
 
 
 @NgModule({
@@ -39,7 +40,8 @@ import {PaginationComponent} from "./shared/pagination/pagination.component";
     GoodsListDialogComponent,
     RegisterConsignmentNoteComponent,
     ConsignmentNoteListComponent,
-    PaginationComponent
+    PaginationComponent,
+    ConsignmentNoteDetailComponent
   ],
   imports: [
     BrowserModule,
