@@ -9,8 +9,9 @@ export class ConsignmentNoteFilter {
   toUrlParameters(paramsBuilder: HttpParamsBuilder): HttpParamsBuilder {
     paramsBuilder.addIfNotEmpty('consignmentNoteType', this.consignmentNoteType);
     paramsBuilder.addIfNotEmpty('consignmentNoteStatus', this.consignmentNoteStatus);
+    paramsBuilder.addIfNotEmpty('from', this.from);
 
-    return paramsBuilder.addIfNotEmpty('from', this.from);
+    return paramsBuilder.addIfNotEmpty('to', this.to);
   }
 
   toServerFilter(): ConsignmentNoteFilter {

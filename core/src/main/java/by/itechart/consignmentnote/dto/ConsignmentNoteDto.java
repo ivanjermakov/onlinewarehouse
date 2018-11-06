@@ -9,6 +9,7 @@ import by.itechart.consignmentnote.enums.ConsignmentNoteStatus;
 import by.itechart.consignmentnote.enums.ConsignmentNoteType;
 import by.itechart.counterparty.entity.Counterparty;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -18,11 +19,13 @@ public class ConsignmentNoteDto {
     private long id;
     private Company company;
     private String number;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate shipment;
     private Counterparty counterparty;
     private Carrier carrier;
     private String vehicleNumber;
     private User creator;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate registration;
     private List<ConsignmentNoteGoods> consignmentNoteGoodsList;
     private ConsignmentNoteType consignmentNoteType;

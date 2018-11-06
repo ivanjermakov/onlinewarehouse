@@ -4,6 +4,7 @@ import by.itechart.company.entity.Company;
 import by.itechart.consignmentnote.enums.ConsignmentNoteStatus;
 import by.itechart.consignmentnote.enums.ConsignmentNoteType;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
@@ -11,6 +12,7 @@ import java.time.LocalDate;
 public class ConsignmentNoteListDto {
     private String number;
     private Company company;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate registration;
     private ConsignmentNoteType consignmentNoteType;
     private ConsignmentNoteStatus consignmentNoteStatus;
