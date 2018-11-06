@@ -1,7 +1,7 @@
 package by.itechart.carrier.dto;
 
-import by.itechart.carrier.entity.Driver;
 import by.itechart.carrier.enums.CarrierType;
+import by.itechart.common.dto.AddressDto;
 import lombok.Data;
 
 import java.util.List;
@@ -10,12 +10,10 @@ import java.util.List;
 public class CarrierDto {
 
     private Long id;
-    private String addressCountry;
-    private String addressRegion;
-    private String addressLocality;
+    private AddressDto address;
     private String name;
     private String taxNumber;
     private CarrierType carrierType;
     private Boolean trusted;
-    private List<Driver> drivers;
+    private List<String> driverInfo;
 }

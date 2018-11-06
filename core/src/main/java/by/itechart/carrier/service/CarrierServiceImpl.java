@@ -6,6 +6,7 @@ import by.itechart.carrier.dto.CarrierListDto;
 import by.itechart.carrier.dto.CreateCarrierDto;
 import by.itechart.carrier.entity.Carrier;
 import by.itechart.carrier.repository.CarrierRepository;
+import by.itechart.carrier.repository.DriverRepository;
 import by.itechart.common.repository.AddressRepository;
 import by.itechart.common.utils.ObjectMapperUtils;
 import by.itechart.company.entity.Company;
@@ -16,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -23,12 +25,13 @@ public class CarrierServiceImpl implements CarrierService {
 
     private final CarrierRepository carrierRepository;
     private final AddressRepository addressRepository;
+    private final DriverRepository driverRepository;
 
     @Autowired
-    public CarrierServiceImpl(CarrierRepository carrierRepository, AddressRepository addressRepository) {
+    public CarrierServiceImpl(CarrierRepository carrierRepository, AddressRepository addressRepository, DriverRepository driverRepository) {
         this.carrierRepository = carrierRepository;
         this.addressRepository = addressRepository;
-
+        this.driverRepository = driverRepository;
     }
 
     @Transactional(readOnly = true)
@@ -36,7 +39,7 @@ public class CarrierServiceImpl implements CarrierService {
     public Page<CarrierListDto> getCarriers(CarrierFilter filter, Long companyId, Pageable pageable) {
         Page<Carrier> result = carrierRepository.findAll(CarrierPredicates.findFilter(filter, companyId), pageable);
         List<CarrierListDto> carrierListDto = ObjectMapperUtils.mapAll(result.getContent(), CarrierListDto.class);
-        return new PageImpl<CarrierListDto>(carrierListDto, pageable, result.getTotalElements());
+        return new PageImpl<>(carrierListDto, pageable, result.getTotalElements());
     }
 
     @Transactional
@@ -53,8 +56,12 @@ public class CarrierServiceImpl implements CarrierService {
     @Transactional(readOnly = true)
     @Override
     public CarrierDto getCarrier(Long companyId, Long carrierId) {
-        Carrier carrier = carrierRepository.findOne(CarrierPredicates.findCompanyIdAndId(companyId, carrierId)).orElse(null);
-        return ObjectMapperUtils.map(carrier, CarrierDto.class);
+        Carrier carrier = carrierRepository.findOne(CarrierPredicates.findByCompanyIdAndId(companyId, carrierId)).orElse(null);
+        CarrierDto carrierDto = ObjectMapperUtils.map(carrier, CarrierDto.class);
+        ArrayList<String> driversInfo = new ArrayList<>();
+        driverRepository.findAll(CarrierPredicates.findDriverByCarrierId(carrierId)).forEach(driver -> driversInfo.add(driver.getInfo()));
+        carrierDto.setDriverInfo(driversInfo);
+        return carrierDto;
     }
 
     @Transactional

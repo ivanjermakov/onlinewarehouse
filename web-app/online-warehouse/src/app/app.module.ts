@@ -32,6 +32,8 @@ import {CommodityLotListComponent} from './commodity-lot/commodity-lot-list/comm
 import {GetCommodityLotComponent} from './commodity-lot/get-commodity-lot/get-commodity-lot.component';
 import {CarrierListComponent} from './carrier/carrier-list/carrier-list.component';
 import {CarrierListDialogComponent} from './carrier/carrier-list-dialog/carrier-list-dialog.component';
+import {GetCarrierComponent} from './carrier/get-carrier/get-carrier.component';
+import {CarrierListViewComponent} from './carrier/carrier-list-view/carrier-list-view.component';
 
 
 @NgModule({
@@ -52,7 +54,9 @@ import {CarrierListDialogComponent} from './carrier/carrier-list-dialog/carrier-
     CommodityLotListComponent,
     GetCommodityLotComponent,
     CarrierListComponent,
-    CarrierListDialogComponent
+    CarrierListDialogComponent,
+    GetCarrierComponent,
+    CarrierListViewComponent
   ],
   imports: [
     BrowserModule,

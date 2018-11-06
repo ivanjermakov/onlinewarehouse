@@ -232,8 +232,7 @@ body {
 }
 
 td.mat-cell, td.mat-footer-cell, th.mat-header-cell {
-  padding-right: 10px !important;
-  padding-left: 10px !important;
+  padding: 10px !important;
 }
 
 .mat-cell, .mat-header-cell {

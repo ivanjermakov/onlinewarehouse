@@ -16,10 +16,10 @@ import {Pageable} from "../../shared/pagination/pageable";
 })
 export class CarrierService {
 
+  private baseApi: string = API_BASE_URL + '/companies';
+
   constructor(private http: HttpClient) {
   }
-
-  private baseApi: string = API_BASE_URL + '/companies';
 
   getCarriers(filter: CarrierFilter, pageable: Pageable, companyId: number): Observable<Page<CarrierListDto>> {
     const path: string = this.baseApi + '/' + companyId + '/carriers';
@@ -40,18 +40,7 @@ export class CarrierService {
 
   getCarrier(companyId: number, carrierId: number): Observable<CarrierDto> {
     const path: string = this.baseApi + '/' + companyId + '/carriers/' + carrierId;
-    return this.http.get(path).pipe(
-      map((data: any) => data.map(item => new CarrierDto(
-        item.id,
-        item.addressCountry,
-        item.addressRegion,
-        item.addressLocality,
-        item.name,
-        item.taxNumber,
-        item.carrierType,
-        item.trusted,
-        item.drivers)))
-    );
+    return this.http.get<CarrierDto>(path);
   }
 
   editCarrier(createCarrierDto: CreateCarrierDto, companyId: number, carrierId: number): Observable<number> {

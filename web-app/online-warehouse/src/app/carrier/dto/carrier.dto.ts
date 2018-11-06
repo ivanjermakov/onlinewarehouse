@@ -1,25 +1,22 @@
 import {CarrierTypeEnum} from "./enum/carrier-type.enum";
+import {AddressDto} from "../../shared/address/dto/address.dto";
 
 export class CarrierDto {
   id: number;
-  addressCountry: string;
-  addressRegion: string;
-  addressLocality: string;
+  address: AddressDto;
   name: string;
   taxNumber: string;
   carrierType: CarrierTypeEnum;
   trusted: boolean;
-  drivers: Array<string>;
+  driverInfo: Array<string>;
 
-  constructor(id: number, addressCountry: string, addressRegion: string, addressLocality: string, name: string, taxNumber: string, carrierType: CarrierTypeEnum, trusted: boolean, drivers: Array<string>) {
+  constructor(id: number, address: AddressDto, name: string, taxNumber: string, carrierType: CarrierTypeEnum, trusted: boolean, driverInfo: Array<string>) {
     this.id = id;
-    this.addressCountry = addressCountry;
-    this.addressRegion = addressRegion;
-    this.addressLocality = addressLocality;
+    this.address = address;
     this.name = name;
     this.taxNumber = taxNumber;
     this.carrierType = carrierType;
     this.trusted = trusted;
-    this.drivers = drivers;
+    this.driverInfo = driverInfo;
   }
 }
