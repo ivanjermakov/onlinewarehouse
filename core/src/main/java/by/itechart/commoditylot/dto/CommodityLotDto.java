@@ -19,5 +19,5 @@ public class CommodityLotDto {
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate creation;
-    private List<CommodityLotGoodsDto> commodityLotGoodsDtoList;
+    private List<CommodityLotGoodsDto> commodityLotGoodsList;
 }

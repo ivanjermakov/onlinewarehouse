@@ -1,0 +1,41 @@
+<div *ngIf="!commodityLotDto" class="loader-container">
+  <div class="loader"></div>
+</div>
+<div *ngIf="commodityLotDto"
+     style="background-color: #fff;  box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.2), 0 4px 20px 0 rgba(0, 0, 0, 0.19)">
+  <table class="table">
+    <tr>
+      <td>Тип</td>
+      <td>Контрагент</td>
+      <td>Дата</td>
+    </tr>
+    <tr>
+      <td>{{commodityLotDto.commodityLotType}}</td>
+      <td>{{commodityLotDto.counterpartyId}}</td>
+      <td>{{commodityLotDto.creation}}</td>
+    </tr>
+  </table>
+  <span>Goods:</span>
+  <table class="table">
+    <tr>
+      <th>amount</th>
+      <th>Name</th>
+      <th>Placement Type</th>
+      <th>Measurement Unit</th>
+      <th>Cost</th>
+      <th>Weight</th>
+      <th>Labelling</th>
+      <th>Description</th>
+    </tr>
+    <tr *ngFor="let commodityLotGoods of commodityLotDto.commodityLotGoodsList">
+      <td>{{commodityLotGoods.amount}}</td>
+      <td>{{commodityLotGoods.goods.name}}</td>
+      <td>{{commodityLotGoods.goods.placementType}}</td>
+      <td>{{commodityLotGoods.goods.measurementUnit}}</td>
+      <td>{{commodityLotGoods.goods.cost}}</td>
+      <td>{{commodityLotGoods.goods.weight}}</td>
+      <td>{{commodityLotGoods.goods.labelling}}</td>
+      <td>{{commodityLotGoods.goods.description}}</td>
+    </tr>
+  </table>
+</div>

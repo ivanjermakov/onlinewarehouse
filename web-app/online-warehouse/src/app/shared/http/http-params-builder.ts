@@ -16,6 +16,18 @@ export default class HttpParamsBuilder {
     return this;
   }
 
+  addObject(object: any): HttpParamsBuilder {
+    let paramsBuilder = this;
+    Object.entries(object)
+      .forEach(([paramName, paramValue]) => {
+        if (paramValue !== null && paramValue !== undefined) {
+          paramsBuilder.httpParams = paramsBuilder.httpParams.append(paramName, String(paramValue))
+        }
+      });
+
+    return paramsBuilder;
+  }
+
   /**
    * Add a param if its value in not empty (including null)
    * @param {HttpParams} params

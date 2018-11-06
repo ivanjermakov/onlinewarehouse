@@ -1,10 +1,12 @@
-class CommodityLotListDto {
+import {CommodityLotTypeEnum} from "./enum/commodity-lot-type.enum";
+
+export class CommodityLotListDto {
   id: number;
   counterpartyName: string;
   creation: Date;
-  commodityLotType: string;
+  commodityLotType: CommodityLotTypeEnum;
 
-  constructor(id: number, counterpartyName: string, creation: Date, commodityLotType: string) {
+  constructor(id: number, counterpartyName: string, creation: Date, commodityLotType: CommodityLotTypeEnum) {
     this.id = id;
     this.counterpartyName = counterpartyName;
     this.creation = creation;

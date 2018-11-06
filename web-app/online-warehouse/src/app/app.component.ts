@@ -25,10 +25,6 @@ export class AppComponent {
           {
             'name': 'Создать компанию',
             'url': '/create-company'
-          },
-          {
-            'name': 'Test',
-            'url': '/test'
           }
         ]
       },
@@ -42,7 +38,16 @@ export class AppComponent {
           {
             'name': 'Создать пользователя',
             'url': '/user'
-          }
+          },
+          {
+            'name': 'Список товаров компании',
+            'url': '/list-goods'
+          },
+          {
+            'name': 'Список товарных партий',
+            'url': '/list-commodity-lots'
+          },
+
         ]
       },
       {

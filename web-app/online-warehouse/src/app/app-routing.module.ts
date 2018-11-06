@@ -9,6 +9,8 @@ import {GoodsListComponent} from "./shared/goods/goods-list/goods-list.component
 import {WriteOffActListComponent} from "./write-off-act/write-off-act-list/write-off-act-list.component";
 import {CreateWriteOffActComponent} from "./write-off-act/create-write-off-act/create-write-off-act.component";
 import {GetWriteOffActComponent} from "./write-off-act/get-write-off-act/get-write-off-act.component";
+import {CommodityLotListComponent} from "./commodity-lot/commodity-lot-list/commodity-lot-list.component";
+import {GetCommodityLotComponent} from "./commodity-lot/get-commodity-lot/get-commodity-lot.component";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -17,10 +19,12 @@ const routes: Routes = [
   {path: 'user', component: UserComponent},
   {path: 'list-companies', component: CompanyListComponent},
   {path: 'create-company', component: CreateCompanyComponent},
-  {path: 'test', component: GoodsListComponent},
+  {path: 'list-goods', component: GoodsListComponent},
   {path: 'list-write-off-acts', component: WriteOffActListComponent},
   {path: 'create-write-off-act', component: CreateWriteOffActComponent},
   {path: 'write-off-act/:id', component: GetWriteOffActComponent},
+  {path: 'list-commodity-lots', component: CommodityLotListComponent},
+  {path: 'commodity-lot/:id', component: GetCommodityLotComponent},
   // { path: 'heroes', component:  }
 ];
 

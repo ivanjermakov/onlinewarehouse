@@ -1,13 +1,15 @@
 package by.itechart.commoditylot.service;
 
-import by.itechart.commoditylot.dto.*;
+import by.itechart.commoditylot.dto.CommodityLotDto;
+import by.itechart.commoditylot.dto.CommodityLotFilter;
+import by.itechart.commoditylot.dto.CommodityLotListDto;
+import by.itechart.commoditylot.dto.CreateCommodityLotDto;
 import by.itechart.commoditylot.entity.CommodityLot;
 import by.itechart.commoditylot.entity.CommodityLotGoods;
 import by.itechart.commoditylot.repository.CommodityLotGoodsRepository;
 import by.itechart.commoditylot.repository.CommodityLotRepository;
 import by.itechart.common.utils.ObjectMapperUtils;
 import by.itechart.company.entity.Company;
-import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -35,7 +37,7 @@ public class CommodityLotServiceImpl implements CommodityLotService {
     public Page<CommodityLotListDto> getCommodityLots(Long companyId, Pageable pageable, CommodityLotFilter commodityLotFilter) {
         Page<CommodityLot> commodityLots = commodityLotRepository.findAll(CommodityLotPredicates.findFilter(commodityLotFilter, companyId), pageable);
         List<CommodityLotListDto> listDtos = ObjectMapperUtils.mapAll(commodityLots.getContent(), CommodityLotListDto.class);
-        return new PageImpl<CommodityLotListDto>(listDtos, pageable, commodityLots.getTotalElements());
+        return new PageImpl<>(listDtos, pageable, commodityLots.getTotalElements());
     }
 
     @Transactional
@@ -59,11 +61,7 @@ public class CommodityLotServiceImpl implements CommodityLotService {
     @Transactional(readOnly = true)
     @Override
     public CommodityLotDto getCommodityLot(Long commodityLotId, Long companyId) {
-        Iterable<CommodityLotGoods> commodityLotGoodsIterable = commodityLotGoodsRepository.findAll(CommodityLotPredicates.findGoodsByCommodityLotId(commodityLotId));
-        List<CommodityLotGoodsDto> commodityLotGoodsDtoList = ObjectMapperUtils.mapAll(Lists.newArrayList(commodityLotGoodsIterable), CommodityLotGoodsDto.class);
-        CommodityLot commodityLot = commodityLotRepository.findOne(CommodityLotPredicates.findOneByIdAndCompanyId(commodityLotId, companyId)).orElse(null);
-        CommodityLotDto commodityLotDto = ObjectMapperUtils.map(commodityLot, CommodityLotDto.class);
-        commodityLotDto.setCommodityLotGoodsDtoList(commodityLotGoodsDtoList);
-        return commodityLotDto;
+        CommodityLot commodityLot = commodityLotRepository.getOne(commodityLotId);
+        return ObjectMapperUtils.map(commodityLot, CommodityLotDto.class);
     }
 }

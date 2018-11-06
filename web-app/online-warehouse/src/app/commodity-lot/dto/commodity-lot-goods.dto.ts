@@ -1,15 +1,7 @@
-class CommodityLotGoodsDto {
-  amount: number;
-  goodsId: number;
-  goodsName: string;
-  goodsPlacementType: string;
-  goodsMeasurementUnit: string;
+import {GoodsDto} from "../../shared/goods/goods.dto";
 
-  constructor(amount: number, goodsId: number, goodsName: string, goodsPlacementType: string, goodsMeasurementUnit: string) {
-    this.amount = amount;
-    this.goodsId = goodsId;
-    this.goodsName = goodsName;
-    this.goodsPlacementType = goodsPlacementType;
-    this.goodsMeasurementUnit = goodsMeasurementUnit;
-  }
+export class CommodityLotGoodsDto {
+  amount: number;
+  goods: GoodsDto;
+
 }

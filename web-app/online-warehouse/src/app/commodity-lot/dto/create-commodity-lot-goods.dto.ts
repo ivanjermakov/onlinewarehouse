@@ -1,4 +1,4 @@
-class CreateCommodityLotGoodsDto {
+export class CreateCommodityLotGoodsDto {
   amount: number;
   goodsId: number;
 

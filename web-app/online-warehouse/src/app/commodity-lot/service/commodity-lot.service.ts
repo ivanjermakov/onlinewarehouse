@@ -3,6 +3,13 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
 import {API_BASE_URL} from "../../base-server-url";
+import {CommodityLotListDto} from "../dto/commodity-lot-list.dto";
+import {CommodityLotFilter} from "../dto/commodity-lot.filter";
+import {CreateCommodityLotDto} from "../dto/create-commodity-lot.dto";
+import {CommodityLotDto} from "../dto/commodity-lot.dto";
+import {Pageable} from "../../shared/pagination/pageable";
+import {Page} from "../../shared/pagination/page";
+import HttpParamsBuilder from "../../shared/http/http-params-builder";
 
 @Injectable({
   providedIn: 'root'
@@ -14,17 +21,14 @@ export class CommodityLotService {
 
   private baseApi: string = API_BASE_URL + '/companies/';
 
-  getCommodityLots(filter: CommodityLotFilter, companyId: number): Observable<CommodityLotListDto[]> {
+  getCommodityLots(filter: CommodityLotFilter, pageable: Pageable, companyId: number): Observable<Page<CommodityLotListDto>> {
     const path: string = this.baseApi + companyId + '/commodity-lots';
-    let data = {};
-    //Object.assign(data, filter);
-    return this.http.get(path, {params: data}).pipe(
-      map((data: any[]) => data.map(item => new CommodityLotListDto(
-        item.id,
-        item.counterpartyName,
-        item.creation,
-        item.commodityLotType)))
-    );
+    let paramsBuilder = new HttpParamsBuilder();
+    pageable.toUrlParameters(paramsBuilder);
+    if (filter) {
+      paramsBuilder.addObject(filter);
+    }
+    return this.http.get<Page<CommodityLotListDto>>(path, {params: paramsBuilder.getHttpParams()});
   }
 
   saveCommodityLot(createCommodityLotDto: CreateCommodityLotDto, companyId: number): Observable<number> {
@@ -36,13 +40,6 @@ export class CommodityLotService {
 
   getCommodityLot(companyId: number, carrierId: number): Observable<CommodityLotDto> {
     const path: string = this.baseApi + companyId + '/commodity-lots/' + carrierId;
-    return this.http.get(path).pipe(
-      map((data: any) => data.map(item => new CommodityLotDto(
-        item.id,
-        item.counterpartyId,
-        item.commodityLotType,
-        item.creation,
-        item.commodityLotGoodsDtoList)))
-    );
+    return this.http.get<CommodityLotDto>(path);
   }
 }

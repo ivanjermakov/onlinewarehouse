@@ -1,0 +1,54 @@
+<form [formGroup]="commodityLotFilterForm"
+      (ngSubmit)="onSubmit(commodityLotFilterForm)">
+  <label>Company size:
+    <select name="commodityLotType"
+            [formControl]="commodityLotFilterForm.controls['commodityLotType']" class="select input-border">
+      <option [value]=""></option>
+      <option *ngFor="let type of getCommodityLotTypes()" [value]="type">{{type}}</option>
+    </select>
+  </label>
+  <br>
+  <label>From:
+    <input type="date" [formControl]="commodityLotFilterForm.controls['from']" class="input input-border">
+  </label>
+  <br>
+  <label>To:
+    <input type="date" [formControl]="commodityLotFilterForm.controls['to']" class="input input-border">
+  </label>
+  <br>
+  <label>Counterparty Name:
+    <input type="text" [formControl]="commodityLotFilterForm.controls['counterpartyName']" class="input input-border">
+  </label>
+  <br>
+  <button type="submit">Search</button>
+</form>
+<br>
+<div *ngIf="!page" class="loader-container">
+  <div class="loader"></div>
+</div>
+<div *ngIf="page">
+  <table class="table table-shadow hoverable-table">
+    <tr>
+      <th>Id</th>
+      <th>Creation</th>
+      <th>Counterparty Name</th>
+      <th>Type</th>
+    </tr>
+    <tr *ngIf="page.content.length === 0">
+      <td colspan="4">Нет подходящих записей</td>
+    </tr>
+    <tr *ngFor="let commodityLot of page.content" (click)="navigateToPage(commodityLot.id)">
+      <td>{{commodityLot.id}}</td>
+      <td>{{commodityLot.creation}}</td>
+      <td>{{commodityLot.counterpartyName}}</td>
+      <td>{{commodityLot.commodityLotType}}</td>
+    </tr>
+  </table>
+  <br>
+  <mat-paginator [length]="page.totalElements"
+                 [pageIndex]="pageable.page"
+                 [pageSize]="pageable.size"
+                 [pageSizeOptions]="pageSizeOptions"
+                 (page)="pageChanged($event)">
+  </mat-paginator>
+</div>

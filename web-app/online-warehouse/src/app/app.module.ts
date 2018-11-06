@@ -19,6 +19,8 @@ import {CreateWriteOffActComponent} from './write-off-act/create-write-off-act/c
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {GoodsListDialogComponent} from './shared/goods/goods-list-dialog/goods-list-dialog.component';
 import {GetWriteOffActComponent} from './write-off-act/get-write-off-act/get-write-off-act.component';
+import {CommodityLotListComponent} from './commodity-lot/commodity-lot-list/commodity-lot-list.component';
+import {GetCommodityLotComponent} from './commodity-lot/get-commodity-lot/get-commodity-lot.component';
 
 
 @NgModule({
@@ -35,7 +37,9 @@ import {GetWriteOffActComponent} from './write-off-act/get-write-off-act/get-wri
     WriteOffActListComponent,
     CreateWriteOffActComponent,
     GoodsListDialogComponent,
-    GetWriteOffActComponent
+    GetWriteOffActComponent,
+    CommodityLotListComponent,
+    GetCommodityLotComponent
   ],
   imports: [
     BrowserModule,
