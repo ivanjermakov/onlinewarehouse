@@ -1,4 +1,4 @@
-class CarrierListDto {
+export class CarrierListDto {
   id: number;
   name: string;
   taxNumber: string;

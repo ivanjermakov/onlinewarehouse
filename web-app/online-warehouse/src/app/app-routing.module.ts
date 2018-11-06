@@ -11,6 +11,7 @@ import {CreateWriteOffActComponent} from "./write-off-act/create-write-off-act/c
 import {GetWriteOffActComponent} from "./write-off-act/get-write-off-act/get-write-off-act.component";
 import {CommodityLotListComponent} from "./commodity-lot/commodity-lot-list/commodity-lot-list.component";
 import {GetCommodityLotComponent} from "./commodity-lot/get-commodity-lot/get-commodity-lot.component";
+import {CarrierListComponent} from "./carrier/carrier-list/carrier-list.component";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -25,6 +26,7 @@ const routes: Routes = [
   {path: 'write-off-act/:id', component: GetWriteOffActComponent},
   {path: 'list-commodity-lots', component: CommodityLotListComponent},
   {path: 'commodity-lot/:id', component: GetCommodityLotComponent},
+  {path: 'list-carriers', component: CarrierListComponent},
   // { path: 'heroes', component:  }
 ];
 

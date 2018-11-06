@@ -4,7 +4,16 @@ import {NgModule} from '@angular/core';
 import {AppComponent} from './app.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
-import {MatDialogModule, MatPaginatorModule} from '@angular/material';
+import {
+  MatDialogModule,
+  MatInputModule,
+  MatNativeDateModule,
+  MatPaginatorModule,
+  MatProgressSpinnerModule,
+  MatSelectModule,
+  MatSortModule,
+  MatTableModule
+} from '@angular/material';
 import {ViewUsersComponent} from './view-users/view-users.component';
 import {AppRoutingModule} from './app-routing.module';
 import {HomeComponent} from './home/home.component';
@@ -21,6 +30,8 @@ import {GoodsListDialogComponent} from './shared/goods/goods-list-dialog/goods-l
 import {GetWriteOffActComponent} from './write-off-act/get-write-off-act/get-write-off-act.component';
 import {CommodityLotListComponent} from './commodity-lot/commodity-lot-list/commodity-lot-list.component';
 import {GetCommodityLotComponent} from './commodity-lot/get-commodity-lot/get-commodity-lot.component';
+import {CarrierListComponent} from './carrier/carrier-list/carrier-list.component';
+import {CarrierListDialogComponent} from './carrier/carrier-list-dialog/carrier-list-dialog.component';
 
 
 @NgModule({
@@ -39,7 +50,9 @@ import {GetCommodityLotComponent} from './commodity-lot/get-commodity-lot/get-co
     GoodsListDialogComponent,
     GetWriteOffActComponent,
     CommodityLotListComponent,
-    GetCommodityLotComponent
+    GetCommodityLotComponent,
+    CarrierListComponent,
+    CarrierListDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -49,10 +62,19 @@ import {GetCommodityLotComponent} from './commodity-lot/get-commodity-lot/get-co
     HttpClientModule,
     BrowserAnimationsModule,
     MatDialogModule,
-    MatPaginatorModule
+    MatInputModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatProgressSpinnerModule,
+    MatNativeDateModule,
+    MatSelectModule
   ],
   bootstrap: [AppComponent],
-  entryComponents: [GoodsListDialogComponent]
+  entryComponents: [
+    GoodsListDialogComponent,
+    CarrierListDialogComponent
+  ]
 })
 export class AppModule {
 }

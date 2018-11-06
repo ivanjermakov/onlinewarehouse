@@ -1,15 +1,17 @@
-class CarrierDto {
+import {CarrierTypeEnum} from "./enum/carrier-type.enum";
+
+export class CarrierDto {
   id: number;
   addressCountry: string;
   addressRegion: string;
   addressLocality: string;
   name: string;
   taxNumber: string;
-  carrierType: string;
+  carrierType: CarrierTypeEnum;
   trusted: boolean;
   drivers: Array<string>;
 
-  constructor(id: number, addressCountry: string, addressRegion: string, addressLocality: string, name: string, taxNumber: string, carrierType: string, trusted: boolean, drivers: Array<string>) {
+  constructor(id: number, addressCountry: string, addressRegion: string, addressLocality: string, name: string, taxNumber: string, carrierType: CarrierTypeEnum, trusted: boolean, drivers: Array<string>) {
     this.id = id;
     this.addressCountry = addressCountry;
     this.addressRegion = addressRegion;

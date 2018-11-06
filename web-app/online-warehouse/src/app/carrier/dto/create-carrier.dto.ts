@@ -1,4 +1,4 @@
-class CreateCarrierDto {
+export class CreateCarrierDto {
   addressCountry: string;
   addressRegion: string;
   addressLocality: string;

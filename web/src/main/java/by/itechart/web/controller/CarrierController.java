@@ -6,11 +6,10 @@ import by.itechart.carrier.dto.CarrierListDto;
 import by.itechart.carrier.dto.CreateCarrierDto;
 import by.itechart.carrier.service.CarrierService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/companies/{companyId}/carriers")
@@ -24,10 +23,10 @@ public class CarrierController {
     }
 
     @GetMapping
-    public List<CarrierListDto> getCarriersList(@PathVariable long companyId,
+    public Page<CarrierListDto> getCarriersList(@PathVariable long companyId,
                                                 Pageable pageable,
                                                 CarrierFilter carrierFilter) {
-        return carrierService.getCarriers(carrierFilter, companyId, pageable).getContent();
+        return carrierService.getCarriers(carrierFilter, companyId, pageable);
     }
 
     @PostMapping

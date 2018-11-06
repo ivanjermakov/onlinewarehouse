@@ -3,6 +3,13 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
 import {API_BASE_URL} from "../../base-server-url";
+import {CarrierFilter} from "../dto/carrier.filter";
+import {CarrierListDto} from "../dto/carrier-list.dto";
+import {CreateCarrierDto} from "../dto/create-carrier.dto";
+import {CarrierDto} from "../dto/carrier.dto";
+import {Page} from "../../shared/pagination/page";
+import HttpParamsBuilder from "../../shared/http/http-params-builder";
+import {Pageable} from "../../shared/pagination/pageable";
 
 @Injectable({
   providedIn: 'root'
@@ -14,18 +21,14 @@ export class CarrierService {
 
   private baseApi: string = API_BASE_URL + '/companies';
 
-  getCarriers(filter: CarrierFilter, companyId: number): Observable<CarrierListDto[]> {
+  getCarriers(filter: CarrierFilter, pageable: Pageable, companyId: number): Observable<Page<CarrierListDto>> {
     const path: string = this.baseApi + '/' + companyId + '/carriers';
-    let data = {};
-    //Object.assign(data, filter);
-    return this.http.get(path, {params: data}).pipe(
-      map((data: any[]) => data.map(item => new CarrierListDto(
-        item.id,
-        item.name,
-        item.taxNumber,
-        item.carrierType,
-        item.trusted)))
-    );
+    let paramsBuilder = new HttpParamsBuilder();
+    pageable.toUrlParameters(paramsBuilder);
+    if (filter) {
+      paramsBuilder.addObject(filter);
+    }
+    return this.http.get<Page<CarrierListDto>>(path, {params: paramsBuilder.getHttpParams()});
   }
 
   saveCarrier(createCarrierDto: CreateCarrierDto, companyId: number): Observable<number> {

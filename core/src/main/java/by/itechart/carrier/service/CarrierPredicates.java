@@ -18,7 +18,7 @@ final class CarrierPredicates {
             predicate.and(QCarrier.carrier.name.startsWithIgnoreCase(filter.getName()));
         }
         if (StringUtils.isNotBlank(filter.getTaxNumber())) {
-            predicate.and(QCarrier.carrier.taxNumber.containsIgnoreCase(filter.getName()));
+            predicate.and(QCarrier.carrier.taxNumber.containsIgnoreCase(filter.getTaxNumber()));
         }
         if (filter.getCarrierType() != null) {
             predicate.and(QCarrier.carrier.carrierType.eq(filter.getCarrierType()));

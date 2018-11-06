@@ -97,10 +97,10 @@ export class AppComponent {
             'url': ''
           }
           ,
-          // {
-          //   'name': 'name3',
-          //   'url': 'componentName3'
-          // }
+          {
+            'name': 'Список перевозчиков',
+            'url': 'list-carriers'
+          }
         ]
       },
       {
