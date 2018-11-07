@@ -4,16 +4,7 @@ import {NgModule} from '@angular/core';
 import {AppComponent} from './app.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
-import {
-  MatDialogModule,
-  MatInputModule,
-  MatNativeDateModule,
-  MatPaginatorModule,
-  MatProgressSpinnerModule,
-  MatSelectModule,
-  MatSortModule,
-  MatTableModule
-} from '@angular/material';
+import {MatNativeDateModule} from '@angular/material';
 import {ViewUsersComponent} from './view-users/view-users.component';
 import {AppRoutingModule} from './app-routing.module';
 import {HomeComponent} from './home/home.component';
@@ -34,6 +25,7 @@ import {CarrierListComponent} from './carrier/carrier-list/carrier-list.componen
 import {CarrierListDialogComponent} from './carrier/carrier-list-dialog/carrier-list-dialog.component';
 import {GetCarrierComponent} from './carrier/get-carrier/get-carrier.component';
 import {CarrierListViewComponent} from './carrier/carrier-list-view/carrier-list-view.component';
+import {MaterialModule} from "./material.module";
 
 
 @NgModule({
@@ -65,14 +57,8 @@ import {CarrierListViewComponent} from './carrier/carrier-list-view/carrier-list
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    MatDialogModule,
-    MatInputModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatProgressSpinnerModule,
+    MaterialModule,
     MatNativeDateModule,
-    MatSelectModule
   ],
   bootstrap: [AppComponent],
   entryComponents: [
