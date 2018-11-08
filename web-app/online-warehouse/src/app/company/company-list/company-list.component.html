@@ -1,26 +1,63 @@
-<div *ngIf="!companyList" class="loader"></div>
-<table *ngIf="companyList" class="table table-shadow">
-  <tr>
-    <th>Id</th>
-    <th>Name</th>
-    <th>Size</th>
-    <th>Current status</th>
-    <th>Updated</th>
-    <th>Change status</th>
-  </tr>
-  <tr *ngFor="let company of companyList">
-    <td>{{company.id}}</td>
-    <td>{{company.name}}</td>
-    <td>{{company.sizeType}}</td>
-    <td>{{company.actionType}}</td>
-    <td>{{company.change}}</td>
-    <td *ngIf="company.actionType === actionType.ENABLED" (click)="disableCompany(company.id)" class="hoverable-cell">
-      Disable
-    </td>
-    <td *ngIf="company.actionType === actionType.DISABLED" (click)="enableCompany(company.id)" class="hoverable-cell">
-      Enable
-    </td>
-  </tr>
-</table>
+<div style="display: flex; justify-content: center; align-items: center">
+  <table mat-table [dataSource]="page ? page.content : null">
 
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef>Id</th>
+      <td mat-cell *matCellDef="let company">{{company.id}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <td mat-cell *matCellDef="let company">{{company.name}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="sizeType">
+      <th mat-header-cell *matHeaderCellDef>Plan</th>
+      <td mat-cell *matCellDef="let company">{{company.sizeType}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="actionType">
+      <th mat-header-cell *matHeaderCellDef>Current status</th>
+      <td mat-cell *matCellDef="let company">{{company.actionType}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="change">
+      <th mat-header-cell *matHeaderCellDef>Updated</th>
+      <td mat-cell *matCellDef="let company">{{company.change}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="changeStatus">
+      <th mat-header-cell *matHeaderCellDef>Change status</th>
+      <td mat-cell *matCellDef="let company"
+          (click)="company.actionType === actionType.ENABLED ? disableCompany(company.id) : enableCompany(company.id)"
+          class="hoverable-cell">
+        {{company.actionType === actionType.ENABLED ? 'Disable' : 'Enable'}}
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>
+
+<div *ngIf="page && page.content.length === 0"
+     style="display: flex; justify-content: center; align-items: center">
+  <p>Not found</p>
+</div>
+
+<div *ngIf="loading$ | async"
+     style="display: flex; justify-content: center; align-items: center">
+  <mat-progress-spinner
+    color="primary"
+    mode="indeterminate">
+  </mat-progress-spinner>
+</div>
+
+<mat-paginator [length]="page ? page.totalElements : 0"
+               [pageIndex]="pageable.page"
+               [pageSize]="pageable.size"
+               [pageSizeOptions]="pageSizeOptions"
+               (page)="pageChanged($event)">
+</mat-paginator>
 

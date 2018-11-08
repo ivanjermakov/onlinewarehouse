@@ -1,5 +1,5 @@
 import {Component, OnInit} from "@angular/core";
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {CreateCompanyDto} from "../dto/create-company.dto";
 import {CompanyService} from "../service/company.service";
 import {CompanySizeEnum} from "../dto/enum/company-size.enum";
@@ -12,13 +12,12 @@ import {CompanySizeEnum} from "../dto/enum/company-size.enum";
 export class CreateCompanyComponent implements OnInit {
 
   createCompanyForm: FormGroup;
-  sizeTypes = CompanySizeEnum;
 
   constructor(private fb: FormBuilder,
               private companyService: CompanyService) {
     this.createCompanyForm = fb.group({
-      "name": [''],
-      "sizeType": ['']
+      "name": ['', Validators.required],
+      "sizeType": ['', Validators.required]
     });
   }
 
@@ -26,7 +25,7 @@ export class CreateCompanyComponent implements OnInit {
   }
 
   getSizeTypes(): Array<string> {
-    return Object.keys(this.sizeTypes);
+    return Object.keys(CompanySizeEnum);
   }
 
   onSubmit(createCompanyForm: FormGroup): void {
@@ -37,5 +36,4 @@ export class CreateCompanyComponent implements OnInit {
       console.log(long)
     });
   }
-
 }

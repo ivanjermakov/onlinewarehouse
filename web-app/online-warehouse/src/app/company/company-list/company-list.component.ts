@@ -1,7 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {CompanyService} from "../service/company.service";
 import {CompanyDto} from "../dto/company.dto";
-import * as actionTypeEnum from "../dto/enum/action-type.enum";
+import {BehaviorSubject, of} from "rxjs";
+import {Page} from "../../shared/pagination/page";
+import {Pageable} from "../../shared/pagination/pageable";
+import {catchError, finalize} from "rxjs/operators";
+import {PageEvent} from "@angular/material";
+import {ActionTypeEnum} from "../dto/enum/action-type.enum";
 
 
 @Component({
@@ -10,8 +15,18 @@ import * as actionTypeEnum from "../dto/enum/action-type.enum";
   styleUrls: ['./company-list.component.css']
 })
 export class CompanyListComponent implements OnInit {
-  companyList: CompanyDto[];
-  actionType = actionTypeEnum.ActionTypeEnum;
+
+  private actionType = ActionTypeEnum;
+
+  private displayedColumns = ["id", "name", "sizeType", "actionType", "change", "changeStatus"];
+  private loadingSubject = new BehaviorSubject<boolean>(false);
+  loading$ = this.loadingSubject.asObservable();
+  private page: Page<CompanyDto>;
+
+  private pageable: Pageable = new Pageable(0, 10);
+  private pageSizeOptions: number[] = [10, 25, 50];
+
+  private errors: any[];
 
   constructor(private companyService: CompanyService) {
   }
@@ -21,19 +36,35 @@ export class CompanyListComponent implements OnInit {
   }
 
   disableCompany(companyId: number) {
-    this.companyService.setCompanyDisabled(companyId);
-    this.updateCompaniesList();
+    this.page = null;
+    this.loadingSubject.next(true);
+    this.companyService.setCompanyDisabled(companyId).subscribe(() => this.updateCompaniesList());
   }
 
   enableCompany(companyId: number) {
-    this.companyService.setCompanyEnabled(companyId);
+    this.page = null;
+    this.loadingSubject.next(true);
+    this.companyService.setCompanyEnabled(companyId).subscribe(() => this.updateCompaniesList());
+  }
+
+  pageChanged(event: PageEvent) {
+    this.page = null;
+    this.pageable = new Pageable(event.pageIndex, event.pageSize);
     this.updateCompaniesList();
   }
 
   updateCompaniesList(): void {
-    this.companyList = null;
-    this.companyService.getAllCompanies().subscribe((companies: CompanyDto[]) => {
-      this.companyList = companies;
-    })
+    this.loadingSubject.next(true);
+    this.companyService.getAllCompanies(this.pageable).pipe(
+      catchError(() => of([])),
+      finalize(() => this.loadingSubject.next(false))
+    )
+      .subscribe(page => {
+        if (page instanceof Array) {
+          this.errors = page as any[];
+        } else {
+          this.page = page;
+        }
+      });
   }
 }

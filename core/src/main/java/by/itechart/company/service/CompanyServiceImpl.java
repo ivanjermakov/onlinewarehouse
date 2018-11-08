@@ -35,8 +35,8 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     @Transactional(readOnly = true)
     public Page<CompanyDto> getCompanies(Pageable pageable) {
-        Page<Company> all = companyRepository.findAll(pageable);
-        List<CompanyDto> companyDtoList = all.getContent().stream().filter(company -> !company.getId().equals(1L)).map(company -> {
+        Page<Company> all = companyRepository.findAll(CompanyPredicates.findExcludeFirstCompany(), pageable);
+        List<CompanyDto> companyDtoList = all.getContent().stream().map(company -> {
             CompanyDto companyDto = new CompanyDto();
             companyDto.setId(company.getId());
             companyDto.setName(company.getName());

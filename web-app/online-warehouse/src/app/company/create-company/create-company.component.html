@@ -1,17 +1,36 @@
-<form [formGroup]="createCompanyForm"
-      (ngSubmit)="onSubmit(createCompanyForm)">
-
-  <label>Company name:
-    <input type="text" [formControl]="createCompanyForm.controls['name']" class="input input-border">
-  </label>
-  <br>
-  <label>Company size:
-    <select name="sizeType"
-            [formControl]="createCompanyForm.controls['sizeType']" class="select input-border">
-      <option *ngFor="let type of getSizeTypes()" [value]="type">{{type}}</option>
-    </select>
-  </label>
-  <br>
-  <br>
-  <button type="submit" class="button button-cyan">Purchase</button>
-</form>
+<mat-horizontal-stepper linear #stepper>
+  <mat-step [stepControl]="createCompanyForm.controls['name']">
+    <ng-template matStepLabel>Fill company name</ng-template>
+    <mat-form-field>
+      <input matInput placeholder="Company name" [formControl]="createCompanyForm.controls['name']" required>
+    </mat-form-field>
+    <div>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
+  <mat-step [stepControl]="createCompanyForm.controls['sizeType']" [optional]="isOptional">
+    <ng-template matStepLabel>Fill company plan</ng-template>
+    <mat-form-field>
+      <mat-select [formControl]="createCompanyForm.controls['sizeType']"
+                  placeholder="Company plan" name="sizeType">
+        <mat-option>None</mat-option>
+        <mat-option *ngFor="let type of getSizeTypes()" [value]="type">
+          {{type}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Done</ng-template>
+    <p>Company name: {{createCompanyForm.controls['name'].value}}</p>
+    <p>Company plan: {{createCompanyForm.controls['sizeType'].value}}</p>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button (click)="onSubmit(createCompanyForm); stepper.reset()">Submit</button>
+    </div>
+  </mat-step>
+</mat-horizontal-stepper>

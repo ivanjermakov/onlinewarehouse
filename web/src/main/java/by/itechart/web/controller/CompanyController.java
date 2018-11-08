@@ -5,11 +5,10 @@ import by.itechart.company.dto.CreateCompanyDto;
 import by.itechart.company.enums.ActionType;
 import by.itechart.company.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/companies")
@@ -23,16 +22,9 @@ public class CompanyController {
     }
 
     @GetMapping
-    public List<CompanyDto> getCompanies(Pageable pageable) {
-        return companyService.getCompanies(pageable).getContent();
+    public Page<CompanyDto> getCompanies(Pageable pageable) {
+        return companyService.getCompanies(pageable);
     }
-
-//    @GetMapping("/test")
-//    public CreateCompanyDto test(){
-//        CreateCompanyDto createCompanyDto = new CreateCompanyDto();
-//        createCompanyDto
-//        return
-//    }
 
     @PostMapping
     public Long saveCompany(@RequestBody CreateCompanyDto createCompanyDto) {

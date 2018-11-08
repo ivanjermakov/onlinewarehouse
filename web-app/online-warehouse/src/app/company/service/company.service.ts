@@ -5,44 +5,42 @@ import {map} from "rxjs/operators";
 import {CompanyDto} from "../dto/company.dto";
 import {CreateCompanyDto} from "../dto/create-company.dto";
 import {API_BASE_URL} from "../../base-server-url";
+import {Page} from "../../shared/pagination/page";
+import {Pageable} from "../../shared/pagination/pageable";
+import HttpParamsBuilder from "../../shared/http/http-params-builder";
 
 @Injectable({
   providedIn: 'root'
 })
 export class CompanyService {
 
+  private baseApi: string = API_BASE_URL + '/companies';
+
   constructor(private http: HttpClient) {
   }
 
-  private baseApi: string = API_BASE_URL + '/companies';
-
-  getAllCompanies(): Observable<CompanyDto[]> {
+  getAllCompanies(pageable: Pageable): Observable<Page<CompanyDto>> {
     const path: string = this.baseApi;
-    return this.http.get(path, {params: {page: '0', size: '20'}}).pipe(
-      map((data: any[]) => data.map(item => new CompanyDto(
-        item.id,
-        item.name,
-        item.sizeType,
-        item.change,
-        item.actionType)))
-    );
+    let paramsBuilder = new HttpParamsBuilder();
+    pageable.toUrlParameters(paramsBuilder);
+    return this.http.get<Page<CompanyDto>>(path, {params: paramsBuilder.getHttpParams()});
   }
 
-  saveCompany(createCompanyDto: CreateCompanyDto):Observable<number> {
+  saveCompany(createCompanyDto: CreateCompanyDto): Observable<number> {
     const path: string = this.baseApi;
     return this.http.post(path, createCompanyDto).pipe(
       map((data: number) => data)
     );
   }
 
-  setCompanyDisabled(companyId: number): void {
+  setCompanyDisabled(companyId: number): Observable<any> {
     const path: string = this.baseApi + '/' + companyId + '/disable';
-    this.http.patch(path, null).subscribe();
+    return this.http.patch(path, null);
   }
 
-  setCompanyEnabled(companyId: number): void {
+  setCompanyEnabled(companyId: number): Observable<any> {
     const path: string = this.baseApi + '/' + companyId + '/enable';
-    this.http.patch(path, null).subscribe();
+    return this.http.patch(path, null);
   }
 
 }
