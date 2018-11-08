@@ -18,6 +18,19 @@
            placeholder="shipment"
            [formControl]="consignmentNoteForm.controls['shipment']">
   </div>
+  <table *ngIf="goodsDtoList.length > 0" formArrayName="consignmentNoteGoodsList">
+    <tr *ngFor="let goods of goodsDtoList; let i = index">
+      <td>{{goods.name}}</td>
+      <td>{{goods.placementType}}</td>
+      <td>{{goods.measurementUnit}}</td>
+      <td>{{goods.cost}}</td>
+      <td formGroupName="{{i}}" style="display: flex; justify-content: space-between">
+        <input type="hidden" formControlName="goodsId">
+        <input type="number" formControlName="amount" class="select input-border">
+      </td>
+    </tr>
+  </table>
 
+  <button class="button button-cyan" (click)="openModal()">Add goods</button>
   <button type="submit" class="button button-cyan" [disabled]="!consignmentNoteForm.valid">Register</button>
 </form>

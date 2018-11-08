@@ -26,10 +26,9 @@ export class ConsignmentNoteDetailComponent implements OnInit {
     if (!Number.isNaN(id) && id != 0) {
       this.consignmentNoteService.getConsignmentNote(companyId, id)
         .subscribe((consignmentNote) => {
-          console.log(consignmentNote);
           this.consignmentNote = consignmentNote;
+          console.log(consignmentNote);
         });
     }
   }
-
 }

@@ -3,7 +3,7 @@ import {Page} from "../../shared/pagination/page";
 import {Pageable} from "../../shared/pagination/pageable";
 import {ConsignmentNoteService} from "../consignment-note.service";
 import {ConsignmentNoteFilter} from "../dto/consignment-note-filter";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {ConsignmentNoteListDto} from "../dto/consignment-note-list-dto";
 
 @Component({

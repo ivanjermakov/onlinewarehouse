@@ -1,5 +1,7 @@
 import {CounterpartyDto} from "../../counterparty/dto/counterparty.dto";
 import {CompanyDto} from "../../company/dto/company.dto";
+import {CarrierDto} from "../../carrier/dto/carrier.dto";
+import {ConsignmentNoteGoodsDto} from "./consignment-note-goods-dto";
 
 export class CreateConsignmentNoteDto {
   company: CompanyDto;
@@ -10,7 +12,7 @@ export class CreateConsignmentNoteDto {
   vehicleNumber: string;
   // creator: UserDto;
   registration: string;
-  // consignmentNoteGoodsList: ConsignmentNoteGoodsDto[];
+  consignmentNoteGoodsList: ConsignmentNoteGoodsDto[];
   consignmentNoteType: string;
   // driver: DriverDto;
   consignmentNoteStatus: string;
