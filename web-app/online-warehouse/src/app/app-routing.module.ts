@@ -17,19 +17,19 @@ import {LoginComponent} from "./auth/login";
 import {AuthGuard} from "./auth/_guards";
 
 const routes: Routes = [
-  {path: 'view-users', component: ViewUsersComponent},
-  {path: 'user/:id', component: UserComponent},
-  {path: 'user', component: UserComponent},
-  {path: 'list-companies', component: CompanyListComponent},
-  {path: 'create-company', component: CreateCompanyComponent},
-  {path: 'list-goods', component: GoodsListComponent},
-  {path: 'list-write-off-acts', component: WriteOffActListComponent},
-  {path: 'create-write-off-act', component: CreateWriteOffActComponent},
-  {path: 'write-off-act/:id', component: GetWriteOffActComponent},
-  {path: 'list-commodity-lots', component: CommodityLotListComponent},
-  {path: 'commodity-lot/:id', component: GetCommodityLotComponent},
-  {path: 'list-carriers', component: CarrierListViewComponent},
-  {path: 'carrier/:id', component: GetCarrierComponent},
+  {path: 'view-users', component: ViewUsersComponent, canActivate: [AuthGuard]},
+  {path: 'user/:id', component: UserComponent, canActivate: [AuthGuard]},
+  {path: 'user', component: UserComponent, canActivate: [AuthGuard]},
+  {path: 'list-companies', component: CompanyListComponent, canActivate: [AuthGuard]},
+  {path: 'create-company', component: CreateCompanyComponent, canActivate: [AuthGuard]},
+  {path: 'list-goods', component: GoodsListComponent, canActivate: [AuthGuard]},
+  {path: 'list-write-off-acts', component: WriteOffActListComponent, canActivate: [AuthGuard]},
+  {path: 'create-write-off-act', component: CreateWriteOffActComponent, canActivate: [AuthGuard]},
+  {path: 'write-off-act/:id', component: GetWriteOffActComponent, canActivate: [AuthGuard]},
+  {path: 'list-commodity-lots', component: CommodityLotListComponent, canActivate: [AuthGuard]},
+  {path: 'commodity-lot/:id', component: GetCommodityLotComponent, canActivate: [AuthGuard]},
+  {path: 'list-carriers', component: CarrierListViewComponent, canActivate: [AuthGuard]},
+  {path: 'carrier/:id', component: GetCarrierComponent, canActivate: [AuthGuard]},
   { path: 'login', component: LoginComponent },
   { path: '', component: HomeComponent, canActivate: [AuthGuard] }
   // { path: 'heroes', component:  }
