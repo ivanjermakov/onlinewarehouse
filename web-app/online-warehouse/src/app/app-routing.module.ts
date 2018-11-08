@@ -13,9 +13,10 @@ import {CommodityLotListComponent} from "./commodity-lot/commodity-lot-list/comm
 import {GetCommodityLotComponent} from "./commodity-lot/get-commodity-lot/get-commodity-lot.component";
 import {GetCarrierComponent} from "./carrier/get-carrier/get-carrier.component";
 import {CarrierListViewComponent} from "./carrier/carrier-list-view/carrier-list-view.component";
+import {LoginComponent} from "./auth/login";
+import {AuthGuard} from "./auth/_guards";
 
 const routes: Routes = [
-  {path: '', component: HomeComponent},
   {path: 'view-users', component: ViewUsersComponent},
   {path: 'user/:id', component: UserComponent},
   {path: 'user', component: UserComponent},
@@ -29,6 +30,8 @@ const routes: Routes = [
   {path: 'commodity-lot/:id', component: GetCommodityLotComponent},
   {path: 'list-carriers', component: CarrierListViewComponent},
   {path: 'carrier/:id', component: GetCarrierComponent},
+  { path: 'login', component: LoginComponent },
+  { path: '', component: HomeComponent, canActivate: [AuthGuard] }
   // { path: 'heroes', component:  }
 ];
 

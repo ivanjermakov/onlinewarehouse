@@ -1,4 +1,7 @@
 {
+  "types": [
+    "node"
+  ],
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",

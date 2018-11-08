@@ -3,7 +3,7 @@ import {NgModule} from '@angular/core';
 
 import {AppComponent} from './app.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {MatNativeDateModule} from '@angular/material';
 import {ViewUsersComponent} from './view-users/view-users.component';
 import {AppRoutingModule} from './app-routing.module';
@@ -26,6 +26,10 @@ import {CarrierListDialogComponent} from './carrier/carrier-list-dialog/carrier-
 import {GetCarrierComponent} from './carrier/get-carrier/get-carrier.component';
 import {CarrierListViewComponent} from './carrier/carrier-list-view/carrier-list-view.component';
 import {MaterialModule} from "./material.module";
+import {fakeBackendProvider, JwtInterceptor} from "./auth/_helpers";
+import {AuthenticationService, UserService} from "./auth/_services";
+import {AuthGuard} from "./auth/_guards";
+import {LoginComponent} from "./auth/login";
 
 
 @NgModule({
@@ -48,7 +52,8 @@ import {MaterialModule} from "./material.module";
     CarrierListComponent,
     CarrierListDialogComponent,
     GetCarrierComponent,
-    CarrierListViewComponent
+    CarrierListViewComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -64,6 +69,19 @@ import {MaterialModule} from "./material.module";
   entryComponents: [
     GoodsListDialogComponent,
     CarrierListDialogComponent
+  ],
+  providers: [
+    AuthGuard,
+    AuthenticationService,
+    UserService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
+      multi: true
+    },
+
+    // providers used to create fake backend
+    fakeBackendProvider
   ]
 })
 export class AppModule {
