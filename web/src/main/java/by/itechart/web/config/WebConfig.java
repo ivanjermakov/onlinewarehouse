@@ -16,7 +16,7 @@ import java.util.List;
 
 @Configuration
 @EnableWebMvc
-@Import(CoreConfig.class)
+@Import({CoreConfig.class, WebSecurityConfig.class})
 public class WebConfig implements WebMvcConfigurer {
 
     public MappingJackson2HttpMessageConverter jacksonMessageConverter() {

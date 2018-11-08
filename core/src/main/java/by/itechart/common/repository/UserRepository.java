@@ -11,6 +11,8 @@ public interface UserRepository extends CrudRepository<User, Long> {
 
     Page<User> findAllByCompany_Id(Long companyId, Pageable pageable);
 
+    User findByUsername(String username);
+
     @Modifying
     @Query("update User u set u.deleted=current_date where u.id = ?1")
     void setDeleted(Long userId);
