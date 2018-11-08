@@ -1,4 +1,4 @@
-export enum CounterpartyType {
+export enum CounterpartyTypeEnum {
   CONSIGNOR = 'CONSIGNOR',
   CONSIGNEE = 'CONSIGNEE'
 }

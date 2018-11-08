@@ -1,0 +1,78 @@
+<div>
+  <form>
+    <mat-form-field appearance="outline">
+      <mat-label>Name</mat-label>
+      <input [formControl]="counterpartyFilterForm.controls['name']" matInput placeholder="Name">
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Tax number</mat-label>
+      <input [formControl]="counterpartyFilterForm.controls['taxNumber']" matInput placeholder="Tax number">
+    </mat-form-field>
+    <mat-form-field *ngIf="showCounterpartyTypeFilter && showCounterpartyTypeFilter == true">
+      <mat-select [formControl]="counterpartyFilterForm.controls['counterpartyType']"
+                  placeholder="Counterparty type" name="counterpartyType">
+        <mat-option>None</mat-option>
+        <mat-option *ngFor="let type of getCounterpartyTypes()" [value]="type">
+          {{type}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+  <div style="display: flex; justify-content: center; align-items: center">
+    <table mat-table [dataSource]="page ? page.content : null" class="hoverable-table">
+
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>Id</th>
+        <td mat-cell *matCellDef="let counterparty">{{counterparty.id}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let counterparty">{{counterparty.name}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="taxNumber">
+        <th mat-header-cell *matHeaderCellDef>Tax number</th>
+        <td mat-cell *matCellDef="let counterparty">{{counterparty.taxNumber}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="address">
+        <th mat-header-cell *matHeaderCellDef>Type</th>
+        <td mat-cell *matCellDef="let counterparty">{{counterparty.address.country}}, {{counterparty.address.region}},
+          {{counterparty.address.locality}}
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"
+          (click)="onRowClicked(row)"></tr>
+    </table>
+  </div>
+
+  <div *ngIf="page && page.content.length === 0"
+       style="display: flex; justify-content: center; align-items: center">
+    <p>Not found</p>
+  </div>
+
+  <div *ngIf="loading$ | async"
+       style="display: flex; justify-content: center; align-items: center">
+    <mat-progress-spinner
+      color="primary"
+      mode="indeterminate">
+    </mat-progress-spinner>
+  </div>
+
+  <br>
+  <div *ngIf="addButton && addButton === true"
+       style="display: flex; justify-content: center; align-items: center">
+    <button mat-stroked-button color="primary">Add counterparty</button>
+  </div>
+
+  <mat-paginator [length]="page ? page.totalElements : 0"
+                 [pageIndex]="pageable.page"
+                 [pageSize]="pageable.size"
+                 [pageSizeOptions]="pageSizeOptions"
+                 (page)="pageChanged($event)">
+  </mat-paginator>
+</div>

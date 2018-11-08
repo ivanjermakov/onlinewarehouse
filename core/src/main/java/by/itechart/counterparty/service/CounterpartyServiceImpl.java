@@ -2,8 +2,8 @@ package by.itechart.counterparty.service;
 
 import by.itechart.common.utils.ObjectMapperUtils;
 import by.itechart.counterparty.dto.CounterpartyDto;
+import by.itechart.counterparty.dto.CounterpartyFilter;
 import by.itechart.counterparty.entity.Counterparty;
-import by.itechart.counterparty.enums.CounterpartyType;
 import by.itechart.counterparty.repository.CounterpartyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,8 +25,8 @@ public class CounterpartyServiceImpl implements CounterpartyService {
     }
 
     @Override
-    public Page<CounterpartyDto> getCounterparties(Long companyId, CounterpartyType counterpartyType, Pageable pageable) {
-        return counterpartyRepository.findAllByCompany_IdAndCounterpartyType(companyId, counterpartyType, pageable)
+    public Page<CounterpartyDto> getCounterparties(Long companyId, CounterpartyFilter filter, Pageable pageable) {
+        return counterpartyRepository.findAll(CounterpartyPredicates.findFilter(filter, companyId), pageable)
                 .map(c -> ObjectMapperUtils.map(c, CounterpartyDto.class));
     }
 

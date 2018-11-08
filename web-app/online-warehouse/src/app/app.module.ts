@@ -30,6 +30,9 @@ import {fakeBackendProvider, JwtInterceptor} from "./auth/_helpers";
 import {AuthenticationService, UserService} from "./auth/_services";
 import {AuthGuard} from "./auth/_guards";
 import {LoginComponent} from "./auth/login";
+import {CounterpartyListComponent} from './counterparty/counterparty-list/counterparty-list.component';
+import {CounterpartyListDialogComponent} from './counterparty/counterparty-list-dialog/counterparty-list-dialog.component';
+import {CounterpartyListViewComponent} from './counterparty/counterparty-list-view/counterparty-list-view.component';
 
 
 @NgModule({
@@ -53,7 +56,10 @@ import {LoginComponent} from "./auth/login";
     CarrierListDialogComponent,
     GetCarrierComponent,
     CarrierListViewComponent,
-    LoginComponent
+    LoginComponent,
+    CounterpartyListComponent,
+    CounterpartyListDialogComponent,
+    CounterpartyListViewComponent
   ],
   imports: [
     BrowserModule,
@@ -68,7 +74,8 @@ import {LoginComponent} from "./auth/login";
   bootstrap: [AppComponent],
   entryComponents: [
     GoodsListDialogComponent,
-    CarrierListDialogComponent
+    CarrierListDialogComponent,
+    CounterpartyListDialogComponent,
   ],
   providers: [
     AuthGuard,

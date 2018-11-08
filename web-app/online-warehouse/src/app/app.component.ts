@@ -95,11 +95,14 @@ export class AppComponent {
           {
             'name': 'Товарные партии к размещению',
             'url': ''
-          }
-          ,
+          },
           {
             'name': 'Список перевозчиков',
             'url': 'list-carriers'
+          },
+          {
+            'name': 'Список контрагентов',
+            'url': 'list-counterparties'
           }
         ]
       },

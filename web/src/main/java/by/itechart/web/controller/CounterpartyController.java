@@ -1,13 +1,12 @@
 package by.itechart.web.controller;
 
 import by.itechart.counterparty.dto.CounterpartyDto;
-import by.itechart.counterparty.enums.CounterpartyType;
+import by.itechart.counterparty.dto.CounterpartyFilter;
 import by.itechart.counterparty.service.CounterpartyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/companies/{companyId}/counterparties")
@@ -21,10 +20,10 @@ public class CounterpartyController {
     }
 
     @GetMapping
-    public List<CounterpartyDto> getCounterparties(@PathVariable long companyId,
-                                                   @RequestParam CounterpartyType counterpartyType,
-                                                   @RequestParam(required = false) Pageable pageable) {
-        return counterpartyService.getCounterparties(companyId, counterpartyType, pageable).getContent();
+    public Page<CounterpartyDto> getCounterparties(@PathVariable long companyId,
+                                                   CounterpartyFilter filter,
+                                                   Pageable pageable) {
+        return counterpartyService.getCounterparties(companyId, filter, pageable);
     }
 
     @PostMapping
