@@ -14,7 +14,7 @@ import {
 
 import {AppComponent} from './app.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {ViewUsersComponent} from './view-users/view-users.component';
 import {AppRoutingModule} from './app-routing.module';
 import {HomeComponent} from './home/home.component';
@@ -38,6 +38,14 @@ import {CarrierListComponent} from './carrier/carrier-list/carrier-list.componen
 import {CarrierListDialogComponent} from './carrier/carrier-list-dialog/carrier-list-dialog.component';
 import {GetCarrierComponent} from './carrier/get-carrier/get-carrier.component';
 import {CarrierListViewComponent} from './carrier/carrier-list-view/carrier-list-view.component';
+import {MaterialModule} from "./material.module";
+import {fakeBackendProvider, JwtInterceptor} from "./auth/_helpers";
+import {AuthenticationService, UserService} from "./auth/_services";
+import {AuthGuard} from "./auth/_guards";
+import {LoginComponent} from "./auth/login";
+import {CounterpartyListComponent} from './counterparty/counterparty-list/counterparty-list.component';
+import {CounterpartyListDialogComponent} from './counterparty/counterparty-list-dialog/counterparty-list-dialog.component';
+import {CounterpartyListViewComponent} from './counterparty/counterparty-list-view/counterparty-list-view.component';
 
 
 @NgModule({
@@ -63,7 +71,11 @@ import {CarrierListViewComponent} from './carrier/carrier-list-view/carrier-list
     CarrierListComponent,
     CarrierListDialogComponent,
     GetCarrierComponent,
-    CarrierListViewComponent
+    LoginComponent,
+    CarrierListViewComponent,
+    CounterpartyListComponent,
+    CounterpartyListDialogComponent,
+    CounterpartyListViewComponent
   ],
   imports: [
     BrowserModule,
@@ -80,10 +92,11 @@ import {CarrierListViewComponent} from './carrier/carrier-list-view/carrier-list
     MatSortModule,
     MatProgressSpinnerModule,
     MatNativeDateModule,
-    MatSelectModule
+    MatSelectModule,
+    MaterialModule
   ],
   bootstrap: [AppComponent],
-  entryComponents: [GoodsListDialogComponent]
+  entryComponents: [GoodsListDialogComponent, CounterpartyListDialogComponent, CarrierListDialogComponent]
 })
 export class AppModule {
 }
