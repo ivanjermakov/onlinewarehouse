@@ -26,13 +26,14 @@ import {CarrierListDialogComponent} from './carrier/carrier-list-dialog/carrier-
 import {GetCarrierComponent} from './carrier/get-carrier/get-carrier.component';
 import {CarrierListViewComponent} from './carrier/carrier-list-view/carrier-list-view.component';
 import {MaterialModule} from "./material.module";
-import {fakeBackendProvider, JwtInterceptor} from "./auth/_helpers";
+import {JwtInterceptor} from "./auth/_helpers";
 import {AuthenticationService, UserService} from "./auth/_services";
 import {AuthGuard} from "./auth/_guards";
 import {LoginComponent} from "./auth/login";
 import {CounterpartyListComponent} from './counterparty/counterparty-list/counterparty-list.component';
 import {CounterpartyListDialogComponent} from './counterparty/counterparty-list-dialog/counterparty-list-dialog.component';
 import {CounterpartyListViewComponent} from './counterparty/counterparty-list-view/counterparty-list-view.component';
+import {LogoutComponent} from "./auth/login/logout.component";
 
 
 @NgModule({
@@ -59,7 +60,8 @@ import {CounterpartyListViewComponent} from './counterparty/counterparty-list-vi
     LoginComponent,
     CounterpartyListComponent,
     CounterpartyListDialogComponent,
-    CounterpartyListViewComponent
+    CounterpartyListViewComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,
@@ -88,7 +90,7 @@ import {CounterpartyListViewComponent} from './counterparty/counterparty-list-vi
     },
 
     // providers used to create fake backend
-    fakeBackendProvider
+    // fakeBackendProvider
   ]
 })
 export class AppModule {

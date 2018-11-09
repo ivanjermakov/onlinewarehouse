@@ -2,17 +2,17 @@
 INSERT INTO company (name, size_type) values ('Online warehouse Company', 'SMALL');
 
 -- Добавляем роли, должно быть в скрипте базы
-INSERT INTO authority (name) VALUES ('ADMIN');
-INSERT INTO authority (name) VALUES ('COMPANY_ADMIN');
-INSERT INTO authority (name) VALUES ('WAREHOUSE_OWNER');
-INSERT INTO authority (name) VALUES ('DISPATCHER');
-INSERT INTO authority (name) VALUES ('MANAGER');
-INSERT INTO authority (name) VALUES ('INSPECTOR');
+INSERT INTO authority (name) VALUES ('ROLE_ADMIN');
+INSERT INTO authority (name) VALUES ('ROLE_COMPANY_ADMIN');
+INSERT INTO authority (name) VALUES ('ROLE_WAREHOUSE_OWNER');
+INSERT INTO authority (name) VALUES ('ROLE_DISPATCHER');
+INSERT INTO authority (name) VALUES ('ROLE_MANAGER');
+INSERT INTO authority (name) VALUES ('ROLE_INSPECTOR');
 
 -- Добавляем админа всей системы, должно быть в скрипте базы
 INSERT INTO address (country, region, locality) VALUES ('Admin', 'Admin', 'Admin');
-INSERT INTO "user" (company_id, address_id, first_name, last_name, patronymic, birth, email, username, password)
-VALUES (1, 1, 'Admin', 'Admin', 'Admin', '2018-10-10', 'companyemail@mail.ru', 'admin', '1234567');
+INSERT INTO users (company_id, address_id, first_name, last_name, patronymic, birth, email, username, password, enabled)
+VALUES (1, 1, 'Admin', 'Admin', 'Admin', '2018-10-10', 'companyemail@mail.ru', 'admin', '$2a$10$SIUR.7KK9EtMFEZEUfNWUuf7iKwMKYtk/HMDeKMah9UZhWMVoDjVC', true);
 
 -- Зарегали компанию
 INSERT INTO company (name, size_type) values ('First Company', 'LARGE');
@@ -20,21 +20,21 @@ INSERT INTO company (name, size_type) values ('First Company', 'LARGE');
 INSERT INTO company_action (company_id, change, action_type) VALUES (2, current_timestamp, 'ENABLED');
 -- одновременно создали админа компании
 INSERT INTO address (country, region, locality) VALUES ('Belarus', 'Minsk', 'Tolstogo str. 10');
-INSERT INTO "user" (company_id, address_id, first_name, last_name, patronymic, birth, email, username, password)
-VALUES (2, 2, 'Kaskin', 'Iliya', 'Ivanovich', '1987-10-17', 'testemail1@mail.ru', 'username2', '1234567');
+INSERT INTO users (company_id, address_id, first_name, last_name, patronymic, birth, email, username, password, enabled)
+VALUES (2, 2, 'Kaskin', 'Iliya', 'Ivanovich', '1987-10-17', 'testemail1@mail.ru', 'username2', '$2a$10$LtfJfQvTgnweIigbSRrbUuo9jMbnv6.jyQC./u.Ac4MQvgIi3HAu2', true);
 INSERT INTO user_authority (user_id, authority_id) VALUES (1, 1);
 
 --админ создал работников в своей компании и присвоил роли
 --первый
 INSERT INTO address (country, region, locality) VALUES ('Belarus', 'Minsk', 'Nezavisimosti str. 158');
-INSERT INTO "user" (company_id, address_id, first_name, last_name, patronymic, birth, email, username, password)
-VALUES (2, 3, 'Dzerginsky', 'Nikolay', 'Valeryevich', '1961-03-12', 'testemail2@mail.ru', 'username3', '1234567');
+INSERT INTO users (company_id, address_id, first_name, last_name, patronymic, birth, email, username, password, enabled)
+VALUES (2, 3, 'Dzerginsky', 'Nikolay', 'Valeryevich', '1961-03-12', 'testemail2@mail.ru', 'username3', '$2a$10$oYNorPPG7UrsMGDQZGYis.q.MruoAPTFheb/FVr4mOAplkF1Vv81i', true);
 INSERT INTO user_authority (user_id, authority_id) VALUES (2, 2);
 INSERT INTO user_authority (user_id, authority_id) VALUES (2, 3);
 --второй
 INSERT INTO address (country, region, locality) VALUES ('Belarus', 'Minsk', 'Timiryazeva str. 35');
-INSERT INTO "user" (company_id, address_id, first_name, last_name, patronymic, birth, email, username, password)
-VALUES (2, 4, 'Litvinyk', 'Aleksey', 'Dmitrievich', '1993-05-03', 'testemail3@mail.ru', 'username4', '1234567');
+INSERT INTO users (company_id, address_id, first_name, last_name, patronymic, birth, email, username, password, enabled)
+VALUES (2, 4, 'Litvinyk', 'Aleksey', 'Dmitrievich', '1993-05-03', 'testemail3@mail.ru', 'username4', '$2a$10$eg0dJgXXZx9Pwnm4mPPagesU06EwhQTETHJlgrFEUkDVM.s9eWuc.', true);
 INSERT INTO user_authority (user_id, authority_id) VALUES (3, 4);
 INSERT INTO user_authority (user_id, authority_id) VALUES (3, 5);
 

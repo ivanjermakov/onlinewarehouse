@@ -31,7 +31,7 @@ create table address (
   locality varchar(50) NOT NULL
 );
 
-create table "user" (
+create table users (
   id                    bigserial PRIMARY KEY,
   company_id            bigint references company (id),
   address_id            bigint references address (id),
@@ -53,7 +53,7 @@ create table authority (
 );
 
 create table user_authority (
-  user_id      bigint references "user" (id),
+  user_id      bigint references users (id),
   authority_id bigint references authority (id),
   PRIMARY KEY (user_id, authority_id)
 );
@@ -109,7 +109,7 @@ create table consignment_note (
   company_id            bigint references company (id),
   carrier_id            bigint references carrier (id),
   counterparty_id       bigint references counterparty (id),
-  creator_id            bigint references "user" (id),
+  creator_id            bigint references users (id),
   number                varchar(15) NOT NULL,
   consignment_note_type varchar(5)  NOT NULL,
   shipment              date        NOT NULL,
@@ -128,7 +128,7 @@ create table commodity_lot (
 create table write_off_act (
   id                 bigserial PRIMARY KEY,
   company_id         bigint references company (id),
-  creator_id         bigint references "user" (id),
+  creator_id         bigint references users (id),
   write_off_act_type varchar(20)  NOT NULL,
   creation           date         NOT NULL,
   total_amount       integer      NOT NULL,

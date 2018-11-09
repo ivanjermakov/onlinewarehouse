@@ -6,6 +6,9 @@
 
   <header class="header-right">
     <div *ngIf="currentComponentName !== null" class="action-name">{{currentComponentName}}</div>
+    <div *ngIf="user" style="align-self: end">
+      <app-logout></app-logout>
+    </div>
   </header>
 
   <div class="left">
@@ -14,7 +17,8 @@
         <div class="role-name">{{role.name}}</div>
         <div class="role-actions-wrapper">
           <div class="role-action" *ngFor="let action of role.actions">
-            <a routerLink="{{action.url}}" routerLinkActive="action-active" [routerLinkActiveOptions]="{exist: true}" (click)="changeCurrentComponentName(action.name)">{{action.name}}</a>
+            <a routerLink="{{action.url}}" routerLinkActive="action-active" [routerLinkActiveOptions]="{exist: true}"
+               (click)="changeCurrentComponentName(action.name)">{{action.name}}</a>
           </div>
         </div>
       </div>

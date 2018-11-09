@@ -8,6 +8,7 @@ import {Component} from '@angular/core';
 export class AppComponent {
   title = 'online-warehouse-test';
   currentComponentName: string;
+  user = localStorage.getItem('currentUser');
 
   menu = {
     'roles': [
