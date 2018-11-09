@@ -2,7 +2,7 @@ package by.itechart.web.security;
 
 import java.io.Serializable;
 
-public class  JwtAuthenticationRequest implements Serializable {
+public class JwtAuthenticationRequest implements Serializable {
 
 
     private String username;

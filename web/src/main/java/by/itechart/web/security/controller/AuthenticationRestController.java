@@ -1,8 +1,5 @@
 package by.itechart.web.security.controller;
 
-import java.util.Objects;
-import javax.servlet.http.HttpServletRequest;
-
 import by.itechart.web.security.JwtAuthenticationRequest;
 import by.itechart.web.security.JwtTokenUtil;
 import by.itechart.web.security.JwtUser;
@@ -18,11 +15,10 @@ import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.Objects;
 
 @RestController
 public class AuthenticationRestController {

@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -19,34 +20,30 @@ import java.util.List;
 @Table(name = "user")
 @Getter
 @Setter
-public class User {
+@NoArgsConstructor
+public class User extends BaseEntity {
 
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(length = 50, unique = true)
+    @Column(name = "username", length = 50, unique = true)
     @NotNull
     @Size(min = 4, max = 50)
     private String username;
 
-    @Column(length = 100)
+    @Column(name = "password", length = 100)
     @NotNull
     @Size(min = 4, max = 100)
     private String password;
 
-    @Column(length = 50)
+    @Column(name = "first_name", length = 50)
     @NotNull
     @Size(min = 4, max = 50)
     private String firstname;
 
-    @Column(length = 50)
+    @Column(name = "last_name", length = 50)
     @NotNull
     @Size(min = 4, max = 50)
     private String lastname;
 
-    @Column(length = 50)
+    @Column(name = "email", length = 50)
     @NotNull
     @Size(min = 4, max = 50)
     private String email;
@@ -72,11 +69,11 @@ public class User {
     @Column(name = "birth")
     private LocalDate birth;
 
-    @Column
+    @Column(name = "enabled")
     @NotNull
     private Boolean enabled;
 
-    @Column
+    @Column(name = "lastpasswordresrtdate")
     @Temporal(TemporalType.TIMESTAMP)
     @NotNull
     private Date lastPasswordResetDate;

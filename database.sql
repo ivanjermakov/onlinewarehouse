@@ -32,33 +32,32 @@ create table address (
 );
 
 create table "user" (
-  id         bigserial PRIMARY KEY,
-  company_id bigint references company (id),
-  address_id bigint references address (id),
-  first_name varchar(30) NOT NULL,
-  last_name  varchar(30) NOT NULL,
-  patronymic varchar(255),
-  birth      date        NOT NULL,
-  email      varchar(50),
-  deleted    date
+  id                    bigserial PRIMARY KEY,
+  company_id            bigint references company (id),
+  address_id            bigint references address (id),
+  username              varchar(50)  NOT NULL UNIQUE,
+  password              varchar(100) NOT NULL,
+  first_name            varchar(30)  NOT NULL,
+  last_name             varchar(30)  NOT NULL,
+  patronymic            varchar(255),
+  enabled               boolean,
+  lastpasswordresrtdate timestamp,
+  birth                 date         NOT NULL,
+  email                 varchar(50),
+  deleted               date
 );
 
-create table credentials (
-  user_id bigint references "user" (id),
-  login   varchar(30) PRIMARY KEY,
-  hash    varchar(60) NOT NULL
-);
-
-create table role (
+create table authority (
   id   bigserial PRIMARY KEY,
-  role varchar(50) NOT NULL
+  name varchar(50) NOT NULL
 );
 
-create table user_role (
-  user_id bigint references "user" (id),
-  role_id bigint references role (id),
-  PRIMARY KEY (user_id, role_id)
+create table user_authority (
+  user_id      bigint references "user" (id),
+  authority_id bigint references authority (id),
+  PRIMARY KEY (user_id, authority_id)
 );
+
 
 create table counterparty (
   id                bigserial PRIMARY KEY,
