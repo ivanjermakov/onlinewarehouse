@@ -1,10 +1,21 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 
+import {
+  MatDialogModule,
+  MatInputModule,
+  MatNativeDateModule,
+  MatPaginatorModule,
+  MatProgressSpinnerModule,
+  MatSelectModule,
+  MatSortModule,
+  MatTableModule
+} from '@angular/material';
+
 import {AppComponent} from './app.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
-import {MatNativeDateModule} from '@angular/material';
+import {MatDialogModule} from '@angular/material';
 import {ViewUsersComponent} from './view-users/view-users.component';
 import {AppRoutingModule} from './app-routing.module';
 import {HomeComponent} from './home/home.component';
@@ -18,6 +29,10 @@ import {WriteOffActListComponent} from './write-off-act/write-off-act-list/write
 import {CreateWriteOffActComponent} from './write-off-act/create-write-off-act/create-write-off-act.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {GoodsListDialogComponent} from './shared/goods/goods-list-dialog/goods-list-dialog.component';
+import {ConsignmentNoteListComponent} from "./consignment-note/consignment-note-list/consignment-note-list.component";
+import {RegisterConsignmentNoteComponent} from "./consignment-note/register-consignment-note/register-consignment-note.component";
+import {ConsignmentNoteDetailComponent} from "./consignment-note/consignment-note-list/consignment-note-detail/consignment-note-detail.component";
+import {PaginationComponent} from "./shared/pagination/pagination.component";
 import {GetWriteOffActComponent} from './write-off-act/get-write-off-act/get-write-off-act.component';
 import {CommodityLotListComponent} from './commodity-lot/commodity-lot-list/commodity-lot-list.component';
 import {GetCommodityLotComponent} from './commodity-lot/get-commodity-lot/get-commodity-lot.component';
@@ -26,7 +41,7 @@ import {CarrierListDialogComponent} from './carrier/carrier-list-dialog/carrier-
 import {GetCarrierComponent} from './carrier/get-carrier/get-carrier.component';
 import {CarrierListViewComponent} from './carrier/carrier-list-view/carrier-list-view.component';
 import {MaterialModule} from "./material.module";
-import {JwtInterceptor} from "./auth/_helpers";
+import {fakeBackendProvider, JwtInterceptor} from "./auth/_helpers";
 import {AuthenticationService, UserService} from "./auth/_services";
 import {AuthGuard} from "./auth/_guards";
 import {LoginComponent} from "./auth/login";
@@ -49,19 +64,7 @@ import {LogoutComponent} from "./auth/login/logout.component";
     GoodsListComponent,
     WriteOffActListComponent,
     CreateWriteOffActComponent,
-    GoodsListDialogComponent,
-    GetWriteOffActComponent,
-    CommodityLotListComponent,
-    GetCommodityLotComponent,
-    CarrierListComponent,
-    CarrierListDialogComponent,
-    GetCarrierComponent,
-    CarrierListViewComponent,
-    LoginComponent,
-    CounterpartyListComponent,
-    CounterpartyListDialogComponent,
-    CounterpartyListViewComponent,
-    LogoutComponent
+    GoodsListDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -70,28 +73,10 @@ import {LogoutComponent} from "./auth/login/logout.component";
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    MaterialModule,
-    MatNativeDateModule,
+    MatDialogModule,
   ],
   bootstrap: [AppComponent],
-  entryComponents: [
-    GoodsListDialogComponent,
-    CarrierListDialogComponent,
-    CounterpartyListDialogComponent,
-  ],
-  providers: [
-    AuthGuard,
-    AuthenticationService,
-    UserService,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: JwtInterceptor,
-      multi: true
-    },
-
-    // providers used to create fake backend
-    // fakeBackendProvider
-  ]
+  entryComponents: [GoodsListDialogComponent]
 })
 export class AppModule {
 }

@@ -71,10 +71,6 @@ export class AppComponent {
       {
         'name': 'dispatcher',
         'actions': [
-          {
-            'name': 'Зарегистрировать ТТН',
-            'url': ''
-          },
           // {
           //   'name': 'viewUsers',
           //   'url': '/view-users'
@@ -90,8 +86,12 @@ export class AppComponent {
         'name': 'manager',
         'actions': [
           {
-            'name': 'Создать ТТН',
-            'url': ''
+            'name': 'Зарегистрировать ТТН',
+            'url': '/register-consignment-note'
+          },
+          {
+            'name': 'Посмотреть ТТН',
+            'url': '/consignment-notes'
           },
           {
             'name': 'Товарные партии к размещению',

@@ -1,0 +1,71 @@
+<div>
+  <div>
+    <div class="form-group row">
+      <label for="consignmentNoteType" class="col-sm-3 col-form-label">Consignment note type</label>
+      <div class="col-sm-5">
+        <select id="consignmentNoteType" class="form-control" [(ngModel)]="consignmentNoteFilter.consignmentNoteType"
+                (change)="getConsignmentNotes()">
+          <option value="IN">IN</option>
+          <option value="OUT">OUT</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="consignmentNoteStatus" class="col-sm-3 col-form-label">Consignment note type</label>
+      <div class="col-sm-5">
+        <select id="consignmentNoteStatus" class="form-control"
+                [(ngModel)]="consignmentNoteFilter.consignmentNoteStatus"
+                (change)="getConsignmentNotes()">
+          <option value="NOT_PROCESSED">NOT_PROCESSED</option>
+          <option value="PROCESSED">PROCESSED</option>
+          <option value="BEING_PROCESSED">BEING_PROCESSED</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="from" class="col-sm-3 col-form-label">From</label>
+      <div class="col-sm-5">
+        <input type="date"
+               id="from"
+               class="form-control"
+               [(ngModel)]="consignmentNoteFilter.from"
+               (change)="getConsignmentNotes()">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="to" class="col-sm-3 col-form-label">To</label>
+      <div class="col-sm-5">
+        <input type="date"
+               id="to"
+               class="form-control"
+               [(ngModel)]="consignmentNoteFilter.to"
+               (change)="getConsignmentNotes()">
+      </div>
+    </div>
+  </div>
+
+  <table *ngIf="consignmentNotes.totalElements > 0" class="table table-shadow hoverable-table">
+    <tr>
+      <th scope="col">Number</th>
+      <th scope="col">Company name</th>
+      <th scope="col">Registration date</th>
+      <th scope="col">Consignment Note Type</th>
+      <th scope="col">Consignment Note Status</th>
+    </tr>
+    <tr *ngFor="let consignmentNote of consignmentNotes.content">
+      <td>
+        <a routerLink="{{consignmentNote.id}}" href="#">{{consignmentNote.number}}</a>
+      </td>
+      <td>{{consignmentNote.company.name}}</td>
+      <td>{{consignmentNote.registration}}</td>
+      <td>{{consignmentNote.consignmentNoteType}}</td>
+      <td>{{consignmentNote.consignmentNoteStatus}}</td>
+    </tr>
+  </table>
+
+  <!--<app-pagination *ngIf="consignmentNotes.totalElements > 0"-->
+                  <!--[page]="consignmentNotes" [pageable]="pageable" (onGetData)="getConsignmentNotes()"></app-pagination>-->
+</div>

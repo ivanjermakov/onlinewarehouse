@@ -16,6 +16,9 @@ import {CarrierListViewComponent} from "./carrier/carrier-list-view/carrier-list
 import {LoginComponent} from "./auth/login";
 import {AuthGuard} from "./auth/_guards";
 import {CounterpartyListViewComponent} from "./counterparty/counterparty-list-view/counterparty-list-view.component";
+import {RegisterConsignmentNoteComponent} from "./consignment-note/register-consignment-note/register-consignment-note.component";
+import {ConsignmentNoteListComponent} from "./consignment-note/consignment-note-list/consignment-note-list.component";
+import {ConsignmentNoteDetailComponent} from "./consignment-note/consignment-note-list/consignment-note-detail/consignment-note-detail.component";
 
 const routes: Routes = [
   {path: 'view-users', component: ViewUsersComponent, canActivate: [AuthGuard]},
@@ -34,7 +37,10 @@ const routes: Routes = [
   {path: 'list-counterparties', component: CounterpartyListViewComponent, canActivate: [AuthGuard]},
   // {path: 'counterparty/:id', component: GetCarrierComponent, canActivate: [AuthGuard]},
   {path: 'login', component: LoginComponent},
-  {path: '', component: HomeComponent, canActivate: [AuthGuard]}
+  {path: '', component: HomeComponent, canActivate: [AuthGuard]},
+  {path: 'register-consignment-note', component: RegisterConsignmentNoteComponent},
+  {path: 'consignment-notes', component: ConsignmentNoteListComponent},
+  {path: 'consignment-notes/:id', component: ConsignmentNoteDetailComponent},
   // { path: 'heroes', component:  }
 ];
 
