@@ -1,8 +1,6 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {ViewUsersComponent} from './view-users/view-users.component';
 import {HomeComponent} from './home/home.component';
-import {UserComponent} from './user/user.component';
 import {CompanyListComponent} from "./company/company-list/company-list.component";
 import {CreateCompanyComponent} from "./company/create-company/create-company.component";
 import {GoodsListComponent} from "./shared/goods/goods-list/goods-list.component";
@@ -16,11 +14,12 @@ import {CarrierListViewComponent} from "./carrier/carrier-list-view/carrier-list
 import {LoginComponent} from "./auth/login";
 import {AuthGuard} from "./auth/_guards";
 import {CounterpartyListViewComponent} from "./counterparty/counterparty-list-view/counterparty-list-view.component";
+import {UserListViewComponent} from "./user/user-list-view/user-list-view.component";
 
 const routes: Routes = [
-  {path: 'view-users', component: ViewUsersComponent, canActivate: [AuthGuard]},
-  {path: 'user/:id', component: UserComponent, canActivate: [AuthGuard]},
-  {path: 'user', component: UserComponent, canActivate: [AuthGuard]},
+  {path: 'list-users', component: UserListViewComponent, canActivate: [AuthGuard]},
+  // {path: 'user/:id', component: UserComponent, canActivate: [AuthGuard]},
+  // {path: 'user', component: UserComponent, canActivate: [AuthGuard]},
   {path: 'list-companies', component: CompanyListComponent, canActivate: [AuthGuard]},
   {path: 'create-company', component: CreateCompanyComponent, canActivate: [AuthGuard]},
   {path: 'list-goods', component: GoodsListComponent, canActivate: [AuthGuard]},

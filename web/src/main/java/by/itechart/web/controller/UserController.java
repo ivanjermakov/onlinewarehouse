@@ -1,15 +1,16 @@
 package by.itechart.web.controller;
 
+import by.itechart.common.dto.UserDto;
 import by.itechart.common.entity.Address;
 import by.itechart.common.entity.User;
 import by.itechart.common.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @RestController
 @RequestMapping("/companies/{companyId}/users")
@@ -23,14 +24,14 @@ public class UserController {
     }
 
     @GetMapping
-    public List<User> getUsersList(@PathVariable long companyId, @RequestParam(required = false) Pageable pageable) {
+    public Page<UserDto> getUsersList(@PathVariable long companyId, Pageable pageable) {
 //        ArrayList<User> users = new ArrayList<>();
 //        //get users by pageable and return page. Pageable = ?page=1&size=5 for example
 //        for (int i = 0; i < 10; i++) {
 //            users.add(createUser(i));
 //        }
 //        return users;
-        return userService.getUsers(companyId, pageable).getContent();
+        return userService.getUsers(companyId, pageable);
     }
 
     @PostMapping

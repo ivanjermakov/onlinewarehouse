@@ -34,7 +34,7 @@ export class AppComponent {
         'actions': [
           {
             'name': 'Посмотреть пользователей',
-            'url': '/view-users'
+            'url': '/list-users'
           },
           {
             'name': 'Создать пользователя',

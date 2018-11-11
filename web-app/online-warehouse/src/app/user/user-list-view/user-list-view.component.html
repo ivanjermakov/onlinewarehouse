@@ -1,0 +1,57 @@
+<app-user-list *ngIf="!user"
+               (userSelected)="selected($event)">
+</app-user-list>
+<div *ngIf="user">
+  <div style="display: flex; justify-content: center; align-items: center">
+    <table class="mat-table">
+      <tbody>
+      <tr class="mat-row">
+        <td class="mat-cell border-right">Username</td>
+        <td class="mat-cell">{{user.username}}</td>
+        <td rowspan="8">
+          <button mat-button>Add authority</button>
+          <br>
+          <button mat-button>Disable/enable</button>
+          <br>
+          <button mat-button>Reset password</button>
+          <br>
+          <button mat-button>Delete</button>
+          <br>
+          <button mat-button>Edit</button>
+        </td>
+      </tr>
+      <tr class="mat-row">
+        <td class="mat-cell border-right">Firstname</td>
+        <td class="mat-cell">{{user.firstname}}</td>
+      </tr>
+      <tr class="mat-row">
+        <td class="mat-cell border-right">Lastname</td>
+        <td class="mat-cell">{{user.lastname}}</td>
+      </tr>
+      <tr class="mat-row">
+        <td class="mat-cell border-right">Patronymic</td>
+        <td class="mat-cell">{{user.patronymic}}</td>
+      </tr>
+      <tr class="mat-row">
+        <td class="mat-cell border-right">Address</td>
+        <td class="mat-cell">{{user.address.country}}, {{user.address.locality}}, {{user.address.region}}</td>
+      </tr>
+      <tr class="mat-row">
+        <td class="mat-cell border-right">Birth</td>
+        <td class="mat-cell">{{user.birth}}</td>
+      </tr>
+      <tr class="mat-row">
+        <td class="mat-cell border-right">Enabled</td>
+        <td class="mat-cell">{{user.enabled}}</td>
+      </tr>
+      <tr class="mat-row">
+        <td class="mat-cell border-right">Authorities</td>
+        <td class="mat-cell">
+          <ng-container *ngFor="let authority of user.authorities">{{authority.name}}</ng-container>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <button mat-button (click)="backToList()">Back to List</button>
+</div>

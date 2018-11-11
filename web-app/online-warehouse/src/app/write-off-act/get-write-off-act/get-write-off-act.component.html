@@ -1,47 +1,81 @@
-<div *ngIf="!writeOffAct" class="loader-container">
-  <div class="loader"></div>
+<div *ngIf="loading$ | async"
+     style="display: flex; justify-content: center; align-items: center">
+  <mat-progress-spinner
+    color="primary"
+    mode="indeterminate">
+  </mat-progress-spinner>
 </div>
-<div *ngIf="writeOffAct"
-     style="background-color: #fff;  box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.2), 0 4px 20px 0 rgba(0, 0, 0, 0.19)">
-  <table class="table">
-    <tr>
-      <td>Создатель</td>
-      <td>Date</td>
-      <td>responsiblePerson</td>
-      <td>totalAmount</td>
-      <td>writeOffActType</td>
+<div *ngIf="writeOffAct">
+  <table class="mat-table">
+    <thead>
+    <tr class="mat-header-row">
+      <th class="mat-header-cell">Creator Id</th>
+      <th class="mat-header-cell">Creation</th>
+      <th class="mat-header-cell">Responsible Person</th>
+      <th class="mat-header-cell">Total amount</th>
+      <th class="mat-header-cell">Write off act type</th>
     </tr>
+    </thead>
+    <tbody>
     <tr>
-      <td>{{writeOffAct.creatorId}}</td>
-      <td>{{writeOffAct.creation}}</td>
-      <td>{{writeOffAct.responsiblePerson}}</td>
-      <td>{{writeOffAct.totalAmount}}</td>
-      <td>{{writeOffAct.writeOffActType}}</td>
+      <td class="mat-cell">{{writeOffAct.creatorId}}</td>
+      <td class="mat-cell">{{writeOffAct.creation}}</td>
+      <td class="mat-cell">{{writeOffAct.responsiblePerson}}</td>
+      <td class="mat-cell">{{writeOffAct.totalAmount}}</td>
+      <td class="mat-cell">{{writeOffAct.writeOffActType}}</td>
     </tr>
+    </tbody>
   </table>
   <span>Goods:</span>
-  <table class="table">
-    <tr>
-      <th>writeOffType</th>
-      <th>amount</th>
-      <th>Name</th>
-      <th>Placement Type</th>
-      <th>Measurement Unit</th>
-      <th>Cost</th>
-      <th>Weight</th>
-      <th>Labelling</th>
-      <th>Description</th>
-    </tr>
-    <tr *ngFor="let writeOffActGoods of writeOffAct.writeOffActGoodsList">
-      <td>{{writeOffActGoods.writeOffType}}</td>
-      <td>{{writeOffActGoods.amount}}</td>
-      <td>{{writeOffActGoods.goods.name}}</td>
-      <td>{{writeOffActGoods.goods.placementType}}</td>
-      <td>{{writeOffActGoods.goods.measurementUnit}}</td>
-      <td>{{writeOffActGoods.goods.cost}}</td>
-      <td>{{writeOffActGoods.goods.weight}}</td>
-      <td>{{writeOffActGoods.goods.labelling}}</td>
-      <td>{{writeOffActGoods.goods.description}}</td>
-    </tr>
+  <table mat-table [dataSource]="writeOffAct.writeOffActGoodsList ? writeOffAct.writeOffActGoodsList : null">
+
+    <ng-container matColumnDef="writeOffType">
+      <th mat-header-cell *matHeaderCellDef>Write off type</th>
+      <td mat-cell *matCellDef="let writeOffActGoods">{{writeOffActGoods.writeOffType}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="amount">
+      <th mat-header-cell *matHeaderCellDef>Amount</th>
+      <td mat-cell *matCellDef="let writeOffActGoods">{{writeOffActGoods.amount}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <td mat-cell *matCellDef="let writeOffActGoods">{{writeOffActGoods.goods.name}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="placementType">
+      <th mat-header-cell *matHeaderCellDef>Placement Type</th>
+      <td mat-cell *matCellDef="let writeOffActGoods">{{writeOffActGoods.goods.placementType}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="measurementUnit">
+      <th mat-header-cell *matHeaderCellDef>Measurement Unit</th>
+      <td mat-cell *matCellDef="let writeOffActGoods">{{writeOffActGoods.goods.measurementUnit}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="cost">
+      <th mat-header-cell *matHeaderCellDef>Cost</th>
+      <td mat-cell *matCellDef="let writeOffActGoods">{{writeOffActGoods.goods.cost}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="weight">
+      <th mat-header-cell *matHeaderCellDef>Weight</th>
+      <td mat-cell *matCellDef="let writeOffActGoods">{{writeOffActGoods.goods.weight}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="labelling">
+      <th mat-header-cell *matHeaderCellDef>Labelling</th>
+      <td mat-cell *matCellDef="let writeOffActGoods">{{writeOffActGoods.goods.labelling}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef>Description</th>
+      <td mat-cell *matCellDef="let writeOffActGoods">{{writeOffActGoods.goods.description}}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
 </div>
