@@ -1,33 +1,76 @@
-<div *ngIf="!page" class="loader-container">
-  <div class="loader"></div>
-</div>
-<div *ngIf="page">
-  <table class="table table-shadow">
-    <tr>
-      <th>Name</th>
-      <th>Placement Type</th>
-      <th>Measurement Unit</th>
-      <th>Cost</th>
-      <th>Weight</th>
-      <th>Labelling</th>
-      <th>Description</th>
-    </tr>
-    <tr *ngFor="let goods of page.content" (click)="clickOnGoods(goods)">
-      <td>{{goods.name}}</td>
-      <td>{{goods.placementType}}</td>
-      <td>{{goods.measurementUnit}}</td>
-      <td>{{goods.cost}}</td>
-      <td>{{goods.weight}}</td>
-      <td>{{goods.labelling}}</td>
-      <td>{{goods.description}}</td>
-    </tr>
-  </table>
+<div>
+  <div style="display: flex; justify-content: center; align-items: center">
+    <table mat-table [dataSource]="page ? page.content : null" class="hoverable-table">
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let goods">{{goods.name}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="placementType">
+        <th mat-header-cell *matHeaderCellDef>Placement Type</th>
+        <td mat-cell *matCellDef="let goods">{{goods.placementType}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="measurementUnit">
+        <th mat-header-cell *matHeaderCellDef>Measurement Unit</th>
+        <td mat-cell *matCellDef="let goods">{{goods.measurementUnit}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="cost">
+        <th mat-header-cell *matHeaderCellDef>Cost</th>
+        <td mat-cell *matCellDef="let goods">{{goods.cost}}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="weight">
+        <th mat-header-cell *matHeaderCellDef>Weight</th>
+        <td mat-cell *matCellDef="let goods">{{goods.weight}}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="labelling">
+        <th mat-header-cell *matHeaderCellDef>Labelling</th>
+        <td mat-cell *matCellDef="let goods">{{goods.labelling}}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef>Description</th>
+        <td mat-cell *matCellDef="let goods">{{goods.description}}
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"
+          (click)="onRowClicked(row)"></tr>
+    </table>
+  </div>
+
+  <div *ngIf="page && page.content.length === 0"
+       style="display: flex; justify-content: center; align-items: center">
+    <p>Not found</p>
+  </div>
+
+  <div *ngIf="loading$ | async"
+       style="display: flex; justify-content: center; align-items: center">
+    <mat-progress-spinner
+      color="primary"
+      mode="indeterminate">
+    </mat-progress-spinner>
+  </div>
+
   <br>
-  <mat-paginator [length]="page.totalElements"
+  <div *ngIf="addButton && addButton === true"
+       style="display: flex; justify-content: center; align-items: center">
+    <button mat-stroked-button color="primary">Add goods</button>
+  </div>
+
+  <mat-paginator [length]="page ? page.totalElements : 0"
                  [pageIndex]="pageable.page"
                  [pageSize]="pageable.size"
                  [pageSizeOptions]="pageSizeOptions"
                  (page)="pageChanged($event)">
   </mat-paginator>
 </div>
-
