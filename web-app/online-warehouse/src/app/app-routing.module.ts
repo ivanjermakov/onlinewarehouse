@@ -19,32 +19,32 @@ import {AuthGuard} from "./auth/_guards";
 import {CounterpartyListViewComponent} from "./counterparty/counterparty-list-view/counterparty-list-view.component";
 import {UserListViewComponent} from "./user/user-list-view/user-list-view.component";
 
-const routes: Routes = [
+export const routes: Routes = [
   {path: 'list-users', component: UserListViewComponent, canActivate: [AuthGuard]},
   // {path: 'user/:id', component: UserComponent, canActivate: [AuthGuard]},
   // {path: 'user', component: UserComponent, canActivate: [AuthGuard]},
-  {path: 'list-companies', component: CompanyListComponent},
-  {path: 'create-company', component: CreateCompanyComponent},
-  {path: 'list-goods', component: GoodsListComponent},
-  {path: 'list-write-off-acts', component: WriteOffActListComponent},
-  {path: 'create-write-off-act', component: CreateWriteOffActComponent},
-  {path: 'write-off-act/:id', component: GetWriteOffActComponent},
-  {path: 'list-commodity-lots', component: CommodityLotListComponent},
-  {path: 'commodity-lot/:id', component: GetCommodityLotComponent},
-  {path: 'list-carriers', component: CarrierListViewComponent},
-  {path: 'carrier/:id', component: GetCarrierComponent},
+  {path: 'list-companies', component: CompanyListComponent, canActivate: [AuthGuard]},
+  {path: 'create-company', component: CreateCompanyComponent, canActivate: [AuthGuard]},
+  {path: 'list-goods', component: GoodsListComponent, canActivate: [AuthGuard]},
+  {path: 'list-write-off-acts', component: WriteOffActListComponent, canActivate: [AuthGuard]},
+  {path: 'create-write-off-act', component: CreateWriteOffActComponent, canActivate: [AuthGuard]},
+  {path: 'write-off-act/:id', component: GetWriteOffActComponent, canActivate: [AuthGuard]},
+  {path: 'list-commodity-lots', component: CommodityLotListComponent, canActivate: [AuthGuard]},
+  {path: 'commodity-lot/:id', component: GetCommodityLotComponent, canActivate: [AuthGuard]},
+  {path: 'list-carriers', component: CarrierListViewComponent, canActivate: [AuthGuard]},
+  {path: 'carrier/:id', component: GetCarrierComponent, canActivate: [AuthGuard]},
   {path: 'list-counterparties', component: CounterpartyListViewComponent, canActivate: [AuthGuard]},
   // {path: 'counterparty/:id', component: GetCarrierComponent, canActivate: [AuthGuard]},
   {path: 'login', component: LoginComponent},
   {path: '', component: HomeComponent, canActivate: [AuthGuard]},
-  {path: 'register-consignment-note', component: RegisterConsignmentNoteComponent},
-  {path: 'consignment-notes', component: ConsignmentNoteListComponent},
-  {path: 'consignment-notes/:id', component: ConsignmentNoteDetailComponent},
+  {path: 'register-consignment-note', component: RegisterConsignmentNoteComponent, canActivate: [AuthGuard]},
+  {path: 'consignment-notes', component: ConsignmentNoteListComponent, canActivate: [AuthGuard]},
+  {path: 'consignment-notes/:id', component: ConsignmentNoteDetailComponent, canActivate: [AuthGuard]},
   // { path: 'heroes', component:  }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule],
   exports: [RouterModule],
   declarations: []
 })

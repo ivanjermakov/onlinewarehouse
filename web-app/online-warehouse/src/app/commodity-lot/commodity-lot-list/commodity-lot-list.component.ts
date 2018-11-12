@@ -57,7 +57,7 @@ export class CommodityLotListComponent implements OnInit {
   }
 
   onRowClicked(commodityLotListDto: CommodityLotListDto) {
-    this.router.navigate(['commodity-lot/' + commodityLotListDto.id]);
+    this.router.navigate(['app/commodity-lot/' + commodityLotListDto.id]);
   }
 
   pageChanged(event: PageEvent) {

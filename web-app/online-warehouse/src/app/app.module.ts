@@ -15,7 +15,8 @@ import {
 import {AppComponent} from './app.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
-import {AppRoutingModule} from './app-routing.module';
+import {MatNativeDateModule} from '@angular/material';
+import {AppRoutingModule, routes as appRoutes} from './app-routing.module';
 import {HomeComponent} from './home/home.component';
 import {PlacementComponent} from './placement/placement.component';
 import {CompanyListComponent} from './company/company-list/company-list.component';
@@ -46,8 +47,16 @@ import {CounterpartyListDialogComponent} from './counterparty/counterparty-list-
 import {CounterpartyListViewComponent} from './counterparty/counterparty-list-view/counterparty-list-view.component';
 import {LogoutComponent} from "./auth/login/logout.component";
 import {UserListComponent} from './user/user-list/user-list.component';
-import {UserListViewComponent} from './user/user-list-view/user-list-view.component';///cd
+import {UserListViewComponent} from './user/user-list-view/user-list-view.component';
+import {RouterModule, Routes} from "@angular/router";
+import {RootComponent} from './root/root.component';
 
+
+const routes: Routes = [
+  {path: 'app', component: AppComponent, canActivate: [AuthGuard], children: appRoutes},
+  {path: 'login', component: LoginComponent},
+  {path: '**', redirectTo: 'app'}
+];
 
 @NgModule({
   declarations: [
@@ -77,19 +86,22 @@ import {UserListViewComponent} from './user/user-list-view/user-list-view.compon
     ConsignmentNoteListComponent,
     ConsignmentNoteDetailComponent,
     RegisterConsignmentNoteComponent,
-    PaginationComponent
+    PaginationComponent,
+    UserListViewComponent,
+    RootComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
+    RouterModule.forRoot(routes),
     HttpClientModule,
     BrowserAnimationsModule,
     MaterialModule,
     MatNativeDateModule,
   ],
-  bootstrap: [AppComponent],
+  bootstrap: [RootComponent],
   entryComponents: [
     GoodsListDialogComponent,
     CarrierListDialogComponent,
