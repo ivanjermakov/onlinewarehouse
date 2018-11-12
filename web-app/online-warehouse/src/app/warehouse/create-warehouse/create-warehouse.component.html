@@ -1,0 +1,19 @@
+<mat-horizontal-stepper linear #stepper>
+  <mat-step [stepControl]="warehouseNameControl">
+    <ng-template matStepLabel>Fill warehouse name</ng-template>
+    <mat-form-field>
+      <input matInput placeholder="Warehouse name" [formControl]="warehouseNameControl" required>
+    </mat-form-field>
+    <div>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Done</ng-template>
+    <p>Warehouse name: {{warehouseNameControl.value}}</p>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button (click)="onSubmit(warehouseNameControl); stepper.reset()">Submit</button>
+    </div>
+  </mat-step>
+</mat-horizontal-stepper>

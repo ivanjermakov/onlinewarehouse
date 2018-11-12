@@ -104,6 +104,14 @@ export class AppComponent {
           {
             'name': 'Список контрагентов',
             'url': 'list-counterparties'
+          },
+          {
+            'name': 'Список складов',
+            'url': 'list-warehouses'
+          },
+          {
+            'name': 'Создать склад',
+            'url': 'create-warehouse'
           }
         ]
       },
