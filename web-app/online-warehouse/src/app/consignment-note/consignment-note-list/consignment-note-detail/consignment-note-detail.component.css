@@ -1,0 +1,17 @@
+.parent {
+  width: 500px;
+}
+
+.row {
+  display: flex;
+}
+
+.label {
+  width: 30%;
+  font-weight: bold;
+}
+
+.value {
+  display: flex;
+  flex-direction: column;
+}

@@ -104,17 +104,21 @@ create table placement (
   deleted               date
 );
 
+-- refactor table: add driver_id, consignment_note_status, description
 create table consignment_note (
   id                    bigserial PRIMARY KEY,
   company_id            bigint references company (id),
   carrier_id            bigint references carrier (id),
+  driver_id             bigint references driver (id),
   counterparty_id       bigint references counterparty (id),
   creator_id            bigint references users (id),
   number                varchar(15) NOT NULL,
   consignment_note_type varchar(5)  NOT NULL,
   shipment              date        NOT NULL,
   registration          date        NOT NULL,
-  vehicle_number        varchar(15) NOT NULL
+  vehicle_number        varchar(15) NOT NULL,
+  consignment_note_status varchar(15) NOT NULL,
+  description           text NOT NULL
 );
 
 create table commodity_lot (

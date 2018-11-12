@@ -1,28 +1,28 @@
 package by.itechart.consignmentnote.service;
 
+import by.itechart.consignmentnote.dto.ConsignmentNoteFilter;
 import by.itechart.consignmentnote.entity.QConsignmentNote;
-import by.itechart.consignmentnote.enums.ConsignmentNoteType;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 
-import java.time.LocalDate;
-
 public class ConsignmentNotePredicate {
 
-    static Predicate findFilter(long companyId, ConsignmentNoteType consignmentNoteType,
-                                LocalDate from, LocalDate to) {
+    static Predicate findFilter(long companyId, ConsignmentNoteFilter consignmentNoteFilter) {
         BooleanBuilder predicate = new BooleanBuilder();
 
-        if (consignmentNoteType != null) {
-            predicate.and(QConsignmentNote.consignmentNote.consignmentNoteType.eq(consignmentNoteType));
+        if (consignmentNoteFilter.getConsignmentNoteType() != null) {
+            predicate.and(QConsignmentNote.consignmentNote.consignmentNoteType.eq(consignmentNoteFilter.getConsignmentNoteType()));
         }
-        if (from != null) {
-            predicate.and(QConsignmentNote.consignmentNote.registration.after(from));
+        if (consignmentNoteFilter.getConsignmentNoteStatus() != null) {
+            predicate.and(QConsignmentNote.consignmentNote.consignmentNoteStatus.eq(consignmentNoteFilter.getConsignmentNoteStatus()));
         }
-        if (to != null) {
-            predicate.and(QConsignmentNote.consignmentNote.registration.before(to));
+        if (consignmentNoteFilter.getFrom() != null) {
+            predicate.and(QConsignmentNote.consignmentNote.registration.after(consignmentNoteFilter.getFrom() ));
         }
-        QConsignmentNote.consignmentNote.company.id.eq(companyId);
+        if (consignmentNoteFilter.getTo()  != null) {
+            predicate.and(QConsignmentNote.consignmentNote.registration.before(consignmentNoteFilter.getTo()));
+        }
+        predicate.and(QConsignmentNote.consignmentNote.company.id.eq(companyId));
 
         return predicate;
     }

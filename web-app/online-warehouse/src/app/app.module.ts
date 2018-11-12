@@ -1,12 +1,25 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 
+import {
+  MatDialogModule,
+  MatInputModule,
+  MatNativeDateModule,
+  MatPaginatorModule,
+  MatProgressSpinnerModule,
+  MatSelectModule,
+  MatSortModule,
+  MatTableModule
+} from '@angular/material';
+
 import {AppComponent} from './app.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {MatNativeDateModule} from '@angular/material';
+import {ViewUsersComponent} from './view-users/view-users.component';
 import {AppRoutingModule} from './app-routing.module';
 import {HomeComponent} from './home/home.component';
+import {UserComponent} from './user/user.component';
 import {PlacementComponent} from './placement/placement.component';
 import {ConsignmentNoteComponent} from './consignment-note/consignment-note.component';
 import {CompanyListComponent} from './company/company-list/company-list.component';
@@ -16,6 +29,10 @@ import {WriteOffActListComponent} from './write-off-act/write-off-act-list/write
 import {CreateWriteOffActComponent} from './write-off-act/create-write-off-act/create-write-off-act.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {GoodsListDialogComponent} from './shared/goods/goods-list-dialog/goods-list-dialog.component';
+import {ConsignmentNoteListComponent} from "./consignment-note/consignment-note-list/consignment-note-list.component";
+import {RegisterConsignmentNoteComponent} from "./consignment-note/register-consignment-note/register-consignment-note.component";
+import {ConsignmentNoteDetailComponent} from "./consignment-note/consignment-note-list/consignment-note-detail/consignment-note-detail.component";
+import {PaginationComponent} from "./shared/pagination/pagination.component";
 import {GetWriteOffActComponent} from './write-off-act/get-write-off-act/get-write-off-act.component';
 import {CommodityLotListComponent} from './commodity-lot/commodity-lot-list/commodity-lot-list.component';
 import {GetCommodityLotComponent} from './commodity-lot/get-commodity-lot/get-commodity-lot.component';
@@ -39,7 +56,9 @@ import {UserListViewComponent} from './user/user-list-view/user-list-view.compon
 @NgModule({
   declarations: [
     AppComponent,
+    ViewUsersComponent,
     HomeComponent,
+    UserComponent,
     PlacementComponent,
     ConsignmentNoteComponent,
     CompanyListComponent,
@@ -61,7 +80,11 @@ import {UserListViewComponent} from './user/user-list-view/user-list-view.compon
     CounterpartyListViewComponent,
     LogoutComponent,
     UserListComponent,
-    UserListViewComponent
+    UserListViewComponent,
+    ConsignmentNoteListComponent,
+    ConsignmentNoteDetailComponent,
+    RegisterConsignmentNoteComponent,
+    PaginationComponent
   ],
   imports: [
     BrowserModule,

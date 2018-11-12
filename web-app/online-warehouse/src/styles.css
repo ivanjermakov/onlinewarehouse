@@ -244,3 +244,7 @@ td.mat-cell, td.mat-footer-cell, th.mat-header-cell {
   margin-left: 10px;
 }
 
+a {
+  text-decoration: none;
+  color: #116b8b;
+}
