@@ -1,0 +1,73 @@
+<div class="menu" style="display: flex; flex-direction: column">
+  <a routerLink="" routerLinkActive="action-active" [routerLinkActiveOptions]="{exact: true}">
+    <button mat-button>Home</button>
+  </a>
+  <a *ngIf="userAuthorities.includes('ROLE_ADMIN')"
+     routerLink="list-companies" routerLinkActive="action-active">
+    <button mat-button>Посмотреть все компании</button>
+  </a>
+  <a *ngIf="userAuthorities.includes('ROLE_ADMIN')"
+     routerLink="create-company" routerLinkActive="action-active">
+    <button mat-button>Создать компанию</button>
+  </a>
+  <a *ngIf="userAuthorities.includes('ROLE_COMPANY_ADMIN' || 'ROLE_WAREHOUSE_OWNER')"
+     routerLink="list-users" routerLinkActive="action-active">
+    <button mat-button>Посмотреть пользователей</button>
+  </a>
+  <a *ngIf="userAuthorities.includes('ROLE_COMPANY_ADMIN' || 'ROLE_WAREHOUSE_OWNER')"
+     routerLink="user" routerLinkActive="action-active">
+    <button mat-button>Создать пользователя</button>
+  </a>
+  <a *ngIf="userAuthorities.includes('ROLE_COMPANY_ADMIN' || 'ROLE_WAREHOUSE_OWNER')"
+     routerLink="list-goods" routerLinkActive="action-active">
+    <button mat-button>Список товаров компании</button>
+  </a>
+  <a *ngIf="userAuthorities.includes('ROLE_COMPANY_ADMIN' || 'ROLE_DISPATCHER')"
+     routerLink="list-commodity-lots" routerLinkActive="action-active">
+    <button mat-button>Список товарных партий</button>
+  </a>
+  <a *ngIf="userAuthorities.includes('ROLE_COMPANY_ADMIN' || 'ROLE_WAREHOUSE_OWNER')"
+     routerLink="" routerLinkActive="action-active">
+    <button mat-button>Отчет прибыли</button>
+  </a>
+  <a *ngIf="userAuthorities.includes('ROLE_COMPANY_ADMIN' || 'ROLE_WAREHOUSE_OWNER')"
+     routerLink="" routerLinkActive="action-active">
+    <button mat-button>Отчет краж</button>
+  </a>
+  <a *ngIf="userAuthorities.includes('ROLE_COMPANY_ADMIN' || 'ROLE_WAREHOUSE_OWNER')"
+     routerLink="" routerLinkActive="action-active">
+    <button mat-button>Еще какой-то отчет</button>
+  </a>
+  <a *ngIf="userAuthorities.includes('ROLE_COMPANY_ADMIN' || 'ROLE_DISPATCHER' || 'ROLE_MANAGER')"
+     routerLink="register-consignment-note" routerLinkActive="action-active">
+    <button mat-button>Зарегистрировать ТТН</button>
+  </a>
+  <a *ngIf="userAuthorities.includes('ROLE_COMPANY_ADMIN' || 'ROLE_DISPATCHER' || 'ROLE_MANAGER' || 'ROLE_INSPECTOR')"
+     routerLink="consignment-notes" routerLinkActive="action-active">
+    <button mat-button>Посмотреть ТТН</button>
+  </a>
+  <a *ngIf="userAuthorities.includes('ROLE_COMPANY_ADMIN' || 'ROLE_MANAGER')"
+     routerLink="" routerLinkActive="action-active">
+    <button mat-button>Товарные партии к размещению</button>
+  </a>
+  <a *ngIf="userAuthorities.includes('ROLE_COMPANY_ADMIN' || 'ROLE_MANAGER' || 'ROLE_DISPATCHER')"
+     routerLink="list-carriers" routerLinkActive="action-active">
+    <button mat-button>Список перевозчиков</button>
+  </a>
+  <a *ngIf="userAuthorities.includes('ROLE_COMPANY_ADMIN' || 'ROLE_MANAGER' || 'ROLE_DISPATCHER')"
+     routerLink="list-counterparties" routerLinkActive="action-active">
+    <button mat-button>Список контрагентов</button>
+  </a>
+  <a *ngIf="userAuthorities.includes('ROLE_COMPANY_ADMIN' || 'ROLE_INSPECTOR')"
+     routerLink="" routerLinkActive="action-active">
+    <button mat-button>Зарегестрированные ТТН</button>
+  </a>
+  <a *ngIf="userAuthorities.includes('ROLE_COMPANY_ADMIN' || 'ROLE_INSPECTOR')"
+     routerLink="create-write-off-act" routerLinkActive="action-active">
+    <button mat-button>Создать акт</button>
+  </a>
+  <a *ngIf="userAuthorities.includes('ROLE_COMPANY_ADMIN' || 'ROLE_DISPATCHER')"
+     routerLink="list-write-off-acts" routerLinkActive="action-active">
+    <button mat-button>Список актов</button>
+  </a>
+</div>

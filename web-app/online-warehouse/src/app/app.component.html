@@ -1,37 +1,19 @@
 <div class="content">
-  <header class="header-left">
-    <img class="logo" src="#">
-    <div class="logo-name">Имя компании</div>
-  </header>
-
-  <header class="header-right">
-    <div *ngIf="currentComponentName !== null" class="action-name">{{currentComponentName}}</div>
-    <div *ngIf="user" style="align-self: end">
+  <mat-sidenav-container class="example-container">
+    <mat-sidenav #sidenav mode="side" opened>
+      <mat-toolbar>My App</mat-toolbar>
+      <app-menu></app-menu>
       <app-logout></app-logout>
-    </div>
-  </header>
+    </mat-sidenav>
 
-  <div class="left">
-    <div class="roles-wrapper">
-      <div class="role" *ngFor="let role of menu.roles">
-        <div class="role-name">{{role.name}}</div>
-        <div class="role-actions-wrapper">
-          <div class="role-action" *ngFor="let action of role.actions">
-            <a routerLink="{{action.url}}" routerLinkActive="action-active" [routerLinkActiveOptions]="{exist: true}"
-               (click)="changeCurrentComponentName(action.name)">{{action.name}}</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-  <div class="right">
-    <div class="not-chosen">
+    <mat-sidenav-content>
+      <mat-toolbar>
+        <button style="margin-left: -20px" (click)="sidenav.toggle(); menu = !menu" mat-button>{{menu ? "<<" : ">>"}}
+        </button>
+      </mat-toolbar>
       <router-outlet></router-outlet>
-    </div>
-  </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
 </div>
-
 
 

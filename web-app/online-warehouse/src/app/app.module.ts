@@ -1,16 +1,7 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 
-import {
-  MatDialogModule,
-  MatInputModule,
-  MatNativeDateModule,
-  MatPaginatorModule,
-  MatProgressSpinnerModule,
-  MatSelectModule,
-  MatSortModule,
-  MatTableModule
-} from '@angular/material';
+import {MatNativeDateModule} from '@angular/material';
 
 import {AppComponent} from './app.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -49,6 +40,7 @@ import {UserListComponent} from './user/user-list/user-list.component';
 import {UserListViewComponent} from './user/user-list-view/user-list-view.component';
 import {RouterModule, Routes} from "@angular/router";
 import {RootComponent} from './root/root.component';
+import {MenuComponent} from './menu/menu.component';
 
 
 const routes: Routes = [
@@ -87,7 +79,8 @@ const routes: Routes = [
     RegisterConsignmentNoteComponent,
     PaginationComponent,
     UserListViewComponent,
-    RootComponent
+    RootComponent,
+    MenuComponent
   ],
   imports: [
     BrowserModule,

@@ -7,6 +7,7 @@ import {GoodsDto} from "../../shared/goods/goods.dto";
 import {WriteOffTypeEnum} from "../dto/enum/write-off-type.enum";
 import {MatDialog, MatDialogConfig} from "@angular/material";
 import {GoodsListDialogComponent} from "../../shared/goods/goods-list-dialog/goods-list-dialog.component";
+import {AuthenticationService} from "../../auth/_services";
 
 @Component({
   selector: 'app-create-write-off-act',
@@ -24,7 +25,8 @@ export class CreateWriteOffActComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
               private writeOffActService: WriteOffActService,
-              private dialog: MatDialog) {
+              private dialog: MatDialog,
+              private auth: AuthenticationService) {
     this.createWriteOffActForm = fb.group({
       "responsiblePerson": ['', Validators.required],
       "writeOffActType": ['', Validators.required],
@@ -81,10 +83,10 @@ export class CreateWriteOffActComponent implements OnInit {
 
   onSubmit(createWriteOffActForm: FormGroup): void {
     let value = createWriteOffActForm.value;
-    let createWriteOffActDto: CreateWriteOffActDto = new CreateWriteOffActDto(null, null, null, null);
+    let createWriteOffActDto: CreateWriteOffActDto = new CreateWriteOffActDto(this.auth.getUserId(), null, null, null);
     Object.assign(createWriteOffActDto, value);
     console.log(createWriteOffActDto);
-    this.writeOffActService.saveWriteOffAct(2, createWriteOffActDto).subscribe((long: number) => {
+    this.writeOffActService.saveWriteOffAct(this.auth.getCompanyId(), createWriteOffActDto).subscribe((long: number) => {
       console.log(long)
     });
     this.clearFrom();
