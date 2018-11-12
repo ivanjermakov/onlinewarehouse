@@ -49,6 +49,9 @@ import {UserListComponent} from './user/user-list/user-list.component';
 import {UserListViewComponent} from './user/user-list-view/user-list-view.component';
 import {RouterModule, Routes} from "@angular/router";
 import {RootComponent} from './root/root.component';
+import {WarehouseListComponent} from './warehouse/warehouse-list/warehouse-list.component';
+import {GetWarehouseComponent} from './warehouse/get-warehouse/get-warehouse.component';
+import {CreateWarehouseComponent} from './warehouse/create-warehouse/create-warehouse.component';
 
 
 const routes: Routes = [
@@ -87,7 +90,10 @@ const routes: Routes = [
     RegisterConsignmentNoteComponent,
     PaginationComponent,
     UserListViewComponent,
-    RootComponent
+    RootComponent,
+    WarehouseListComponent,
+    GetWarehouseComponent,
+    CreateWarehouseComponent
   ],
   imports: [
     BrowserModule,
