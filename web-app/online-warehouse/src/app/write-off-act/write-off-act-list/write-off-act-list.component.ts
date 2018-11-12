@@ -45,7 +45,7 @@ export class WriteOffActListComponent implements OnInit {
   }
 
   onRowClicked(writeOffActListDto: WriteOffActListDto) {
-    this.router.navigate(['write-off-act/' + writeOffActListDto.id]);
+    this.router.navigate(['app/write-off-act/' + writeOffActListDto.id]);
   }
 
   pageChanged(event: PageEvent) {

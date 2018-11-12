@@ -21,11 +21,11 @@ export class AppComponent {
           },
           {
             'name': 'Посмотреть все компании',
-            'url': '/list-companies'
+            'url': 'list-companies'
           },
           {
             'name': 'Создать компанию',
-            'url': '/create-company'
+            'url': 'create-company'
           }
         ]
       },
@@ -34,19 +34,19 @@ export class AppComponent {
         'actions': [
           {
             'name': 'Посмотреть пользователей',
-            'url': '/list-users'
+            'url': 'list-users'
           },
           {
             'name': 'Создать пользователя',
-            'url': '/user'
+            'url': 'user'
           },
           {
             'name': 'Список товаров компании',
-            'url': '/list-goods'
+            'url': 'list-goods'
           },
           {
             'name': 'Список товарных партий',
-            'url': '/list-commodity-lots'
+            'url': 'list-commodity-lots'
           },
 
         ]

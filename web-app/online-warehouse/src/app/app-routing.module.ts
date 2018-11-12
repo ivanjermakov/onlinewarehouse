@@ -11,12 +11,11 @@ import {CommodityLotListComponent} from "./commodity-lot/commodity-lot-list/comm
 import {GetCommodityLotComponent} from "./commodity-lot/get-commodity-lot/get-commodity-lot.component";
 import {GetCarrierComponent} from "./carrier/get-carrier/get-carrier.component";
 import {CarrierListViewComponent} from "./carrier/carrier-list-view/carrier-list-view.component";
-import {LoginComponent} from "./auth/login";
 import {AuthGuard} from "./auth/_guards";
 import {CounterpartyListViewComponent} from "./counterparty/counterparty-list-view/counterparty-list-view.component";
 import {UserListViewComponent} from "./user/user-list-view/user-list-view.component";
 
-const routes: Routes = [
+export const routes: Routes = [
   {path: 'list-users', component: UserListViewComponent, canActivate: [AuthGuard]},
   // {path: 'user/:id', component: UserComponent, canActivate: [AuthGuard]},
   // {path: 'user', component: UserComponent, canActivate: [AuthGuard]},
@@ -32,13 +31,13 @@ const routes: Routes = [
   {path: 'carrier/:id', component: GetCarrierComponent, canActivate: [AuthGuard]},
   {path: 'list-counterparties', component: CounterpartyListViewComponent, canActivate: [AuthGuard]},
   // {path: 'counterparty/:id', component: GetCarrierComponent, canActivate: [AuthGuard]},
-  {path: 'login', component: LoginComponent},
+  // {path: 'login', component: LoginComponent},
   {path: '', component: HomeComponent, canActivate: [AuthGuard]}
   // { path: 'heroes', component:  }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule],
   exports: [RouterModule],
   declarations: []
 })

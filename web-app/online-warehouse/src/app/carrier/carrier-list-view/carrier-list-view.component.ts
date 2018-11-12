@@ -16,7 +16,7 @@ export class CarrierListViewComponent implements OnInit {
   }
 
   selected(carrier: CarrierListDto) {
-    this.router.navigate(['carrier/' + carrier.id]);
+    this.router.navigate(['app/carrier/' + carrier.id]);
   }
 
 }
