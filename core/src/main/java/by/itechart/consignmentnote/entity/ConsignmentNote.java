@@ -34,8 +34,6 @@ public class ConsignmentNote extends BaseEntity {
     @Column(name = "number")
     private String number;
 
-    @JsonSerialize(using = LocalDateSerializer.class)
-    @JsonDeserialize(using = LocalDateDeserializer.class)
     @Column(name = "shipment")
     private LocalDate shipment;
 
@@ -54,8 +52,6 @@ public class ConsignmentNote extends BaseEntity {
     @JoinColumn(name = "creator_id")
     private User creator;
 
-    @JsonSerialize(using = LocalDateSerializer.class)
-    @JsonDeserialize(using = LocalDateDeserializer.class)
     @Column(name = "registration")
     private LocalDate registration;
 

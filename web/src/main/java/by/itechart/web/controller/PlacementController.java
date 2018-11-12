@@ -2,8 +2,10 @@ package by.itechart.web.controller;
 
 import by.itechart.warehouse.dto.CreatePlacementDto;
 import by.itechart.warehouse.dto.PlacementDto;
+import by.itechart.warehouse.entity.Placement;
 import by.itechart.warehouse.service.PlacementService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -22,14 +24,14 @@ public class PlacementController {
     }
 
     @GetMapping
-    public List<PlacementDto> getPlacementList(@PathVariable long companyId, @PathVariable long warehouseId,
+    public Page<PlacementDto> getPlacementList(@PathVariable long companyId, @PathVariable long warehouseId,
                                                Pageable pageable) {
-        return placementService.getPlacements(companyId, warehouseId, pageable).getContent();
+        return placementService.getPlacements(companyId, warehouseId, pageable);
     }
 
     @PostMapping
-    public PlacementDto savePlacement(@PathVariable long companyId, @PathVariable long warehouseId,
-                                      @RequestBody CreatePlacementDto placement) {
+    public Long savePlacement(@PathVariable long companyId, @PathVariable long warehouseId,
+                                   @RequestBody CreatePlacementDto placement) {
         return placementService.savePlacement(placement, companyId, warehouseId);
     }
 
@@ -40,15 +42,14 @@ public class PlacementController {
     }
 
     @PutMapping("/{placementId}")
-    public PlacementDto editPlacement(@PathVariable long companyId, @PathVariable long warehouseId,
+    public Long editPlacement(@PathVariable long companyId, @PathVariable long warehouseId,
                                       @PathVariable long placementId, @RequestBody CreatePlacementDto placement) {
         return placementService.editPlacement(placement, companyId, warehouseId, placementId);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("/{placementId}")
-    public void deletePlacement(@PathVariable long companyId, @PathVariable long warehouseId,
-                                @PathVariable long placementId) {
+    public void deletePlacement(@PathVariable long placementId) {
         placementService.deletePlacement(placementId);
     }
 }

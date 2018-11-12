@@ -12,7 +12,7 @@ INSERT INTO authority (name) VALUES ('ROLE_INSPECTOR');
 -- Добавляем админа всей системы, должно быть в скрипте базы
 INSERT INTO address (country, region, locality) VALUES ('Admin', 'Admin', 'Admin');
 INSERT INTO users (company_id, address_id, first_name, last_name, patronymic, birth, email, username, password, enabled)
-VALUES (1, 1, 'Admin', 'Admin', 'Admin', '2018-10-10', 'companyemail@mail.ru', 'admin', '$2a$10$SIUR.7KK9EtMFEZEUfNWUuf7iKwMKYtk/HMDeKMah9UZhWMVoDjVC', true);
+VALUES (1, 1, 'Admin', 'Admin', 'Admin', '2018-10-10', 'companyemail@mail.ru', 'admin', '$2a$10$YlDfHrpz8pWm8fBZgdfnEO3ajSTHVWwd8yxlr.7w7LOghO6vJojBG', true);
 
 -- Зарегали компанию
 INSERT INTO company (name, size_type) values ('First Company', 'LARGE');

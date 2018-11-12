@@ -1,10 +1,20 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 
+import {
+  MatDialogModule,
+  MatInputModule,
+  MatNativeDateModule,
+  MatPaginatorModule,
+  MatProgressSpinnerModule,
+  MatSelectModule,
+  MatSortModule,
+  MatTableModule
+} from '@angular/material';
+
 import {AppComponent} from './app.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
-import {MatNativeDateModule} from '@angular/material';
 import {AppRoutingModule, routes as appRoutes} from './app-routing.module';
 import {HomeComponent} from './home/home.component';
 import {PlacementComponent} from './placement/placement.component';

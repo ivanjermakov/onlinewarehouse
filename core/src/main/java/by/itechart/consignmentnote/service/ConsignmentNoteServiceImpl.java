@@ -53,11 +53,12 @@ public class ConsignmentNoteServiceImpl implements ConsignmentNoteService {
         ConsignmentNote consignmentNote = ObjectMapperUtils.map(createConsignmentNoteDto, ConsignmentNote.class);
         consignmentNote.setCompany(new Company(companyId));
         consignmentNote.setId(null);
+        // TODO driverId? creatorId
         Long id = consignmentNoteRepository.save(consignmentNote).getId();
         List<ConsignmentNoteGoods> consignmentNoteGoodsList = createConsignmentNoteDto.getConsignmentNoteGoodsList()
                 .stream().map(dto -> {
                     ConsignmentNoteGoods consignmentNoteGoods = ObjectMapperUtils.map(dto, ConsignmentNoteGoods.class);
-                    consignmentNoteGoods.setId(null);
+//                    consignmentNoteGoods.setId(null);
                     consignmentNoteGoods.setConsignmentNote(new ConsignmentNote(id));
                     return consignmentNoteGoods;
                 }).collect(Collectors.toList());
