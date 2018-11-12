@@ -9,9 +9,9 @@ public interface PlacementService {
 
     Page<PlacementDto> getPlacements(long companyId, long warehouseId, Pageable pageable);
 
-    PlacementDto savePlacement(CreatePlacementDto placementDto, long companyId, long warehouseId);
+    Long savePlacement(CreatePlacementDto placementDto, long companyId, long warehouseId);
 
-    PlacementDto editPlacement(CreatePlacementDto editDto, long companyId, long warehouseId, long placementId);
+    Long editPlacement(CreatePlacementDto editDto, long companyId, long warehouseId, long placementId);
 
     PlacementDto getPlacement(long companyId, long warehouseId, long placementId);
 

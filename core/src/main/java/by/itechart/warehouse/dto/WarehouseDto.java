@@ -1,9 +1,6 @@
 package by.itechart.warehouse.dto;
 
-import by.itechart.common.enums.MeasurementUnit;
-import by.itechart.common.enums.PlacementType;
-import by.itechart.warehouse.entity.PlacementGoods;
-import by.itechart.warehouse.entity.Warehouse;
+import by.itechart.company.dto.CompanyDto;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
@@ -14,15 +11,11 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Data
-public class PlacementDto {
-
+public class WarehouseDto {
     private long id;
-    private WarehouseDto warehouse;
-    private Integer size;
-    private PlacementType placementType;
-    private MeasurementUnit measurementUnit;
-    private Integer storageCost;
-    private List<PlacementGoodsDto> placementGoodsList;
+    private CompanyDto company;
+    private List<PlacementDto> placements;
+    private String name;
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate deleted;
