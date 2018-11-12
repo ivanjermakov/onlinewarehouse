@@ -15,13 +15,9 @@ import {
 import {AppComponent} from './app.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
-import {MatNativeDateModule} from '@angular/material';
-import {ViewUsersComponent} from './view-users/view-users.component';
 import {AppRoutingModule} from './app-routing.module';
 import {HomeComponent} from './home/home.component';
-import {UserComponent} from './user/user.component';
 import {PlacementComponent} from './placement/placement.component';
-import {ConsignmentNoteComponent} from './consignment-note/consignment-note.component';
 import {CompanyListComponent} from './company/company-list/company-list.component';
 import {CreateCompanyComponent} from './company/create-company/create-company.component';
 import {GoodsListComponent} from "./shared/goods/goods-list/goods-list.component";
@@ -50,17 +46,14 @@ import {CounterpartyListDialogComponent} from './counterparty/counterparty-list-
 import {CounterpartyListViewComponent} from './counterparty/counterparty-list-view/counterparty-list-view.component';
 import {LogoutComponent} from "./auth/login/logout.component";
 import {UserListComponent} from './user/user-list/user-list.component';
-import {UserListViewComponent} from './user/user-list-view/user-list-view.component';
+import {UserListViewComponent} from './user/user-list-view/user-list-view.component';///cd
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    ViewUsersComponent,
     HomeComponent,
-    UserComponent,
     PlacementComponent,
-    ConsignmentNoteComponent,
     CompanyListComponent,
     CreateCompanyComponent,
     GoodsListComponent,

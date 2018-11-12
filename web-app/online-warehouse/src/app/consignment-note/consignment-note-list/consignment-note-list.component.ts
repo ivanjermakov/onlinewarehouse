@@ -7,6 +7,8 @@ import {ConsignmentNoteListDto} from "../dto/consignment-note-list-dto";
 import {BehaviorSubject} from "rxjs/index";
 import {PageEvent} from "@angular/material";
 import {Router} from "@angular/router";
+import {FormBuilder, FormGroup} from "@angular/forms";
+import {debounceTime, distinctUntilChanged, tap} from "rxjs/operators";
 
 @Component({
   selector: 'app-consignment-note-list',
@@ -21,15 +23,34 @@ export class ConsignmentNoteListComponent implements OnInit {
   private pageSizeOptions: number[] = [10, 25, 50];
   private errors: any[];
 
-  consignmentNotes: Page<ConsignmentNoteListDto> = new Page<ConsignmentNoteListDto>();
-  consignmentNoteFilter: ConsignmentNoteFilter = new ConsignmentNoteFilter();
+  private consignmentNotes: Page<ConsignmentNoteListDto>;
+  private consignmentNoteFilterForm: FormGroup;
+  private consignmentNoteFilter: ConsignmentNoteFilter = new ConsignmentNoteFilter();
 
   constructor(private consignmentNoteService: ConsignmentNoteService,
-              private router: Router) {
+              private router: Router,
+              private fb: FormBuilder) {
+    this.consignmentNoteFilterForm = fb.group({
+      "consignmentNoteType": [''],
+      "consignmentNoteStatus": [''],
+      "from": [''],
+      "to": ['']
+    });
   }
+
 
   ngOnInit(): void {
     this.getConsignmentNotes();
+    this.consignmentNoteFilterForm.valueChanges.pipe(debounceTime(250),
+      distinctUntilChanged(),
+      tap(() => {
+        this.consignmentNotes = null;
+        this.pageable.page = 0;
+        let value = this.consignmentNoteFilterForm.value;
+        Object.assign(this.consignmentNoteFilter, value);
+        this.getConsignmentNotes();
+      })
+    ).subscribe();
   }
 
   getConsignmentNotes(): void {

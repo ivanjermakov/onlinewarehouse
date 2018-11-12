@@ -1,51 +1,31 @@
 <div>
-  <div>
-    <div class="form-group row">
-      <label for="consignmentNoteType" class="col-sm-3 col-form-label">Consignment note type</label>
-      <div class="col-sm-5">
-        <select id="consignmentNoteType" class="form-control" [(ngModel)]="consignmentNoteFilter.consignmentNoteType"
-                (change)="getConsignmentNotes()">
-          <option value="IN">IN</option>
-          <option value="OUT">OUT</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="form-group row">
-      <label for="consignmentNoteStatus" class="col-sm-3 col-form-label">Consignment note type</label>
-      <div class="col-sm-5">
-        <select id="consignmentNoteStatus" class="form-control"
-                [(ngModel)]="consignmentNoteFilter.consignmentNoteStatus"
-                (change)="getConsignmentNotes()">
-          <option value="NOT_PROCESSED">NOT_PROCESSED</option>
-          <option value="PROCESSED">PROCESSED</option>
-          <option value="BEING_PROCESSED">BEING_PROCESSED</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="form-group row">
-      <label for="from" class="col-sm-3 col-form-label">From</label>
-      <div class="col-sm-5">
-        <input type="date"
-               id="from"
-               class="form-control"
-               [(ngModel)]="consignmentNoteFilter.from"
-               (change)="getConsignmentNotes()">
-      </div>
-    </div>
-
-    <div class="form-group row">
-      <label for="to" class="col-sm-3 col-form-label">To</label>
-      <div class="col-sm-5">
-        <input type="date"
-               id="to"
-               class="form-control"
-               [(ngModel)]="consignmentNoteFilter.to"
-               (change)="getConsignmentNotes()">
-      </div>
-    </div>
-  </div>
+  <form>
+    <mat-form-field>
+      <mat-select [formControl]="consignmentNoteFilterForm.controls['consignmentNoteType']"
+                  name="consignmentNoteType">
+        <mat-option>NONE</mat-option>
+        <mat-option [value]="'IN'">IN</mat-option>
+        <mat-option [value]="'OUT'">OUT</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select [formControl]="consignmentNoteFilterForm.controls['consignmentNoteStatus']"
+                  name="consignmentNoteStatus">
+        <mat-option>NONE</mat-option>
+        <mat-option [value]="'NOT_PROCESSED'">NOT_PROCESSED</mat-option>
+        <mat-option [value]="'PROCESSED'">PROCESSED</mat-option>
+        <mat-option [value]="'BEING_PROCESSED'">BEING_PROCESSED</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>From</mat-label>
+      <input type="date" [formControl]="consignmentNoteFilterForm.controls['from']" matInput placeholder="From ">
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>To</mat-label>
+      <input type="date" [formControl]="consignmentNoteFilterForm.controls['to']" matInput placeholder="To ">
+    </mat-form-field>
+  </form>
 
   <div style="display: flex; justify-content: center; align-items: center">
     <table mat-table [dataSource]="consignmentNotes ? consignmentNotes.content : null" class="hoverable-table">
@@ -83,7 +63,7 @@
     </table>
   </div>
 
-  <div *ngIf="consignmentNotes.totalElements"
+  <div *ngIf="consignmentNotes && consignmentNotes.content.length === 0"
        style="display: flex; justify-content: center; align-items: center">
     <p>Not found</p>
   </div>

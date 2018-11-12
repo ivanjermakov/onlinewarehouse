@@ -18,7 +18,7 @@ import {ConsignmentNoteService} from "../consignment-note.service";
 export class RegisterConsignmentNoteComponent implements OnInit {
   consignmentNoteForm: FormGroup;
   counterparty: CounterpartyDto;
-  carrier: CarrierDto;
+  carrier:  CarrierDto;
   goodsDtoList: Array<GoodsDto> = [];
 
   constructor(private consignmentNoteService: ConsignmentNoteService,
@@ -71,8 +71,9 @@ export class RegisterConsignmentNoteComponent implements OnInit {
     this.consignmentNoteForm.patchValue({'carrier': this.carrier});
   }
 
-  setDriverInfo(driverInfo: Array<string>): void {
-    this.carrier.driverInfo = driverInfo;
+  setDriverInfo(driverInfo: string): void {
+    this.carrier.driverInfo = [];
+    this.carrier.driverInfo.push(driverInfo);
     this.consignmentNoteForm.patchValue({'carrier': this.carrier});
   }
 
