@@ -14,6 +14,7 @@ import {Router} from "@angular/router";
   styleUrls: ['./consignment-note-list.component.css']
 })
 export class ConsignmentNoteListComponent implements OnInit {
+
   private displayedColumns = ["Number", "Company name", "Registration date", "Consignment Note Type", "Consignment Note Status"];
   private loadingSubject = new BehaviorSubject<boolean>(false);
   loading$ = this.loadingSubject.asObservable();
@@ -41,7 +42,7 @@ export class ConsignmentNoteListComponent implements OnInit {
   }
 
   onRowClicked(row) {
-    this.router.navigateByUrl("consignment-notes/" + row.id);
+    this.router.navigateByUrl("app/consignment-notes/" + row.id);
   }
 
   pageChanged(event: PageEvent) {

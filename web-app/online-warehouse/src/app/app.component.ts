@@ -87,11 +87,11 @@ export class AppComponent {
         'actions': [
           {
             'name': 'Зарегистрировать ТТН',
-            'url': '/register-consignment-note'
+            'url': 'register-consignment-note'
           },
           {
             'name': 'Посмотреть ТТН',
-            'url': '/consignment-notes'
+            'url': 'consignment-notes'
           },
           {
             'name': 'Товарные партии к размещению',

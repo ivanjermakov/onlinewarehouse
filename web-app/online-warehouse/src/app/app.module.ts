@@ -8,7 +8,6 @@ import {MatNativeDateModule} from '@angular/material';
 import {AppRoutingModule, routes as appRoutes} from './app-routing.module';
 import {HomeComponent} from './home/home.component';
 import {PlacementComponent} from './placement/placement.component';
-import {ConsignmentNoteComponent} from './consignment-note/consignment-note.component';
 import {CompanyListComponent} from './company/company-list/company-list.component';
 import {CreateCompanyComponent} from './company/create-company/create-company.component';
 import {GoodsListComponent} from "./shared/goods/goods-list/goods-list.component";
@@ -53,7 +52,6 @@ const routes: Routes = [
     AppComponent,
     HomeComponent,
     PlacementComponent,
-    ConsignmentNoteComponent,
     CompanyListComponent,
     CreateCompanyComponent,
     GoodsListComponent,
