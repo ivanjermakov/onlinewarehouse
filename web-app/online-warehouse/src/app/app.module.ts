@@ -16,6 +16,10 @@ import {WriteOffActListComponent} from './write-off-act/write-off-act-list/write
 import {CreateWriteOffActComponent} from './write-off-act/create-write-off-act/create-write-off-act.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {GoodsListDialogComponent} from './shared/goods/goods-list-dialog/goods-list-dialog.component';
+import {ConsignmentNoteListComponent} from "./consignment-note/consignment-note-list/consignment-note-list.component";
+import {RegisterConsignmentNoteComponent} from "./consignment-note/register-consignment-note/register-consignment-note.component";
+import {ConsignmentNoteDetailComponent} from "./consignment-note/consignment-note-list/consignment-note-detail/consignment-note-detail.component";
+import {PaginationComponent} from "./shared/pagination/pagination.component";
 import {GetWriteOffActComponent} from './write-off-act/get-write-off-act/get-write-off-act.component';
 import {CommodityLotListComponent} from './commodity-lot/commodity-lot-list/commodity-lot-list.component';
 import {GetCommodityLotComponent} from './commodity-lot/get-commodity-lot/get-commodity-lot.component';
@@ -69,6 +73,11 @@ const routes: Routes = [
     CounterpartyListViewComponent,
     LogoutComponent,
     UserListComponent,
+    UserListViewComponent,
+    ConsignmentNoteListComponent,
+    ConsignmentNoteDetailComponent,
+    RegisterConsignmentNoteComponent,
+    PaginationComponent,
     UserListViewComponent,
     RootComponent
   ],

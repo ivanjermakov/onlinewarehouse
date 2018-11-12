@@ -5,34 +5,36 @@ import {Pageable} from "../shared/pagination/pageable";
 import HttpParamsBuilder from "../shared/http/http-params-builder";
 import {Page} from "../shared/pagination/page";
 import {API_BASE_URL} from "../base-server-url";
+import {ConsignmentNoteDto} from "./dto/consignment-note-dto";
+import {CreateConsignmentNoteDto} from "./dto/create-consignment-note-dto";
+import {ConsignmentNoteFilter} from "./dto/consignment-note-filter";
+import {ConsignmentNoteListDto} from "./dto/consignment-note-list-dto";
 
 @Injectable({
   providedIn: 'root'
 })
-export class PlacementService {
+export class ConsignmentNoteService {
 
   constructor(private http: HttpClient) {
   }
 
   private baseApi: string = API_BASE_URL + '/companies';
 
-  getPlacements(companyId: number, consignmentNoteType: string, from: string, to: string, pageable: Pageable): Observable<Page<ConsignmentNoteDto>> {
+  getConsignmentNotes(companyId: number, consignmentNoteFilter: ConsignmentNoteFilter, pageable: Pageable): Observable<Page<ConsignmentNoteListDto>> {
     const path: string = this.baseApi + '/' + companyId + '/consignment-notes';
     let paramsBuilder = new HttpParamsBuilder();
-    paramsBuilder.addIfNotEmpty('consignmentNoteType', consignmentNoteType);
-    paramsBuilder.addIfNotEmpty('from', from);
-    paramsBuilder.addIfNotEmpty('to', to);
+    consignmentNoteFilter.toUrlParameters(paramsBuilder);
     pageable.toUrlParameters(paramsBuilder);
 
-    return this.http.get<Page<ConsignmentNoteDto>>(path, {params: paramsBuilder.getHttpParams()});
+    return this.http.get<Page<ConsignmentNoteListDto>>(path, {params: paramsBuilder.getHttpParams()});
   }
 
-  savePlacement(createConsignmentNoteDto: CreateConsignmentNoteDto, companyId: number): Observable<ConsignmentNoteDto> {
+  saveConsignmentNote(companyId: number, createConsignmentNoteDto: CreateConsignmentNoteDto): Observable<ConsignmentNoteDto> {
     const path: string = this.baseApi + '/' + companyId + '/consignment-notes';
     return this.http.post<ConsignmentNoteDto>(path, createConsignmentNoteDto);
   }
 
-  getPlacement(companyId: number, consignmentNoteId: number): Observable<ConsignmentNoteDto> {
+  getConsignmentNote(companyId: number, consignmentNoteId: number): Observable<ConsignmentNoteDto> {
     const path: string = this.baseApi + '/' + companyId + '/consignment-notes/' + consignmentNoteId;
     return this.http.get<ConsignmentNoteDto>(path);
   }

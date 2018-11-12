@@ -1,9 +1,11 @@
 package by.itechart.consignmentnote.entity;
 
 import by.itechart.carrier.entity.Carrier;
+import by.itechart.carrier.entity.Driver;
 import by.itechart.common.entity.BaseEntity;
 import by.itechart.common.entity.User;
 import by.itechart.company.entity.Company;
+import by.itechart.consignmentnote.enums.ConsignmentNoteStatus;
 import by.itechart.consignmentnote.enums.ConsignmentNoteType;
 import by.itechart.counterparty.entity.Counterparty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -64,4 +66,18 @@ public class ConsignmentNote extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private ConsignmentNoteType consignmentNoteType;
 
+    @ManyToOne
+    @JoinColumn(name = "driver_id")
+    private Driver driver;
+
+    @Column(name = "consignment_note_status")
+    @Enumerated(EnumType.STRING)
+    private ConsignmentNoteStatus consignmentNoteStatus;
+
+    @Column(name = "description")
+    private String description;
+
+    public ConsignmentNote(Long id) {
+        super(id);
+    }
 }

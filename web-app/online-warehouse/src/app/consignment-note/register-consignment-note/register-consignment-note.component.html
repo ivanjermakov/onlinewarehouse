@@ -1,0 +1,154 @@
+<mat-horizontal-stepper linear #stepper [formGroup]="consignmentNoteForm">
+  <mat-step [stepControl]="consignmentNoteForm.controls['number']">
+    <ng-template matStepLabel>Fill number consignment note</ng-template>
+    <mat-form-field>
+      <input matInput placeholder="CN Number" [formControl]="consignmentNoteForm.controls['number']" required>
+    </mat-form-field>
+    <div>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
+
+  <mat-step [stepControl]="consignmentNoteForm.controls['shipment']">
+    <ng-template matStepLabel>Shipment</ng-template>
+    <mat-form-field>
+      <input matInput type="date" placeholder="Shipment" [formControl]="consignmentNoteForm.controls['shipment']"
+             required>
+    </mat-form-field>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
+
+  <mat-step [stepControl]="consignmentNoteForm.controls['counterparty']">
+    <ng-template matStepLabel>Add counterparty</ng-template>
+
+    <table *ngIf="counterparty" formArrayName="counterparty">
+      <tr>
+        <td>{{counterparty.name}}</td>
+        <td>{{counterparty.taxNumber}}</td>
+        <td>{{counterparty.counterpartyType}}</td>
+      </tr>
+    </table>
+    <button type="button" class="button button-cyan" (click)="counterpartyModal()">Add</button>
+
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
+
+  <mat-step [stepControl]="consignmentNoteForm.controls['carrier']">
+    <ng-template matStepLabel>Add carrier</ng-template>
+
+    <table *ngIf="carrier">
+      <tr>
+        <td>{{carrier.name}}</td>
+        <td>{{carrier.taxNumber}}</td>
+        <td>{{carrier.carrierType}}</td>
+        <td *ngIf="carrier.carrierType == 'AUTOMOBILE'" style="display: flex; justify-content: space-between">
+          <input matInput type="text" placeholder="driver info"
+                 #info (keyup)="setDriverInfo(info.value)">
+        </td>
+      </tr>
+    </table>
+    <button type="button" class="button button-cyan" (click)="carrierModal()">Add</button>
+
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
+
+  <mat-step [stepControl]="consignmentNoteForm.controls['vehicleNumber']">
+    <ng-template matStepLabel>Vehicle number</ng-template>
+    <mat-form-field>
+      <input matInput placeholder="Vehicle number" [formControl]="consignmentNoteForm.controls['vehicleNumber']"
+             required>
+    </mat-form-field>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
+
+  <mat-step [stepControl]="consignmentNoteForm.controls['registration']">
+    <ng-template matStepLabel>Registration</ng-template>
+    <mat-form-field>
+      <input matInput type="date" placeholder="registration"
+             [formControl]="consignmentNoteForm.controls['registration']" required>
+    </mat-form-field>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
+
+  <mat-step [stepControl]="consignmentNoteForm.controls['consignmentNoteGoodsList']">
+    <ng-template matStepLabel>Add goods</ng-template>
+
+    <table *ngIf="goodsDtoList.length > 0" formArrayName="consignmentNoteGoodsList">
+      <tr *ngFor="let goods of goodsDtoList; let i = index">
+        <td>{{goods.name}}</td>
+        <td>{{goods.placementType}}</td>
+        <td>{{goods.measurementUnit}}</td>
+        <td>{{goods.cost}}</td>
+        <td formGroupName="{{i}}" style="display: flex; justify-content: space-between">
+          <input type="hidden" formControlName="goods">
+          <input type="number" formControlName="amount" class="select input-border">
+        </td>
+      </tr>
+    </table>
+    <button type="button" class="button button-cyan" (click)="goodsModal()">Add</button>
+
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
+
+  <mat-step [stepControl]="consignmentNoteForm.controls['consignmentNoteType']">
+    <ng-template matStepLabel>Сonsignment note type</ng-template>
+    <mat-form-field>
+      <select id="consignmentNoteType" class="form-control" matNativeControl
+              [formControl]="consignmentNoteForm.controls['consignmentNoteType']" required>
+        <option value="IN">IN</option>
+        <option value="OUT">OUT</option>
+      </select>
+    </mat-form-field>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
+
+  <mat-step [stepControl]="consignmentNoteForm.controls['consignmentNoteStatus']">
+    <ng-template matStepLabel>Consignment note status</ng-template>
+    <mat-form-field>
+      <select id="consignmentNoteStatus" class="form-control" matNativeControl
+              [formControl]="consignmentNoteForm.controls['consignmentNoteStatus']" required>
+        <option value="NOT_PROCESSED">NOT_PROCESSED</option>
+        <option value="PROCESSED">PROCESSED</option>
+        <option value="BEING_PROCESSED">BEING_PROCESSED</option>
+      </select>
+    </mat-form-field>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
+
+  <mat-step [stepControl]="consignmentNoteForm.controls['description']">
+    <ng-template matStepLabel>Description</ng-template>
+    <mat-form-field>
+      <textarea matInput [formControl]="consignmentNoteForm.controls['description']"
+                required></textarea>
+    </mat-form-field>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button (click)="onSubmit(consignmentNoteForm); stepper.reset()">Submit</button>
+    </div>
+  </mat-step>
+
+</mat-horizontal-stepper>

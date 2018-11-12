@@ -11,6 +11,10 @@ import {CommodityLotListComponent} from "./commodity-lot/commodity-lot-list/comm
 import {GetCommodityLotComponent} from "./commodity-lot/get-commodity-lot/get-commodity-lot.component";
 import {GetCarrierComponent} from "./carrier/get-carrier/get-carrier.component";
 import {CarrierListViewComponent} from "./carrier/carrier-list-view/carrier-list-view.component";
+import {RegisterConsignmentNoteComponent} from "./consignment-note/register-consignment-note/register-consignment-note.component";
+import {ConsignmentNoteListComponent} from "./consignment-note/consignment-note-list/consignment-note-list.component";
+import {ConsignmentNoteDetailComponent} from "./consignment-note/consignment-note-list/consignment-note-detail/consignment-note-detail.component";
+import {LoginComponent} from "./auth/login";
 import {AuthGuard} from "./auth/_guards";
 import {CounterpartyListViewComponent} from "./counterparty/counterparty-list-view/counterparty-list-view.component";
 import {UserListViewComponent} from "./user/user-list-view/user-list-view.component";
@@ -31,8 +35,11 @@ export const routes: Routes = [
   {path: 'carrier/:id', component: GetCarrierComponent, canActivate: [AuthGuard]},
   {path: 'list-counterparties', component: CounterpartyListViewComponent, canActivate: [AuthGuard]},
   // {path: 'counterparty/:id', component: GetCarrierComponent, canActivate: [AuthGuard]},
-  // {path: 'login', component: LoginComponent},
-  {path: '', component: HomeComponent, canActivate: [AuthGuard]}
+  {path: 'login', component: LoginComponent},
+  {path: '', component: HomeComponent, canActivate: [AuthGuard]},
+  {path: 'register-consignment-note', component: RegisterConsignmentNoteComponent, canActivate: [AuthGuard]},
+  {path: 'consignment-notes', component: ConsignmentNoteListComponent, canActivate: [AuthGuard]},
+  {path: 'consignment-notes/:id', component: ConsignmentNoteDetailComponent, canActivate: [AuthGuard]},
   // { path: 'heroes', component:  }
 ];
 
