@@ -4,16 +4,11 @@ import by.itechart.consignmentnote.dto.ConsignmentNoteDto;
 import by.itechart.consignmentnote.dto.ConsignmentNoteFilter;
 import by.itechart.consignmentnote.dto.ConsignmentNoteListDto;
 import by.itechart.consignmentnote.dto.CreateConsignmentNoteDto;
-import by.itechart.consignmentnote.enums.ConsignmentNoteType;
 import by.itechart.consignmentnote.service.ConsignmentNoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDate;
-import java.util.List;
 
 @RestController
 @RequestMapping("/companies/{companyId}/consignment-notes")
@@ -39,8 +34,9 @@ public class ConsignmentNoteController {
     }
 
     @PostMapping
-    public ConsignmentNoteDto saveConsignmentNote(@PathVariable long companyId,
+    public Long saveConsignmentNote(@PathVariable long companyId,
                                                   @RequestBody CreateConsignmentNoteDto consignmentNote) {
+        System.out.println(consignmentNote);
         return consignmentNoteService.saveConsignmentNote(consignmentNote, companyId);
     }
 }

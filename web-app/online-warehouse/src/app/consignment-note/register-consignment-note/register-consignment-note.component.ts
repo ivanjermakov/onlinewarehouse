@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import {FormArray, FormBuilder, FormGroup} from "@angular/forms";
-import {CreateConsignmentNoteDto} from "../dto/create-consignment-note-dto";
 import {GoodsListDialogComponent} from "../../shared/goods/goods-list-dialog/goods-list-dialog.component";
 import {GoodsDto} from "../../shared/goods/goods.dto";
 import {MatDialog, MatDialogConfig} from "@angular/material";
 import {CarrierDto} from "../../carrier/dto/carrier.dto";
 import {CarrierListDialogComponent} from "../../carrier/carrier-list-dialog/carrier-list-dialog.component";
-import {group} from "@angular/animations";
 import {CounterpartyListDialogComponent} from "../../counterparty/counterparty-list-dialog/counterparty-list-dialog.component";
 import {CounterpartyTypeEnum} from "../../counterparty/dto/enum/counterparty-type.enum";
 import {CounterpartyDto} from "../../counterparty/dto/counterparty.dto";
+import {ConsignmentNoteService} from "../consignment-note.service";
 
 @Component({
   selector: 'app-register-consignment-note',
@@ -18,10 +17,12 @@ import {CounterpartyDto} from "../../counterparty/dto/counterparty.dto";
 })
 export class RegisterConsignmentNoteComponent implements OnInit {
   consignmentNoteForm: FormGroup;
+  counterparty: CounterpartyDto;
+  carrier: CarrierDto;
   goodsDtoList: Array<GoodsDto> = [];
-  consignmentNote: CreateConsignmentNoteDto;
 
-  constructor(private fb: FormBuilder,
+  constructor(private consignmentNoteService: ConsignmentNoteService,
+              private fb: FormBuilder,
               private dialog: MatDialog) {
     this.consignmentNoteForm = fb.group({
       "number": [''],
@@ -33,21 +34,16 @@ export class RegisterConsignmentNoteComponent implements OnInit {
       "consignmentNoteGoodsList": fb.array([]),
       "consignmentNoteType": [''],
       "consignmentNoteStatus": [''],
-      "description": [''],
-      //driver
+      "description": ['']
     });
   }
 
   ngOnInit() {
   }
 
-  onSubmit(consignmentNoteForm: FormGroup): void {
-    console.log(this.consignmentNoteForm.value);
-    consignmentNoteForm.reset();
-  }
-
   addCounterparty(counterparty: CounterpartyDto): void {
-    console.log(counterparty);
+    this.consignmentNoteForm.patchValue({"counterparty" : counterparty});
+    this.counterparty = counterparty;
   }
 
   counterpartyModal(): void {
@@ -71,11 +67,13 @@ export class RegisterConsignmentNoteComponent implements OnInit {
   }
 
   addCarrier(carrier: CarrierDto): void {
-    console.log(carrier);
-    // this.carrier = carrier;
-    // this.consignmentNoteForm.controls['carrier'] = this.fb.group({
-    //   "carrier": this.carrier
-    // });
+    this.carrier = carrier;
+    this.consignmentNoteForm.patchValue({'carrier': this.carrier});
+  }
+
+  setDriverInfo(driverInfo: Array<string>): void {
+    this.carrier.driverInfo = driverInfo;
+    this.consignmentNoteForm.patchValue({'carrier': this.carrier});
   }
 
   carrierModal(): void {
@@ -96,11 +94,10 @@ export class RegisterConsignmentNoteComponent implements OnInit {
   }
 
   addGoods(goods: GoodsDto): void {
-    console.log(goods);
     this.goodsDtoList.push(goods);
     let index = this.goodsDtoList.length - 1;
     (this.consignmentNoteForm.controls['consignmentNoteGoodsList'] as FormArray).push(this.fb.group({
-      "goodsId": [this.goodsDtoList[index].id],
+      "goods": [this.goodsDtoList[index]],
       "amount": ['']
     }));
   }
@@ -122,4 +119,19 @@ export class RegisterConsignmentNoteComponent implements OnInit {
     );
   }
 
+  onSubmit(consignmentNoteForm: FormGroup): void {
+    console.log(this.consignmentNoteForm.value);
+    // const id = Number(this.route.snapshot.paramMap.get('companyId'));
+    const companyId = 2;
+    this.consignmentNoteService.saveConsignmentNote(companyId, this.consignmentNoteForm.value)
+      .subscribe();
+    this.clearFrom();
+  }
+
+  private clearFrom(): void {
+    this.carrier = null;
+    this.counterparty = null;
+    this.goodsDtoList = [];
+    this.consignmentNoteForm.reset();
+  }
 }

@@ -1,62 +1,104 @@
-<div *ngIf="consignmentNote">
-  <h1>Consignment note</h1>
-  <table id="table">
-    <thead>
-    <tr>
-      <th class="key">Number: </th>
-      <th class="value">{{consignmentNote.number}}</th>
-    </tr>
-    <tr>
-      <th class="key">Company: </th>
-      <th class="value">{{consignmentNote.company.name}}</th>
-    </tr>
-    <tr>
-      <th class="key">Shipment: </th>
-      <th class="value">{{consignmentNote.shipment}}</th>
-    </tr>
-    <tr>
-      <th class="key">Counterparty: </th>
-      <th class="value">{{consignmentNote.counterparty.name}}</th>
-      <th class="value">(other info)</th>
-    </tr>
-    <tr>
-      <th class="key">Carrier: </th>
-      <th class="value">{{consignmentNote.carrier.name}}</th>
-      <th class="value">(other info)</th>
-    </tr>
-    <tr>
-      <th class="key">Vehicle number:</th>
-      <th class="value">{{consignmentNote.vehicleNumber}}</th>
-    </tr>
-    <tr>
-      <!--userDto-->
-    </tr>
-    <tr>
-      <th class="key">Registration:</th>
-      <th class="value">{{consignmentNote.registration}}</th>
-    </tr>
-    <tr>
-      <th class="key">Goods:</th>
-      <!--<div *ngFor="let consignmentNoteGood of consignmentNote.consignmentNoteGoodsList">-->
-        <!--{{consignmentNoteGood.goods.name}}-->
-      <!--</div>-->
-    </tr>
-    <tr>
-      <th class="key">Type:</th>
-      <th class="value">{{consignmentNote.consignmentNoteType}}</th>
-    </tr>
-    <tr>
-      <!--driverDto-->
-    </tr>
-    <tr>
-      <th class="key">Status:</th>
-      <th class="value">{{consignmentNote.consignmentNoteStatus}}</th>
-    </tr>
-    <tr>
-      <th class="key">Description:</th>
-      <th class="value">{{consignmentNote.description}}</th>
-    </tr>
-    </thead>
-  </table>
+<div class="parent" *ngIf="consignmentNote">
 
+  <h1>Consignment note</h1>
+  <div class="row">
+    <span class="label">Number:</span>
+    <div class="value">
+      <span class="value-item">{{consignmentNote.number}}</span>
+    </div>
+  </div>
+  <div class="row">
+    <span class="label">Company:</span>
+    <div class="value">
+      <span class="value-item">{{consignmentNote.company.name}}</span>
+    </div>
+  </div>
+  <div class="row">
+    <span class="label">Shipment:</span>
+    <div class="value">
+      <span class="value-item">{{consignmentNote.shipment}}</span>
+    </div>
+  </div>
+  <div class="row">
+    <span class="label">Counterparty:</span>
+    <div class="value">
+      <span class="value-item">{{consignmentNote.counterparty.name}}</span>
+      <span class="value-item">{{consignmentNote.counterparty.taxNumber}}</span>
+      <span class="value-item">{{consignmentNote.counterparty.counterpartyType}}</span>
+      <span class="value-item">
+        {{consignmentNote.carrier.address.country}}
+        {{consignmentNote.carrier.address.region}}
+        {{consignmentNote.carrier.address.locality}}
+      </span>
+    </div>
+  </div>
+  <div class="row">
+    <span class="label">Carrier:</span>
+    <div class="value">
+      <span class="value-item">{{consignmentNote.carrier.name}}</span>
+      <span class="value-item">{{consignmentNote.carrier.taxNumber}}</span>
+      <span class="value-item">{{consignmentNote.carrier.carrierType}}</span>
+      <span class="value-item">
+        {{consignmentNote.carrier.address.country}}
+        {{consignmentNote.carrier.address.region}}
+        {{consignmentNote.carrier.address.locality}}
+      </span>
+      <span class="value-item">{{consignmentNote.carrier.driverInfo}}</span>
+    </div>
+  </div>
+  <div class="row">
+    <span class="label">Vehicle number:</span>
+    <div class="value">
+      <span class="value-item">{{consignmentNote.vehicleNumber}}</span>
+    </div>
+  </div>
+  <div class="row">
+    <span class="label">Registration:</span>
+    <div class="value">
+      <span class="value-item">{{consignmentNote.registration}}</span>
+    </div>
+  </div>
+  <div class="row">
+    <span class="label">Goods:</span>
+    <table *ngIf="consignmentNote.consignmentNoteGoodsList !== undefined" class="table table-shadow hoverable-table">
+    <tr>
+      <th>Name</th>
+      <th>Labelling</th>
+      <th>Measurement unit</th>
+      <th>Placement type</th>
+      <th>Weight</th>
+      <th>Cost</th>
+      <th>Description</th>
+      <th>Amount</th>
+    </tr>
+    <tr *ngFor="let good of consignmentNote.consignmentNoteGoodsList">
+      <td>{{good.goods.name}}</td>
+      <td>{{good.goods.labelling}}</td>
+      <td>{{good.goods.measurementUnit}}</td>
+      <td>{{good.goods.placementType}}</td>
+      <td>{{good.goods.weight}}</td>
+      <td>{{good.goods.cost}}</td>
+      <td>{{good.goods.description}}</td>
+      <td>{{good.amount}}</td>
+    </tr>
+    </table>
+  </div>
+  <div class="row">
+    <span class="label">Type:</span>
+    <div class="value">
+      <span class="value-item">{{consignmentNote.consignmentNoteType}}</span>
+    </div>
+  </div>
+  <div class="row">
+    <span class="label">Status:</span>
+    <div class="value">
+      <span class="value-item">{{consignmentNote.consignmentNoteStatus}}</span>
+    </div>
+  </div>
+  <div class="row">
+    <span class="label">Description:</span>
+    <div class="value">
+      <span class="value-item">{{consignmentNote.description}}</span>
+    </div>
+  </div>
 </div>

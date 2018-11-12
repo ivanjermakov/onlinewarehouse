@@ -29,7 +29,7 @@ export class ConsignmentNoteService {
     return this.http.get<Page<ConsignmentNoteListDto>>(path, {params: paramsBuilder.getHttpParams()});
   }
 
-  saveConsignmentNote(createConsignmentNoteDto: CreateConsignmentNoteDto, companyId: number): Observable<ConsignmentNoteDto> {
+  saveConsignmentNote(companyId: number, createConsignmentNoteDto: CreateConsignmentNoteDto): Observable<ConsignmentNoteDto> {
     const path: string = this.baseApi + '/' + companyId + '/consignment-notes';
     return this.http.post<ConsignmentNoteDto>(path, createConsignmentNoteDto);
   }

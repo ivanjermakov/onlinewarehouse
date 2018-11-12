@@ -1,26 +1,37 @@
 package by.itechart.consignmentnote.dto;
 
-import by.itechart.carrier.entity.Carrier;
-import by.itechart.common.entity.User;
-import by.itechart.company.entity.Company;
+import by.itechart.carrier.dto.CarrierDto;
+import by.itechart.consignmentnote.enums.ConsignmentNoteStatus;
 import by.itechart.consignmentnote.enums.ConsignmentNoteType;
-import by.itechart.counterparty.entity.Counterparty;
+import by.itechart.counterparty.dto.CounterpartyDto;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 public class CreateConsignmentNoteDto {
-    private Company company;
     private String number;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate shipment;
-    private Counterparty counterparty;
-    private Carrier carrier;
+    private CounterpartyDto counterparty;
+    private CarrierDto carrier;
     private String vehicleNumber;
-    private User creator;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate registration;
+    @JsonBackReference
+    private List<ConsignmentNoteGoodsDto> consignmentNoteGoodsList;
     private ConsignmentNoteType consignmentNoteType;
+    private ConsignmentNoteStatus consignmentNoteStatus;
+    private String description;
 }

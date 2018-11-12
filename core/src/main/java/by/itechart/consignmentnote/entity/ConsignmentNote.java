@@ -76,4 +76,8 @@ public class ConsignmentNote extends BaseEntity {
 
     @Column(name = "description")
     private String description;
+
+    public ConsignmentNote(Long id) {
+        super(id);
+    }
 }

@@ -1,6 +1,5 @@
 package by.itechart.writeoffact.dto;
 
-import by.itechart.common.entity.User;
 import by.itechart.writeoffact.enums.WriteOffActType;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;

@@ -13,9 +13,8 @@ export class ConsignmentNoteDto {
   vehicleNumber: string;
   // creator: User;
   registration: string;
-  consignmentNoteGoodsList: ConsignmentNoteGoodsDto[];
+  consignmentNoteGoodsList: Array<ConsignmentNoteGoodsDto>;
   consignmentNoteType: string;
-  // driver: DriverDto;
   consignmentNoteStatus: string;
   description: string;
 }

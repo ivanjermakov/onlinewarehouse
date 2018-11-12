@@ -2,11 +2,8 @@ package by.itechart.consignmentnote.service;
 
 import by.itechart.consignmentnote.dto.ConsignmentNoteFilter;
 import by.itechart.consignmentnote.entity.QConsignmentNote;
-import by.itechart.consignmentnote.enums.ConsignmentNoteType;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
-
-import java.time.LocalDate;
 
 public class ConsignmentNotePredicate {
 

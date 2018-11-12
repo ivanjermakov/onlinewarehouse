@@ -46,6 +46,7 @@ import {LoginComponent} from "./auth/login";
 import {CounterpartyListComponent} from './counterparty/counterparty-list/counterparty-list.component';
 import {CounterpartyListDialogComponent} from './counterparty/counterparty-list-dialog/counterparty-list-dialog.component';
 import {CounterpartyListViewComponent} from './counterparty/counterparty-list-view/counterparty-list-view.component';
+import {LogoutComponent} from "./auth/login/logout.component";
 
 
 @NgModule({
@@ -55,10 +56,6 @@ import {CounterpartyListViewComponent} from './counterparty/counterparty-list-vi
     HomeComponent,
     UserComponent,
     PlacementComponent,
-    PaginationComponent,
-    ConsignmentNoteListComponent,
-    RegisterConsignmentNoteComponent,
-    ConsignmentNoteDetailComponent,
     CompanyListComponent,
     CreateCompanyComponent,
     GoodsListComponent,
@@ -71,11 +68,16 @@ import {CounterpartyListViewComponent} from './counterparty/counterparty-list-vi
     CarrierListComponent,
     CarrierListDialogComponent,
     GetCarrierComponent,
-    LoginComponent,
     CarrierListViewComponent,
+    LoginComponent,
     CounterpartyListComponent,
     CounterpartyListDialogComponent,
-    CounterpartyListViewComponent
+    CounterpartyListViewComponent,
+    LogoutComponent,
+    ConsignmentNoteListComponent,
+    ConsignmentNoteDetailComponent,
+    RegisterConsignmentNoteComponent,
+    PaginationComponent
   ],
   imports: [
     BrowserModule,
@@ -84,19 +86,28 @@ import {CounterpartyListViewComponent} from './counterparty/counterparty-list-vi
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    BrowserAnimationsModule,
-    MatDialogModule,
-    MatInputModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatProgressSpinnerModule,
+    MaterialModule,
     MatNativeDateModule,
-    MatSelectModule,
-    MaterialModule
   ],
   bootstrap: [AppComponent],
-  entryComponents: [GoodsListDialogComponent, CounterpartyListDialogComponent, CarrierListDialogComponent]
+  entryComponents: [
+    GoodsListDialogComponent,
+    CarrierListDialogComponent,
+    CounterpartyListDialogComponent,
+  ],
+  providers: [
+    AuthGuard,
+    AuthenticationService,
+    UserService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
+      multi: true
+    },
+
+    // providers used to create fake backend
+    // fakeBackendProvider
+  ]
 })
 export class AppModule {
 }

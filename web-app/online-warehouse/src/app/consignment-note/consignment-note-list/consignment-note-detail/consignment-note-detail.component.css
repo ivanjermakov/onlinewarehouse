@@ -1,7 +1,17 @@
-.key {
+.parent {
+  width: 500px;
+}
+
+.row {
+  display: flex;
+}
+
+.label {
+  width: 30%;
   font-weight: bold;
 }
 
 .value {
-  font-weight: inherit;
+  display: flex;
+  flex-direction: column;
 }
