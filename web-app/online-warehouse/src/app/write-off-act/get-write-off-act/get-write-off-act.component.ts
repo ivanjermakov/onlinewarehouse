@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {WriteOffActService} from "../service/write-off-act.service";
 import {ActivatedRoute} from "@angular/router";
 import {WriteOffActDto} from "../dto/write-off-act.dto";
+import {BehaviorSubject, of} from "rxjs";
+import {catchError, finalize} from "rxjs/operators";
 
 @Component({
   selector: 'app-get-write-off-act',
@@ -12,6 +14,12 @@ export class GetWriteOffActComponent implements OnInit {
 
   writeOffActId: number;
   writeOffAct: WriteOffActDto;
+
+  displayedColumns = ["writeOffType", "amount", "name", "placementType", "measurementUnit", "cost", "weight", "labelling", "description"];
+  private loadingSubject = new BehaviorSubject<boolean>(false);
+  loading$ = this.loadingSubject.asObservable();
+
+  private errors: any[];
 
   constructor(
     private writeOffActService: WriteOffActService,
@@ -35,8 +43,20 @@ export class GetWriteOffActComponent implements OnInit {
   }
 
   getWriteOffAct() {
-    this.writeOffActService.getWriteOffAct(2, this.writeOffActId)
-      .subscribe((data: WriteOffActDto) => this.writeOffAct = data);
+    this.loadingSubject.next(true);
+    this.writeOffActService.getWriteOffAct(2, this.writeOffActId).pipe(
+      catchError(() => of([])),
+      finalize(() => this.loadingSubject.next(false))
+    )
+      .subscribe(page => {
+        if (page instanceof Array) {
+          this.errors = page as any[];
+          console.log('test', this.errors)
+        } else {
+          this.writeOffAct = page;
+          console.log('test', this.writeOffAct)
+        }
+      });
   }
 
 }

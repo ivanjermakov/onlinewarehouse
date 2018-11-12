@@ -2,6 +2,7 @@
 import {HttpClient} from '@angular/common/http';
 import {map} from "rxjs/operators";
 import {API_BASE_URL} from "../../base-server-url";
+import {JwtHelperService} from "@auth0/angular-jwt";
 
 @Injectable()
 export class AuthenticationService {
@@ -9,6 +10,8 @@ export class AuthenticationService {
 
   constructor(private http: HttpClient) {
   }
+
+  private jwtHelper: JwtHelperService = new JwtHelperService();
 
   login(username: string, password: string) {
     console.log('test');
@@ -27,5 +30,29 @@ export class AuthenticationService {
   logout() {
     // remove user from local storage to log user out
     localStorage.removeItem('currentUser');
+  }
+
+  getAuthorities(): Array<string> {
+    if (localStorage.getItem('currentUser')) {
+      let decodeToken = this.jwtHelper.decodeToken(localStorage.getItem('currentUser'));
+      return decodeToken.authorities;
+    }
+    return null;
+  }
+
+  getCompanyId(): number {
+    if (localStorage.getItem('currentUser')) {
+      let decodeToken = this.jwtHelper.decodeToken(localStorage.getItem('currentUser'));
+      return decodeToken.companyId;
+    }
+    return null;
+  }
+
+  getUserId(): number {
+    if (localStorage.getItem('currentUser')) {
+      let decodeToken = this.jwtHelper.decodeToken(localStorage.getItem('currentUser'));
+      return decodeToken.userId;
+    }
+    return null;
   }
 }

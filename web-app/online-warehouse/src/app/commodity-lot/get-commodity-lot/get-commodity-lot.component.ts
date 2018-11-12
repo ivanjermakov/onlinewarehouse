@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {CommodityLotDto} from "../dto/commodity-lot.dto";
 import {CommodityLotService} from "../service/commodity-lot.service";
+import {BehaviorSubject, of} from "rxjs";
+import {catchError, finalize} from "rxjs/operators";
 
 @Component({
   selector: 'app-get-commodity-lot',
@@ -11,6 +13,11 @@ import {CommodityLotService} from "../service/commodity-lot.service";
 export class GetCommodityLotComponent implements OnInit {
   commodityLotId: number;
   commodityLotDto: CommodityLotDto;
+  displayedColumns = ["amount", "name", "placementType", "measurementUnit", "cost", "weight", "labelling", "description"];
+  private loadingSubject = new BehaviorSubject<boolean>(false);
+  loading$ = this.loadingSubject.asObservable();
+
+  private errors: any[];
 
   constructor(
     private commodityLotService: CommodityLotService,
@@ -34,8 +41,19 @@ export class GetCommodityLotComponent implements OnInit {
   }
 
   getCommodityLot() {
+    this.loadingSubject.next(true);
     this.commodityLotService.getCommodityLot(2, this.commodityLotId)
-      .subscribe((data: CommodityLotDto) => this.commodityLotDto = data);
+      .pipe(
+        catchError(() => of([])),
+        finalize(() => this.loadingSubject.next(false))
+      )
+      .subscribe(commodityLotDto => {
+        if (commodityLotDto instanceof Array) {
+          this.errors = commodityLotDto as any[];
+        } else {
+          this.commodityLotDto = commodityLotDto;
+        }
+      });
   }
 
 

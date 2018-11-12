@@ -1,41 +1,72 @@
-<div *ngIf="!commodityLotDto" class="loader-container">
-  <div class="loader"></div>
+<div *ngIf="loading$ | async"
+     style="display: flex; justify-content: center; align-items: center">
+  <mat-progress-spinner
+    color="primary"
+    mode="indeterminate">
+  </mat-progress-spinner>
 </div>
-<div *ngIf="commodityLotDto"
-     style="background-color: #fff;  box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.2), 0 4px 20px 0 rgba(0, 0, 0, 0.19)">
-  <table class="table">
-    <tr>
-      <td>Тип</td>
-      <td>Контрагент</td>
-      <td>Дата</td>
+<div *ngIf="commodityLotDto">
+  <table class="mat-table">
+    <thead>
+    <tr class="mat-header-row">
+      <th class="mat-header-cell">Тип</th>
+      <th class="mat-header-cell">Контрагент</th>
+      <th class="mat-header-cell">Дата</th>
     </tr>
+    </thead>
+    <tbody>
     <tr>
-      <td>{{commodityLotDto.commodityLotType}}</td>
-      <td>{{commodityLotDto.counterpartyId}}</td>
-      <td>{{commodityLotDto.creation}}</td>
+      <td class="mat-cell">{{commodityLotDto.commodityLotType}}</td>
+      <td class="mat-cell">{{commodityLotDto.counterpartyId}}</td>
+      <td class="mat-cell">{{commodityLotDto.creation}}</td>
     </tr>
+    </tbody>
   </table>
   <span>Goods:</span>
-  <table class="table">
-    <tr>
-      <th>amount</th>
-      <th>Name</th>
-      <th>Placement Type</th>
-      <th>Measurement Unit</th>
-      <th>Cost</th>
-      <th>Weight</th>
-      <th>Labelling</th>
-      <th>Description</th>
-    </tr>
-    <tr *ngFor="let commodityLotGoods of commodityLotDto.commodityLotGoodsList">
-      <td>{{commodityLotGoods.amount}}</td>
-      <td>{{commodityLotGoods.goods.name}}</td>
-      <td>{{commodityLotGoods.goods.placementType}}</td>
-      <td>{{commodityLotGoods.goods.measurementUnit}}</td>
-      <td>{{commodityLotGoods.goods.cost}}</td>
-      <td>{{commodityLotGoods.goods.weight}}</td>
-      <td>{{commodityLotGoods.goods.labelling}}</td>
-      <td>{{commodityLotGoods.goods.description}}</td>
-    </tr>
+  <table mat-table [dataSource]="commodityLotDto.commodityLotGoodsList ? commodityLotDto.commodityLotGoodsList : null">
+
+    <ng-container matColumnDef="amount">
+      <th mat-header-cell *matHeaderCellDef>Amount</th>
+      <td mat-cell *matCellDef="let commodityLotGoods">{{commodityLotGoods.amount}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <td mat-cell *matCellDef="let commodityLotGoods">{{commodityLotGoods.goods.name}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="placementType">
+      <th mat-header-cell *matHeaderCellDef>Placement Type</th>
+      <td mat-cell *matCellDef="let commodityLotGoods">{{commodityLotGoods.goods.placementType}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="measurementUnit">
+      <th mat-header-cell *matHeaderCellDef>Measurement Unit</th>
+      <td mat-cell *matCellDef="let commodityLotGoods">{{commodityLotGoods.goods.measurementUnit}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="cost">
+      <th mat-header-cell *matHeaderCellDef>Cost</th>
+      <td mat-cell *matCellDef="let commodityLotGoods">{{commodityLotGoods.goods.cost}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="weight">
+      <th mat-header-cell *matHeaderCellDef>Weight</th>
+      <td mat-cell *matCellDef="let commodityLotGoods">{{commodityLotGoods.goods.weight}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="labelling">
+      <th mat-header-cell *matHeaderCellDef>Labelling</th>
+      <td mat-cell *matCellDef="let commodityLotGoods">{{commodityLotGoods.goods.labelling}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef>Description</th>
+      <td mat-cell *matCellDef="let commodityLotGoods">{{commodityLotGoods.goods.description}}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
 </div>

@@ -1,4 +1,5 @@
-<mat-horizontal-stepper linear #stepper>
+<mat-vertical-stepper linear #stepper [formGroup]="consignmentNoteForm">
+
   <mat-step [stepControl]="consignmentNoteForm.controls['number']">
     <ng-template matStepLabel>Fill number consignment note</ng-template>
     <mat-form-field>
@@ -23,10 +24,11 @@
 
   <mat-step [stepControl]="consignmentNoteForm.controls['counterparty']">
     <ng-template matStepLabel>Add counterparty</ng-template>
-
-    <table *ngIf="consignmentNoteForm.controls['counterparty']">
+    <table *ngIf="counterparty" formArrayName="counterparty">
       <tr>
-        <td></td>
+        <td>{{counterparty.name}}</td>
+        <td>{{counterparty.taxNumber}}</td>
+        <td>{{counterparty.counterpartyType}}</td>
       </tr>
     </table>
     <button type="button" class="button button-cyan" (click)="counterpartyModal()">Add</button>
@@ -39,10 +41,21 @@
 
   <mat-step [stepControl]="consignmentNoteForm.controls['carrier']">
     <ng-template matStepLabel>Add carrier</ng-template>
-
-    <table *ngIf="consignmentNoteForm.controls['carrier']">
+    <table *ngIf="carrier">
       <tr>
-        <td></td>
+        <td>{{carrier.name}}</td>
+      </tr>
+      <tr>
+        <td>{{carrier.taxNumber}}</td>
+      </tr>
+      <tr>
+        <td>{{carrier.carrierType}}</td>
+      </tr>
+      <tr>
+        <td *ngIf="carrier.carrierType == 'AUTOMOBILE'" style="display: flex; justify-content: space-between">
+          <textarea matInput type="text" placeholder="driver info" class="select input-border"
+                    #info (keyup)="setDriverInfo(info.value)"></textarea>
+        </td>
       </tr>
     </table>
     <button type="button" class="button button-cyan" (click)="carrierModal()">Add</button>
@@ -79,7 +92,6 @@
 
   <mat-step [stepControl]="consignmentNoteForm.controls['consignmentNoteGoodsList']">
     <ng-template matStepLabel>Add goods</ng-template>
-
     <table *ngIf="goodsDtoList.length > 0" formArrayName="consignmentNoteGoodsList">
       <tr *ngFor="let goods of goodsDtoList; let i = index">
         <td>{{goods.name}}</td>
@@ -87,7 +99,7 @@
         <td>{{goods.measurementUnit}}</td>
         <td>{{goods.cost}}</td>
         <td formGroupName="{{i}}" style="display: flex; justify-content: space-between">
-          <input type="hidden" formControlName="goodsId">
+          <input type="hidden" formControlName="goods">
           <input type="number" formControlName="amount" class="select input-border">
         </td>
       </tr>
@@ -100,31 +112,36 @@
     </div>
   </mat-step>
 
-  <!--<mat-step [stepControl]="consignmentNoteForm.controls['consignmentNoteType']">-->
-    <!--<ng-template matStepLabel>Сonsignment note type</ng-template>-->
-    <!--<mat-form-field>-->
-      <!--<input matInput placeholder="consignmentNoteType"-->
-             <!--[formControl]="consignmentNoteForm.controls['consignmentNoteType']"-->
-             <!--required>-->
-    <!--</mat-form-field>-->
-    <!--<div>-->
-      <!--<button mat-button matStepperPrevious>Back</button>-->
-      <!--<button mat-button matStepperNext>Next</button>-->
-    <!--</div>-->
-  <!--</mat-step>-->
+  <mat-step [stepControl]="consignmentNoteForm.controls['consignmentNoteType']">
+    <ng-template matStepLabel>Сonsignment note type</ng-template>
+    <mat-form-field>
+      <mat-select [formControl]="consignmentNoteForm.controls['consignmentNoteType']"
+                  name="consignmentNoteType">
+        <mat-option [value]="'IN'">IN</mat-option>
+        <mat-option [value]="'OUT'">OUT</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
 
-  <!--<mat-step [stepControl]="consignmentNoteForm.controls['consignmentNoteStatus']">&ndash;&gt;-->
-    <!--<ng-template matStepLabel>Consignment note status</ng-template>-->
-    <!--<mat-form-field>-->
-      <!--<input matInput placeholder="consignmentNoteStatus"-->
-             <!--[formControl]="consignmentNoteForm.controls['consignmentNoteStatus']"-->
-             <!--required>-->
-    <!--</mat-form-field>-->
-    <!--<div>-->
-      <!--<button mat-button matStepperPrevious>Back</button>-->
-      <!--<button mat-button matStepperNext>Next</button>-->
-    <!--</div>-->
-  <!--</mat-step>-->
+  <mat-step [stepControl]="consignmentNoteForm.controls['consignmentNoteStatus']">
+    <ng-template matStepLabel>Consignment note status</ng-template>
+    <mat-form-field>
+      <mat-select [formControl]="consignmentNoteForm.controls['consignmentNoteStatus']"
+                  name="consignmentNoteStatus">
+        <mat-option [value]="'NOT_PROCESSED'">NOT_PROCESSED</mat-option>
+        <mat-option [value]="'PROCESSED'">PROCESSED</mat-option>
+        <mat-option [value]="'BEING_PROCESSED'">BEING_PROCESSED</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
 
   <mat-step [stepControl]="consignmentNoteForm.controls['description']">
     <ng-template matStepLabel>Description</ng-template>
@@ -138,4 +155,4 @@
     </div>
   </mat-step>
 
-</mat-horizontal-stepper>
+</mat-vertical-stepper>

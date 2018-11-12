@@ -31,9 +31,10 @@ public class Warehouse extends BaseEntity {
     @Column(name = "name")
     private String name;
 
-    @JsonSerialize(using = LocalDateSerializer.class)
-    @JsonDeserialize(using = LocalDateDeserializer.class)
     @Column(name = "deleted")
     private LocalDate deleted;
 
+    public Warehouse(Long id) {
+        super(id);
+    }
 }

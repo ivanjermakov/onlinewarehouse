@@ -43,9 +43,10 @@ public class Placement extends BaseEntity {
     @OneToMany(mappedBy = "placement")
     private List<PlacementGoods> placementGoodsList;
 
-    @JsonSerialize(using = LocalDateSerializer.class)
-    @JsonDeserialize(using = LocalDateDeserializer.class)
     @Column(name = "deleted")
     private LocalDate deleted;
 
+    public Placement(Long id) {
+        super(id);
+    }
 }

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormArray, FormBuilder, FormGroup} from "@angular/forms";
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {WriteOffActTypeEnum} from "../dto/enum/write-off-act-type.enum";
 import {WriteOffActService} from "../service/write-off-act.service";
 import {CreateWriteOffActDto} from "../dto/create-write-off-act.dto";
@@ -20,18 +20,23 @@ export class CreateWriteOffActComponent implements OnInit {
   writeOffActType = WriteOffActTypeEnum;
   writeOffType = WriteOffTypeEnum;
 
+  goodsStep: FormControl;
 
   constructor(private fb: FormBuilder,
               private writeOffActService: WriteOffActService,
               private dialog: MatDialog) {
     this.createWriteOffActForm = fb.group({
-      "responsiblePerson": [''],
-      "writeOffActType": [''],
-      "writeOffActGoodsDtoList": fb.array([])
+      "responsiblePerson": ['', Validators.required],
+      "writeOffActType": ['', Validators.required],
+      "writeOffActGoodsDtoList": fb.array([], Validators.required)
     });
   }
 
   ngOnInit() {
+  }
+
+  printToConsole(smth: any) {
+    console.log(smth)
   }
 
   getWriteOffActsTypes(): Array<string> {
@@ -47,9 +52,14 @@ export class CreateWriteOffActComponent implements OnInit {
     let index = this.goodsDtoList.length - 1;
     (this.createWriteOffActForm.controls['writeOffActGoodsDtoList'] as FormArray).push(this.fb.group({
       "goodsId": [this.goodsDtoList[index].id],
-      "writeOffType": [''],
-      "amount": ['']
+      "writeOffType": ['', Validators.required],
+      "amount": ['', Validators.required]
     }));
+  }
+
+  deleteItem(i: number): void {
+    this.goodsDtoList.splice(i, 1);
+    (this.createWriteOffActForm.controls['writeOffActGoodsDtoList'] as FormArray).removeAt(i);
   }
 
   openModal(): void {

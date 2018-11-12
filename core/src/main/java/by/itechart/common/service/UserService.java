@@ -1,12 +1,13 @@
 package by.itechart.common.service;
 
+import by.itechart.common.dto.UserDto;
 import by.itechart.common.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface UserService {
 
-    Page<User> getUsers(Long companyId, Pageable pageable);
+    Page<UserDto> getUsers(Long companyId, Pageable pageable);
 
     Long saveOrUpdateUser(User user);
 

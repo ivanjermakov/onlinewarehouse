@@ -20,8 +20,12 @@ export default class HttpParamsBuilder {
     let paramsBuilder = this;
     Object.entries(object)
       .forEach(([paramName, paramValue]) => {
-        if (paramValue !== null && paramValue !== undefined) {
-          paramsBuilder.httpParams = paramsBuilder.httpParams.append(paramName, String(paramValue))
+        if (paramValue !== null && paramValue !== undefined && paramValue !== '') {
+          if (paramValue instanceof Date) {
+            paramsBuilder.httpParams = paramsBuilder.httpParams.append(paramName, (paramValue as Date).toISOString().split('T')[0])
+          } else {
+            paramsBuilder.httpParams = paramsBuilder.httpParams.append(paramName, String(paramValue))
+          }
         }
       });
 

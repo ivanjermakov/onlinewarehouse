@@ -11,10 +11,9 @@ import java.util.List;
 @Data
 public class CreatePlacementDto {
 
-    private Warehouse warehouse;
     private Integer size;
     private PlacementType placementType;
     private MeasurementUnit measurementUnit;
     private Integer storageCost;
-    private List<PlacementGoods> placementGoodsList;
+    private List<PlacementGoodsDto> placementGoodsList;
 }

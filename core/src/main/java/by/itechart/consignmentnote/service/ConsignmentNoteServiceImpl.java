@@ -1,12 +1,14 @@
 package by.itechart.consignmentnote.service;
 
 import by.itechart.common.utils.ObjectMapperUtils;
+import by.itechart.company.entity.Company;
 import by.itechart.consignmentnote.dto.ConsignmentNoteDto;
 import by.itechart.consignmentnote.dto.ConsignmentNoteFilter;
 import by.itechart.consignmentnote.dto.ConsignmentNoteListDto;
 import by.itechart.consignmentnote.dto.CreateConsignmentNoteDto;
 import by.itechart.consignmentnote.entity.ConsignmentNote;
-import by.itechart.consignmentnote.enums.ConsignmentNoteType;
+import by.itechart.consignmentnote.entity.ConsignmentNoteGoods;
+import by.itechart.consignmentnote.repository.ConsignmentNoteGoodsRepository;
 import by.itechart.consignmentnote.repository.ConsignmentNoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,16 +16,20 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ConsignmentNoteServiceImpl implements ConsignmentNoteService {
 
     private ConsignmentNoteRepository consignmentNoteRepository;
+    private ConsignmentNoteGoodsRepository consignmentNoteGoodsRepository;
 
     @Autowired
-    public ConsignmentNoteServiceImpl(ConsignmentNoteRepository consignmentNoteRepository) {
+    public ConsignmentNoteServiceImpl(ConsignmentNoteRepository consignmentNoteRepository,
+                                      ConsignmentNoteGoodsRepository consignmentNoteGoodsRepository) {
         this.consignmentNoteRepository = consignmentNoteRepository;
+        this.consignmentNoteGoodsRepository = consignmentNoteGoodsRepository;
     }
 
     @Override
@@ -43,11 +49,20 @@ public class ConsignmentNoteServiceImpl implements ConsignmentNoteService {
 
     @Override
     @Transactional
-    public ConsignmentNoteDto saveConsignmentNote(CreateConsignmentNoteDto createConsignmentNoteDto, long companyId) {
+    public Long saveConsignmentNote(CreateConsignmentNoteDto createConsignmentNoteDto, long companyId) {
         ConsignmentNote consignmentNote = ObjectMapperUtils.map(createConsignmentNoteDto, ConsignmentNote.class);
-        consignmentNote.getCompany().setId(companyId);
-        // CHECK!!!
-
-        return ObjectMapperUtils.map(consignmentNote, ConsignmentNoteDto.class);
+        consignmentNote.setCompany(new Company(companyId));
+        consignmentNote.setId(null);
+        // TODO driverId? creatorId
+        Long id = consignmentNoteRepository.save(consignmentNote).getId();
+        List<ConsignmentNoteGoods> consignmentNoteGoodsList = createConsignmentNoteDto.getConsignmentNoteGoodsList()
+                .stream().map(dto -> {
+                    ConsignmentNoteGoods consignmentNoteGoods = ObjectMapperUtils.map(dto, ConsignmentNoteGoods.class);
+//                    consignmentNoteGoods.setId(null);
+                    consignmentNoteGoods.setConsignmentNote(new ConsignmentNote(id));
+                    return consignmentNoteGoods;
+                }).collect(Collectors.toList());
+        consignmentNoteGoodsRepository.saveAll(consignmentNoteGoodsList);
+        return id;
     }
 }

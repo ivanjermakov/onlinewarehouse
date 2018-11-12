@@ -1,54 +1,76 @@
-<form [formGroup]="commodityLotFilterForm"
-      (ngSubmit)="onSubmit(commodityLotFilterForm)">
-  <label>Company size:
-    <select name="commodityLotType"
-            [formControl]="commodityLotFilterForm.controls['commodityLotType']" class="select input-border">
-      <option [value]=""></option>
-      <option *ngFor="let type of getCommodityLotTypes()" [value]="type">{{type}}</option>
-    </select>
-  </label>
-  <br>
-  <label>From:
-    <input type="date" [formControl]="commodityLotFilterForm.controls['from']" class="input input-border">
-  </label>
-  <br>
-  <label>To:
-    <input type="date" [formControl]="commodityLotFilterForm.controls['to']" class="input input-border">
-  </label>
-  <br>
-  <label>Counterparty Name:
-    <input type="text" [formControl]="commodityLotFilterForm.controls['counterpartyName']" class="input input-border">
-  </label>
-  <br>
-  <button type="submit">Search</button>
+<form [formGroup]="commodityLotFilterForm">
+
+  <mat-form-field appearance="outline">
+    <mat-label>Type</mat-label>
+    <mat-select [formControl]="commodityLotFilterForm.controls['commodityLotType']"
+                placeholder="Type" name="commodityLotType">
+      <mat-option>None</mat-option>
+      <mat-option *ngFor="let type of getCommodityLotTypes()" [value]="type">
+        {{type}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>From</mat-label>
+    <input matInput [formControl]="commodityLotFilterForm.controls['from']"
+           [matDatepicker]="pickerFrom" placeholder="From">
+    <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+    <mat-datepicker #pickerFrom></mat-datepicker>
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>To</mat-label>
+    <input matInput [formControl]="commodityLotFilterForm.controls['to']"
+           [matDatepicker]="pickerTo" placeholder="To">
+    <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
+    <mat-datepicker #pickerTo></mat-datepicker>
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Counterparty Name</mat-label>
+    <input [formControl]="commodityLotFilterForm.controls['counterpartyName']" matInput placeholder="Counterparty Name">
+  </mat-form-field>
 </form>
-<br>
-<div *ngIf="!page" class="loader-container">
-  <div class="loader"></div>
-</div>
-<div *ngIf="page">
-  <table class="table table-shadow hoverable-table">
-    <tr>
-      <th>Id</th>
-      <th>Creation</th>
-      <th>Counterparty Name</th>
-      <th>Type</th>
-    </tr>
-    <tr *ngIf="page.content.length === 0">
-      <td colspan="4">Нет подходящих записей</td>
-    </tr>
-    <tr *ngFor="let commodityLot of page.content" (click)="navigateToPage(commodityLot.id)">
-      <td>{{commodityLot.id}}</td>
-      <td>{{commodityLot.creation}}</td>
-      <td>{{commodityLot.counterpartyName}}</td>
-      <td>{{commodityLot.commodityLotType}}</td>
-    </tr>
+
+<div style="display: flex; justify-content: center; align-items: center">
+  <table mat-table [dataSource]="page ? page.content : null" class="hoverable-table">
+
+    <ng-container matColumnDef="creation">
+      <th mat-header-cell *matHeaderCellDef>Creation</th>
+      <td mat-cell *matCellDef="let commodityLot">{{commodityLot.creation}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="counterpartyName">
+      <th mat-header-cell *matHeaderCellDef>Counterparty Name</th>
+      <td mat-cell *matCellDef="let commodityLot">{{commodityLot.counterpartyName}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="commodityLotType">
+      <th mat-header-cell *matHeaderCellDef>Type</th>
+      <td mat-cell *matCellDef="let commodityLot">{{commodityLot.commodityLotType}}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"
+        (click)="onRowClicked(row)"></tr>
   </table>
-  <br>
-  <mat-paginator [length]="page.totalElements"
-                 [pageIndex]="pageable.page"
-                 [pageSize]="pageable.size"
-                 [pageSizeOptions]="pageSizeOptions"
-                 (page)="pageChanged($event)">
-  </mat-paginator>
 </div>
+
+<div *ngIf="page && page.content.length === 0"
+     style="display: flex; justify-content: center; align-items: center">
+  <p>Not found</p>
+</div>
+
+<div *ngIf="loading$ | async"
+     style="display: flex; justify-content: center; align-items: center">
+  <mat-progress-spinner
+    color="primary"
+    mode="indeterminate">
+  </mat-progress-spinner>
+</div>
+
+<mat-paginator [length]="page ? page.totalElements : 0"
+               [pageIndex]="pageable.page"
+               [pageSize]="pageable.size"
+               [pageSizeOptions]="pageSizeOptions"
+               (page)="pageChanged($event)">
+</mat-paginator>

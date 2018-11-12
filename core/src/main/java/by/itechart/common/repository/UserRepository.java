@@ -9,7 +9,7 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface UserRepository extends CrudRepository<User, Long> {
 
-    Page<User> findAllByCompany_Id(Long companyId, Pageable pageable);
+    Page<User> findAllByCompany_IdAndDeletedIsNull(Long companyId, Pageable pageable);
 
     User findByUsername(String username);
 

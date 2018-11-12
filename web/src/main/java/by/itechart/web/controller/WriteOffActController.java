@@ -6,10 +6,9 @@ import by.itechart.writeoffact.dto.WriteOffActFilter;
 import by.itechart.writeoffact.dto.WriteOffActListDto;
 import by.itechart.writeoffact.service.WriteOffActService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/companies/{companyId}/write-off-acts")
@@ -23,10 +22,10 @@ public class WriteOffActController {
     }
 
     @GetMapping
-    public List<WriteOffActListDto> getWriteOffActs(@PathVariable long companyId,
+    public Page<WriteOffActListDto> getWriteOffActs(@PathVariable long companyId,
                                                     WriteOffActFilter filter,
                                                     Pageable pageable) {
-        return writeOffActService.getWriteOffActs(companyId, pageable, filter).getContent();
+        return writeOffActService.getWriteOffActs(companyId, pageable, filter);
     }
 
     @GetMapping("/{writeOffActId}")

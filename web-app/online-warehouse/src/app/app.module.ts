@@ -15,13 +15,9 @@ import {
 import {AppComponent} from './app.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
-import {MatDialogModule} from '@angular/material';
-import {ViewUsersComponent} from './view-users/view-users.component';
-import {AppRoutingModule} from './app-routing.module';
+import {AppRoutingModule, routes as appRoutes} from './app-routing.module';
 import {HomeComponent} from './home/home.component';
-import {UserComponent} from './user/user.component';
 import {PlacementComponent} from './placement/placement.component';
-import {ConsignmentNoteComponent} from './consignment-note/consignment-note.component';
 import {CompanyListComponent} from './company/company-list/company-list.component';
 import {CreateCompanyComponent} from './company/create-company/create-company.component';
 import {GoodsListComponent} from "./shared/goods/goods-list/goods-list.component";
@@ -41,7 +37,7 @@ import {CarrierListDialogComponent} from './carrier/carrier-list-dialog/carrier-
 import {GetCarrierComponent} from './carrier/get-carrier/get-carrier.component';
 import {CarrierListViewComponent} from './carrier/carrier-list-view/carrier-list-view.component';
 import {MaterialModule} from "./material.module";
-import {fakeBackendProvider, JwtInterceptor} from "./auth/_helpers";
+import {JwtInterceptor} from "./auth/_helpers";
 import {AuthenticationService, UserService} from "./auth/_services";
 import {AuthGuard} from "./auth/_guards";
 import {LoginComponent} from "./auth/login";
@@ -49,34 +45,80 @@ import {CounterpartyListComponent} from './counterparty/counterparty-list/counte
 import {CounterpartyListDialogComponent} from './counterparty/counterparty-list-dialog/counterparty-list-dialog.component';
 import {CounterpartyListViewComponent} from './counterparty/counterparty-list-view/counterparty-list-view.component';
 import {LogoutComponent} from "./auth/login/logout.component";
+import {UserListComponent} from './user/user-list/user-list.component';
+import {UserListViewComponent} from './user/user-list-view/user-list-view.component';
+import {RouterModule, Routes} from "@angular/router";
+import {RootComponent} from './root/root.component';
 
+
+const routes: Routes = [
+  {path: 'app', component: AppComponent, canActivate: [AuthGuard], children: appRoutes},
+  {path: 'login', component: LoginComponent},
+  {path: '**', redirectTo: 'app'}
+];
 
 @NgModule({
   declarations: [
     AppComponent,
-    ViewUsersComponent,
     HomeComponent,
-    UserComponent,
     PlacementComponent,
-    ConsignmentNoteComponent,
     CompanyListComponent,
     CreateCompanyComponent,
     GoodsListComponent,
     WriteOffActListComponent,
     CreateWriteOffActComponent,
-    GoodsListDialogComponent
+    GoodsListDialogComponent,
+    GetWriteOffActComponent,
+    CommodityLotListComponent,
+    GetCommodityLotComponent,
+    CarrierListComponent,
+    CarrierListDialogComponent,
+    GetCarrierComponent,
+    CarrierListViewComponent,
+    LoginComponent,
+    CounterpartyListComponent,
+    CounterpartyListDialogComponent,
+    CounterpartyListViewComponent,
+    LogoutComponent,
+    UserListComponent,
+    UserListViewComponent,
+    ConsignmentNoteListComponent,
+    ConsignmentNoteDetailComponent,
+    RegisterConsignmentNoteComponent,
+    PaginationComponent,
+    UserListViewComponent,
+    RootComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
+    RouterModule.forRoot(routes),
     HttpClientModule,
     BrowserAnimationsModule,
-    MatDialogModule,
+    MaterialModule,
+    MatNativeDateModule,
   ],
-  bootstrap: [AppComponent],
-  entryComponents: [GoodsListDialogComponent]
+  bootstrap: [RootComponent],
+  entryComponents: [
+    GoodsListDialogComponent,
+    CarrierListDialogComponent,
+    CounterpartyListDialogComponent,
+  ],
+  providers: [
+    AuthGuard,
+    AuthenticationService,
+    UserService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
+      multi: true
+    },
+
+    // providers used to create fake backend
+    // fakeBackendProvider
+  ]
 })
 export class AppModule {
 }
