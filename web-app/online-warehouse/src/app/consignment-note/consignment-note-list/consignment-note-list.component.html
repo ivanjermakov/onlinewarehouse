@@ -1,29 +1,36 @@
 <div>
   <form>
-    <mat-form-field>
+    <mat-form-field appearance="outline">
       <mat-select [formControl]="consignmentNoteFilterForm.controls['consignmentNoteType']"
-                  name="consignmentNoteType">
+                  placeholder="Type" name="consignmentNoteType">
         <mat-option>NONE</mat-option>
         <mat-option [value]="'IN'">IN</mat-option>
         <mat-option [value]="'OUT'">OUT</mat-option>
       </mat-select>
     </mat-form-field>
-    <mat-form-field>
+    <mat-form-field appearance="outline">
       <mat-select [formControl]="consignmentNoteFilterForm.controls['consignmentNoteStatus']"
-                  name="consignmentNoteStatus">
+                  placeholder="Status" name="consignmentNoteStatus">
         <mat-option>NONE</mat-option>
         <mat-option [value]="'NOT_PROCESSED'">NOT_PROCESSED</mat-option>
         <mat-option [value]="'PROCESSED'">PROCESSED</mat-option>
         <mat-option [value]="'BEING_PROCESSED'">BEING_PROCESSED</mat-option>
       </mat-select>
     </mat-form-field>
+
     <mat-form-field appearance="outline">
       <mat-label>From</mat-label>
-      <input type="date" [formControl]="consignmentNoteFilterForm.controls['from']" matInput placeholder="From ">
+      <input matInput [formControl]="consignmentNoteFilterForm.controls['from']"
+             [matDatepicker]="pickerFrom" placeholder="From">
+      <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+      <mat-datepicker #pickerFrom></mat-datepicker>
     </mat-form-field>
     <mat-form-field appearance="outline">
       <mat-label>To</mat-label>
-      <input type="date" [formControl]="consignmentNoteFilterForm.controls['to']" matInput placeholder="To ">
+      <input matInput [formControl]="consignmentNoteFilterForm.controls['to']"
+             [matDatepicker]="pickerTo" placeholder="To">
+      <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
+      <mat-datepicker #pickerTo></mat-datepicker>
     </mat-form-field>
   </form>
 

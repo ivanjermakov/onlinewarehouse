@@ -5,11 +5,11 @@ import {ConsignmentNoteGoodsDto} from "./consignment-note-goods-dto";
 
 export class CreateConsignmentNoteDto {
   number: string;
-  shipment: string;
+  shipment: Date;
   counterparty: CounterpartyDto;
   carrier: CarrierDto;
   vehicleNumber: string;
-  registration: string;
+  registration: Date;
   consignmentNoteGoodsList: Array<ConsignmentNoteGoodsDto>;
   consignmentNoteType: string;
   consignmentNoteStatus: string;
