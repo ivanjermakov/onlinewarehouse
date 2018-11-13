@@ -18,6 +18,7 @@ import {LoginComponent} from "./auth/login";
 import {AuthGuard} from "./auth/_guards";
 import {CounterpartyListViewComponent} from "./counterparty/counterparty-list-view/counterparty-list-view.component";
 import {UserListViewComponent} from "./user/user-list-view/user-list-view.component";
+import {CreateCounterpartyComponent} from "./counterparty/create-counterparty/create-counterparty.component";
 
 export const routes: Routes = [
   {path: 'list-users', component: UserListViewComponent, canActivate: [AuthGuard]},
@@ -40,6 +41,7 @@ export const routes: Routes = [
   {path: 'register-consignment-note', component: RegisterConsignmentNoteComponent, canActivate: [AuthGuard]},
   {path: 'consignment-notes', component: ConsignmentNoteListComponent, canActivate: [AuthGuard]},
   {path: 'consignment-notes/:id', component: ConsignmentNoteDetailComponent, canActivate: [AuthGuard]},
+  {path: 'create-counterparty', component: CreateCounterpartyComponent, canActivate: [AuthGuard]},
   // { path: 'heroes', component:  }
 ];
 

@@ -58,6 +58,10 @@
      routerLink="list-counterparties" routerLinkActive="action-active">
     <button mat-button>Список контрагентов</button>
   </a>
+  <a *ngIf="userAuthorities.includes('ROLE_COMPANY_ADMIN' || 'ROLE_MANAGER' || 'ROLE_DISPATCHER')"
+     routerLink="create-counterparty" routerLinkActive="action-active">
+    <button mat-button>Создать контрагента</button>
+  </a>
   <a *ngIf="userAuthorities.includes('ROLE_COMPANY_ADMIN' || 'ROLE_INSPECTOR')"
      routerLink="" routerLinkActive="action-active">
     <button mat-button>Зарегестрированные ТТН</button>

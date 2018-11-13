@@ -1,0 +1,65 @@
+<mat-horizontal-stepper linear #stepper>
+  <mat-step [stepControl]="createCounterpartyForm.controls['name']">
+    <ng-template matStepLabel>Fill counterparty name</ng-template>
+    <mat-form-field>
+      <input matInput placeholder="Counterparty name" [formControl]="createCounterpartyForm.controls['name']" required>
+    </mat-form-field>
+    <div>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
+  <mat-step [stepControl]="createCounterpartyForm.controls['counterpartyType']">
+    <ng-template matStepLabel>Choose counterparty type</ng-template>
+    <mat-form-field>
+      <mat-select [formControl]="createCounterpartyForm.controls['counterpartyType']"
+                  placeholder="Counterparty type" name="sizeType">
+        <mat-option>None</mat-option>
+        <mat-option *ngFor="let type of getCounterpartyTypes()" [value]="type">
+          {{type}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
+  <mat-step [stepControl]="createCounterpartyForm.controls['taxNumber']">
+    <ng-template matStepLabel>Fill tax number</ng-template>
+    <mat-form-field>
+      <input matInput placeholder="Tax number" [formControl]="createCounterpartyForm.controls['taxNumber']" required>
+    </mat-form-field>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
+  <mat-step [stepControl]="createCounterpartyForm.controls['address']">
+    <ng-template matStepLabel>Fill address</ng-template>
+    <mat-form-field>
+      <input matInput placeholder="Country"
+             [formControl]="createCounterpartyForm.controls['address'].controls['country']" required>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Region" [formControl]="createCounterpartyForm.controls['address'].controls['region']"
+             required>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Locality"
+             [formControl]="createCounterpartyForm.controls['address'].controls['locality']" required>
+    </mat-form-field>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Done</ng-template>
+    <!--<p>Company name: {{createCounterpartyForm.controls['name'].value}}</p>-->
+    <!--<p>Company plan: {{createCounterpartyForm.controls['sizeType'].value}}</p>-->
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button (click)="onSubmit(createCounterpartyForm); stepper.reset()">Submit</button>
+    </div>
+  </mat-step>
+</mat-horizontal-stepper>

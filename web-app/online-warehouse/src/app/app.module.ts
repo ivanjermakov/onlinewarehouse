@@ -41,6 +41,7 @@ import {UserListViewComponent} from './user/user-list-view/user-list-view.compon
 import {RouterModule, Routes} from "@angular/router";
 import {RootComponent} from './root/root.component';
 import {MenuComponent} from './menu/menu.component';
+import {CreateCounterpartyComponent} from './counterparty/create-counterparty/create-counterparty.component';
 
 
 const routes: Routes = [
@@ -80,7 +81,8 @@ const routes: Routes = [
     PaginationComponent,
     UserListViewComponent,
     RootComponent,
-    MenuComponent
+    MenuComponent,
+    CreateCounterpartyComponent
   ],
   imports: [
     BrowserModule,
