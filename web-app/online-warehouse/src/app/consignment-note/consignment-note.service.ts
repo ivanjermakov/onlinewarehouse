@@ -23,8 +23,10 @@ export class ConsignmentNoteService {
   getConsignmentNotes(companyId: number, consignmentNoteFilter: ConsignmentNoteFilter, pageable: Pageable): Observable<Page<ConsignmentNoteListDto>> {
     const path: string = this.baseApi + '/' + companyId + '/consignment-notes';
     let paramsBuilder = new HttpParamsBuilder();
-    consignmentNoteFilter.toUrlParameters(paramsBuilder);
     pageable.toUrlParameters(paramsBuilder);
+    if (consignmentNoteFilter) {
+      paramsBuilder.addObject(consignmentNoteFilter);
+    }
 
     return this.http.get<Page<ConsignmentNoteListDto>>(path, {params: paramsBuilder.getHttpParams()});
   }

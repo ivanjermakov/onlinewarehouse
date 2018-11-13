@@ -7,11 +7,10 @@ import {JwtHelperService} from "@auth0/angular-jwt";
 @Injectable()
 export class AuthenticationService {
   private baseApi: string = API_BASE_URL + '/api/authenticate';
+  private jwtHelper: JwtHelperService = new JwtHelperService();
 
   constructor(private http: HttpClient) {
   }
-
-  private jwtHelper: JwtHelperService = new JwtHelperService();
 
   login(username: string, password: string) {
     console.log('test');
@@ -32,7 +31,7 @@ export class AuthenticationService {
     localStorage.removeItem('currentUser');
   }
 
-  getAuthorities(): Array<string> {
+  getAuthorities(): Array<any> {
     if (localStorage.getItem('currentUser')) {
       let decodeToken = this.jwtHelper.decodeToken(localStorage.getItem('currentUser'));
       return decodeToken.authorities;

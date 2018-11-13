@@ -3,8 +3,8 @@ import HttpParamsBuilder from "../../shared/http/http-params-builder";
 export class ConsignmentNoteFilter {
   consignmentNoteType: string;
   consignmentNoteStatus: string;
-  from: string;
-  to: string;
+  from: Date;
+  to: Date;
 
   toUrlParameters(paramsBuilder: HttpParamsBuilder): HttpParamsBuilder {
     paramsBuilder.addIfNotEmpty('consignmentNoteType', this.consignmentNoteType);

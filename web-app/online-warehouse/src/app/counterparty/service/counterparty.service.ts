@@ -7,15 +7,16 @@ import {Page} from "../../shared/pagination/page";
 import HttpParamsBuilder from "../../shared/http/http-params-builder";
 import {CounterpartyFilter} from "../dto/counterparty.filter";
 import {CounterpartyDto} from "../dto/counterparty.dto";
+import {CreateCounterpartyDto} from "../dto/create-counterparty.dto";
 
 @Injectable({
   providedIn: 'root'
 })
 export class CounterpartyService {
+  private baseApi: string = API_BASE_URL + '/companies/';
+
   constructor(private http: HttpClient) {
   }
-
-  private baseApi: string = API_BASE_URL + '/companies/';
 
   getCounterparties(filter: CounterpartyFilter, pageable: Pageable, companyId: number): Observable<Page<CounterpartyDto>> {
     const path: string = this.baseApi + companyId + '/counterparties';
@@ -27,12 +28,11 @@ export class CounterpartyService {
     return this.http.get<Page<CounterpartyDto>>(path, {params: paramsBuilder.getHttpParams()});
   }
 
-  // saveCommodityLot(createCommodityLotDto: CreateCommodityLotDto, companyId: number): Observable<number> {
-  //   const path: string = this.baseApi + companyId + '/counterparties';
-  //   return this.http.post(path, createCommodityLotDto).pipe(
-  //     map((data: number) => data)
-  //   );
-  // }
+  saveCounterparty(createCounterpartyDto: CreateCounterpartyDto, companyId: number): Observable<number> {
+    const path: string = this.baseApi + companyId + '/counterparties';
+    return this.http.post<number>(path, createCounterpartyDto);
+  }
+
   //
   // getCommodityLot(companyId: number, carrierId: number): Observable<CommodityLotDto> {
   //   const path: string = this.baseApi + companyId + '/counterparties/' + carrierId;

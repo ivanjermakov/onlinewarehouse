@@ -7,9 +7,10 @@ import {BehaviorSubject, of} from "rxjs";
 import {Page} from "../../shared/pagination/page";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {Pageable} from "../../shared/pagination/pageable";
-import {catchError, finalize} from "rxjs/operators";
+import {catchError, debounceTime, distinctUntilChanged, finalize, tap} from "rxjs/operators";
 import {PageEvent} from "@angular/material";
 import {WriteOffActTypeEnum} from "../dto/enum/write-off-act-type.enum";
+import {AuthenticationService} from "../../auth/_services";
 
 @Component({
   selector: 'app-write-off-act-list',
@@ -32,7 +33,8 @@ export class WriteOffActListComponent implements OnInit {
 
   constructor(private writeOffActService: WriteOffActService,
               private router: Router,
-              private fb: FormBuilder) {
+              private fb: FormBuilder,
+              private auth: AuthenticationService) {
     this.writeOffActFilterForm = fb.group({
       "writeOffActType": [''],
       "from": [''],
@@ -42,6 +44,17 @@ export class WriteOffActListComponent implements OnInit {
 
   ngOnInit() {
     this.loadWriteOffActs();
+    this.writeOffActFilterForm.valueChanges.pipe(debounceTime(250),
+      distinctUntilChanged(),
+      tap(() => {
+        this.page = null;
+        this.pageable.page = 0;
+        let value = this.writeOffActFilterForm.value;
+        Object.assign(this.filter, value);
+        this.loadWriteOffActs();
+      })
+    )
+      .subscribe();
   }
 
   onRowClicked(writeOffActListDto: WriteOffActListDto) {
@@ -61,7 +74,7 @@ export class WriteOffActListComponent implements OnInit {
 
   private loadWriteOffActs() {
     this.loadingSubject.next(true);
-    this.writeOffActService.getWriteOffActs(this.filter, this.pageable, 2).pipe(
+    this.writeOffActService.getWriteOffActs(this.filter, this.pageable, this.auth.getCompanyId()).pipe(
       catchError(() => of([])),
       finalize(() => this.loadingSubject.next(false))
     )

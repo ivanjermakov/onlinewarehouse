@@ -2,6 +2,7 @@ package by.itechart.web.controller;
 
 import by.itechart.counterparty.dto.CounterpartyDto;
 import by.itechart.counterparty.dto.CounterpartyFilter;
+import by.itechart.counterparty.dto.CreateCounterpartyDto;
 import by.itechart.counterparty.service.CounterpartyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -27,7 +28,7 @@ public class CounterpartyController {
     }
 
     @PostMapping
-    public Long saveCounterparty(@PathVariable long companyId, @RequestBody CounterpartyDto counterparty) {
+    public Long saveCounterparty(@PathVariable long companyId, @RequestBody CreateCounterpartyDto counterparty) {
         // save counterparty and return generated counterparty id
         return counterpartyService.saveOrUpdateCounterparty(counterparty);
     }
@@ -41,7 +42,7 @@ public class CounterpartyController {
 
     @PutMapping("/{counterpartyId}")
     public Long updateCounterparty(@PathVariable long companyId, @PathVariable long counterpartyId,
-                                   @RequestBody CounterpartyDto counterparty) {
+                                   @RequestBody CreateCounterpartyDto counterparty) {
         // update counterparty and return counterparty id
         return counterpartyService.saveOrUpdateCounterparty(counterparty);
     }

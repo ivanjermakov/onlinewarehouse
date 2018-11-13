@@ -25,6 +25,7 @@ public class CommodityLotController {
     public Page<CommodityLotListDto> getCommodityLot(@PathVariable long companyId,
                                                      CommodityLotFilter filter,
                                                      Pageable pageable) {
+        System.out.println(filter);
         return commodityLotService.getCommodityLots(companyId, pageable, filter);
     }
 

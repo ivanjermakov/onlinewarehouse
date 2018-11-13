@@ -4,7 +4,7 @@ export class ConsignmentNoteListDto {
   id: number;
   number: string;
   company: CompanyDto;
-  registration: string;
+  registration: Date;
   consignmentNoteType: string;
   consignmentNoteStatus: string;
 }

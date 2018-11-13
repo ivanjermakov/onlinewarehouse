@@ -24,4 +24,7 @@ public class Address extends BaseEntity {
     @Column(name = "locality")
     private String locality;
 
+    public Address(Long id) {
+        super(id);
+    }
 }
