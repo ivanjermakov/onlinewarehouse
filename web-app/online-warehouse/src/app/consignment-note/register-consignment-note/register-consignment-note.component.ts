@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormArray, FormBuilder, FormGroup} from "@angular/forms";
+import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {GoodsListDialogComponent} from "../../shared/goods/goods-list-dialog/goods-list-dialog.component";
 import {GoodsDto} from "../../shared/goods/goods.dto";
 import {MatDialog, MatDialogConfig} from "@angular/material";
@@ -27,13 +27,11 @@ export class RegisterConsignmentNoteComponent implements OnInit {
     this.consignmentNoteForm = fb.group({
       "number": [''],
       "shipment": [''],
-      "counterparty": [''],
-      "carrier": [''],
+      "counterparty": ['', Validators.required],
+      "carrier": ['', Validators.required],
       "vehicleNumber": [''],
-      "registration": [''],
-      "consignmentNoteGoodsList": fb.array([]),
+      "consignmentNoteGoodsList": fb.array([], Validators.required),
       "consignmentNoteType": [''],
-      "consignmentNoteStatus": [''],
       "description": ['']
     });
   }
@@ -42,8 +40,13 @@ export class RegisterConsignmentNoteComponent implements OnInit {
   }
 
   addCounterparty(counterparty: CounterpartyDto): void {
-    this.consignmentNoteForm.patchValue({"counterparty" : counterparty});
     this.counterparty = counterparty;
+    this.consignmentNoteForm.patchValue({"counterparty" : counterparty});
+  }
+
+  deleteCounterparty(): void {
+    this.counterparty = null;
+    this.consignmentNoteForm.patchValue({"counterparty" : ''});
   }
 
   counterpartyModal(): void {
@@ -69,6 +72,11 @@ export class RegisterConsignmentNoteComponent implements OnInit {
   addCarrier(carrier: CarrierDto): void {
     this.carrier = carrier;
     this.consignmentNoteForm.patchValue({'carrier': this.carrier});
+  }
+
+  deleteCarrier(): void {
+    this.carrier = null;
+    this.consignmentNoteForm.patchValue({'carrier': ''});
   }
 
   setDriverInfo(driverInfo: string): void {
@@ -101,6 +109,11 @@ export class RegisterConsignmentNoteComponent implements OnInit {
       "goods": [this.goodsDtoList[index]],
       "amount": ['']
     }));
+  }
+
+  deleteGood(i: number): void {
+    this.goodsDtoList.splice(i, 1);
+    (this.consignmentNoteForm.controls['consignmentNoteGoodsList'] as FormArray).removeAt(i);
   }
 
   goodsModal(): void {

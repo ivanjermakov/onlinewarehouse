@@ -8,6 +8,7 @@ import by.itechart.consignmentnote.dto.ConsignmentNoteListDto;
 import by.itechart.consignmentnote.dto.CreateConsignmentNoteDto;
 import by.itechart.consignmentnote.entity.ConsignmentNote;
 import by.itechart.consignmentnote.entity.ConsignmentNoteGoods;
+import by.itechart.consignmentnote.enums.ConsignmentNoteStatus;
 import by.itechart.consignmentnote.repository.ConsignmentNoteGoodsRepository;
 import by.itechart.consignmentnote.repository.ConsignmentNoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -53,6 +55,8 @@ public class ConsignmentNoteServiceImpl implements ConsignmentNoteService {
         ConsignmentNote consignmentNote = ObjectMapperUtils.map(createConsignmentNoteDto, ConsignmentNote.class);
         consignmentNote.setCompany(new Company(companyId));
         consignmentNote.setId(null);
+        consignmentNote.setRegistration(LocalDate.now());
+        consignmentNote.setConsignmentNoteStatus(ConsignmentNoteStatus.NOT_PROCESSED);
         // TODO driverId? creatorId
         Long id = consignmentNoteRepository.save(consignmentNote).getId();
         List<ConsignmentNoteGoods> consignmentNoteGoodsList = createConsignmentNoteDto.getConsignmentNoteGoodsList()
