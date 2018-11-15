@@ -4,11 +4,12 @@ import {Page} from "../../shared/pagination/page";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {Pageable} from "../../shared/pagination/pageable";
 import {catchError, debounceTime, distinctUntilChanged, finalize, tap} from "rxjs/operators";
-import {PageEvent} from "@angular/material";
+import {MatDialog, PageEvent} from "@angular/material";
 import {CounterpartyDto} from "../dto/counterparty.dto";
 import {CounterpartyFilter} from "../dto/counterparty.filter";
 import {CounterpartyService} from "../service/counterparty.service";
 import {CounterpartyTypeEnum} from "../dto/enum/counterparty-type.enum";
+import {CreateCounterpartyDialogComponent} from "../create-counterparty-dialog/create-counterparty-dialog.component";
 
 @Component({
   selector: 'app-counterparty-list',
@@ -38,7 +39,8 @@ export class CounterpartyListComponent implements OnInit {
   private errors: any[];
 
   constructor(private counterpartyService: CounterpartyService,
-              private fb: FormBuilder) {
+              private fb: FormBuilder,
+              private dialog: MatDialog) {
     this.counterpartyFilterForm = fb.group({
       "name": [''],
       "taxNumber": [''],
@@ -76,6 +78,21 @@ export class CounterpartyListComponent implements OnInit {
 
   getCounterpartyTypes(): Array<string> {
     return Object.keys(CounterpartyTypeEnum);
+  }
+
+  addCounterpartyModal(): void {
+    const dialogRef = this.dialog.open(CreateCounterpartyDialogComponent, {
+      disableClose: false,
+      autoFocus: true,
+      data: {
+        counterpartyType: this.counterpartyType
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+        this.loadCounterparties();
+      }
+    );
   }
 
   loadCounterparties(): void {

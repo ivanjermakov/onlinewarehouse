@@ -44,6 +44,7 @@ import {MenuComponent} from './menu/menu.component';
 import {CreateCounterpartyComponent} from './counterparty/create-counterparty/create-counterparty.component';
 import {RegisterComponent} from "./auth/registration/register.component";
 import {GetCounterpartyComponent} from './counterparty/get-counterparty/get-counterparty.component';
+import {CreateCounterpartyDialogComponent} from './counterparty/create-counterparty-dialog/create-counterparty-dialog.component';
 
 const routes: Routes = [
   {path: 'app', component: AppComponent, canActivate: [AuthGuard], children: appRoutes},
@@ -85,7 +86,8 @@ const routes: Routes = [
     MenuComponent,
     CreateCounterpartyComponent,
     RegisterComponent,
-    GetCounterpartyComponent
+    GetCounterpartyComponent,
+    CreateCounterpartyDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -103,6 +105,7 @@ const routes: Routes = [
     GoodsListDialogComponent,
     CarrierListDialogComponent,
     CounterpartyListDialogComponent,
+    CreateCounterpartyDialogComponent
   ],
   providers: [
     AuthGuard,

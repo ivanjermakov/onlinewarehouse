@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {CounterpartyService} from "../service/counterparty.service";
 import {CreateCounterpartyDto} from "../dto/create-counterparty.dto";
@@ -12,7 +12,12 @@ import {CounterpartyTypeEnum} from "../dto/enum/counterparty-type.enum";
 })
 export class CreateCounterpartyComponent implements OnInit {
 
+  @Input() counterpartyTypeInput: CounterpartyTypeEnum;
+
+  @Output() submitted: EventEmitter = new EventEmitter();
+
   createCounterpartyForm: FormGroup;
+  createCounterparty: CreateCounterpartyDto = new CreateCounterpartyDto();
 
   constructor(private fb: FormBuilder,
               private counterpartyService: CounterpartyService,
@@ -30,6 +35,10 @@ export class CreateCounterpartyComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (this.counterpartyTypeInput) {
+      this.createCounterpartyForm.removeControl('counterpartyType');
+      this.createCounterparty.counterpartyType = this.counterpartyTypeInput;
+    }
   }
 
   getCounterpartyTypes(): Array<string> {
@@ -38,11 +47,11 @@ export class CreateCounterpartyComponent implements OnInit {
 
   onSubmit(createCounterpartyForm: FormGroup): void {
     let value = createCounterpartyForm.value;
-    let createCounterparty: CreateCounterpartyDto = new CreateCounterpartyDto();
-    createCounterparty.companyId = this.auth.getCompanyId();
-    Object.assign(createCounterparty, value);
-    this.counterpartyService.saveCounterparty(createCounterparty).subscribe((long: number) => {
-      console.log(long)
+    this.createCounterparty.companyId = this.auth.getCompanyId();
+    Object.assign(this.createCounterparty, value);
+    this.counterpartyService.saveCounterparty(this.createCounterparty).subscribe((long: number) => {
+      console.log(long);
+      this.submitted.emit();
     });
   }
 

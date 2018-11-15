@@ -66,7 +66,7 @@
   <br>
   <div *ngIf="addButton && addButton === true"
        style="display: flex; justify-content: center; align-items: center">
-    <button mat-stroked-button color="primary">Add counterparty</button>
+    <button mat-stroked-button color="primary" (click)="addCounterpartyModal()">Add counterparty</button>
   </div>
 
   <mat-paginator [length]="page ? page.totalElements : 0"
