@@ -1,16 +1,7 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 
-import {
-  MatDialogModule,
-  MatInputModule,
-  MatNativeDateModule,
-  MatPaginatorModule,
-  MatProgressSpinnerModule,
-  MatSelectModule,
-  MatSortModule,
-  MatTableModule
-} from '@angular/material';
+import {MatNativeDateModule} from '@angular/material';
 
 import {AppComponent} from './app.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -49,10 +40,9 @@ import {UserListComponent} from './user/user-list/user-list.component';
 import {UserListViewComponent} from './user/user-list-view/user-list-view.component';
 import {RouterModule, Routes} from "@angular/router";
 import {RootComponent} from './root/root.component';
-import {WarehouseListComponent} from './warehouse/warehouse-list/warehouse-list.component';
-import {GetWarehouseComponent} from './warehouse/get-warehouse/get-warehouse.component';
-import {CreateWarehouseComponent} from './warehouse/create-warehouse/create-warehouse.component';
-
+import {MenuComponent} from './menu/menu.component';
+import {CreateCounterpartyComponent} from './counterparty/create-counterparty/create-counterparty.component';
+import {RegisterComponent} from "./auth/registration/register.component";
 
 const routes: Routes = [
   {path: 'app', component: AppComponent, canActivate: [AuthGuard], children: appRoutes},
@@ -91,9 +81,9 @@ const routes: Routes = [
     PaginationComponent,
     UserListViewComponent,
     RootComponent,
-    WarehouseListComponent,
-    GetWarehouseComponent,
-    CreateWarehouseComponent
+    MenuComponent,
+    CreateCounterpartyComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

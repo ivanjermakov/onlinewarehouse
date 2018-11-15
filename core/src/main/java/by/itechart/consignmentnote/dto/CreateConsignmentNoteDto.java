@@ -24,14 +24,10 @@ public class CreateConsignmentNoteDto {
     private LocalDate shipment;
     private CounterpartyDto counterparty;
     private CarrierDto carrier;
+    private Long creatorId;
     private String vehicleNumber;
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    @JsonSerialize(using = LocalDateSerializer.class)
-    @JsonDeserialize(using = LocalDateDeserializer.class)
-    private LocalDate registration;
     @JsonBackReference
     private List<ConsignmentNoteGoodsDto> consignmentNoteGoodsList;
     private ConsignmentNoteType consignmentNoteType;
-    private ConsignmentNoteStatus consignmentNoteStatus;
     private String description;
 }

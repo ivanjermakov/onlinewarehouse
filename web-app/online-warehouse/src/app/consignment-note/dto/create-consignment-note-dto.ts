@@ -8,10 +8,9 @@ export class CreateConsignmentNoteDto {
   shipment: Date;
   counterparty: CounterpartyDto;
   carrier: CarrierDto;
+  creatorId: number;
   vehicleNumber: string;
-  registration: Date;
   consignmentNoteGoodsList: Array<ConsignmentNoteGoodsDto>;
   consignmentNoteType: string;
-  consignmentNoteStatus: string;
   description: string;
 }

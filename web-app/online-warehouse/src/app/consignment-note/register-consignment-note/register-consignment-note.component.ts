@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormArray, FormBuilder, FormGroup} from "@angular/forms";
+import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {GoodsListDialogComponent} from "../../shared/goods/goods-list-dialog/goods-list-dialog.component";
 import {GoodsDto} from "../../shared/goods/goods.dto";
 import {MatDialog, MatDialogConfig} from "@angular/material";
@@ -9,6 +9,7 @@ import {CounterpartyListDialogComponent} from "../../counterparty/counterparty-l
 import {CounterpartyTypeEnum} from "../../counterparty/dto/enum/counterparty-type.enum";
 import {CounterpartyDto} from "../../counterparty/dto/counterparty.dto";
 import {ConsignmentNoteService} from "../consignment-note.service";
+import {AuthenticationService} from "../../auth/_services";
 
 @Component({
   selector: 'app-register-consignment-note',
@@ -27,13 +28,11 @@ export class RegisterConsignmentNoteComponent implements OnInit {
     this.consignmentNoteForm = fb.group({
       "number": [''],
       "shipment": [''],
-      "counterparty": [''],
-      "carrier": [''],
+      "counterparty": ['', Validators.required],
+      "carrier": ['', Validators.required],
       "vehicleNumber": [''],
-      "registration": [''],
-      "consignmentNoteGoodsList": fb.array([]),
+      "consignmentNoteGoodsList": fb.array([], Validators.required),
       "consignmentNoteType": [''],
-      "consignmentNoteStatus": [''],
       "description": ['']
     });
   }
@@ -42,8 +41,13 @@ export class RegisterConsignmentNoteComponent implements OnInit {
   }
 
   addCounterparty(counterparty: CounterpartyDto): void {
-    this.consignmentNoteForm.patchValue({"counterparty" : counterparty});
     this.counterparty = counterparty;
+    this.consignmentNoteForm.patchValue({"counterparty" : counterparty});
+  }
+
+  deleteCounterparty(): void {
+    this.counterparty = null;
+    this.consignmentNoteForm.patchValue({"counterparty" : ''});
   }
 
   counterpartyModal(): void {
@@ -69,6 +73,11 @@ export class RegisterConsignmentNoteComponent implements OnInit {
   addCarrier(carrier: CarrierDto): void {
     this.carrier = carrier;
     this.consignmentNoteForm.patchValue({'carrier': this.carrier});
+  }
+
+  deleteCarrier(): void {
+    this.carrier = null;
+    this.consignmentNoteForm.patchValue({'carrier': ''});
   }
 
   setDriverInfo(driverInfo: string): void {
@@ -103,6 +112,11 @@ export class RegisterConsignmentNoteComponent implements OnInit {
     }));
   }
 
+  deleteGood(i: number): void {
+    this.goodsDtoList.splice(i, 1);
+    (this.consignmentNoteForm.controls['consignmentNoteGoodsList'] as FormArray).removeAt(i);
+  }
+
   goodsModal(): void {
     const dialogConfig = new MatDialogConfig();
 
@@ -121,11 +135,8 @@ export class RegisterConsignmentNoteComponent implements OnInit {
   }
 
   onSubmit(consignmentNoteForm: FormGroup): void {
-    console.log(this.consignmentNoteForm.value);
-    // const id = Number(this.route.snapshot.paramMap.get('companyId'));
-    const companyId = 2;
-    this.consignmentNoteService.saveConsignmentNote(companyId, this.consignmentNoteForm.value)
-      .subscribe();
+    console.log(consignmentNoteForm.value);
+    this.consignmentNoteService.saveConsignmentNote(this.consignmentNoteForm.value).subscribe();
     this.clearFrom();
   }
 

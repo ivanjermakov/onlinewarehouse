@@ -1,6 +1,10 @@
 package by.itechart.web.security.controller;
 
+import by.itechart.common.entity.Authority;
+import by.itechart.common.entity.User;
+import by.itechart.common.service.UserService;
 import by.itechart.web.security.JwtAuthenticationRequest;
+import by.itechart.web.security.JwtRegistrationRequest;
 import by.itechart.web.security.JwtTokenUtil;
 import by.itechart.web.security.JwtUser;
 import by.itechart.web.security.service.JwtAuthenticationResponse;
@@ -15,6 +19,8 @@ import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,11 +38,30 @@ public class AuthenticationRestController {
 
     private final UserDetailsService userDetailsService;
 
+    private final UserService userService;
+
     @Autowired
-    public AuthenticationRestController(AuthenticationManager authenticationManager, JwtTokenUtil jwtTokenUtil, @Qualifier("jwtUserDetailsService") UserDetailsService userDetailsService) {
+    public AuthenticationRestController(AuthenticationManager authenticationManager, JwtTokenUtil jwtTokenUtil, @Qualifier("jwtUserDetailsService") UserDetailsService userDetailsService, UserService userService) {
         this.authenticationManager = authenticationManager;
         this.jwtTokenUtil = jwtTokenUtil;
         this.userDetailsService = userDetailsService;
+        this.userService = userService;
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<?> register(@RequestBody JwtRegistrationRequest user) {
+
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String hashedPassword = passwordEncoder.encode(user.getPassword());
+        User newUser = new User();
+        newUser.setPassword(hashedPassword);
+        newUser.setUsername(user.getUsername());
+        newUser.setFirstname(user.getFirstName());
+        newUser.setLastname(user.getLastName());
+
+        userService.saveOrUpdateUser(newUser);
+
+        return null;
     }
 
     @RequestMapping(value = "${jwt.route.authentication.path}", method = RequestMethod.POST)

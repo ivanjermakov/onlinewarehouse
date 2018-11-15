@@ -11,7 +11,6 @@ export class ConsignmentNoteDto {
   counterparty: CounterpartyDto;
   carrier: CarrierDto;
   vehicleNumber: string;
-  // creator: User;
   registration: Date;
   consignmentNoteGoodsList: Array<ConsignmentNoteGoodsDto>;
   consignmentNoteType: string;

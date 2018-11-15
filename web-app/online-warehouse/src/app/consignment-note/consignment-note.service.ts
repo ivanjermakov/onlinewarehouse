@@ -9,18 +9,21 @@ import {ConsignmentNoteDto} from "./dto/consignment-note-dto";
 import {CreateConsignmentNoteDto} from "./dto/create-consignment-note-dto";
 import {ConsignmentNoteFilter} from "./dto/consignment-note-filter";
 import {ConsignmentNoteListDto} from "./dto/consignment-note-list-dto";
+import {AuthenticationService} from "../auth/_services";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ConsignmentNoteService {
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+              private auth: AuthenticationService) {
   }
 
   private baseApi: string = API_BASE_URL + '/companies';
 
-  getConsignmentNotes(companyId: number, consignmentNoteFilter: ConsignmentNoteFilter, pageable: Pageable): Observable<Page<ConsignmentNoteListDto>> {
+  getConsignmentNotes(consignmentNoteFilter: ConsignmentNoteFilter, pageable: Pageable): Observable<Page<ConsignmentNoteListDto>> {
+    var companyId = this.auth.getCompanyId();
     const path: string = this.baseApi + '/' + companyId + '/consignment-notes';
     let paramsBuilder = new HttpParamsBuilder();
     pageable.toUrlParameters(paramsBuilder);
@@ -31,12 +34,15 @@ export class ConsignmentNoteService {
     return this.http.get<Page<ConsignmentNoteListDto>>(path, {params: paramsBuilder.getHttpParams()});
   }
 
-  saveConsignmentNote(companyId: number, createConsignmentNoteDto: CreateConsignmentNoteDto): Observable<ConsignmentNoteDto> {
+  saveConsignmentNote(createConsignmentNoteDto: CreateConsignmentNoteDto): Observable<ConsignmentNoteDto> {
+    var companyId = this.auth.getCompanyId();
+    createConsignmentNoteDto.creatorId = this.auth.getUserId();
     const path: string = this.baseApi + '/' + companyId + '/consignment-notes';
     return this.http.post<ConsignmentNoteDto>(path, createConsignmentNoteDto);
   }
 
-  getConsignmentNote(companyId: number, consignmentNoteId: number): Observable<ConsignmentNoteDto> {
+  getConsignmentNote(consignmentNoteId: number): Observable<ConsignmentNoteDto> {
+    var companyId = this.auth.getCompanyId();
     const path: string = this.baseApi + '/' + companyId + '/consignment-notes/' + consignmentNoteId;
     return this.http.get<ConsignmentNoteDto>(path);
   }

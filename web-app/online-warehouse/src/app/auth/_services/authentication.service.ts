@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {map} from "rxjs/operators";
 import {API_BASE_URL} from "../../base-server-url";
 import {JwtHelperService} from "@auth0/angular-jwt";
+import {User} from "../_models";
 
 @Injectable()
 export class AuthenticationService {
@@ -25,6 +26,11 @@ export class AuthenticationService {
         return user;
       }));
   }
+
+  register(user: User) {
+    return this.http.post(`${API_BASE_URL}/api/register`, user);
+  }
+
 
   logout() {
     // remove user from local storage to log user out
