@@ -80,7 +80,7 @@ export class CounterpartyListComponent implements OnInit {
 
   loadCounterparties(): void {
     this.loadingSubject.next(true);
-    this.counterpartyService.getCounterparties(this.filter, this.pageable, 2).pipe(
+    this.counterpartyService.getCounterparties(this.filter, this.pageable,).pipe(
       catchError(() => of([])),
       finalize(() => this.loadingSubject.next(false))
     )

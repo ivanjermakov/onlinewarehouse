@@ -41,7 +41,7 @@ export class CreateCounterpartyComponent implements OnInit {
     let createCounterparty: CreateCounterpartyDto = new CreateCounterpartyDto();
     createCounterparty.companyId = this.auth.getCompanyId();
     Object.assign(createCounterparty, value);
-    this.counterpartyService.saveCounterparty(createCounterparty, this.auth.getCompanyId()).subscribe((long: number) => {
+    this.counterpartyService.saveCounterparty(createCounterparty).subscribe((long: number) => {
       console.log(long)
     });
   }

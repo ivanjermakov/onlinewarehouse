@@ -43,6 +43,7 @@ import {RootComponent} from './root/root.component';
 import {MenuComponent} from './menu/menu.component';
 import {CreateCounterpartyComponent} from './counterparty/create-counterparty/create-counterparty.component';
 import {RegisterComponent} from "./auth/registration/register.component";
+import {GetCounterpartyComponent} from './counterparty/get-counterparty/get-counterparty.component';
 
 const routes: Routes = [
   {path: 'app', component: AppComponent, canActivate: [AuthGuard], children: appRoutes},
@@ -83,7 +84,8 @@ const routes: Routes = [
     RootComponent,
     MenuComponent,
     CreateCounterpartyComponent,
-    RegisterComponent
+    RegisterComponent,
+    GetCounterpartyComponent
   ],
   imports: [
     BrowserModule,
