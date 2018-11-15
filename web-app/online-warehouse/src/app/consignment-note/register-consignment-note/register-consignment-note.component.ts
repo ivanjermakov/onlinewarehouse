@@ -9,6 +9,7 @@ import {CounterpartyListDialogComponent} from "../../counterparty/counterparty-l
 import {CounterpartyTypeEnum} from "../../counterparty/dto/enum/counterparty-type.enum";
 import {CounterpartyDto} from "../../counterparty/dto/counterparty.dto";
 import {ConsignmentNoteService} from "../consignment-note.service";
+import {AuthenticationService} from "../../auth/_services";
 
 @Component({
   selector: 'app-register-consignment-note',
@@ -134,11 +135,8 @@ export class RegisterConsignmentNoteComponent implements OnInit {
   }
 
   onSubmit(consignmentNoteForm: FormGroup): void {
-    console.log(this.consignmentNoteForm.value);
-    // const id = Number(this.route.snapshot.paramMap.get('companyId'));
-    const companyId = 2;
-    this.consignmentNoteService.saveConsignmentNote(companyId, this.consignmentNoteForm.value)
-      .subscribe();
+    console.log(consignmentNoteForm.value);
+    this.consignmentNoteService.saveConsignmentNote(this.consignmentNoteForm.value).subscribe();
     this.clearFrom();
   }
 

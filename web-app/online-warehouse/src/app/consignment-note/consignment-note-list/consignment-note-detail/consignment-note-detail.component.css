@@ -1,18 +1,9 @@
-.parent {
-  width: 500px;
+td.mat-cell.border-right {
+  border-right: 1px solid rgba(0, 0, 0, .12);
+  border-bottom: 1px solid rgba(0, 0, 0, .12);
 }
 
-.row {
-  display: flex;
-  margin-bottom: 10px;
-}
-
-.label {
-  width: 30%;
-  font-weight: bold;
-}
-
-.value {
-  display: flex;
-  flex-direction: column;
+.consignment-note-header {
+  margin-left: 30px;
+  font-family: 'Helvetica Neue', sans-serif;
 }

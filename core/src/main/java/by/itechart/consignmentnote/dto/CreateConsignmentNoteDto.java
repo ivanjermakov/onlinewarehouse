@@ -24,6 +24,7 @@ public class CreateConsignmentNoteDto {
     private LocalDate shipment;
     private CounterpartyDto counterparty;
     private CarrierDto carrier;
+    private Long creatorId;
     private String vehicleNumber;
     @JsonBackReference
     private List<ConsignmentNoteGoodsDto> consignmentNoteGoodsList;

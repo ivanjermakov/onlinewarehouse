@@ -52,6 +52,7 @@ public class ConsignmentNoteServiceImpl implements ConsignmentNoteService {
     @Override
     @Transactional
     public Long saveConsignmentNote(CreateConsignmentNoteDto createConsignmentNoteDto, long companyId) {
+        System.out.println(createConsignmentNoteDto.getCreatorId());
         ConsignmentNote consignmentNote = ObjectMapperUtils.map(createConsignmentNoteDto, ConsignmentNote.class);
         consignmentNote.setCompany(new Company(companyId));
         consignmentNote.setId(null);
