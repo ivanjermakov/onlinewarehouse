@@ -1,4 +1,4 @@
-package by.itechart.mail.birthday.service;
+package by.itechart.mail.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,7 +24,7 @@ public class MailServiceImpl implements MailService {
     }
 
     @Override
-    public void send(String from, String to, String subject, String content) {
+    public void send(String to, String subject, String content) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(from);
         message.setTo(to);
@@ -34,7 +34,7 @@ public class MailServiceImpl implements MailService {
     }
 
     @Override
-    public void sendHtml(String from, String to, String subject, String html) throws MessagingException {
+    public void sendHtml(String to, String subject, String html) throws MessagingException {
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, false, "utf-8");
         helper.setFrom(from);

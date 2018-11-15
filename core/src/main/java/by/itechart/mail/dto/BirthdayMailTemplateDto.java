@@ -1,4 +1,4 @@
-package by.itechart.mail.birthday.dto;
+package by.itechart.mail.dto;
 
 import lombok.Data;
 

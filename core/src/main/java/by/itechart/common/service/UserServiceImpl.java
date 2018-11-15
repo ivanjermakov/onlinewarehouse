@@ -11,7 +11,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -44,5 +46,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(Long userId) {
         userRepository.setDeleted(userId);
+    }
+
+    @Override
+    public Set<User> getUsersWithBirthday(Long companyId, LocalDate birthDay) {
+        return userRepository.getUsersWithBirthday(companyId, birthDay);
     }
 }

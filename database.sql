@@ -170,3 +170,11 @@ create table placement_goods (
   storage_time_days integer NOT NULL,
   deleted           date
 );
+
+create table birthday_mail_template (
+  id bigserial primary key,
+  company_id bigint references company (id),
+  text varchar not null,
+  background_color varchar(7) not null,
+  header_image_path varchar not null
+);
