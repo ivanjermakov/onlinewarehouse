@@ -42,7 +42,7 @@ import {RouterModule, Routes} from "@angular/router";
 import {RootComponent} from './root/root.component';
 import {MenuComponent} from './menu/menu.component';
 import {CreateCounterpartyComponent} from './counterparty/create-counterparty/create-counterparty.component';
-import { RegisterComponent } from './auth/registration';
+import {RegisterComponent} from "./auth/registration/register.component";
 
 const routes: Routes = [
   {path: 'app', component: AppComponent, canActivate: [AuthGuard], children: appRoutes},

@@ -19,7 +19,7 @@ import {AuthGuard} from "./auth/_guards";
 import {CounterpartyListViewComponent} from "./counterparty/counterparty-list-view/counterparty-list-view.component";
 import {UserListViewComponent} from "./user/user-list-view/user-list-view.component";
 import {CreateCounterpartyComponent} from "./counterparty/create-counterparty/create-counterparty.component";
-import { RegisterComponent } from './auth/registration';
+import {RegisterComponent} from "./auth/registration/register.component";
 
 export const routes: Routes = [
   {path: 'list-users', component: UserListViewComponent, canActivate: [AuthGuard]},
