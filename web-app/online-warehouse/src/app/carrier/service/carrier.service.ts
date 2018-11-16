@@ -10,19 +10,23 @@ import {CarrierDto} from "../dto/carrier.dto";
 import {Page} from "../../shared/pagination/page";
 import HttpParamsBuilder from "../../shared/http/http-params-builder";
 import {Pageable} from "../../shared/pagination/pageable";
+import {AuthenticationService} from "../../auth/_services";
 
 @Injectable({
   providedIn: 'root'
 })
 export class CarrierService {
 
+  readonly companyId: number;
   private baseApi: string = API_BASE_URL + '/companies';
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+              private auth: AuthenticationService) {
+    this.companyId = auth.getCompanyId();
   }
 
-  getCarriers(filter: CarrierFilter, pageable: Pageable, companyId: number): Observable<Page<CarrierListDto>> {
-    const path: string = this.baseApi + '/' + companyId + '/carriers';
+  getCarriers(filter: CarrierFilter, pageable: Pageable): Observable<Page<CarrierListDto>> {
+    const path: string = this.baseApi + '/' + this.companyId + '/carriers';
     let paramsBuilder = new HttpParamsBuilder();
     pageable.toUrlParameters(paramsBuilder);
     if (filter) {
@@ -31,27 +35,27 @@ export class CarrierService {
     return this.http.get<Page<CarrierListDto>>(path, {params: paramsBuilder.getHttpParams()});
   }
 
-  saveCarrier(createCarrierDto: CreateCarrierDto, companyId: number): Observable<number> {
-    const path: string = this.baseApi + '/' + companyId + '/carriers';
+  saveCarrier(createCarrierDto: CreateCarrierDto): Observable<number> {
+    const path: string = this.baseApi + '/' + this.companyId + '/carriers';
     return this.http.post(path, createCarrierDto).pipe(
       map((data: number) => data)
     );
   }
 
-  getCarrier(companyId: number, carrierId: number): Observable<CarrierDto> {
-    const path: string = this.baseApi + '/' + companyId + '/carriers/' + carrierId;
+  getCarrier(carrierId: number): Observable<CarrierDto> {
+    const path: string = this.baseApi + '/' + this.companyId + '/carriers/' + carrierId;
     return this.http.get<CarrierDto>(path);
   }
 
-  editCarrier(createCarrierDto: CreateCarrierDto, companyId: number, carrierId: number): Observable<number> {
-    const path: string = this.baseApi + '/' + companyId + '/carriers/' + carrierId;
+  editCarrier(createCarrierDto: CreateCarrierDto, carrierId: number): Observable<number> {
+    const path: string = this.baseApi + '/' + this.companyId + '/carriers/' + carrierId;
     return this.http.put(path, createCarrierDto).pipe(
       map((data: number) => data)
     );
   }
 
-  deleteCarrier(companyId: number, carrierId: number): void {
-    const path: string = this.baseApi + '/' + companyId + '/carriers/' + carrierId;
+  deleteCarrier(carrierId: number): void {
+    const path: string = this.baseApi + '/' + this.companyId + '/carriers/' + carrierId;
     this.http.delete(path);
   }
 }

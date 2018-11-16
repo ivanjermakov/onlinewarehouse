@@ -45,8 +45,7 @@ public class CarrierServiceImpl implements CarrierService {
     @Transactional
     @Override
     public Long saveCarrier(CreateCarrierDto createCarrierDto, Long companyId) {
-        Carrier carrier = new Carrier();
-        ObjectMapperUtils.map(createCarrierDto, carrier);
+        Carrier carrier = ObjectMapperUtils.map(createCarrierDto, Carrier.class);
         Long addressId = addressRepository.save(carrier.getAddress()).getId();
         carrier.getAddress().setId(addressId);
         carrier.setCompany(new Company(companyId));

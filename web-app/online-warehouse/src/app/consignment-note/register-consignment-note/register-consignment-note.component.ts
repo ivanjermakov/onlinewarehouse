@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {GoodsListDialogComponent} from "../../shared/goods/goods-list-dialog/goods-list-dialog.component";
 import {GoodsDto} from "../../shared/goods/goods.dto";
@@ -9,7 +9,6 @@ import {CounterpartyListDialogComponent} from "../../counterparty/counterparty-l
 import {CounterpartyTypeEnum} from "../../counterparty/dto/enum/counterparty-type.enum";
 import {CounterpartyDto} from "../../counterparty/dto/counterparty.dto";
 import {ConsignmentNoteService} from "../consignment-note.service";
-import {AuthenticationService} from "../../auth/_services";
 
 @Component({
   selector: 'app-register-consignment-note',
@@ -19,7 +18,7 @@ import {AuthenticationService} from "../../auth/_services";
 export class RegisterConsignmentNoteComponent implements OnInit {
   consignmentNoteForm: FormGroup;
   counterparty: CounterpartyDto;
-  carrier:  CarrierDto;
+  carrier: CarrierDto;
   goodsDtoList: Array<GoodsDto> = [];
 
   constructor(private consignmentNoteService: ConsignmentNoteService,
@@ -42,12 +41,12 @@ export class RegisterConsignmentNoteComponent implements OnInit {
 
   addCounterparty(counterparty: CounterpartyDto): void {
     this.counterparty = counterparty;
-    this.consignmentNoteForm.patchValue({"counterparty" : counterparty});
+    this.consignmentNoteForm.patchValue({"counterparty": counterparty});
   }
 
   deleteCounterparty(): void {
     this.counterparty = null;
-    this.consignmentNoteForm.patchValue({"counterparty" : ''});
+    this.consignmentNoteForm.patchValue({"counterparty": ''});
   }
 
   counterpartyModal(): void {
@@ -87,12 +86,13 @@ export class RegisterConsignmentNoteComponent implements OnInit {
   }
 
   carrierModal(): void {
-    const dialogConfig = new MatDialogConfig();
-
-    dialogConfig.disableClose = false;
-    dialogConfig.autoFocus = true;
-
-    const dialogRef = this.dialog.open(CarrierListDialogComponent, dialogConfig);
+    const dialogRef = this.dialog.open(CarrierListDialogComponent, {
+      disableClose: false,
+      autoFocus: true,
+      data: {
+        addButton: true
+      }
+    });
 
     dialogRef.afterClosed().subscribe(
       data => {
