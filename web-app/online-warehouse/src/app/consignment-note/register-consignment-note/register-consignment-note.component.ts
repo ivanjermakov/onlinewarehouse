@@ -9,7 +9,6 @@ import {CounterpartyListDialogComponent} from "../../counterparty/counterparty-l
 import {CounterpartyTypeEnum} from "../../counterparty/dto/enum/counterparty-type.enum";
 import {CounterpartyDto} from "../../counterparty/dto/counterparty.dto";
 import {ConsignmentNoteService} from "../consignment-note.service";
-import {AuthenticationService} from "../../auth/_services";
 
 @Component({
   selector: 'app-register-consignment-note',

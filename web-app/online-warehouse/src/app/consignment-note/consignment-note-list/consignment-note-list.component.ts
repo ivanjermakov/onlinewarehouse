@@ -17,7 +17,7 @@ import {debounceTime, distinctUntilChanged, tap} from "rxjs/operators";
 })
 export class ConsignmentNoteListComponent implements OnInit {
 
-  private displayedColumns = ["Number", "Company name", "Registration date", "Consignment Note Type", "Consignment Note Status"];
+  private displayedColumns = ["number", "company name", "registration date", "consignment Note Type", "consignment Note Status"];
   private loadingSubject = new BehaviorSubject<boolean>(false);
   loading$ = this.loadingSubject.asObservable();
   private pageable: Pageable = new Pageable(0, 10);

@@ -39,7 +39,6 @@ public class ConsignmentNoteController {
     public Page<ConsignmentNoteListDto> getConsignmentNotes(@PathVariable long companyId,
                                                             ConsignmentNoteFilter consignmentNoteFilter,
                                                             Pageable pageable) {
-        System.out.println(consignmentNoteFilter);
         return consignmentNoteService.getConsignmentNotes(companyId, consignmentNoteFilter, pageable);
     }
 
