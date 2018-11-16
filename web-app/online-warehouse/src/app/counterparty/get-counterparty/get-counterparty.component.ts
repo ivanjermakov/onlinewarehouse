@@ -36,7 +36,6 @@ export class GetCounterpartyComponent implements OnInit {
       this.loadingSubject.next(true);
       this.counterpartyService.getCounterparty(id)
         .pipe(
-          catchError(() => of([])),
           finalize(() => this.loadingSubject.next(false))
         )
         .subscribe(counterparty => {

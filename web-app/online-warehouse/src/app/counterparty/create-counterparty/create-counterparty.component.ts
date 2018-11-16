@@ -14,7 +14,7 @@ export class CreateCounterpartyComponent implements OnInit {
 
   @Input() counterpartyTypeInput: CounterpartyTypeEnum;
 
-  @Output() submitted: EventEmitter = new EventEmitter();
+  @Output() submitted: EventEmitter<any[]> = new EventEmitter();
 
   createCounterpartyForm: FormGroup;
   createCounterparty: CreateCounterpartyDto = new CreateCounterpartyDto();
