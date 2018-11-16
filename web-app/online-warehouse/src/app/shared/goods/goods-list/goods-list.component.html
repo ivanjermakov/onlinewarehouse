@@ -1,4 +1,30 @@
 <div>
+
+  <form>
+    <mat-form-field appearance="outline">
+      <mat-label>Name</mat-label>
+      <input [formControl]="goodsFilterForm.controls['name']" matInput placeholder="Name">
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-select [formControl]="goodsFilterForm.controls['placementType']"
+                  placeholder="Placement type" name="placementType">
+        <mat-option>NONE</mat-option>
+        <mat-option [value]="'HEATED'">HEATED</mat-option>
+        <mat-option [value]="'UNHEATED'">UNHEATED</mat-option>
+        <mat-option [value]="'FREEZER'">FREEZER</mat-option>
+        <mat-option [value]="'OPEN_SPACE'">OPEN_SPACE</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Cost from</mat-label>
+      <input [formControl]="goodsFilterForm.controls['costFrom']" matInput placeholder="Cost from">
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Cost to</mat-label>
+      <input [formControl]="goodsFilterForm.controls['costTo']" matInput placeholder="Cost to">
+    </mat-form-field>
+  </form>
+
   <div style="display: flex; justify-content: center; align-items: center">
     <table mat-table [dataSource]="page ? page.content : null" class="hoverable-table">
 

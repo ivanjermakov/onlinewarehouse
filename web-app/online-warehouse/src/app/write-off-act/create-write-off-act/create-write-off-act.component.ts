@@ -3,7 +3,7 @@ import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angul
 import {WriteOffActTypeEnum} from "../dto/enum/write-off-act-type.enum";
 import {WriteOffActService} from "../service/write-off-act.service";
 import {CreateWriteOffActDto} from "../dto/create-write-off-act.dto";
-import {GoodsDto} from "../../shared/goods/goods.dto";
+import {GoodsDto} from "../../shared/goods/dto/goods.dto";
 import {WriteOffTypeEnum} from "../dto/enum/write-off-type.enum";
 import {MatDialog, MatDialogConfig} from "@angular/material";
 import {GoodsListDialogComponent} from "../../shared/goods/goods-list-dialog/goods-list-dialog.component";

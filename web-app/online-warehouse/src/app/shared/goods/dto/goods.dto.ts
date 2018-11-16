@@ -1,5 +1,5 @@
-import {PlacementTypeEnum} from "../enum/placement-type.enum";
-import {MeasurementUnitEnum} from "../enum/measurement-unit.enum";
+import {PlacementTypeEnum} from "../../enum/placement-type.enum";
+import {MeasurementUnitEnum} from "../../enum/measurement-unit.enum";
 
 export class GoodsDto {
   constructor(
