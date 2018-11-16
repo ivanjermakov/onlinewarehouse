@@ -34,16 +34,16 @@ export class ConsignmentNoteService {
     return this.http.get<Page<ConsignmentNoteListDto>>(path, {params: paramsBuilder.getHttpParams()});
   }
 
+  getConsignmentNote(consignmentNoteId: number): Observable<ConsignmentNoteDto> {
+    var companyId = this.auth.getCompanyId();
+    const path: string = this.baseApi + '/' + companyId + '/consignment-notes/' + consignmentNoteId;
+    return this.http.get<ConsignmentNoteDto>(path);
+  }
+
   saveConsignmentNote(createConsignmentNoteDto: CreateConsignmentNoteDto): Observable<ConsignmentNoteDto> {
     var companyId = this.auth.getCompanyId();
     createConsignmentNoteDto.creatorId = this.auth.getUserId();
     const path: string = this.baseApi + '/' + companyId + '/consignment-notes';
     return this.http.post<ConsignmentNoteDto>(path, createConsignmentNoteDto);
-  }
-
-  getConsignmentNote(consignmentNoteId: number): Observable<ConsignmentNoteDto> {
-    var companyId = this.auth.getCompanyId();
-    const path: string = this.baseApi + '/' + companyId + '/consignment-notes/' + consignmentNoteId;
-    return this.http.get<ConsignmentNoteDto>(path);
   }
 }

@@ -6,6 +6,8 @@ import {Observable} from "rxjs";
 import {Page} from "../../shared/pagination/page";
 import HttpParamsBuilder from "../../shared/http/http-params-builder";
 import {UserDto} from "../dto/user.dto";
+import {UserFilter} from "../dto/user-filter";
+import {AuthenticationService} from "../../auth/_services";
 
 
 @Injectable({
@@ -15,14 +17,16 @@ export class UserService {
 
   baseApi = API_BASE_URL + '/companies/';
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+              private auth: AuthenticationService) {
   }
 
-  getAllUsers(pageable: Pageable, companyId: number): Observable<Page<UserDto>> {
-    console.log(companyId);
+  getAllUsers(userFilter: UserFilter, pageable: Pageable): Observable<Page<UserDto>> {
+    var companyId = this.auth.getCompanyId();
     const path: string = this.baseApi + companyId + '/users';
     let paramsBuilder = new HttpParamsBuilder();
     pageable.toUrlParameters(paramsBuilder);
+    userFilter.toUrlParameters(paramsBuilder);
     return this.http.get<Page<UserDto>>(path, {params: paramsBuilder.getHttpParams()});
   }
 

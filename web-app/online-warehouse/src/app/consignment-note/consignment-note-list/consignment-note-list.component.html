@@ -37,27 +37,27 @@
   <div style="display: flex; justify-content: center; align-items: center">
     <table mat-table [dataSource]="consignmentNotes ? consignmentNotes.content : null" class="hoverable-table">
 
-      <ng-container matColumnDef="Number">
+      <ng-container matColumnDef="number">
         <th mat-header-cell *matHeaderCellDef>Number</th>
         <td mat-cell *matCellDef="let consignmentNote">{{consignmentNote.number}}</td>
       </ng-container>
 
-      <ng-container matColumnDef="Company name">
+      <ng-container matColumnDef="company name">
         <th mat-header-cell *matHeaderCellDef>Company name</th>
         <td mat-cell *matCellDef="let consignmentNote">{{consignmentNote.company.name}}</td>
       </ng-container>
 
-      <ng-container matColumnDef="Registration date">
+      <ng-container matColumnDef="registration date">
         <th mat-header-cell *matHeaderCellDef>Registration date</th>
         <td mat-cell *matCellDef="let consignmentNote">{{consignmentNote.registration}}</td>
       </ng-container>
 
-      <ng-container matColumnDef="Consignment Note Type">
+      <ng-container matColumnDef="consignment Note Type">
         <th mat-header-cell *matHeaderCellDef>Consignment Note Type</th>
         <td mat-cell *matCellDef="let consignmentNote">{{consignmentNote.consignmentNoteType}}</td>
       </ng-container>
 
-      <ng-container matColumnDef="Consignment Note Status">
+      <ng-container matColumnDef="consignment Note Status">
         <th mat-header-cell *matHeaderCellDef>Consignment Note Status</th>
         <td mat-cell *matCellDef="let consignmentNote">{{consignmentNote.consignmentNoteStatus}}</td>
       </ng-container>

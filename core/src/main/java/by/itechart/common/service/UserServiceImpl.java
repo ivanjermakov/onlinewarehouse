@@ -1,6 +1,7 @@
 package by.itechart.common.service;
 
 import by.itechart.common.dto.UserDto;
+import by.itechart.common.dto.UserFilter;
 import by.itechart.common.entity.User;
 import by.itechart.common.repository.UserRepository;
 import by.itechart.common.utils.ObjectMapperUtils;
@@ -25,10 +26,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Page<UserDto> getUsers(Long companyId, Pageable pageable) {
-        Page<User> users = userRepository.findAllByCompany_IdAndDeletedIsNull(companyId, pageable);
-        List<UserDto> listDtos = ObjectMapperUtils.mapAll(users.getContent(), UserDto.class);
-        return new PageImpl<>(listDtos, pageable, users.getTotalElements());
+    public Page<UserDto> getUsers(Long companyId, UserFilter userFilter, Pageable pageable) {
+        Page<User> users = userRepository.findAll(UserPredicate.findFilter(companyId, userFilter), pageable);
+        return users.map(user -> ObjectMapperUtils.map(user, UserDto.class));
     }
 
     @Override

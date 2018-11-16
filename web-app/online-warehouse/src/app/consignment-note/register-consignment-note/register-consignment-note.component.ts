@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {GoodsListDialogComponent} from "../../shared/goods/goods-list-dialog/goods-list-dialog.component";
-import {GoodsDto} from "../../shared/goods/goods.dto";
+import {GoodsDto} from "../../shared/goods/dto/goods.dto";
 import {MatDialog, MatDialogConfig} from "@angular/material";
 import {CarrierDto} from "../../carrier/dto/carrier.dto";
 import {CarrierListDialogComponent} from "../../carrier/carrier-list-dialog/carrier-list-dialog.component";

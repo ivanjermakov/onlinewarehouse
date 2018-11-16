@@ -1,4 +1,4 @@
-import {GoodsDto} from '../../shared/goods/goods.dto';
+import {GoodsDto} from '../../shared/goods/dto/goods.dto';
 import {WriteOffActDto} from './write-off-act.dto';
 import {WriteOffTypeEnum} from "./enum/write-off-type.enum";
 
