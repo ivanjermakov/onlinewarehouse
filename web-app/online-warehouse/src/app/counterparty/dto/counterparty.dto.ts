@@ -9,11 +9,11 @@ export class CounterpartyDto {
   taxNumber: string;
 
 
-  constructor(id: number, address: AddressDto, name: string, counterpartyType: CounterpartyTypeEnum, taxNumber: string) {
-    this.id = id;
-    this.address = address;
-    this.name = name;
-    this.counterpartyType = counterpartyType;
-    this.taxNumber = taxNumber;
-  }
+  // constructor(id: number, address: AddressDto, name: string, counterpartyType: CounterpartyTypeEnum, taxNumber: string) {
+  //   this.id = id;
+  //   this.address = address;
+  //   this.name = name;
+  //   this.counterpartyType = counterpartyType;
+  //   this.taxNumber = taxNumber;
+  // }
 }

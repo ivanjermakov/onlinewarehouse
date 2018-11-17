@@ -46,7 +46,7 @@ export class WarehouseListComponent implements OnInit {
 
   loadWarehouses() {
     this.loadingSubject.next(true);
-    this.warehouseService.getWarehouses(this.pageable, this.auth.getCompanyId()).pipe(
+    this.warehouseService.getWarehouses(this.auth.getCompanyId(), this.pageable).pipe(
       finalize(() => this.loadingSubject.next(false))
     )
       .subscribe(page => {

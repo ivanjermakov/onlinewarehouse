@@ -1,7 +1,7 @@
 package by.itechart.consignmentnote.dto;
 
 import by.itechart.carrier.dto.CarrierDto;
-import by.itechart.consignmentnote.enums.ConsignmentNoteStatus;
+import by.itechart.carrier.dto.DriverDto;
 import by.itechart.consignmentnote.enums.ConsignmentNoteType;
 import by.itechart.counterparty.dto.CounterpartyDto;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -24,6 +24,7 @@ public class CreateConsignmentNoteDto {
     private LocalDate shipment;
     private CounterpartyDto counterparty;
     private CarrierDto carrier;
+    private DriverDto driver;
     private Long creatorId;
     private String vehicleNumber;
     @JsonBackReference

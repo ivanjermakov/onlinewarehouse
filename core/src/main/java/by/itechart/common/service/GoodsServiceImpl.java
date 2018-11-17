@@ -2,19 +2,14 @@ package by.itechart.common.service;
 
 import by.itechart.common.dto.GoodFilter;
 import by.itechart.common.dto.GoodsDto;
-import by.itechart.common.dto.UserDto;
 import by.itechart.common.entity.Goods;
-import by.itechart.common.entity.User;
 import by.itechart.common.repository.GoodsRepository;
 import by.itechart.common.utils.ObjectMapperUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 public class GoodsServiceImpl implements GoodsService {

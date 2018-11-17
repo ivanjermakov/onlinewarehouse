@@ -47,6 +47,8 @@ import {GetCounterpartyComponent} from './counterparty/get-counterparty/get-coun
 import {CreateCounterpartyDialogComponent} from './counterparty/create-counterparty-dialog/create-counterparty-dialog.component';
 import {CreateCarrierComponent} from './carrier/create-carrier/create-carrier.component';
 import {CreateCarrierDialogComponent} from './carrier/create-carrier-dialog/create-carrier-dialog.component';
+import {DriverListDialogComponent} from "./carrier/driver/driver-list-dialog/driver-list-dialog.component";
+import {DriverListComponent} from "./carrier/driver/driver-list/driver-list.component";
 
 const routes: Routes = [
   {path: 'app', component: AppComponent, canActivate: [AuthGuard], children: appRoutes},
@@ -91,7 +93,9 @@ const routes: Routes = [
     GetCounterpartyComponent,
     CreateCounterpartyDialogComponent,
     CreateCarrierComponent,
-    CreateCarrierDialogComponent
+    CreateCarrierDialogComponent,
+    DriverListComponent,
+    DriverListDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -110,7 +114,8 @@ const routes: Routes = [
     CarrierListDialogComponent,
     CounterpartyListDialogComponent,
     CreateCounterpartyDialogComponent,
-    CreateCarrierDialogComponent
+    CreateCarrierDialogComponent,
+    DriverListDialogComponent
   ],
   providers: [
     AuthGuard,

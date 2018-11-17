@@ -1,6 +1,6 @@
 import {PlacementGoodsDto} from "./placement-goods.dto";
 
-class PlacementDto {
+export class PlacementDto {
   id: number;
   warehouseId: number;
   size: number;

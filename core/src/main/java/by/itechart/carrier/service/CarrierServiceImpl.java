@@ -1,10 +1,8 @@
 package by.itechart.carrier.service;
 
-import by.itechart.carrier.dto.CarrierDto;
-import by.itechart.carrier.dto.CarrierFilter;
-import by.itechart.carrier.dto.CarrierListDto;
-import by.itechart.carrier.dto.CreateCarrierDto;
+import by.itechart.carrier.dto.*;
 import by.itechart.carrier.entity.Carrier;
+import by.itechart.carrier.entity.Driver;
 import by.itechart.carrier.repository.CarrierRepository;
 import by.itechart.carrier.repository.DriverRepository;
 import by.itechart.common.repository.AddressRepository;
@@ -74,5 +72,12 @@ public class CarrierServiceImpl implements CarrierService {
     @Override
     public void deleteCarrier(Long companyId, Long carrierId) {
         carrierRepository.setDeleted(carrierId, companyId);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public Page<DriverDto> getDrivers(Long companyId, Pageable pageable) {
+        Page<Driver> drivers = driverRepository.findByCarrierId(companyId, pageable);
+        return drivers.map(driver -> ObjectMapperUtils.map(driver, DriverDto.class));
     }
 }

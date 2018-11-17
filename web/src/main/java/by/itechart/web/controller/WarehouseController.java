@@ -1,21 +1,13 @@
 package by.itechart.web.controller;
 
-import by.itechart.common.enums.PlacementType;
 import by.itechart.warehouse.dto.CreateWarehouseDto;
 import by.itechart.warehouse.dto.WarehouseDto;
-import by.itechart.warehouse.entity.Placement;
-import by.itechart.warehouse.entity.Warehouse;
-import by.itechart.warehouse.service.PlacementService;
 import by.itechart.warehouse.service.WarehouseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 @RestController
 @RequestMapping("/companies/{companyId}/warehouses")
@@ -30,6 +22,7 @@ public class WarehouseController {
 
     @GetMapping
     public Page<WarehouseDto> getWarehouseList(@PathVariable long companyId, Pageable pageable) {
+        System.out.println(1);
         return warehouseService.getWarehouses(companyId, pageable);
     }
 

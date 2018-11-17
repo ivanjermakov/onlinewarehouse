@@ -2,11 +2,8 @@ package by.itechart.warehouse.service;
 
 import by.itechart.common.utils.ObjectMapperUtils;
 import by.itechart.company.entity.Company;
-import by.itechart.consignmentnote.entity.ConsignmentNote;
-import by.itechart.consignmentnote.entity.ConsignmentNoteGoods;
 import by.itechart.warehouse.dto.CreatePlacementDto;
 import by.itechart.warehouse.dto.PlacementDto;
-import by.itechart.warehouse.dto.PlacementGoodsDto;
 import by.itechart.warehouse.entity.Placement;
 import by.itechart.warehouse.entity.PlacementGoods;
 import by.itechart.warehouse.entity.Warehouse;

@@ -2,7 +2,6 @@ package by.itechart.web.controller;
 
 import by.itechart.common.dto.UserDto;
 import by.itechart.common.dto.UserFilter;
-import by.itechart.common.entity.Address;
 import by.itechart.common.entity.User;
 import by.itechart.common.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +9,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDate;
 
 @RestController
 @RequestMapping("/companies/{companyId}/users")

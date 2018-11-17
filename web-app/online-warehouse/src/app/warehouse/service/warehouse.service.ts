@@ -17,7 +17,7 @@ export class WarehouseService {
   constructor(private http: HttpClient) {
   }
 
-  getWarehouses(pageable: Pageable, companyId: number): Observable<Page<WarehouseDto>> {
+  getWarehouses( companyId: number, pageable: Pageable): Observable<Page<WarehouseDto>> {
     const path: string = this.baseApi + '/' + companyId + '/warehouses';
     let paramsBuilder = new HttpParamsBuilder();
     pageable.toUrlParameters(paramsBuilder);
