@@ -9,7 +9,7 @@ import {ActivatedRoute, Router} from "@angular/router";
   styleUrls: ['./consignment-note-detail.component.css']
 })
 export class ConsignmentNoteDetailComponent implements OnInit {
-  consignmentNote: ConsignmentNoteDto = new ConsignmentNoteDto();
+  consignmentNote: ConsignmentNoteDto;
   displayedColumns: string[] = ['Name', 'Labelling', 'Measurement unit', 'Placement type',
     'Weight', 'Cost', 'Description', 'Amount'];
 

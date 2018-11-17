@@ -43,7 +43,7 @@ export class GetCarrierComponent implements OnInit {
 
   loadDriver() {
     this.loadingSubject.next(true);
-    this.carrierService.getCarrier(2, this.carrierId).pipe(
+    this.carrierService.getCarrier(this.carrierId).pipe(
       catchError(() => of([])),
       finalize(() => this.loadingSubject.next(false))
     )

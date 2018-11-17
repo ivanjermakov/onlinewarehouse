@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {BehaviorSubject, of} from "rxjs";
 import {catchError, debounceTime, distinctUntilChanged, finalize, tap} from "rxjs/operators";
 import {CarrierService} from "../service/carrier.service";
@@ -8,7 +8,8 @@ import {Page} from "../../shared/pagination/page";
 import {Pageable} from "../../shared/pagination/pageable";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {CarrierTypeEnum} from "../dto/enum/carrier-type.enum";
-import {PageEvent} from "@angular/material";
+import {MatDialog, PageEvent} from "@angular/material";
+import {CreateCarrierDialogComponent} from "../create-carrier-dialog/create-carrier-dialog.component";
 
 @Component({
   selector: 'app-carrier-list',
@@ -18,6 +19,8 @@ import {PageEvent} from "@angular/material";
 export class CarrierListComponent implements OnInit {
 
   @Output() carrierSelected: EventEmitter<CarrierListDto> = new EventEmitter();
+
+  @Input() addButton: Boolean;
 
   private displayedColumns = ["id", "name", "taxNumber", "carrierType", "trusted"];
   private loadingSubject = new BehaviorSubject<boolean>(false);
@@ -33,7 +36,8 @@ export class CarrierListComponent implements OnInit {
   private errors: any[];
 
   constructor(private carrierService: CarrierService,
-              private fb: FormBuilder) {
+              private fb: FormBuilder,
+              private dialog: MatDialog) {
     this.carrierFilterForm = fb.group({
       "name": [''],
       "taxNumber": [''],
@@ -70,9 +74,21 @@ export class CarrierListComponent implements OnInit {
     return Object.keys(CarrierTypeEnum);
   }
 
+  addCarrierModal(): void {
+    const dialogRef = this.dialog.open(CreateCarrierDialogComponent, {
+      disableClose: false,
+      autoFocus: true,
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+        this.loadCarriers();
+      }
+    );
+  }
+
   loadCarriers() {
     this.loadingSubject.next(true);
-    this.carrierService.getCarriers(this.filter, this.pageable, 2).pipe(
+    this.carrierService.getCarriers(this.filter, this.pageable).pipe(
       catchError(() => of([])),
       finalize(() => this.loadingSubject.next(false))
     )

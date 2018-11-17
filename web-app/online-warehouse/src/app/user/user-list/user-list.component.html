@@ -1,4 +1,15 @@
 <div>
+  <form>
+    <mat-form-field appearance="outline">
+      <mat-label>Firstname</mat-label>
+      <input [formControl]="userFilterForm.controls['firstname']" matInput placeholder="Firstname">
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Lastname</mat-label>
+      <input [formControl]="userFilterForm.controls['lastname']" matInput placeholder="Lastname">
+    </mat-form-field>
+  </form>
+
   <div style="display: flex; justify-content: center; align-items: center">
     <table mat-table [dataSource]="page ? page.content : null" class="hoverable-table">
 

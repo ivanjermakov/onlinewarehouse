@@ -8,18 +8,22 @@ import HttpParamsBuilder from "../../shared/http/http-params-builder";
 import {CounterpartyFilter} from "../dto/counterparty.filter";
 import {CounterpartyDto} from "../dto/counterparty.dto";
 import {CreateCounterpartyDto} from "../dto/create-counterparty.dto";
+import {AuthenticationService} from "../../auth/_services";
 
 @Injectable({
   providedIn: 'root'
 })
 export class CounterpartyService {
   private baseApi: string = API_BASE_URL + '/companies/';
+  private companyId: number;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+              private auth: AuthenticationService) {
+    this.companyId = auth.getCompanyId();
   }
 
-  getCounterparties(filter: CounterpartyFilter, pageable: Pageable, companyId: number): Observable<Page<CounterpartyDto>> {
-    const path: string = this.baseApi + companyId + '/counterparties';
+  getCounterparties(filter: CounterpartyFilter, pageable: Pageable): Observable<Page<CounterpartyDto>> {
+    const path: string = this.baseApi + this.companyId + '/counterparties';
     let paramsBuilder = new HttpParamsBuilder();
     pageable.toUrlParameters(paramsBuilder);
     if (filter) {
@@ -28,14 +32,14 @@ export class CounterpartyService {
     return this.http.get<Page<CounterpartyDto>>(path, {params: paramsBuilder.getHttpParams()});
   }
 
-  saveCounterparty(createCounterpartyDto: CreateCounterpartyDto, companyId: number): Observable<number> {
-    const path: string = this.baseApi + companyId + '/counterparties';
+  saveCounterparty(createCounterpartyDto: CreateCounterpartyDto): Observable<number> {
+    const path: string = this.baseApi + this.companyId + '/counterparties';
     return this.http.post<number>(path, createCounterpartyDto);
   }
 
-  //
-  // getCommodityLot(companyId: number, carrierId: number): Observable<CommodityLotDto> {
-  //   const path: string = this.baseApi + companyId + '/counterparties/' + carrierId;
-  //   return this.http.get<CommodityLotDto>(path);
-  // }
+
+  getCounterparty(carrierId: number): Observable<CounterpartyDto> {
+    const path: string = this.baseApi + this.companyId + '/counterparties/' + carrierId;
+    return this.http.get<CounterpartyDto>(path);
+  }
 }

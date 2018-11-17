@@ -1,5 +1,6 @@
 package by.itechart.web.controller;
 
+import by.itechart.common.dto.GoodFilter;
 import by.itechart.common.dto.GoodsDto;
 import by.itechart.common.service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +23,10 @@ public class GoodsController {
     }
 
     @GetMapping()
-    public Page<GoodsDto> getGoods(@PathVariable long companyId, Pageable pageable) {
-        return goodsService.getGoods(pageable, companyId);
+    public Page<GoodsDto> getGoods(@PathVariable long companyId,
+                                   GoodFilter goodFilter,
+                                   Pageable pageable) {
+        return goodsService.getGoods(companyId, goodFilter, pageable);
     }
 
 //    @PostMapping()

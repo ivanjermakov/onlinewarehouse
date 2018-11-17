@@ -20,6 +20,8 @@ import {CounterpartyListViewComponent} from "./counterparty/counterparty-list-vi
 import {UserListViewComponent} from "./user/user-list-view/user-list-view.component";
 import {CreateCounterpartyComponent} from "./counterparty/create-counterparty/create-counterparty.component";
 import {RegisterComponent} from "./auth/registration/register.component";
+import {GetCounterpartyComponent} from "./counterparty/get-counterparty/get-counterparty.component";
+import {CreateCarrierComponent} from "./carrier/create-carrier/create-carrier.component";
 
 export const routes: Routes = [
   {path: 'list-users', component: UserListViewComponent, canActivate: [AuthGuard]},
@@ -35,15 +37,16 @@ export const routes: Routes = [
   {path: 'commodity-lot/:id', component: GetCommodityLotComponent, canActivate: [AuthGuard]},
   {path: 'list-carriers', component: CarrierListViewComponent, canActivate: [AuthGuard]},
   {path: 'carrier/:id', component: GetCarrierComponent, canActivate: [AuthGuard]},
+  {path: 'create-carrier', component: CreateCarrierComponent, canActivate: [AuthGuard]},
   {path: 'list-counterparties', component: CounterpartyListViewComponent, canActivate: [AuthGuard]},
-  // {path: 'counterparty/:id', component: GetCarrierComponent, canActivate: [AuthGuard]},
+  {path: 'counterparty/:id', component: GetCounterpartyComponent, canActivate: [AuthGuard]},
   {path: 'login', component: LoginComponent},
   {path: '', component: HomeComponent, canActivate: [AuthGuard]},
   {path: 'register-consignment-note', component: RegisterConsignmentNoteComponent, canActivate: [AuthGuard]},
   {path: 'consignment-notes', component: ConsignmentNoteListComponent, canActivate: [AuthGuard]},
   {path: 'consignment-notes/:id', component: ConsignmentNoteDetailComponent, canActivate: [AuthGuard]},
   {path: 'create-counterparty', component: CreateCounterpartyComponent, canActivate: [AuthGuard]},
-  { path: 'register', component: RegisterComponent, canActivate: [AuthGuard]}
+  {path: 'register', component: RegisterComponent, canActivate: [AuthGuard]}
 
   // { path: 'heroes', component:  }
 ];
