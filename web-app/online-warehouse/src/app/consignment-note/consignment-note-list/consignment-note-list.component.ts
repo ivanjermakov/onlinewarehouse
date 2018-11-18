@@ -40,7 +40,6 @@ export class ConsignmentNoteListComponent implements OnInit {
     });
   }
 
-
   ngOnInit(): void {
     if(this.router.url === '/app/registered-consignment-notes') {
       this.consignmentNoteFilterForm.patchValue({'consignmentNoteStatus': 'NOT_PROCESSED'});
