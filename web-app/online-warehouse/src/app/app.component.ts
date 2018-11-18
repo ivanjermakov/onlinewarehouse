@@ -119,8 +119,8 @@ export class AppComponent {
         'name': 'inspector',
         'actions': [
           {
-            'name': 'Зарегестрированные ТТН',
-            'url': ''
+            'name': 'Зарегистрированные ТТН',
+            'url': 'registered-consignment-notes'
           },
           {
             'name': 'Создать акт',

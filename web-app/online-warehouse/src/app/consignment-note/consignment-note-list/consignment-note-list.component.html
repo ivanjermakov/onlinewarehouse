@@ -1,6 +1,6 @@
 <div>
   <form>
-    <mat-form-field appearance="outline">
+    <mat-form-field *ngIf="disabled" appearance="outline">
       <mat-select [formControl]="consignmentNoteFilterForm.controls['consignmentNoteType']"
                   placeholder="Type" name="consignmentNoteType">
         <mat-option>NONE</mat-option>
@@ -8,7 +8,7 @@
         <mat-option [value]="'OUT'">OUT</mat-option>
       </mat-select>
     </mat-form-field>
-    <mat-form-field appearance="outline">
+    <mat-form-field *ngIf="disabled" appearance="outline">
       <mat-select [formControl]="consignmentNoteFilterForm.controls['consignmentNoteStatus']"
                   placeholder="Status" name="consignmentNoteStatus">
         <mat-option>NONE</mat-option>

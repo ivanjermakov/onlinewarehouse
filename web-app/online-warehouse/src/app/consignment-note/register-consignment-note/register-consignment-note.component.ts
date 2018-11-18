@@ -12,6 +12,7 @@ import {ConsignmentNoteService} from "../consignment-note.service";
 import {DriverDto} from "../../carrier/driver/driver.dto";
 import {DriverListDialogComponent} from "../../carrier/driver/driver-list-dialog/driver-list-dialog.component";
 import {CarrierTypeEnum} from "../../carrier/dto/enum/carrier-type.enum";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-register-consignment-note',

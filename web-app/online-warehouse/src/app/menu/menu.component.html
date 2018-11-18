@@ -63,8 +63,8 @@
     <button mat-button>Создать контрагента</button>
   </a>
   <a *ngIf="userAuthorities.includes('ROLE_COMPANY_ADMIN' || 'ROLE_INSPECTOR')"
-     routerLink="" routerLinkActive="action-active">
-    <button mat-button>Зарегестрированные ТТН</button>
+     routerLink="registered-consignment-notes" routerLinkActive="action-active">
+    <button mat-button>Зарегистрированные ТТН</button>
   </a>
   <a *ngIf="userAuthorities.includes('ROLE_COMPANY_ADMIN' || 'ROLE_INSPECTOR')"
      routerLink="create-write-off-act" routerLinkActive="action-active">
