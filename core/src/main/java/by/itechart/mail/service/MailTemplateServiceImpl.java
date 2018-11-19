@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.util.Optional;
 
 @Getter
 @Service
@@ -41,7 +42,7 @@ public class MailTemplateServiceImpl implements MailTemplateService {
 
     @Override
     public BirthdayMailTemplate getTemplate(long companyId) {
-        return mailTemplateRepository.getTemplate(companyId);
+        return Optional.ofNullable(mailTemplateRepository.getTemplate(companyId)).orElse(defaultBirthdayMailTemplate);
     }
 
     @Override
