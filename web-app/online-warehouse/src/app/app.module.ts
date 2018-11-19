@@ -46,6 +46,8 @@ import {GetCounterpartyComponent} from './counterparty/get-counterparty/get-coun
 import {CreateCounterpartyDialogComponent} from './counterparty/create-counterparty-dialog/create-counterparty-dialog.component';
 import {CreateCarrierComponent} from './carrier/create-carrier/create-carrier.component';
 import {CreateCarrierDialogComponent} from './carrier/create-carrier-dialog/create-carrier-dialog.component';
+import {DriverListDialogComponent} from "./carrier/driver/driver-list-dialog/driver-list-dialog.component";
+import {DriverListComponent} from "./carrier/driver/driver-list/driver-list.component";
 import {WarehouseListComponent} from './warehouse/warehouse-list/warehouse-list.component';
 import {CreateWarehouseComponent} from './warehouse/create-warehouse/create-warehouse.component';
 import {GetPlacementComponent} from './warehouse/get-placement/get-placement.component';
@@ -95,6 +97,9 @@ const routes: Routes = [
     CreateCounterpartyDialogComponent,
     CreateCarrierComponent,
     CreateCarrierDialogComponent,
+    DriverListComponent,
+    DriverListDialogComponent,
+    CreateCarrierDialogComponent,
     WarehouseListComponent,
     CreateWarehouseComponent,
     GetPlacementComponent,
@@ -118,7 +123,8 @@ const routes: Routes = [
     CarrierListDialogComponent,
     CounterpartyListDialogComponent,
     CreateCounterpartyDialogComponent,
-    CreateCarrierDialogComponent
+    CreateCarrierDialogComponent,
+    DriverListDialogComponent
   ],
   providers: [
     AuthGuard,

@@ -9,7 +9,6 @@ import by.itechart.warehouse.dto.WarehouseDto;
 import by.itechart.warehouse.entity.Placement;
 import by.itechart.warehouse.entity.PlacementGoods;
 import by.itechart.warehouse.entity.Warehouse;
-import by.itechart.warehouse.repository.PlacementGoodsRepository;
 import by.itechart.warehouse.repository.PlacementRepository;
 import by.itechart.warehouse.repository.WarehouseRepository;
 import org.springframework.beans.factory.annotation.Autowired;

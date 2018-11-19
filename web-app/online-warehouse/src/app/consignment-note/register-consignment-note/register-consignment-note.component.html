@@ -1,4 +1,4 @@
-<mat-horizontal-stepper linear #stepper [formGroup]="consignmentNoteForm">
+<mat-vertical-stepper linear #stepper [formGroup]="consignmentNoteForm">
 
   <mat-step [stepControl]="consignmentNoteForm.controls['number']">
     <ng-template matStepLabel>Fill number consignment note</ng-template>
@@ -68,14 +68,6 @@
         <td class="mat-cell">{{carrier.name}}</td>
         <td class="mat-cell">{{carrier.taxNumber}}</td>
         <td class="mat-cell">{{carrier.carrierType}}</td>
-        <ng-container>
-          <td *ngIf="carrier.carrierType == 'AUTOMOBILE'" class="mat-cell">
-            <mat-form-field>
-              <textarea matInput placeholder="Leave a comment about driver"
-                        #info (keyup)="setDriverInfo(info.value)"></textarea>
-            </mat-form-field>
-          </td>
-        </ng-container>
         <td class="mat-cell">
           <button mat-button (click)="deleteCarrier()">&#10006;</button>
         </td>
@@ -83,6 +75,30 @@
       </tbody>
     </table>
     <button *ngIf="!carrier" mat-button (click)="carrierModal()">Add</button>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
+
+  <mat-step *ngIf="carrierType == 'AUTOMOBILE'" [stepControl]="consignmentNoteForm.controls['driver']">
+    <ng-template matStepLabel>Add driver</ng-template>
+    <table *ngIf="driver" class="mat-table">
+      <thead>
+      <tr class="mat-header-row">
+        <th class="mat-header-cell">Info</th>
+        <th class="mat-header-cell"></th>
+      </tr>
+      <tbody>
+      <tr>
+        <td class="mat-cell">{{driver.info}}</td>
+        <td class="mat-cell">
+          <button mat-button (click)="deleteDriver()">&#10006;</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <button *ngIf="!driver" mat-button (click)="driverModal()">Add</button>
     <div>
       <button mat-button matStepperPrevious>Back</button>
       <button mat-button matStepperNext>Next</button>
@@ -168,4 +184,4 @@
     </div>
   </mat-step>
 
-</mat-horizontal-stepper>
+</mat-vertical-stepper>

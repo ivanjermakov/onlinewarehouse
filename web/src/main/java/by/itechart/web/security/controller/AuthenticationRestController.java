@@ -1,6 +1,5 @@
 package by.itechart.web.security.controller;
 
-import by.itechart.common.entity.Authority;
 import by.itechart.common.entity.User;
 import by.itechart.common.service.UserService;
 import by.itechart.web.security.JwtAuthenticationRequest;

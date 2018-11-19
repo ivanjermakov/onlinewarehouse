@@ -1,8 +1,6 @@
 package by.itechart.common.repository;
 
 import by.itechart.common.entity.Address;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.elasticsearch.repository.ElasticsearchCrudRepository;
 
 

@@ -9,6 +9,10 @@ import {CounterpartyListDialogComponent} from "../../counterparty/counterparty-l
 import {CounterpartyTypeEnum} from "../../counterparty/dto/enum/counterparty-type.enum";
 import {CounterpartyDto} from "../../counterparty/dto/counterparty.dto";
 import {ConsignmentNoteService} from "../consignment-note.service";
+import {DriverDto} from "../../carrier/driver/driver.dto";
+import {DriverListDialogComponent} from "../../carrier/driver/driver-list-dialog/driver-list-dialog.component";
+import {CarrierTypeEnum} from "../../carrier/dto/enum/carrier-type.enum";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-register-consignment-note',
@@ -16,9 +20,11 @@ import {ConsignmentNoteService} from "../consignment-note.service";
   styleUrls: ['./register-consignment-note.component.css']
 })
 export class RegisterConsignmentNoteComponent implements OnInit {
+  carrierType = '';
   consignmentNoteForm: FormGroup;
   counterparty: CounterpartyDto;
   carrier: CarrierDto;
+  driver: DriverDto;
   goodsDtoList: Array<GoodsDto> = [];
 
   constructor(private consignmentNoteService: ConsignmentNoteService,
@@ -29,6 +35,7 @@ export class RegisterConsignmentNoteComponent implements OnInit {
       "shipment": [''],
       "counterparty": ['', Validators.required],
       "carrier": ['', Validators.required],
+      "driver": ['', Validators.required],
       "vehicleNumber": [''],
       "consignmentNoteGoodsList": fb.array([], Validators.required),
       "consignmentNoteType": [''],
@@ -71,18 +78,14 @@ export class RegisterConsignmentNoteComponent implements OnInit {
 
   addCarrier(carrier: CarrierDto): void {
     this.carrier = carrier;
+    this.carrierType = carrier.carrierType;
     this.consignmentNoteForm.patchValue({'carrier': this.carrier});
   }
 
   deleteCarrier(): void {
     this.carrier = null;
+    this.carrierType = '';
     this.consignmentNoteForm.patchValue({'carrier': ''});
-  }
-
-  setDriverInfo(driverInfo: string): void {
-    this.carrier.driverInfo = [];
-    this.carrier.driverInfo.push(driverInfo);
-    this.consignmentNoteForm.patchValue({'carrier': this.carrier});
   }
 
   carrierModal(): void {
@@ -98,6 +101,34 @@ export class RegisterConsignmentNoteComponent implements OnInit {
       data => {
         if (data) {
           this.addCarrier(data);
+        }
+      }
+    );
+  }
+
+  addDriver(driver: DriverDto): void {
+    this.driver = driver;
+    this.consignmentNoteForm.patchValue({'driver': this.driver});
+  }
+
+  deleteDriver(): void {
+    this.driver = null;
+    this.consignmentNoteForm.patchValue({'driver': ''});
+  }
+
+  driverModal(): void {
+    const dialogRef = this.dialog.open(DriverListDialogComponent, {
+      disableClose: false,
+      autoFocus: true,
+      data: {
+        carrierId: this.carrier.id
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(
+      data => {
+        if (data) {
+          this.addDriver(data);
         }
       }
     );
@@ -142,7 +173,9 @@ export class RegisterConsignmentNoteComponent implements OnInit {
 
   private clearFrom(): void {
     this.carrier = null;
+    this.carrierType = '';
     this.counterparty = null;
+    this.driver = null;
     this.goodsDtoList = [];
     this.consignmentNoteForm.reset();
   }

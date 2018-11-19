@@ -1,15 +1,14 @@
 package by.itechart.carrier.service;
 
-import by.itechart.carrier.dto.CarrierDto;
-import by.itechart.carrier.dto.CarrierFilter;
-import by.itechart.carrier.dto.CarrierListDto;
-import by.itechart.carrier.dto.CreateCarrierDto;
+import by.itechart.carrier.dto.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface CarrierService {
 
     Page<CarrierListDto> getCarriers(CarrierFilter filter, Long companyId, Pageable pageable);
+
+    Page<DriverDto> getDrivers(Long companyId, Pageable pageable);
 
     Long saveCarrier(CreateCarrierDto createCarrierDto, Long companyId);
 
