@@ -1,0 +1,108 @@
+<div *ngIf="placement">
+  <h1 class="placement-header">Placement</h1>
+  <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center">
+    <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center">
+      <div>
+        <table class="mat-table">
+          <tbody>
+          <tr class="mat-row">
+            <td class="mat-cell border-right">Size</td>
+            <td class="mat-cell">{{placement.size}}</td>
+          </tr>
+          <tr class="mat-row">
+            <td class="mat-cell border-right">Placement Type</td>
+            <td class="mat-cell">{{placement.placementType}}</td>
+          </tr>
+          <tr class="mat-row">
+            <td class="mat-cell border-right">Measurement unit</td>
+            <td class="mat-cell">{{placement.measurementUnit}}</td>
+          </tr>
+          <tr class="mat-row">
+            <td class="mat-cell border-right">Storage cost</td>
+            <td class="mat-cell">{{placement.storageCost}}</td>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <highcharts-chart
+          [Highcharts]="Highcharts"
+          [options]="chartOptionsLoadPercentage"
+
+          style="width: 400px; display: block; all: revert;"
+        ></highcharts-chart>
+      </div>
+      <div>
+        <highcharts-chart
+          [Highcharts]="Highcharts"
+          [options]="chartOptionsLoadDate"
+
+          style="width: 600px;  display: block;  all: revert;"
+        ></highcharts-chart>
+      </div>
+    </div>
+  </div>
+  <table mat-table [dataSource]="placement.placementGoodsList ? placement.placementGoodsList : null">
+
+    <ng-container matColumnDef="storageTimeDays">
+      <th mat-header-cell *matHeaderCellDef>Storage time</th>
+      <td mat-cell *matCellDef="let placementGoods">{{placementGoods.storageTimeDays}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="expirationDate">
+      <th mat-header-cell *matHeaderCellDef>Expiration time</th>
+      <td mat-cell *matCellDef="let placementGoods">{{placementGoods.expirationDate}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="amount">
+      <th mat-header-cell *matHeaderCellDef>Amount</th>
+      <td mat-cell *matCellDef="let placementGoods">{{placementGoods.amount}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <td mat-cell *matCellDef="let placementGoods">{{placementGoods.goods.name}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="placementType">
+      <th mat-header-cell *matHeaderCellDef>Placement Type</th>
+      <td mat-cell *matCellDef="let placementGoods">{{placementGoods.goods.placementType}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="measurementUnit">
+      <th mat-header-cell *matHeaderCellDef>Measurement Unit</th>
+      <td mat-cell *matCellDef="let placementGoods">{{placementGoods.goods.measurementUnit}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="cost">
+      <th mat-header-cell *matHeaderCellDef>Cost</th>
+      <td mat-cell *matCellDef="let placementGoods">{{placementGoods.goods.cost}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="weight">
+      <th mat-header-cell *matHeaderCellDef>Weight</th>
+      <td mat-cell *matCellDef="let placementGoods">{{placementGoods.goods.weight}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="labelling">
+      <th mat-header-cell *matHeaderCellDef>Labelling</th>
+      <td mat-cell *matCellDef="let placementGoods">{{placementGoods.goods.labelling}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef>Description</th>
+      <td mat-cell *matCellDef="let placementGoods">{{placementGoods.goods.description}}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>
+
+<div *ngIf="loading$ | async"
+     style="display: flex; justify-content: center; align-items: center">
+  <mat-progress-spinner
+    color="primary"
+    mode="indeterminate">
+  </mat-progress-spinner>
+</div>

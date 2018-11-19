@@ -22,6 +22,10 @@ import {CreateCounterpartyComponent} from "./counterparty/create-counterparty/cr
 import {RegisterComponent} from "./auth/registration/register.component";
 import {GetCounterpartyComponent} from "./counterparty/get-counterparty/get-counterparty.component";
 import {CreateCarrierComponent} from "./carrier/create-carrier/create-carrier.component";
+import {WarehouseListComponent} from "./warehouse/warehouse-list/warehouse-list.component";
+import {CreateWarehouseComponent} from "./warehouse/create-warehouse/create-warehouse.component";
+import {GetPlacementComponent} from "./warehouse/get-placement/get-placement.component";
+import {DistributeGoodsWarehouseComponent} from "./warehouse/distribute-goods-warehouse/distribute-goods-warehouse.component";
 
 export const routes: Routes = [
   {path: 'list-users', component: UserListViewComponent, canActivate: [AuthGuard]},
@@ -46,7 +50,11 @@ export const routes: Routes = [
   {path: 'consignment-notes', component: ConsignmentNoteListComponent, canActivate: [AuthGuard]},
   {path: 'consignment-notes/:id', component: ConsignmentNoteDetailComponent, canActivate: [AuthGuard]},
   {path: 'create-counterparty', component: CreateCounterpartyComponent, canActivate: [AuthGuard]},
-  {path: 'register', component: RegisterComponent, canActivate: [AuthGuard]}
+  {path: 'register', component: RegisterComponent, canActivate: [AuthGuard]},
+  {path: 'list-warehouse', component: WarehouseListComponent, canActivate: [AuthGuard]},
+  {path: 'create-warehouse', component: CreateWarehouseComponent, canActivate: [AuthGuard]},
+  {path: 'placement/:warehouseId/:placementId', component: GetPlacementComponent, canActivate: [AuthGuard]},
+  {path: 'distribute-goods', component: DistributeGoodsWarehouseComponent, canActivate: [AuthGuard]}
 
   // { path: 'heroes', component:  }
 ];

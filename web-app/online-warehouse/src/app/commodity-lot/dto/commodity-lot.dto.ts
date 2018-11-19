@@ -8,7 +8,7 @@ export class CommodityLotDto {
   creation: Date;
   commodityLotGoodsList: Array<CommodityLotGoodsDto>;
 
-  constructor(id: number, counterpartyId: number, commodityLotType: CommodityLotTypeEnum, creation: Date, commodityLotGoodsList: Array<CommodityLotGoodsDto>) {
+  constructor(id?: number, counterpartyId?: number, commodityLotType?: CommodityLotTypeEnum, creation?: Date, commodityLotGoodsList?: Array<CommodityLotGoodsDto>) {
     this.id = id;
     this.counterpartyId = counterpartyId;
     this.commodityLotType = commodityLotType;

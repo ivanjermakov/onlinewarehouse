@@ -50,13 +50,13 @@ public class PlacementServiceImpl implements PlacementService {
         placement.getWarehouse().setCompany(new Company(companyId));
 
         Long id = placementRepository.save(placement).getId();
-        List<PlacementGoods> placementGoodsList = createPlacementDto.getPlacementGoodsList()
-                .stream().map(dto -> {
-                    PlacementGoods placementGoods = ObjectMapperUtils.map(dto, PlacementGoods.class);
-                    placementGoods.setPlacement(new Placement(id));
-                    return placementGoods;
-                }).collect(Collectors.toList());
-        placementGoodsRepository.saveAll(placementGoodsList);
+//        List<PlacementGoods> placementGoodsList = createPlacementDto.getPlacementGoodsList()
+//                .stream().map(dto -> {
+//                    PlacementGoods placementGoods = ObjectMapperUtils.map(dto, PlacementGoods.class);
+//                    placementGoods.setPlacement(new Placement(id));
+//                    return placementGoods;
+//                }).collect(Collectors.toList());
+//        placementGoodsRepository.saveAll(placementGoodsList);
 
         return id;
     }

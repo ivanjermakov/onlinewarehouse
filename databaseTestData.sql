@@ -39,15 +39,16 @@ INSERT INTO user_authority (user_id, authority_id) VALUES (3, 4);
 INSERT INTO user_authority (user_id, authority_id) VALUES (3, 5);
 
 --админ компании, возможно менеджер, создал склад и указал помещения в нем
-INSERT INTO warehouse (company_id, name) values (2, 'First warehouse');
+INSERT INTO address (country, region, locality) VALUES ('Belarus', 'Minsk', 'Novogorca str. 35');
+INSERT INTO warehouse (company_id, name, address_id) values (2, 'First warehouse', 5);
 INSERT INTO placement (warehouse_id, placement_type, storage_cost, "size", measurement_unit_type) VALUES (1, 'FREEZER', 5, 100, 'TEST');
 INSERT INTO placement (warehouse_id, placement_type, storage_cost, "size", measurement_unit_type) VALUES (1, 'UNHEATED', 2, 100, 'TEST');
 
 --кто-то из работников предварительно добавил в систему перевозчика и отправителя
 INSERT INTO address (country, region, locality) VALUES ('Belarus', 'Minsk', 'Carrier Tolstogo str. 10');
-INSERT INTO carrier (address_id, company_id, name, carrier_type, tax_number, trusted) VALUES (5, 2, 'Carrier 1', 'AUTOMOBILE', 'sdfsfdf', false);
+INSERT INTO carrier (address_id, company_id, name, carrier_type, tax_number, trusted) VALUES (6, 2, 'Carrier 1', 'AUTOMOBILE', 'sdfsfdf', false);
 INSERT INTO address (country, region, locality) VALUES ('Belarus', 'Minsk', 'Counterparty Tolstogo str. 10');
-INSERT INTO counterparty (address_id, company_id, name, counterparty_type, tax_number) VALUES (6, 2, 'Counterparty 1', 'CONSIGNOR', 'assfdfdssdf');
+INSERT INTO counterparty (address_id, company_id, name, counterparty_type, tax_number) VALUES (7, 2, 'Counterparty 1', 'CONSIGNOR', 'assfdfdssdf');
 -- add 11.05
 INSERT INTO driver (carrier_id, info) VALUES (1, 'Good driver');
 
@@ -75,9 +76,9 @@ INSERT INTO commodity_lot_goods (goods_id, commodity_lot_id, amount) VALUES (2, 
 INSERT INTO commodity_lot_goods (goods_id, commodity_lot_id, amount) VALUES (3, 1, 6);
 
 --менеджер видит товарную партию и начинает расскидывать ее по складу(заказ на хранение был на 10 дней)
-INSERT INTO placement_goods (goods_id, placement_id, counterparty_id, amount, storage_time_days) VALUES (1, 1, 1, 9, 10);
-INSERT INTO placement_goods (goods_id, placement_id, counterparty_id, amount, storage_time_days) VALUES (2, 2, 1, 15, 10);
-INSERT INTO placement_goods (goods_id, placement_id, counterparty_id, amount, storage_time_days) VALUES (3, 2, 1, 6, 10);
+INSERT INTO placement_goods (goods_id, placement_id, counterparty_id, amount, storage_time_days, expiration_date) VALUES (1, 1, 1, 9, 10, '2018-10-24');
+INSERT INTO placement_goods (goods_id, placement_id, counterparty_id, amount, storage_time_days, expiration_date) VALUES (2, 2, 1, 15, 10, '2018-10-24');
+INSERT INTO placement_goods (goods_id, placement_id, counterparty_id, amount, storage_time_days, expiration_date) VALUES (3, 2, 1, 6, 10, '2018-10-24');
 
 --контролер решил перепроверить склад и обнаружил что кто-то украл 2 единицы товара 'Some goods 1 name' и составляет акт
 INSERT INTO write_off_act (company_id, creator_id, write_off_act_type, creation, total_amount, responsible_person) VALUES (2, 3, 'LOSS', '2018-10-24', 20, 'Somebody');
@@ -90,10 +91,10 @@ UPDATE placement_goods SET amount = 7 WHERE goods_id = 1 AND placement_id = 1 AN
 --менеджер создает делает ТТН на выпуск, таких перевозчика и получателя в системе нет и он их предварительно регистрирует (прям в окошке создания ТТН)
 -- перевозчика
 INSERT INTO address (country, region, locality) VALUES ('Belarus', 'Minsk', 'Carrier Nezavisimosti str. 158');
-INSERT INTO carrier (address_id, company_id, name, carrier_type, tax_number, trusted) VALUES (7, 2, 'Carrier 2', 'AUTOMOBILE', 'asd', false);
+INSERT INTO carrier (address_id, company_id, name, carrier_type, tax_number, trusted) VALUES (8, 2, 'Carrier 2', 'AUTOMOBILE', 'asd', false);
 --получатель
 INSERT INTO address (country, region, locality) VALUES ('Belarus', 'Minsk', 'Counterparty Nezavisimosti str. 158');
-INSERT INTO counterparty (address_id, company_id, name, counterparty_type, tax_number) VALUES (8, 2, 'Counterparty 1', 'CONSIGNEE', 'assfdfdssdf');
+INSERT INTO counterparty (address_id, company_id, name, counterparty_type, tax_number) VALUES (9, 2, 'Counterparty 1', 'CONSIGNEE', 'assfdfdssdf');
 --сама ТТН
 INSERT INTO consignment_note (company_id, carrier_id, driver_id, counterparty_id, creator_id, number, consignment_note_type, shipment, registration, vehicle_number, consignment_note_status, description)
 VALUES (1, 2, 1, 2, 4, '123124432', 'OUT', '2018-10-28', '2018-10-28', '1234-КР 7', 'PROCESSED', 'ha');

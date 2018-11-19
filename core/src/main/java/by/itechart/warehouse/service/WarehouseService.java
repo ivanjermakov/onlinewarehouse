@@ -10,7 +10,7 @@ public interface WarehouseService {
 
     Long saveWarehouse(CreateWarehouseDto createWarehouseDto, long companyId);
 
-    Long editWarehouse(CreateWarehouseDto editWarehouseDto, long companyId, long warehouseId);
+    Long editWarehouse(WarehouseDto warehouseDto, long companyId, long warehouseId);
 
     WarehouseDto getWarehouse(long companyId, long warehouseId);
 

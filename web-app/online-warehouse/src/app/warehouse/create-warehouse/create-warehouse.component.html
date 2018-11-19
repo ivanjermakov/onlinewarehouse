@@ -1,0 +1,38 @@
+<mat-horizontal-stepper linear #stepper>
+  <mat-step [stepControl]="createWarehouseForm.controls['name']">
+    <ng-template matStepLabel>Fill warehouse name</ng-template>
+    <mat-form-field>
+      <input matInput placeholder="Warehouse name" [formControl]="createWarehouseForm.controls['name']" required>
+    </mat-form-field>
+    <div>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
+  <mat-step [stepControl]="createWarehouseForm.controls['address']">
+    <ng-template matStepLabel>Fill address</ng-template>
+    <mat-form-field>
+      <input matInput placeholder="Country"
+             [formControl]="createWarehouseForm.controls['address'].controls['country']" required>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Region" [formControl]="createWarehouseForm.controls['address'].controls['region']"
+             required>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Locality"
+             [formControl]="createWarehouseForm.controls['address'].controls['locality']" required>
+    </mat-form-field>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Done</ng-template>
+    <!--<p>Warehouse name: {{warehouseNameControl.value}}</p>-->
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button (click)="onSubmit(createWarehouseForm); stepper.reset()">Submit</button>
+    </div>
+  </mat-step>
+</mat-horizontal-stepper>

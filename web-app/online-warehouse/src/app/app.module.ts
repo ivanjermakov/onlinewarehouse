@@ -8,7 +8,6 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {AppRoutingModule, routes as appRoutes} from './app-routing.module';
 import {HomeComponent} from './home/home.component';
-import {PlacementComponent} from './placement/placement.component';
 import {CompanyListComponent} from './company/company-list/company-list.component';
 import {CreateCompanyComponent} from './company/create-company/create-company.component';
 import {GoodsListComponent} from "./shared/goods/goods-list/goods-list.component";
@@ -47,6 +46,11 @@ import {GetCounterpartyComponent} from './counterparty/get-counterparty/get-coun
 import {CreateCounterpartyDialogComponent} from './counterparty/create-counterparty-dialog/create-counterparty-dialog.component';
 import {CreateCarrierComponent} from './carrier/create-carrier/create-carrier.component';
 import {CreateCarrierDialogComponent} from './carrier/create-carrier-dialog/create-carrier-dialog.component';
+import {WarehouseListComponent} from './warehouse/warehouse-list/warehouse-list.component';
+import {CreateWarehouseComponent} from './warehouse/create-warehouse/create-warehouse.component';
+import {GetPlacementComponent} from './warehouse/get-placement/get-placement.component';
+import {HighchartsChartModule} from "highcharts-angular";
+import {DistributeGoodsWarehouseComponent} from './warehouse/distribute-goods-warehouse/distribute-goods-warehouse.component';
 
 const routes: Routes = [
   {path: 'app', component: AppComponent, canActivate: [AuthGuard], children: appRoutes},
@@ -58,7 +62,6 @@ const routes: Routes = [
   declarations: [
     AppComponent,
     HomeComponent,
-    PlacementComponent,
     CompanyListComponent,
     CreateCompanyComponent,
     GoodsListComponent,
@@ -91,7 +94,11 @@ const routes: Routes = [
     GetCounterpartyComponent,
     CreateCounterpartyDialogComponent,
     CreateCarrierComponent,
-    CreateCarrierDialogComponent
+    CreateCarrierDialogComponent,
+    WarehouseListComponent,
+    CreateWarehouseComponent,
+    GetPlacementComponent,
+    DistributeGoodsWarehouseComponent
   ],
   imports: [
     BrowserModule,
@@ -103,6 +110,7 @@ const routes: Routes = [
     BrowserAnimationsModule,
     MaterialModule,
     MatNativeDateModule,
+    HighchartsChartModule
   ],
   bootstrap: [RootComponent],
   entryComponents: [

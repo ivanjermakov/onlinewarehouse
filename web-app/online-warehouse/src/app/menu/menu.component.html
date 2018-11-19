@@ -22,6 +22,14 @@
      routerLink="list-goods" routerLinkActive="action-active">
     <button mat-button>Список товаров компании</button>
   </a>
+  <a *ngIf="userAuthorities.includes('ROLE_COMPANY_ADMIN' || 'ROLE_WAREHOUSE_OWNER')"
+     routerLink="list-warehouse" routerLinkActive="action-active">
+    <button mat-button>Список складов</button>
+  </a>
+  <a *ngIf="userAuthorities.includes('ROLE_COMPANY_ADMIN' || 'ROLE_WAREHOUSE_OWNER')"
+     routerLink="create-warehouse" routerLinkActive="action-active">
+    <button mat-button>Создать склад</button>
+  </a>
   <a *ngIf="userAuthorities.includes('ROLE_COMPANY_ADMIN' || 'ROLE_DISPATCHER')"
      routerLink="list-commodity-lots" routerLinkActive="action-active">
     <button mat-button>Список товарных партий</button>

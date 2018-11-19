@@ -90,6 +90,7 @@ create table driver (
 create table warehouse (
   id         bigserial PRIMARY KEY,
   company_id bigint references company (id),
+  address_id bigint references address (id),
   name       varchar(20),
   deleted    date
 );
@@ -168,5 +169,6 @@ create table placement_goods (
   counterparty_id   bigint references counterparty (id),
   amount            integer NOT NULL,
   storage_time_days integer NOT NULL,
+  expiration_date   date NOT NULL,
   deleted           date
 );

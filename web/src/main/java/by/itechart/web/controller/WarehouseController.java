@@ -45,8 +45,8 @@ public class WarehouseController {
 
     @PutMapping("/{warehouseId}")
     public Long editWarehouse(@PathVariable long companyId, @PathVariable long warehouseId,
-                              @RequestBody CreateWarehouseDto warehouse) {
-        return warehouseService.editWarehouse(warehouse, companyId, warehouseId);
+                              @RequestBody WarehouseDto warehouseDto) {
+        return warehouseService.editWarehouse(warehouseDto, companyId, warehouseId);
     }
 
     @DeleteMapping("/{warehouseId}")
