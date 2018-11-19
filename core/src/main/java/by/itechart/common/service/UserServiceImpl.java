@@ -52,4 +52,9 @@ public class UserServiceImpl implements UserService {
     public Set<User> getUsersWithBirthday(Long companyId, LocalDate birthDay) {
         return userRepository.getUsersWithBirthday(companyId, birthDay);
     }
+
+    @Override
+    public Set<User> getAllById(List<Long> id) {
+        return userRepository.findAllById(id);
+    }
 }

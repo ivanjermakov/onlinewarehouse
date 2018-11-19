@@ -178,3 +178,10 @@ create table birthday_mail_template (
   background_color varchar(7) not null,
   header_image_path varchar not null
 );
+
+create table birthday_mail_send (
+  id bigserial primary key,
+  user_id bigint references users (id),
+  timestamp date not null,
+  successful boolean not null
+)

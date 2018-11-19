@@ -56,10 +56,10 @@ public class MailTemplateServiceImpl implements MailTemplateService {
         }
     }
 
-
     @PostConstruct
     private void initBirthdayMailTemplate() {
-//        TODO: something more elegant, maybe read from .html file
+        //        TODO: something more elegant, maybe read from .html file
+        //        TODO: fix mail design
         String defaultTemplateText = "<head>\n" +
                 "    <meta name=\"viewport\" content=\"width=device-width\"/>\n" +
                 "    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"/>\n" +
@@ -84,5 +84,4 @@ public class MailTemplateServiceImpl implements MailTemplateService {
         defaultBirthdayMailTemplate.setBackgroundColor("#FFFFFF");
         defaultBirthdayMailTemplate.setHeaderImagePath("#");
     }
-
 }

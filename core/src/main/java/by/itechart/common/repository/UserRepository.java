@@ -9,6 +9,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 public interface UserRepository extends CrudRepository<User, Long> {
@@ -23,4 +24,6 @@ public interface UserRepository extends CrudRepository<User, Long> {
 
     @Query("select u from User u where u.company.id = :companyId and u.birth = :birthDay")
     Set<User> getUsersWithBirthday(@Param("companyId") Long companyId, @Param("birthDay") LocalDate birthDay);
+
+    Set<User> findAllById(List<Long> id);
 }
