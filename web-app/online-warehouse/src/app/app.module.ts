@@ -42,6 +42,7 @@ import {RouterModule, Routes} from "@angular/router";
 import {RootComponent} from './root/root.component';
 import {MenuComponent} from './menu/menu.component';
 import {CreateCounterpartyComponent} from './counterparty/create-counterparty/create-counterparty.component';
+import { ChangeBirthdayMailTemplateComponent } from './mail/change-birthday-mail-template/change-birthday-mail-template.component';
 
 
 const routes: Routes = [
@@ -82,7 +83,8 @@ const routes: Routes = [
     UserListViewComponent,
     RootComponent,
     MenuComponent,
-    CreateCounterpartyComponent
+    CreateCounterpartyComponent,
+    ChangeBirthdayMailTemplateComponent
   ],
   imports: [
     BrowserModule,

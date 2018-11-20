@@ -74,4 +74,8 @@
      routerLink="list-write-off-acts" routerLinkActive="action-active">
     <button mat-button>Список актов</button>
   </a>
+  <a *ngIf="userAuthorities.includes('ROLE_COMPANY_ADMIN')"
+     routerLink="change-birthday-mail-template" routerLinkActive="action-active">
+    <button mat-button>Изменить шаблон поздравления с днем рождения</button>
+  </a>
 </div>

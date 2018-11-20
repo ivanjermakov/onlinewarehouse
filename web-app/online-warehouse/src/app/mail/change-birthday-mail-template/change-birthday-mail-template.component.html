@@ -1,0 +1,20 @@
+<div>
+  <form id="birthday-template-from">
+    <mat-form-field appearance="outline">
+      <mat-label>Текст шаблона</mat-label>
+      <textarea mat-input matTextareaAutosize [formControl]="templateForm.controls['text']" matInput
+                placeholder="Tax number"></textarea>
+    </mat-form-field>
+
+    <mat-button-toggle>
+      <label for="colorPicker">Цвет фона</label>
+    </mat-button-toggle>
+    <input id="colorPicker" type="color" [formControl]="templateForm.controls['backgroundColor']"
+           style="display:none;">
+
+    <mat-button-toggle>
+      <label for="fileToUpload">Загрузить изображение заголовка</label>
+    </mat-button-toggle>
+    <input id="fileToUpload" type="file" style="display:none;">
+  </form>
+</div>
