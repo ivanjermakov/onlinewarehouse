@@ -1,9 +1,6 @@
 package by.itechart.web.controller;
 
-import by.itechart.consignmentnote.dto.ConsignmentNoteDto;
-import by.itechart.consignmentnote.dto.ConsignmentNoteFilter;
-import by.itechart.consignmentnote.dto.ConsignmentNoteListDto;
-import by.itechart.consignmentnote.dto.CreateConsignmentNoteDto;
+import by.itechart.consignmentnote.dto.*;
 import by.itechart.consignmentnote.service.ConsignmentNoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -38,5 +35,12 @@ public class ConsignmentNoteController {
                                                   @RequestBody CreateConsignmentNoteDto consignmentNote) {
         System.out.println(consignmentNote);
         return consignmentNoteService.saveConsignmentNote(consignmentNote, companyId);
+    }
+
+    @PutMapping
+    public Long updateConsignmentNote(@PathVariable long companyId,
+                                    @RequestBody UpdateConsignmentNoteDto consignmentNote) {
+        System.out.println(consignmentNote);
+        return consignmentNoteService.updateConsignmentNote(consignmentNote, companyId);
     }
 }

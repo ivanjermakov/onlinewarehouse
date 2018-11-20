@@ -1,20 +1,21 @@
 <div>
   <form>
-    <mat-form-field *ngIf="disabled" appearance="outline">
+    <mat-form-field *ngIf="active" appearance="outline">
       <mat-select [formControl]="consignmentNoteFilterForm.controls['consignmentNoteType']"
                   placeholder="Type" name="consignmentNoteType">
         <mat-option>NONE</mat-option>
-        <mat-option [value]="'IN'">IN</mat-option>
-        <mat-option [value]="'OUT'">OUT</mat-option>
+        <mat-option *ngFor="let type of getTypes()" [value]="type">
+          {{cnType[type]}}
+        </mat-option>
       </mat-select>
     </mat-form-field>
-    <mat-form-field *ngIf="disabled" appearance="outline">
+    <mat-form-field *ngIf="active" appearance="outline">
       <mat-select [formControl]="consignmentNoteFilterForm.controls['consignmentNoteStatus']"
                   placeholder="Status" name="consignmentNoteStatus">
         <mat-option>NONE</mat-option>
-        <mat-option [value]="'NOT_PROCESSED'">NOT_PROCESSED</mat-option>
-        <mat-option [value]="'PROCESSED'">PROCESSED</mat-option>
-        <mat-option [value]="'BEING_PROCESSED'">BEING_PROCESSED</mat-option>
+        <mat-option *ngFor="let status of getStatuses()" [value]="status">
+          {{cnStatus[status]}}
+        </mat-option>
       </mat-select>
     </mat-form-field>
 
@@ -54,12 +55,12 @@
 
       <ng-container matColumnDef="consignment Note Type">
         <th mat-header-cell *matHeaderCellDef>Consignment Note Type</th>
-        <td mat-cell *matCellDef="let consignmentNote">{{consignmentNote.consignmentNoteType}}</td>
+        <td mat-cell *matCellDef="let consignmentNote">{{cnType[consignmentNote.consignmentNoteType]}}</td>
       </ng-container>
 
       <ng-container matColumnDef="consignment Note Status">
         <th mat-header-cell *matHeaderCellDef>Consignment Note Status</th>
-        <td mat-cell *matCellDef="let consignmentNote">{{consignmentNote.consignmentNoteStatus}}</td>
+        <td mat-cell *matCellDef="let consignmentNote">{{cnStatus[consignmentNote.consignmentNoteStatus]}}</td>
       </ng-container>
 
 

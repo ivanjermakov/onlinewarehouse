@@ -10,6 +10,8 @@ import {Router} from "@angular/router";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {debounceTime, distinctUntilChanged, tap} from "rxjs/operators";
 import {Location} from "@angular/common";
+import {ConsignmentNoteStatus} from "../dto/enum/consignment-note-status.enum";
+import {ConsignmentNoteType} from "../dto/enum/consignment-note-type.enum";
 
 @Component({
   selector: 'app-consignment-note-list',
@@ -18,13 +20,15 @@ import {Location} from "@angular/common";
 })
 export class ConsignmentNoteListComponent implements OnInit {
 
+  private cnStatus = ConsignmentNoteStatus;
+  private cnType = ConsignmentNoteType;
   private displayedColumns = ["number", "company name", "registration date", "consignment Note Type", "consignment Note Status"];
   private loadingSubject = new BehaviorSubject<boolean>(false);
   loading$ = this.loadingSubject.asObservable();
   private pageable: Pageable = new Pageable(0, 10);
   private pageSizeOptions: number[] = [10, 25, 50];
   private errors: any[];
-  private disabled = true;
+  private active = true;
 
   private consignmentNotes: Page<ConsignmentNoteListDto>;
   private consignmentNoteFilterForm: FormGroup;
@@ -43,7 +47,7 @@ export class ConsignmentNoteListComponent implements OnInit {
   ngOnInit(): void {
     if(this.router.url === '/app/registered-consignment-notes') {
       this.consignmentNoteFilterForm.patchValue({'consignmentNoteStatus': 'NOT_PROCESSED'});
-      this.disabled = false;
+      this.active = false;
     }
     this.getConsignmentNotes();
     this.consignmentNoteFilterForm.valueChanges.pipe(debounceTime(250),
@@ -61,6 +65,14 @@ export class ConsignmentNoteListComponent implements OnInit {
       .subscribe((consignmentNotes) =>
           this.consignmentNotes = consignmentNotes,
         error => this.errors = error);
+  }
+
+  getTypes(): Array<string> {
+    return Object.keys(ConsignmentNoteType);
+  }
+
+  getStatuses(): Array<string> {
+    return Object.keys(ConsignmentNoteStatus);
   }
 
   onRowClicked(row) {

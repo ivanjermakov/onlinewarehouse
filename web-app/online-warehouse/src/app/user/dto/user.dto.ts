@@ -2,7 +2,7 @@ import {AddressDto} from "../../shared/address/dto/address.dto";
 import {AuthorityDto} from "./authority.dto";
 
 export class UserDto {
-  id: string;
+  id: number;
   username: string;
   firstname: string;
   lastname: string;

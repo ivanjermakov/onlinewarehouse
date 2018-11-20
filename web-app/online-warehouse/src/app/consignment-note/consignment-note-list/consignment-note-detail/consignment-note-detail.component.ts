@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {ConsignmentNoteDto} from "../../dto/consignment-note-dto";
 import {ConsignmentNoteService} from "../../consignment-note.service";
 import {ActivatedRoute, Router} from "@angular/router";
+import {ConsignmentNoteType} from "../../dto/enum/consignment-note-type.enum";
+import {ConsignmentNoteStatus} from "../../dto/enum/consignment-note-status.enum";
 
 @Component({
   selector: 'app-consignment-note-detail',
@@ -9,8 +11,10 @@ import {ActivatedRoute, Router} from "@angular/router";
   styleUrls: ['./consignment-note-detail.component.css']
 })
 export class ConsignmentNoteDetailComponent implements OnInit {
-  consignmentNote: ConsignmentNoteDto;
-  displayedColumns: string[] = ['Name', 'Labelling', 'Measurement unit', 'Placement type',
+  private status = ConsignmentNoteStatus;
+  private type = ConsignmentNoteType;
+  private consignmentNote: ConsignmentNoteDto;
+  private displayedColumns: string[] = ['Name', 'Labelling', 'Measurement unit', 'Placement type',
     'Weight', 'Cost', 'Description', 'Amount'];
 
   constructor(private consignmentNoteService: ConsignmentNoteService,
@@ -28,6 +32,10 @@ export class ConsignmentNoteDetailComponent implements OnInit {
       this.consignmentNoteService.getConsignmentNote(id)
         .subscribe((consignmentNote) => this.consignmentNote = consignmentNote);
     }
+  }
+
+  update() {
+    this.router.navigateByUrl("app/register-consignment-note/" + this.consignmentNote.id);
   }
 
   backToList() {

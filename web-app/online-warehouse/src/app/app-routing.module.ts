@@ -43,6 +43,7 @@ export const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: '', component: HomeComponent, canActivate: [AuthGuard]},
   {path: 'register-consignment-note', component: RegisterConsignmentNoteComponent, canActivate: [AuthGuard]},
+  {path: 'register-consignment-note/:id', component: RegisterConsignmentNoteComponent, canActivate: [AuthGuard]},
   {path: 'consignment-notes', component: ConsignmentNoteListComponent, canActivate: [AuthGuard]},
   {path: 'registered-consignment-notes', component: ConsignmentNoteListComponent, canActivate: [AuthGuard]},
   {path: 'consignment-notes/:id', component: ConsignmentNoteDetailComponent, canActivate: [AuthGuard]},

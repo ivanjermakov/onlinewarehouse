@@ -10,6 +10,7 @@ import {CreateConsignmentNoteDto} from "./dto/create-consignment-note-dto";
 import {ConsignmentNoteFilter} from "./dto/consignment-note-filter";
 import {ConsignmentNoteListDto} from "./dto/consignment-note-list-dto";
 import {AuthenticationService} from "../auth/_services";
+import {UpdateConsignmentNoteDto} from "./dto/update-consignment-note-dto";
 
 @Injectable({
   providedIn: 'root'
@@ -45,5 +46,11 @@ export class ConsignmentNoteService {
     createConsignmentNoteDto.creatorId = this.auth.getUserId();
     const path: string = this.baseApi + '/' + companyId + '/consignment-notes';
     return this.http.post<ConsignmentNoteDto>(path, createConsignmentNoteDto);
+  }
+
+  updateConsignmentNote(updateConsignmentNoteDto: UpdateConsignmentNoteDto): Observable<ConsignmentNoteDto> {
+    var companyId = this.auth.getCompanyId();
+    const path: string = this.baseApi + '/' + companyId + '/consignment-notes';
+    return this.http.put<ConsignmentNoteDto>(path, updateConsignmentNoteDto);
   }
 }
