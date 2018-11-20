@@ -5,7 +5,6 @@ import {Pageable} from "../../shared/pagination/pageable";
 import {finalize} from "rxjs/operators";
 import {WarehouseDto} from "../dto/warehouse.dto";
 import {WarehouseService} from "../service/warehouse.service";
-import {AuthenticationService} from "../../auth/_services";
 import {PageEvent} from "@angular/material";
 import {Router} from "@angular/router";
 
@@ -49,9 +48,9 @@ export class WarehouseListComponent implements OnInit {
     this.router.navigateByUrl('app/placement/' + warehouseId + '/' + placementId)
   }
 
-  // onRowClicked(row) {
-  //   this.warehouseSelected.emit(row);
-  // }
+  addPlacement(id: number) {
+    this.router.navigateByUrl('app/warehouse/' + id + '/create-placement')
+  }
 
   loadWarehouses() {
     this.loadingSubject.next(true);

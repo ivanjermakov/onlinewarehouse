@@ -53,6 +53,10 @@ import {CreateWarehouseComponent} from './warehouse/create-warehouse/create-ware
 import {GetPlacementComponent} from './warehouse/get-placement/get-placement.component';
 import {HighchartsChartModule} from "highcharts-angular";
 import {DistributeGoodsWarehouseComponent} from './warehouse/distribute-goods-warehouse/distribute-goods-warehouse.component';
+import {DistributeGoodsWarehouseDialogComponent} from './warehouse/distribute-goods-warehouse-dialog/distribute-goods-warehouse-dialog.component';
+import {ConsignmentNoteDetailDialogComponent} from './consignment-note/consignment-note-list/consignment-note-detail-dialog/consignment-note-detail-dialog.component';
+import {CreateWriteOffActDialogComponent} from './write-off-act/create-write-off-act-dialog/create-write-off-act-dialog.component';
+import {CreatePlacementComponent} from './warehouse/create-placement/create-placement.component';
 
 const routes: Routes = [
   {path: 'app', component: AppComponent, canActivate: [AuthGuard], children: appRoutes},
@@ -103,7 +107,11 @@ const routes: Routes = [
     WarehouseListComponent,
     CreateWarehouseComponent,
     GetPlacementComponent,
-    DistributeGoodsWarehouseComponent
+    DistributeGoodsWarehouseComponent,
+    DistributeGoodsWarehouseDialogComponent,
+    ConsignmentNoteDetailDialogComponent,
+    CreateWriteOffActDialogComponent,
+    CreatePlacementComponent
   ],
   imports: [
     BrowserModule,
@@ -124,7 +132,10 @@ const routes: Routes = [
     CounterpartyListDialogComponent,
     CreateCounterpartyDialogComponent,
     CreateCarrierDialogComponent,
-    DriverListDialogComponent
+    DriverListDialogComponent,
+    DistributeGoodsWarehouseDialogComponent,
+    ConsignmentNoteDetailDialogComponent,
+    CreateWriteOffActDialogComponent
   ],
   providers: [
     AuthGuard,

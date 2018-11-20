@@ -1,3 +1,3 @@
-export class MeasurementUnitEnum {
+export enum MeasurementUnitEnum {
   TEST = 'TEST'
 }

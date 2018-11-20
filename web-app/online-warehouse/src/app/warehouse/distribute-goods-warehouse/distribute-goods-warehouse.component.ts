@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Pageable} from "../../shared/pagination/pageable";
 import {WarehouseService} from "../service/warehouse.service";
 import {WarehouseDto} from "../dto/warehouse.dto";
@@ -11,6 +11,8 @@ import {PlacementDto} from "../dto/placement.dto";
 import {CommodityLotService} from "../../commodity-lot/service/commodity-lot.service";
 import {CommodityLotDto} from "../../commodity-lot/dto/commodity-lot.dto";
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from "@angular/cdk/drag-drop";
+import {BehaviorSubject} from "rxjs";
+import {finalize} from "rxjs/operators";
 
 @Component({
   selector: 'app-distribute-goods-warehouse',
@@ -20,16 +22,18 @@ import {CdkDragDrop, moveItemInArray, transferArrayItem} from "@angular/cdk/drag
 export class DistributeGoodsWarehouseComponent implements OnInit {
 
   @Input() commodityLot: CommodityLotDto;
+  @Output() submitted: EventEmitter<any> = new EventEmitter<any>();
   goodsCount: FormGroup;
-
-  private warehouses: WarehouseDto[];
   placementDropListArray: PlacementDropList[];
+  error: any;
+  private loadingSubject = new BehaviorSubject<boolean>(false);
+  loading$ = this.loadingSubject.asObservable();
+  private warehouses: WarehouseDto[];
   private warehouse: WarehouseDto;
   private distributeGoodsForm: FormGroup;
   private warehouseControl: FormControl;
   private warehouseId: number;
   private counterpartyId: number;
-  error: any;
 
   constructor(private warehouseService: WarehouseService,
               private commodityLotService: CommodityLotService,
@@ -37,10 +41,13 @@ export class DistributeGoodsWarehouseComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loadingSubject.next(true);
     this.warehouseService.getWarehouses(new Pageable(0, Number.MAX_SAFE_INTEGER))
+      .pipe(
+        finalize(() => this.loadingSubject.next(false))
+      )
       .subscribe(page => {
           this.warehouses = page.content;
-          console.log(this.warehouses[0]);
         }, (err: any) => {
           this.error = err;
         }
@@ -51,28 +58,35 @@ export class DistributeGoodsWarehouseComponent implements OnInit {
     this.warehouseControl = this.fb.control('', Validators.required);
 
     this.goodsCount = this.fb.group({arr: this.fb.array([])});
-    if (!this.commodityLot) {
-      // this.commodityLot = new CommodityLotDto();
-      this.commodityLotService.getCommodityLot(2, 1)
-        .subscribe((commodityLot) => {
-          this.commodityLot = commodityLot;
-          console.log('test');
-          console.log(this.commodityLot);
+    //
+    this.commodityLot.commodityLotGoodsList.forEach((commodityLotGoods) => {
+      (this.goodsCount.controls['arr'] as FormArray)
+        .push(this.fb.control([''], [Validators.max(commodityLotGoods.amount - 1), Validators.min(1)]))
+    });
 
-          commodityLot.commodityLotGoodsList.forEach((commodityLotGoods) => {
-            (this.goodsCount.controls['arr'] as FormArray)
-              .push(this.fb.control([''], [Validators.max(commodityLotGoods.amount - 1), Validators.min(1)]))
-          });
-          console.log(this.goodsCount.controls['arr']);
-        });
-
-    }
+    // if (!this.commodityLot) {
+    //   // this.commodityLot = new CommodityLotDto();
+    //   this.commodityLotService.getCommodityLot(1)
+    //     .subscribe((commodityLot) => {
+    //       this.commodityLot = commodityLot;
+    //       console.log('test');
+    //       console.log(this.commodityLot);
+    //
+    //       commodityLot.commodityLotGoodsList.forEach((commodityLotGoods) => {
+    //         (this.goodsCount.controls['arr'] as FormArray)
+    //           .push(this.fb.control([''], [Validators.max(commodityLotGoods.amount - 1), Validators.min(1)]))
+    //       });
+    //       console.log(this.goodsCount.controls['arr']);
+    //     });
+    //
+    // }
 
   }
 
   saveUpdatedWarehouse() {
     this.joinPlacementDropGroupAndWarehouse(this.placementDropListArray, this.warehouses[this.warehouseControl.value]);
     this.warehouseService.updateWarehouse(this.warehouses[this.warehouseControl.value]).subscribe();
+    this.submitted.emit();
   }
 
   mapWarehouseToPlacementDropGroup(warehouseDto: WarehouseDto): PlacementDropList[] {
@@ -96,7 +110,7 @@ export class DistributeGoodsWarehouseComponent implements OnInit {
           // 10,
           this.distributeGoodsForm.controls['storageTime'].value,
           // this.addDays(Date.now(), 10))
-        this.addDays(Date.now(), this.distributeGoodsForm.controls['storageTime'].value))
+          this.addDays(Date.now(), this.distributeGoodsForm.controls['storageTime'].value))
       });
       return new PlacementDto(placementDropList.id, placementGoodsDtos);
     });
@@ -134,17 +148,12 @@ export class DistributeGoodsWarehouseComponent implements OnInit {
         event.container.data,
         event.previousIndex,
         event.currentIndex);
-      console.log(event.container.data);
-      console.log(event.item)
     }
   }
 
   selectionChange() {
     if (true) {
-      console.log(this.warehouseControl.value);
-      console.log(this.warehouses[this.warehouseControl.value]);
       this.placementDropListArray = this.mapWarehouseToPlacementDropGroup(this.warehouses[this.warehouseControl.value]);
-      console.log(this.placementDropListArray);
     }
   }
 
@@ -159,23 +168,14 @@ export class DistributeGoodsWarehouseComponent implements OnInit {
       .insert(index, this.fb.control([''], [Validators.max(formValue - 1), Validators.min(1)]))
   }
 
-  private placementGoodsEquals(p1: PlacementGoodsDto, p2: PlacementGoodsDto) {
-    let b = (p1.counterpartyId === p2.counterpartyId &&
-      p1.goods === p2.goods &&
-      this.dateEquals(p1.expirationDate, p2.expirationDate) &&
-      p1.storageTimeDays == p2.storageTimeDays);
-    console.log( this.dateEquals(p1.expirationDate, p2.expirationDate), b);
-    return b;
-  }
-
-  dateEquals(d1: Date, d2: Date){
+  dateEquals(d1: Date, d2: Date) {
     let date1, date2;
-    if (d1 instanceof Date){
+    if (d1 instanceof Date) {
       date1 = d1.toISOString().split('T')[0];
-    } else{
+    } else {
       date1 = d1;
     }
-    if (d2 instanceof Date){
+    if (d2 instanceof Date) {
       date2 = d2.toISOString().split('T')[0];
     } else {
       date2 = d2;
@@ -187,31 +187,16 @@ export class DistributeGoodsWarehouseComponent implements OnInit {
     let result = new Date(date);
     // result.setHours(0, 0, 0, 0);
     result.setDate(result.getDate() + days);
-    console.log(result);
     return result; //.toISOString().split('T')[0];
   }
 
-  todo = [
-    'Get to work',
-    'Pick up groceries',
-    'Go home',
-    'Fall asleep'
-  ];
-
-  done = [[
-    'Get up',
-    'Brush teeth',
-    'Take a shower',
-    'Check e-mail',
-    'Walk dog'
-  ], [
-    'Get up',
-    'Brush teeth',
-    'Take a shower',
-    'Check e-mail',
-    'Walk dog'
-  ]];
-
+  private placementGoodsEquals(p1: PlacementGoodsDto, p2: PlacementGoodsDto) {
+    let b = (p1.counterpartyId === p2.counterpartyId &&
+      p1.goods === p2.goods &&
+      this.dateEquals(p1.expirationDate, p2.expirationDate) &&
+      p1.storageTimeDays == p2.storageTimeDays);
+    return b;
+  }
 }
 
 class PlacementDropList {

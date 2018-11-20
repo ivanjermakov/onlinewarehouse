@@ -1,5 +1,6 @@
 package by.itechart.commoditylot.entity;
 
+import by.itechart.commoditylot.enums.CommodityLotStatus;
 import by.itechart.commoditylot.enums.CommodityLotType;
 import by.itechart.common.entity.BaseEntity;
 import by.itechart.company.entity.Company;
@@ -34,6 +35,10 @@ public class CommodityLot extends BaseEntity {
     @Column(name = "commodity_lot_type")
     @Enumerated(EnumType.STRING)
     private CommodityLotType commodityLotType;
+
+    @Column(name = "commodity_lot_status")
+    @Enumerated(EnumType.STRING)
+    private CommodityLotStatus commodityLotStatus;
 
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)

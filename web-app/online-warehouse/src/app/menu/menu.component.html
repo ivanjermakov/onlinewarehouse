@@ -55,7 +55,7 @@
     <button mat-button>Посмотреть ТТН</button>
   </a>
   <a *ngIf="userAuthorities.includes('ROLE_COMPANY_ADMIN' || 'ROLE_MANAGER')"
-     routerLink="" routerLinkActive="action-active">
+     routerLink="registered-commodity-lots" routerLinkActive="action-active">
     <button mat-button>Товарные партии к размещению</button>
   </a>
   <a *ngIf="userAuthorities.includes('ROLE_COMPANY_ADMIN' || 'ROLE_MANAGER' || 'ROLE_DISPATCHER')"

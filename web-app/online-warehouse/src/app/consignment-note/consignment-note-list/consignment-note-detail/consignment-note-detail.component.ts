@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {ConsignmentNoteDto} from "../../dto/consignment-note-dto";
 import {ConsignmentNoteService} from "../../consignment-note.service";
 import {ActivatedRoute, Router} from "@angular/router";
+import {MatDialog} from "@angular/material";
+import {CreateWriteOffActDialogComponent} from "../../../write-off-act/create-write-off-act-dialog/create-write-off-act-dialog.component";
+import {CommodityLotService} from "../../../commodity-lot/service/commodity-lot.service";
 
 @Component({
   selector: 'app-consignment-note-detail',
@@ -9,17 +12,27 @@ import {ActivatedRoute, Router} from "@angular/router";
   styleUrls: ['./consignment-note-detail.component.css']
 })
 export class ConsignmentNoteDetailComponent implements OnInit {
+
+  @Input() showWriteOffButtons: boolean = false;
+  @Input() inputConsignmentNote: ConsignmentNoteDto;
+
   consignmentNote: ConsignmentNoteDto;
   displayedColumns: string[] = ['Name', 'Labelling', 'Measurement unit', 'Placement type',
     'Weight', 'Cost', 'Description', 'Amount'];
 
   constructor(private consignmentNoteService: ConsignmentNoteService,
               private router: Router,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private dialog: MatDialog,
+              private commodityLotService: CommodityLotService) {
   }
 
   ngOnInit(): void {
-    this.getConsignmentNote();
+    if (!this.inputConsignmentNote) {
+      this.getConsignmentNote();
+    } else {
+      this.consignmentNote = this.inputConsignmentNote;
+    }
   }
 
   getConsignmentNote(): void {
@@ -32,5 +45,31 @@ export class ConsignmentNoteDetailComponent implements OnInit {
 
   backToList() {
     this.router.navigateByUrl("app/consignment-notes");
+  }
+
+  submitWithAct() {
+    this.consignmentNoteService.setConsignmentNoteBeingProcessed(this.consignmentNote.id).subscribe();
+    const dialogRef = this.dialog.open(CreateWriteOffActDialogComponent, {
+      disableClose: false,
+      autoFocus: true,
+      data: {
+        emitWhenSubmit: true
+      }
+    });
+
+    dialogRef.afterClosed().subscribe((createWriteOffActDto) => {
+        if (createWriteOffActDto) {
+          console.log('test');
+          this.commodityLotService
+            .saveCommodityLotFromConsignmentNoteAndWriteOffAct(this.consignmentNote, createWriteOffActDto)
+            .subscribe();
+        }
+      }
+    );
+  }
+
+  submitWithoutAct() {
+    this.consignmentNoteService.setConsignmentNoteProcessed(this.consignmentNote.id).subscribe();
+    this.commodityLotService.saveCommodityLotFromConsignmentNote(this.consignmentNote).subscribe();
   }
 }

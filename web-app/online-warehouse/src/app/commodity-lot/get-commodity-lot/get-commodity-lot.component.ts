@@ -42,7 +42,7 @@ export class GetCommodityLotComponent implements OnInit {
 
   getCommodityLot() {
     this.loadingSubject.next(true);
-    this.commodityLotService.getCommodityLot(2, this.commodityLotId)
+    this.commodityLotService.getCommodityLot(this.commodityLotId)
       .pipe(
         catchError(() => of([])),
         finalize(() => this.loadingSubject.next(false))

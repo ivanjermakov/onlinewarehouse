@@ -15,8 +15,8 @@ import {PlacementDto} from "../dto/placement.dto";
 })
 export class WarehouseService {
 
-  private baseApi: string = API_BASE_URL + '/companies';
   readonly companyId: number;
+  private baseApi: string = API_BASE_URL + '/companies';
   private routedPlacement: PlacementDto;
 
   constructor(private http: HttpClient,
@@ -50,5 +50,10 @@ export class WarehouseService {
     const path: string = this.baseApi + '/' + this.companyId + '/warehouses/'
       + warehouseId + '/placements/' + placementId;
     return this.http.get<PlacementDto>(path);
+  }
+
+  savePlacement(placementDto: PlacementDto) {
+    const path: string = this.baseApi + '/' + this.companyId + '/warehouses/' + placementDto.warehouseId + '/placements';
+    return this.http.post<number>(path, placementDto);
   }
 }

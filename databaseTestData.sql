@@ -69,13 +69,15 @@ INSERT INTO write_off_act (company_id, creator_id, write_off_act_type, creation,
 -- указываем количество товаров и причину (на TEST забейте, нужно статусы описать)
 INSERT INTO write_off_act_goods(goods_id, write_off_act_id, write_off_type, amount) VALUES (1, 1, 'CARRIER_LOSS', 1);
 --одновременно создается товарая партия
-INSERT INTO commodity_lot (company_id, counterparty_id, creation, commodity_lot_type) VALUES (2, 1, '2018-10-24', 'IN');
+INSERT INTO commodity_lot (company_id, counterparty_id, creation, commodity_lot_type, commodity_lot_status) VALUES (2, 1, '2018-10-24', 'IN', 'NOT_PROCESSED');
 --c товарами (вычитаем единицу товара "Some goods 1 name" из акта итого 9 товара "Some goods 1 name")
 INSERT INTO commodity_lot_goods (goods_id, commodity_lot_id, amount) VALUES (1, 1, 9);
 INSERT INTO commodity_lot_goods (goods_id, commodity_lot_id, amount) VALUES (2, 1, 15);
 INSERT INTO commodity_lot_goods (goods_id, commodity_lot_id, amount) VALUES (3, 1, 6);
 
 --менеджер видит товарную партию и начинает расскидывать ее по складу(заказ на хранение был на 10 дней)
+UPDATE commodity_lot SET commodity_lot_status='PROCESSED' WHERE id = 1;
+
 INSERT INTO placement_goods (goods_id, placement_id, counterparty_id, amount, storage_time_days, expiration_date) VALUES (1, 1, 1, 9, 10, '2018-10-24');
 INSERT INTO placement_goods (goods_id, placement_id, counterparty_id, amount, storage_time_days, expiration_date) VALUES (2, 2, 1, 15, 10, '2018-10-24');
 INSERT INTO placement_goods (goods_id, placement_id, counterparty_id, amount, storage_time_days, expiration_date) VALUES (3, 2, 1, 6, 10, '2018-10-24');
@@ -102,8 +104,10 @@ VALUES (1, 2, 1, 2, 4, '123124432', 'OUT', '2018-10-28', '2018-10-28', '1234-К�
 INSERT INTO consignment_note_goods (goods_id, consignment_note_id, amount) VALUES (1, 2, 7);
 INSERT INTO consignment_note_goods (goods_id, consignment_note_id, amount) VALUES (2, 2, 10);
 
+INSERT INTO commodity_lot (company_id, counterparty_id, creation, commodity_lot_type, commodity_lot_status) VALUES (2, 2, '2018-10-28', 'OUT', 'NOT_PROCESSED');
 -- контролер идет проверять наличие товара, все ок, и он создает товарную партию
-INSERT INTO commodity_lot (company_id, counterparty_id, creation, commodity_lot_type) VALUES (2, 2, '2018-10-28', 'OUT');
+UPDATE commodity_lot SET commodity_lot_status='PROCESSED' WHERE id = 2;
+
 --c товарами (вычитаем единицу товара "Some goods 1 name" из акта итого 9 товара "Some goods 1 name")
 INSERT INTO commodity_lot_goods (goods_id, commodity_lot_id, amount) VALUES (1, 2, 7);
 INSERT INTO commodity_lot_goods (goods_id, commodity_lot_id, amount) VALUES (2, 2, 10);

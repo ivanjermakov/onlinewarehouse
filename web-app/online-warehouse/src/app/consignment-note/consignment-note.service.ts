@@ -16,11 +16,11 @@ import {AuthenticationService} from "../auth/_services";
 })
 export class ConsignmentNoteService {
 
+  private baseApi: string = API_BASE_URL + '/companies';
+
   constructor(private http: HttpClient,
               private auth: AuthenticationService) {
   }
-
-  private baseApi: string = API_BASE_URL + '/companies';
 
   getConsignmentNotes(consignmentNoteFilter: ConsignmentNoteFilter, pageable: Pageable): Observable<Page<ConsignmentNoteListDto>> {
     var companyId = this.auth.getCompanyId();
@@ -45,5 +45,17 @@ export class ConsignmentNoteService {
     createConsignmentNoteDto.creatorId = this.auth.getUserId();
     const path: string = this.baseApi + '/' + companyId + '/consignment-notes';
     return this.http.post<ConsignmentNoteDto>(path, createConsignmentNoteDto);
+  }
+
+  setConsignmentNoteBeingProcessed(consignmentNoteId: number): Observable<number> {
+    let companyId = this.auth.getCompanyId();
+    const path: string = this.baseApi + '/' + companyId + '/consignment-notes/' + consignmentNoteId + '?status=BEING_PROCESSED';
+    return this.http.put<number>(path, null);
+  }
+
+  setConsignmentNoteProcessed(consignmentNoteId: number): Observable<number> {
+    let companyId = this.auth.getCompanyId();
+    const path: string = this.baseApi + '/' + companyId + '/consignment-notes/' + consignmentNoteId + '?status=PROCESSED';
+    return this.http.put<number>(path, null);
   }
 }

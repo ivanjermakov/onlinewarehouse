@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {WriteOffActTypeEnum} from "../dto/enum/write-off-act-type.enum";
 import {WriteOffActService} from "../service/write-off-act.service";
@@ -15,6 +15,10 @@ import {AuthenticationService} from "../../auth/_services";
   styleUrls: ['./create-write-off-act.component.css']
 })
 export class CreateWriteOffActComponent implements OnInit {
+
+  @Input() emitWhenSubmit: boolean = false;
+
+  @Output() submitted: EventEmitter<CreateWriteOffActDto> = new EventEmitter<CreateWriteOffActDto>();
 
   goodsDtoList: Array<GoodsDto> = [];
   createWriteOffActForm: FormGroup;
@@ -90,6 +94,9 @@ export class CreateWriteOffActComponent implements OnInit {
       console.log(long)
     });
     this.clearFrom();
+    if (this.emitWhenSubmit) {
+      this.submitted.emit(createWriteOffActDto);
+    }
   }
 
   private clearFrom(): void {

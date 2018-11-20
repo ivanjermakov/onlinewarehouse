@@ -92,12 +92,11 @@ export class GetPlacementComponent implements OnInit {
     // that in JavaScript, months start at 0 for January, 1 for February etc.
     series: [{
       name: "Placement",
-      data: [
-      ]
+      data: []
     }]
   };
 
-  displayedColumns = ["amount", "name", "storageTimeDays","expirationDate" , "cost", "weight", "labelling", "description"];
+  displayedColumns = ["amount", "name", "storageTimeDays", "expirationDate", "cost", "weight", "labelling", "description"];
 
   private loadingSubject = new BehaviorSubject<boolean>(false);
   loading$ = this.loadingSubject.asObservable();
@@ -115,7 +114,7 @@ export class GetPlacementComponent implements OnInit {
     this.getPlacement();
   }
 
-  calculateCount(){
+  calculateCount() {
     let placementLoad: number = 0;
     this.placement.placementGoodsList.forEach((placementGoods) => {
       placementLoad += placementGoods.amount;
@@ -134,15 +133,19 @@ export class GetPlacementComponent implements OnInit {
     this.placement.placementGoodsList.forEach((placementGoods) => {
       placementLoadDynamic.push([new Date(placementGoods.expirationDate).getTime(), placementLoad -= placementGoods.amount])
     });
-      // placementLoadDynamic.sort((a, b) => {return a[0] - b[0]});
-      console.log(placementLoadDynamic);
-      placementLoadDynamic.forEach((arr) => {this.chartOptionsLoadDate.series[0].data.push(arr)});
+    placementLoadDynamic.sort((a, b) => {
+      return a[0] - b[0]
+    });
+    console.log(placementLoadDynamic);
+    placementLoadDynamic.forEach((arr) => {
+      this.chartOptionsLoadDate.series[0].data.push(arr)
+    });
   }
 
   getPlacement(): void {
     const warehouseId = Number(this.route.snapshot.paramMap.get('warehouseId'));
     const placementId = Number(this.route.snapshot.paramMap.get('placementId'));
-    if (!Number.isNaN(warehouseId) && warehouseId != 0 &&!Number.isNaN(placementId) && placementId != 0) {
+    if (!Number.isNaN(warehouseId) && warehouseId != 0 && !Number.isNaN(placementId) && placementId != 0) {
       this.loadingSubject.next(true);
       this.warehouseService.getPlacement(warehouseId, placementId)
         .pipe(

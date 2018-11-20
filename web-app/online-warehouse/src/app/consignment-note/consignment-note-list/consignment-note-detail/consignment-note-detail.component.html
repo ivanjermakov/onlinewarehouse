@@ -105,8 +105,12 @@
       </tbody>
     </table>
   </div>
-  <button mat-button (click)="backToList()">Back to List</button>
+  <button mat-button *ngIf="!showWriteOffButtons" (click)="backToList()">Back to List</button>
 </div>
 <div class="not-found" *ngIf="!consignmentNote">
   <button mat-button (click)="backToList()">Back to List</button>
+</div>
+<div *ngIf="showWriteOffButtons">
+  <button mat-button (click)="submitWithoutAct()">Submit</button>
+  <button mat-button (click)="submitWithAct()">Submit with write off act</button>
 </div>

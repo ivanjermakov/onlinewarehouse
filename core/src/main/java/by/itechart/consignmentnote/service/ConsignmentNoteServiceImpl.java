@@ -68,4 +68,11 @@ public class ConsignmentNoteServiceImpl implements ConsignmentNoteService {
         consignmentNoteGoodsRepository.saveAll(consignmentNoteGoodsList);
         return id;
     }
+
+    @Transactional
+    @Override
+    public Long setConsignmentNoteStatus(long consignmentNoteId, ConsignmentNoteStatus consignmentNoteStatus, long companyId) {
+        consignmentNoteRepository.setConsignmentNoteStatus(companyId, consignmentNoteId, consignmentNoteStatus);
+        return consignmentNoteId;
+    }
 }

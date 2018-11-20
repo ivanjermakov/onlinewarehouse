@@ -1,4 +1,4 @@
-<mat-vertical-stepper (selectionChange)="selectionChange($event)" linear #stepper>
+<mat-vertical-stepper (selectionChange)="selectionChange($event)" linear #stepper *ngIf="warehouses">
   <mat-step [stepControl]="warehouseControl">
     <ng-template matStepLabel>Choose warehouse</ng-template>
     <mat-form-field>
@@ -18,7 +18,8 @@
   <mat-step [stepControl]="distributeGoodsForm.controls['storageTime']">
     <ng-template matStepLabel>Specify the storage period</ng-template>
     <mat-form-field>
-      <input matInput type="number" placeholder="Storage period" [formControl]="distributeGoodsForm.controls['storageTime']"
+      <input matInput type="number" placeholder="Storage period"
+             [formControl]="distributeGoodsForm.controls['storageTime']"
              required>
     </mat-form-field>
     <div>
@@ -49,7 +50,7 @@
               <div mat-menu-item [disabled]="true"
                    style="display: flex">
                 <input matInput style="width: 40%" type="number" formControlName="{{i}}"/>
-                <button mat-button (click)="divide(item, i)">Divide</button>
+                <button mat-button (click)="divide(item, i)" [matMenuTriggerFor]="menu">Divide</button>
               </div>
             </mat-menu>
           </div>
@@ -58,19 +59,27 @@
 
       <div class="example-container">
         <ng-container *ngFor="let placementDropList of placementDropListArray">
-        <h2>{{placementDropList.size}}, {{placementDropList.placementType}}</h2>
-        <div
-          cdkDropList
-          [cdkDropListData]="placementDropList.arr"
-          class="example-list"
-          (cdkDropListDropped)="drop($event)">
-          <div class="example-box" *ngFor="let item of placementDropList.arr" cdkDrag>
-            {{item.goods.name}},{{item.amount}}
+          <h2>{{placementDropList.size}}, {{placementDropList.placementType}}</h2>
+          <div
+            cdkDropList
+            [cdkDropListData]="placementDropList.arr"
+            class="example-list"
+            (cdkDropListDropped)="drop($event)">
+            <div class="example-box" *ngFor="let item of placementDropList.arr" cdkDrag>
+              {{item.goods.name}},{{item.amount}}
+            </div>
           </div>
-        </div>
         </ng-container>
       </div>
     </div>
     <button mat-button (click)="saveUpdatedWarehouse()">Save</button>
   </mat-step>
 </mat-vertical-stepper>
+
+<div *ngIf="loading$ | async"
+     style="display: flex; justify-content: center; align-items: center">
+  <mat-progress-spinner
+    color="primary"
+    mode="indeterminate">
+  </mat-progress-spinner>
+</div>

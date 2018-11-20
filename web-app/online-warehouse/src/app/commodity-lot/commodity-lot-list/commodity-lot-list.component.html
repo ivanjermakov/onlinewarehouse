@@ -10,6 +10,16 @@
       </mat-option>
     </mat-select>
   </mat-form-field>
+  <mat-form-field *ngIf="disabled" appearance="outline">
+    <mat-label>Status</mat-label>
+    <mat-select [formControl]="commodityLotFilterForm.controls['commodityLotStatus']"
+                placeholder="Status" name="commodityLotType">
+      <mat-option>None</mat-option>
+      <mat-option *ngFor="let type of getCommodityLotStatuses()" [value]="type">
+        {{type}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
   <mat-form-field appearance="outline">
     <mat-label>From</mat-label>
     <input matInput [formControl]="commodityLotFilterForm.controls['from']"
@@ -31,7 +41,7 @@
 </form>
 
 <div style="display: flex; justify-content: center; align-items: center">
-  <table mat-table [dataSource]="page ? page.content : null" class="hoverable-table">
+  <table mat-table [dataSource]="page ? page.content : null" [ngClass]="{'hoverable-table': disabled}">
 
     <ng-container matColumnDef="creation">
       <th mat-header-cell *matHeaderCellDef>Creation</th>
@@ -46,6 +56,18 @@
     <ng-container matColumnDef="commodityLotType">
       <th mat-header-cell *matHeaderCellDef>Type</th>
       <td mat-cell *matCellDef="let commodityLot">{{commodityLot.commodityLotType}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="commodityLotStatus">
+      <th mat-header-cell *matHeaderCellDef>Status</th>
+      <td mat-cell *matCellDef="let commodityLot">{{commodityLot.commodityLotStatus}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="commodityLotProcess">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let commodityLot">
+        <button mat-button>Process</button>
+      </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

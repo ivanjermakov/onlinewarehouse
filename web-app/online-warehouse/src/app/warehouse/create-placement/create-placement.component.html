@@ -1,0 +1,60 @@
+<mat-horizontal-stepper [formGroup]="createPlacementForm" linear #stepper>
+  <mat-step [stepControl]="createPlacementForm.controls['placementType']">
+    <ng-template matStepLabel>Choose placement type</ng-template>
+    <mat-form-field>
+      <mat-select [formControl]="createPlacementForm.controls['placementType']"
+                  placeholder="Type" [required]="true">
+        <mat-option *ngFor="let type of getPlacementType()" [value]="type">
+          {{type}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
+  <mat-step [stepControl]="createPlacementForm.controls['measurementUnit']">
+    <ng-template matStepLabel>Choose measurement unit</ng-template>
+    <mat-form-field>
+      <mat-select [formControl]="createPlacementForm.controls['measurementUnit']"
+                  placeholder="Measurement unit" [required]="true">
+        <mat-option *ngFor="let type of getMeasurementUnit()" [value]="type">
+          {{type}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
+  <mat-step [stepControl]="createPlacementForm.controls['size']">
+    <ng-template matStepLabel>Fill placement size</ng-template>
+    <mat-form-field>
+      <input matInput placeholder="Size" [formControl]="createPlacementForm.controls['size']" required>
+    </mat-form-field>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
+  <mat-step [stepControl]="createPlacementForm.controls['storageCost']">
+    <ng-template matStepLabel>Fill storage cost</ng-template>
+    <mat-form-field>
+      <input matInput placeholder="Storage cost"
+             [formControl]="createPlacementForm.controls['storageCost']" required>
+    </mat-form-field>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Done</ng-template>
+    <!--<p>Warehouse name: {{warehouseNameControl.value}}</p>-->
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button (click)="onSubmit(createWarehouseForm); stepper.reset()">Submit</button>
+    </div>
+  </mat-step>
+</mat-horizontal-stepper>

@@ -1,19 +1,13 @@
-import {GoodsDto} from '../../shared/goods/dto/goods.dto';
-import {WriteOffActDto} from './write-off-act.dto';
 import {WriteOffTypeEnum} from "./enum/write-off-type.enum";
 
 export class CreateWriteOffActGoodsDto {
-  id: number;
-  goods: GoodsDto;
-  writeOffAct: WriteOffActDto;
+
+  goodsId: number;
   writeOffType: WriteOffTypeEnum;
   amount: number;
 
-
-  constructor(id: number, goods: GoodsDto, writeOffAct: WriteOffActDto, writeOffType: WriteOffTypeEnum, amount: number) {
-    this.id = id;
-    this.goods = goods;
-    this.writeOffAct = writeOffAct;
+  constructor(goodsId: number, writeOffType: WriteOffTypeEnum, amount: number) {
+    this.goodsId = goodsId;
     this.writeOffType = writeOffType;
     this.amount = amount;
   }

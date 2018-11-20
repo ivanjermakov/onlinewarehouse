@@ -123,11 +123,12 @@ create table consignment_note (
 );
 
 create table commodity_lot (
-  id                 bigserial PRIMARY KEY,
-  company_id         bigint references company (id),
-  counterparty_id    bigint references counterparty (id),
-  creation           date        NOT NULL,
-  commodity_lot_type varchar(20) NOT NULL
+  id                   bigserial PRIMARY KEY,
+  company_id           bigint references company (id),
+  counterparty_id      bigint references counterparty (id),
+  creation             date        NOT NULL,
+  commodity_lot_type   varchar(20) NOT NULL
+  commodity_lot_status varchar(20) NOT NULL
 );
 
 create table write_off_act (
