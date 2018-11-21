@@ -13,8 +13,9 @@ import {catchError, debounceTime, distinctUntilChanged, finalize, tap} from 'rxj
 export class ChangeBirthdayMailTemplateComponent implements OnInit {
 
   private templateForm: FormGroup;
+  private template: BirthdayMailTemplateDto;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private mailService: MailService) {
     this.templateForm = fb.group({
       'text': [''],
       'backgroundColor': [''],
@@ -23,9 +24,15 @@ export class ChangeBirthdayMailTemplateComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loadBirthdayTemplate();
   }
 
   loadBirthdayTemplate() {
+    // TODO: don't forget to change to a variable
+    this.mailService.getBirthdayMailTemplate(2).subscribe(data => {
+      console.log(data);
+      this.template = data;
+    });
   }
 
 }
