@@ -17,6 +17,8 @@
     <mat-button-toggle>
       <label for="fileToUpload">Загрузить изображение заголовка</label>
     </mat-button-toggle>
-    <input id="fileToUpload" type="file" [formControl]="templateForm.controls['backgroundColor']" style="display:none;">
+    <input id="fileToUpload" type="file"
+           [formControl]="templateForm.controls['headerImagePath']"
+           style="display:none;">
   </form>
 </div>
