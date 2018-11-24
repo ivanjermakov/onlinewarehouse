@@ -3,6 +3,9 @@ import {CarrierDto} from "../../carrier/dto/carrier.dto";
 import {CounterpartyDto} from "../../counterparty/dto/counterparty.dto";
 import {ConsignmentNoteGoodsDto} from "./consignment-note-goods-dto";
 import {DriverDto} from "../../carrier/driver/driver.dto";
+import {ConsignmentNoteType} from "./enum/consignment-note-type.enum";
+import {ConsignmentNoteStatus} from "./enum/consignment-note-status.enum";
+import {UserDto} from "../../user/dto/user.dto";
 
 export class ConsignmentNoteDto {
   id: number;
@@ -12,10 +15,11 @@ export class ConsignmentNoteDto {
   counterparty: CounterpartyDto;
   carrier: CarrierDto;
   driver: DriverDto;
+  creator: UserDto;
   vehicleNumber: string;
   registration: Date;
   consignmentNoteGoodsList: Array<ConsignmentNoteGoodsDto>;
-  consignmentNoteType: string;
-  consignmentNoteStatus: string;
+  consignmentNoteType: ConsignmentNoteType;
+  consignmentNoteStatus: ConsignmentNoteStatus;
   description: string;
 }

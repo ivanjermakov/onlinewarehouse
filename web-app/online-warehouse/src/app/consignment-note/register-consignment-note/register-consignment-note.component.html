@@ -163,8 +163,9 @@
       <mat-select [formControl]="consignmentNoteForm.controls['consignmentNoteType']"
                   placeholder="Type" name="consignmentNoteType" [required]="true">
         <mat-option [value]="">NONE</mat-option>
-        <mat-option [value]="'IN'">IN</mat-option>
-        <mat-option [value]="'OUT'">OUT</mat-option>
+        <mat-option *ngFor="let type of getTypes()" [value]="type">
+          {{cnType[type]}}
+        </mat-option>
       </mat-select>
     </mat-form-field>
     <div>
@@ -180,7 +181,7 @@
     </mat-form-field>
     <div>
       <button mat-button matStepperPrevious>Back</button>
-      <button mat-button (click)="onSubmit(consignmentNoteForm); stepper.reset()">Submit</button>
+      <button mat-button (click)="onSubmit(); stepper.reset()">Submit</button>
     </div>
   </mat-step>
 

@@ -5,6 +5,8 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {MatDialog} from "@angular/material";
 import {CreateWriteOffActDialogComponent} from "../../../write-off-act/create-write-off-act-dialog/create-write-off-act-dialog.component";
 import {CommodityLotService} from "../../../commodity-lot/service/commodity-lot.service";
+import {ConsignmentNoteType} from "../../dto/enum/consignment-note-type.enum";
+import {ConsignmentNoteStatus} from "../../dto/enum/consignment-note-status.enum";
 
 @Component({
   selector: 'app-consignment-note-detail',
@@ -16,8 +18,10 @@ export class ConsignmentNoteDetailComponent implements OnInit {
   @Input() showWriteOffButtons: boolean = false;
   @Input() inputConsignmentNote: ConsignmentNoteDto;
 
-  consignmentNote: ConsignmentNoteDto;
-  displayedColumns: string[] = ['Name', 'Labelling', 'Measurement unit', 'Placement type',
+  private status = ConsignmentNoteStatus;
+  private type = ConsignmentNoteType;
+  private consignmentNote: ConsignmentNoteDto;
+  private displayedColumns: string[] = ['Name', 'Labelling', 'Measurement unit', 'Placement type',
     'Weight', 'Cost', 'Description', 'Amount'];
 
   constructor(private consignmentNoteService: ConsignmentNoteService,
@@ -41,6 +45,10 @@ export class ConsignmentNoteDetailComponent implements OnInit {
       this.consignmentNoteService.getConsignmentNote(id)
         .subscribe((consignmentNote) => this.consignmentNote = consignmentNote);
     }
+  }
+
+  update() {
+    this.router.navigateByUrl("app/register-consignment-note/" + this.consignmentNote.id);
   }
 
   backToList() {

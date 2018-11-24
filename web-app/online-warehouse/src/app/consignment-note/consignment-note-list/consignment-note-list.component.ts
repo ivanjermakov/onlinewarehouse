@@ -2,12 +2,16 @@ import {Component, OnInit} from '@angular/core';
 import {Page} from "../../shared/pagination/page";
 import {Pageable} from "../../shared/pagination/pageable";
 import {ConsignmentNoteService} from "../consignment-note.service";
+import {ConsignmentNoteFilter} from "../dto/consignment-note-filter";
 import {ConsignmentNoteListDto} from "../dto/consignment-note-list-dto";
 import {BehaviorSubject} from "rxjs/index";
 import {MatDialog, PageEvent} from "@angular/material";
 import {Router} from "@angular/router";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {debounceTime, distinctUntilChanged, tap} from "rxjs/operators";
+import {Location} from "@angular/common";
+import {ConsignmentNoteStatus} from "../dto/enum/consignment-note-status.enum";
+import {ConsignmentNoteType} from "../dto/enum/consignment-note-type.enum";
 import {ConsignmentNoteDetailDialogComponent} from "./consignment-note-detail-dialog/consignment-note-detail-dialog.component";
 
 @Component({
@@ -17,13 +21,15 @@ import {ConsignmentNoteDetailDialogComponent} from "./consignment-note-detail-di
 })
 export class ConsignmentNoteListComponent implements OnInit {
 
+  private cnStatus = ConsignmentNoteStatus;
+  private cnType = ConsignmentNoteType;
   private displayedColumns = ["number", "company name", "registration date", "consignment Note Type", "consignment Note Status"];
   private loadingSubject = new BehaviorSubject<boolean>(false);
   loading$ = this.loadingSubject.asObservable();
   private pageable: Pageable = new Pageable(0, 10);
   private pageSizeOptions: number[] = [10, 25, 50];
   private errors: any[];
-  private disabled = true;
+  private active = true;
 
   private consignmentNotes: Page<ConsignmentNoteListDto>;
   private consignmentNoteFilterForm: FormGroup;
@@ -40,12 +46,11 @@ export class ConsignmentNoteListComponent implements OnInit {
     });
   }
 
-
   ngOnInit(): void {
     if (this.router.url === '/app/registered-consignment-notes') {
       this.consignmentNoteFilterForm.patchValue({'consignmentNoteStatus': 'NOT_PROCESSED'});
       this.displayedColumns.push('consignment Process');
-      this.disabled = false;
+      this.active = false;
     }
     this.getConsignmentNotes();
     this.consignmentNoteFilterForm.valueChanges.pipe(debounceTime(250),
@@ -58,7 +63,6 @@ export class ConsignmentNoteListComponent implements OnInit {
     ).subscribe();
   }
 
-
   getConsignmentNotes(): void {
     this.consignmentNoteService.getConsignmentNotes(this.consignmentNoteFilterForm.value, this.pageable.toServerPageable())
       .subscribe((consignmentNotes) =>
@@ -67,11 +71,19 @@ export class ConsignmentNoteListComponent implements OnInit {
   }
 
   onRowClicked(row: ConsignmentNoteListDto) {
-    if (!this.disabled) {
+    if (!this.active) {
       this.openModal(row);
     } else {
       this.router.navigateByUrl("app/consignment-notes/" + row.id);
     }
+  }
+
+  getTypes(): Array<string> {
+    return Object.keys(ConsignmentNoteType);
+  }
+
+  getStatuses(): Array<string> {
+    return Object.keys(ConsignmentNoteStatus);
   }
 
   openModal(row: ConsignmentNoteListDto): void {

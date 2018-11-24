@@ -21,3 +21,8 @@ td.mat-cell.border-right {
   align-items: center;
   padding-top: 1em;
 }
+
+.updateButton {
+  background-color: #7d1616;
+  color: white;
+}

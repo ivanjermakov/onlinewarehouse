@@ -41,11 +41,11 @@
       </tr>
       <tr class="mat-row">
         <td class="mat-cell border-right">Type</td>
-        <td class="mat-cell">{{consignmentNote.consignmentNoteType}}</td>
+        <td class="mat-cell">{{type[consignmentNote.consignmentNoteType]}}</td>
       </tr>
       <tr class="mat-row">
         <td class="mat-cell border-right">Status</td>
-        <td class="mat-cell">{{consignmentNote.consignmentNoteStatus}}</td>
+        <td class="mat-cell">{{status[consignmentNote.consignmentNoteStatus]}}</td>
       </tr>
       <tr class="mat-row">
         <td class="mat-cell border-right">Description</td>
@@ -106,6 +106,8 @@
     </table>
   </div>
   <button mat-button *ngIf="!showWriteOffButtons" (click)="backToList()">Back to List</button>
+  <button class="updateButton" *ngIf="consignmentNote.consignmentNoteStatus == 'NOT_PROCESSED'"
+          mat-button (click)="update()">UPDATE</button>
 </div>
 <div class="not-found" *ngIf="!consignmentNote">
   <button mat-button (click)="backToList()">Back to List</button>

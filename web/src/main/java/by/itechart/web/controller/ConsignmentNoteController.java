@@ -1,9 +1,6 @@
 package by.itechart.web.controller;
 
-import by.itechart.consignmentnote.dto.ConsignmentNoteDto;
-import by.itechart.consignmentnote.dto.ConsignmentNoteFilter;
-import by.itechart.consignmentnote.dto.ConsignmentNoteListDto;
-import by.itechart.consignmentnote.dto.CreateConsignmentNoteDto;
+import by.itechart.consignmentnote.dto.*;
 import by.itechart.consignmentnote.enums.ConsignmentNoteStatus;
 import by.itechart.consignmentnote.service.ConsignmentNoteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,5 +44,12 @@ public class ConsignmentNoteController {
                                          ConsignmentNoteStatus status) {
 //        ConsignmentNoteType consignmentNoteType = ConsignmentNoteType.valueOf(status); //Todo: soo bad idea do something like that, but time rolls his ceaseless course
         return consignmentNoteService.setConsignmentNoteStatus(consignmentNoteId, status, companyId);
+    }
+
+    @PutMapping
+    public Long updateConsignmentNote(@PathVariable long companyId,
+                                    @RequestBody UpdateConsignmentNoteDto consignmentNote) {
+        System.out.println(consignmentNote);
+        return consignmentNoteService.updateConsignmentNote(consignmentNote, companyId);
     }
 }

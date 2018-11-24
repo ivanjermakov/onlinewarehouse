@@ -2,10 +2,7 @@ package by.itechart.consignmentnote.service;
 
 import by.itechart.common.utils.ObjectMapperUtils;
 import by.itechart.company.entity.Company;
-import by.itechart.consignmentnote.dto.ConsignmentNoteDto;
-import by.itechart.consignmentnote.dto.ConsignmentNoteFilter;
-import by.itechart.consignmentnote.dto.ConsignmentNoteListDto;
-import by.itechart.consignmentnote.dto.CreateConsignmentNoteDto;
+import by.itechart.consignmentnote.dto.*;
 import by.itechart.consignmentnote.entity.ConsignmentNote;
 import by.itechart.consignmentnote.entity.ConsignmentNoteGoods;
 import by.itechart.consignmentnote.enums.ConsignmentNoteStatus;
@@ -69,10 +66,25 @@ public class ConsignmentNoteServiceImpl implements ConsignmentNoteService {
         return id;
     }
 
-    @Transactional
     @Override
+    @Transactional
     public Long setConsignmentNoteStatus(long consignmentNoteId, ConsignmentNoteStatus consignmentNoteStatus, long companyId) {
         consignmentNoteRepository.setConsignmentNoteStatus(companyId, consignmentNoteId, consignmentNoteStatus);
         return consignmentNoteId;
+    }
+
+    @Override
+    @Transactional
+    public Long updateConsignmentNote(UpdateConsignmentNoteDto consignmentNoteDto, long companyId) {
+        ConsignmentNote consignmentNote = ObjectMapperUtils.map(consignmentNoteDto, ConsignmentNote.class);
+        Long id = consignmentNoteRepository.save(consignmentNote).getId();
+        List<ConsignmentNoteGoods> consignmentNoteGoodsList = consignmentNoteDto.getConsignmentNoteGoodsList()
+                .stream().map(dto -> {
+                    ConsignmentNoteGoods consignmentNoteGoods = ObjectMapperUtils.map(dto, ConsignmentNoteGoods.class);
+                    consignmentNoteGoods.setConsignmentNote(new ConsignmentNote(id));
+                    return consignmentNoteGoods;
+                }).collect(Collectors.toList());
+        consignmentNoteGoodsRepository.saveAll(consignmentNoteGoodsList);
+        return id;
     }
 }

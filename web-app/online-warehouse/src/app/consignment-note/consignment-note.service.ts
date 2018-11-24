@@ -10,17 +10,18 @@ import {CreateConsignmentNoteDto} from "./dto/create-consignment-note-dto";
 import {ConsignmentNoteFilter} from "./dto/consignment-note-filter";
 import {ConsignmentNoteListDto} from "./dto/consignment-note-list-dto";
 import {AuthenticationService} from "../auth/_services";
+import {UpdateConsignmentNoteDto} from "./dto/update-consignment-note-dto";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ConsignmentNoteService {
 
-  private baseApi: string = API_BASE_URL + '/companies';
-
   constructor(private http: HttpClient,
               private auth: AuthenticationService) {
   }
+
+  private baseApi: string = API_BASE_URL + '/companies';
 
   getConsignmentNotes(consignmentNoteFilter: ConsignmentNoteFilter, pageable: Pageable): Observable<Page<ConsignmentNoteListDto>> {
     var companyId = this.auth.getCompanyId();
@@ -45,6 +46,12 @@ export class ConsignmentNoteService {
     createConsignmentNoteDto.creatorId = this.auth.getUserId();
     const path: string = this.baseApi + '/' + companyId + '/consignment-notes';
     return this.http.post<ConsignmentNoteDto>(path, createConsignmentNoteDto);
+  }
+
+  updateConsignmentNote(updateConsignmentNoteDto: UpdateConsignmentNoteDto): Observable<ConsignmentNoteDto> {
+    var companyId = this.auth.getCompanyId();
+    const path: string = this.baseApi + '/' + companyId + '/consignment-notes';
+    return this.http.put<ConsignmentNoteDto>(path, updateConsignmentNoteDto);
   }
 
   setConsignmentNoteBeingProcessed(consignmentNoteId: number): Observable<number> {
