@@ -107,7 +107,8 @@
   </div>
   <button mat-button *ngIf="!showWriteOffButtons" (click)="backToList()">Back to List</button>
   <button class="updateButton" *ngIf="consignmentNote.consignmentNoteStatus == 'NOT_PROCESSED'"
-          mat-button (click)="update()">UPDATE</button>
+          mat-button (click)="update()">UPDATE
+  </button>
 </div>
 <div class="not-found" *ngIf="!consignmentNote">
   <button mat-button (click)="backToList()">Back to List</button>

@@ -37,7 +37,7 @@
 
   <div style="display: flex; justify-content: center; align-items: center">
     <table mat-table [dataSource]="consignmentNotes ? consignmentNotes.content : null"
-           [ngClass]="{'hoverable-table': disabled}">
+           [ngClass]="{'hoverable-table': active}">
 
       <ng-container matColumnDef="number">
         <th mat-header-cell *matHeaderCellDef>Number</th>

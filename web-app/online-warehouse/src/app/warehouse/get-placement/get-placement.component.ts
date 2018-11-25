@@ -131,6 +131,7 @@ export class GetPlacementComponent implements OnInit {
 
     let placementLoadDynamic: any[] = [[Date.now(), placementLoad]];
     this.placement.placementGoodsList.forEach((placementGoods) => {
+      placementLoadDynamic.push([new Date(placementGoods.expirationDate).getTime(), placementLoad]);
       placementLoadDynamic.push([new Date(placementGoods.expirationDate).getTime(), placementLoad -= placementGoods.amount])
     });
     placementLoadDynamic.sort((a, b) => {

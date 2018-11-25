@@ -1,9 +1,7 @@
 package by.itechart.web.controller;
 
-import by.itechart.writeoffact.dto.CreateWriteOffActDto;
-import by.itechart.writeoffact.dto.WriteOffActDto;
-import by.itechart.writeoffact.dto.WriteOffActFilter;
-import by.itechart.writeoffact.dto.WriteOffActListDto;
+import by.itechart.commoditylot.dto.CreateCommodityLotDto;
+import by.itechart.writeoffact.dto.*;
 import by.itechart.writeoffact.service.WriteOffActService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -36,5 +34,11 @@ public class WriteOffActController {
     @PostMapping
     public Long saveWriteOffAct(@PathVariable long companyId, @RequestBody CreateWriteOffActDto createWriteOffActDto) {
         return writeOffActService.saveWriteOffAct(createWriteOffActDto, companyId);
+    }
+
+    @PutMapping("/create-commodity-lot")
+    public Pair<Long, Long> saveWriteOffActAndCommodityLot(@PathVariable long companyId,
+                                                           @RequestBody Pair<CreateWriteOffActDto, CreateCommodityLotDto> writeOffActAndCommodityLot) {
+        return writeOffActService.saveWriteOffActAndCommodityLot(writeOffActAndCommodityLot, companyId);
     }
 }

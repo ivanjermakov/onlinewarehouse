@@ -1,7 +1,7 @@
 package by.itechart.consignmentnote.service;
 
-import by.itechart.consignmentnote.enums.ConsignmentNoteStatus;
 import by.itechart.consignmentnote.dto.*;
+import by.itechart.consignmentnote.enums.ConsignmentNoteStatus;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

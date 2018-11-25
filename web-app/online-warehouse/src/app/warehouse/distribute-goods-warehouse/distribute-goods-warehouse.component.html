@@ -43,14 +43,18 @@
           <div class="example-box" *ngFor="let item of commodityLot.commodityLotGoodsList; let i = index" cdkDrag>
             {{item.goods.name}},{{i}}
             <i>{{item.amount}}</i>
-            <button mat-icon-button [matMenuTriggerFor]="menu">
+            <button mat-icon-button [matMenuTriggerFor]="menu" #menuTrigger="matMenuTrigger">
               <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #menu="matMenu">
               <div mat-menu-item [disabled]="true"
                    style="display: flex">
-                <input matInput style="width: 40%" type="number" formControlName="{{i}}"/>
-                <button mat-button (click)="divide(item, i)" [matMenuTriggerFor]="menu">Divide</button>
+                <span style="font-size: 8px">
+                <mat-form-field>
+                  <input matInput style="width: 40%" type="number" formControlName="{{i}}"/>
+                </mat-form-field>
+                <button mat-button (click)="divide(item, i); menuTrigger.closeMenu()">Divide</button>
+                </span>
               </div>
             </mat-menu>
           </div>

@@ -74,7 +74,7 @@ export class WriteOffActListComponent implements OnInit {
 
   private loadWriteOffActs() {
     this.loadingSubject.next(true);
-    this.writeOffActService.getWriteOffActs(this.filter, this.pageable, this.auth.getCompanyId()).pipe(
+    this.writeOffActService.getWriteOffActs(this.filter, this.pageable).pipe(
       catchError(() => of([])),
       finalize(() => this.loadingSubject.next(false))
     )

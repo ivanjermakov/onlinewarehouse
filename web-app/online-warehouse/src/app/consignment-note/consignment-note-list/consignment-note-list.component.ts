@@ -2,14 +2,12 @@ import {Component, OnInit} from '@angular/core';
 import {Page} from "../../shared/pagination/page";
 import {Pageable} from "../../shared/pagination/pageable";
 import {ConsignmentNoteService} from "../consignment-note.service";
-import {ConsignmentNoteFilter} from "../dto/consignment-note-filter";
 import {ConsignmentNoteListDto} from "../dto/consignment-note-list-dto";
 import {BehaviorSubject} from "rxjs/index";
 import {MatDialog, PageEvent} from "@angular/material";
 import {Router} from "@angular/router";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {debounceTime, distinctUntilChanged, tap} from "rxjs/operators";
-import {Location} from "@angular/common";
 import {ConsignmentNoteStatus} from "../dto/enum/consignment-note-status.enum";
 import {ConsignmentNoteType} from "../dto/enum/consignment-note-type.enum";
 import {ConsignmentNoteDetailDialogComponent} from "./consignment-note-detail-dialog/consignment-note-detail-dialog.component";
@@ -77,6 +75,7 @@ export class ConsignmentNoteListComponent implements OnInit {
       this.router.navigateByUrl("app/consignment-notes/" + row.id);
     }
   }
+
 
   getTypes(): Array<string> {
     return Object.keys(ConsignmentNoteType);

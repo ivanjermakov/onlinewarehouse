@@ -165,7 +165,7 @@ export class DistributeGoodsWarehouseComponent implements OnInit {
     newCommodityLotGoods.amount = formValue;
     this.commodityLot.commodityLotGoodsList.splice(index, 0, newCommodityLotGoods);
     (this.goodsCount.controls['arr'] as FormArray)
-      .insert(index, this.fb.control([''], [Validators.max(formValue - 1), Validators.min(1)]))
+      .insert(index, this.fb.control([''], [Validators.max(formValue - 1), Validators.min(1)]));
   }
 
   dateEquals(d1: Date, d2: Date) {

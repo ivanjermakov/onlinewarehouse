@@ -7,6 +7,7 @@ import {CreateWriteOffActDialogComponent} from "../../../write-off-act/create-wr
 import {CommodityLotService} from "../../../commodity-lot/service/commodity-lot.service";
 import {ConsignmentNoteType} from "../../dto/enum/consignment-note-type.enum";
 import {ConsignmentNoteStatus} from "../../dto/enum/consignment-note-status.enum";
+import {WriteOffActService} from "../../../write-off-act/service/write-off-act.service";
 
 @Component({
   selector: 'app-consignment-note-detail',
@@ -28,7 +29,8 @@ export class ConsignmentNoteDetailComponent implements OnInit {
               private router: Router,
               private route: ActivatedRoute,
               private dialog: MatDialog,
-              private commodityLotService: CommodityLotService) {
+              private commodityLotService: CommodityLotService,
+              private writeOffActService: WriteOffActService) {
   }
 
   ngOnInit(): void {
@@ -68,9 +70,12 @@ export class ConsignmentNoteDetailComponent implements OnInit {
     dialogRef.afterClosed().subscribe((createWriteOffActDto) => {
         if (createWriteOffActDto) {
           console.log('test');
-          this.commodityLotService
-            .saveCommodityLotFromConsignmentNoteAndWriteOffAct(this.consignmentNote, createWriteOffActDto)
-            .subscribe();
+          this.writeOffActService
+            .saveWriteOffActAndCommodityLot(createWriteOffActDto,
+              this.commodityLotService.getCommodityLotFromConsignmentNoteAndWriteOffAct(this.consignmentNote, createWriteOffActDto))
+            .subscribe((pair) => {
+              console.log('writeOffActId:' + pair.value1, 'commodityLotId: ' + pair.value2)
+            });
         }
       }
     );

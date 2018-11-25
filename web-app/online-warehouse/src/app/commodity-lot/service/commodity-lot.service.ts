@@ -15,6 +15,7 @@ import {ConsignmentNoteDto} from "../../consignment-note/dto/consignment-note-dt
 import {CreateCommodityLotGoodsDto} from "../dto/create-commodity-lot-goods.dto";
 import {CommodityLotTypeEnum} from "../dto/enum/commodity-lot-type.enum";
 import {CreateWriteOffActDto} from "../../write-off-act/dto/create-write-off-act.dto";
+import {WriteOffActService} from "../../write-off-act/service/write-off-act.service";
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +26,8 @@ export class CommodityLotService {
   private baseApi: string = API_BASE_URL + '/companies/';
 
   constructor(private http: HttpClient,
-              private auth: AuthenticationService) {
+              private auth: AuthenticationService,
+              private writeOffActService: WriteOffActService) {
     this.companyId = auth.getCompanyId();
   }
 
@@ -57,21 +59,23 @@ export class CommodityLotService {
   }
 
   saveCommodityLotFromConsignmentNote(consignmentNote: ConsignmentNoteDto): Observable<number> {
+    return this.saveCommodityLot(this.getCommodityLotFromConsignmentNote(consignmentNote));
+  }
+
+  getCommodityLotFromConsignmentNote(consignmentNote: ConsignmentNoteDto): CreateCommodityLotDto {
     let commodityLotGoodsDtoArr = consignmentNote.consignmentNoteGoodsList.map((dto) => {
       return new CreateCommodityLotGoodsDto(
         dto.amount,
         dto.goods.id
       )
     });
-    let createCommodityLotDto: CreateCommodityLotDto = new CreateCommodityLotDto(
+    return new CreateCommodityLotDto(
       consignmentNote.counterparty.id,
       CommodityLotTypeEnum[consignmentNote.consignmentNoteType],
       commodityLotGoodsDtoArr);
-    return this.saveCommodityLot(createCommodityLotDto);
   }
 
-  saveCommodityLotFromConsignmentNoteAndWriteOffAct(consignmentNote: ConsignmentNoteDto, createWriteOffActDto: CreateWriteOffActDto): Observable<number> {
-    console.log(createWriteOffActDto);
+  getCommodityLotFromConsignmentNoteAndWriteOffAct(consignmentNote: ConsignmentNoteDto, createWriteOffActDto: CreateWriteOffActDto): CreateCommodityLotDto {
     createWriteOffActDto.writeOffActGoodsDtoList.forEach((writeOffActGoods) => {
       for (let i = 0; i < consignmentNote.consignmentNoteGoodsList.length; i++) {
         if (writeOffActGoods.goodsId === consignmentNote.consignmentNoteGoodsList[i].goods.id) {
@@ -80,7 +84,7 @@ export class CommodityLotService {
         }
       }
     });
-    return this.saveCommodityLotFromConsignmentNote(consignmentNote);
+    return this.getCommodityLotFromConsignmentNote(consignmentNote);
   }
 
 

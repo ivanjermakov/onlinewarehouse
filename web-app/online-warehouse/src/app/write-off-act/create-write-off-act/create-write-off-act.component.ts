@@ -90,13 +90,14 @@ export class CreateWriteOffActComponent implements OnInit {
     let createWriteOffActDto: CreateWriteOffActDto = new CreateWriteOffActDto(this.auth.getUserId(), null, null, null);
     Object.assign(createWriteOffActDto, value);
     console.log(createWriteOffActDto);
-    this.writeOffActService.saveWriteOffAct(this.auth.getCompanyId(), createWriteOffActDto).subscribe((long: number) => {
-      console.log(long)
-    });
-    this.clearFrom();
-    if (this.emitWhenSubmit) {
+    if (!this.emitWhenSubmit) {
+      this.writeOffActService.saveWriteOffAct(createWriteOffActDto).subscribe((long: number) => {
+        console.log(long)
+      });
+    } else {
       this.submitted.emit(createWriteOffActDto);
     }
+    this.clearFrom();
   }
 
   private clearFrom(): void {

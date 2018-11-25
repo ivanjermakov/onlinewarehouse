@@ -48,7 +48,7 @@ public class ConsignmentNoteController {
 
     @PutMapping
     public Long updateConsignmentNote(@PathVariable long companyId,
-                                    @RequestBody UpdateConsignmentNoteDto consignmentNote) {
+                                      @RequestBody UpdateConsignmentNoteDto consignmentNote) {
         System.out.println(consignmentNote);
         return consignmentNoteService.updateConsignmentNote(consignmentNote, companyId);
     }
