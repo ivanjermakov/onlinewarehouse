@@ -1,6 +1,7 @@
 package by.itechart.mail.service;
 
 import by.itechart.common.utils.ObjectMapperUtils;
+import by.itechart.company.repository.CompanyRepository;
 import by.itechart.mail.dto.BirthdayMailTemplateDto;
 import by.itechart.mail.entity.BirthdayMailTemplate;
 import by.itechart.mail.repository.MailTemplateRepository;
@@ -18,15 +19,22 @@ public class MailTemplateServiceImpl implements MailTemplateService {
 
     private BirthdayMailTemplate defaultBirthdayMailTemplate;
     private final MailTemplateRepository mailTemplateRepository;
+    private final CompanyRepository companyRepository;
 
     @Autowired
-    public MailTemplateServiceImpl(MailTemplateRepository mailTemplateRepository) {
+    public MailTemplateServiceImpl(MailTemplateRepository mailTemplateRepository, CompanyRepository companyRepository) {
         this.mailTemplateRepository = mailTemplateRepository;
+        this.companyRepository = companyRepository;
     }
 
     @Override
-    public void updateBirthdayMailTemplate(long companyId, BirthdayMailTemplateDto birthdayMailTemplateDto) {
-        saveOrUpdateTemplate(companyId, ObjectMapperUtils.map(birthdayMailTemplateDto, BirthdayMailTemplate.class));
+    public BirthdayMailTemplateDto updateBirthdayMailTemplate(long companyId, BirthdayMailTemplateDto birthdayMailTemplateDto) {
+//        TODO: check file presence
+        BirthdayMailTemplate birthdayMailTemplate = ObjectMapperUtils.map(birthdayMailTemplateDto, BirthdayMailTemplate.class);
+        birthdayMailTemplate.setCompany(companyRepository.getById(companyId));
+        return ObjectMapperUtils.map(
+                saveOrUpdateTemplate(companyId, birthdayMailTemplate), BirthdayMailTemplateDto.class
+        );
     }
 
     @Override
@@ -46,14 +54,17 @@ public class MailTemplateServiceImpl implements MailTemplateService {
     }
 
     @Override
-    public void saveOrUpdateTemplate(long companyId, BirthdayMailTemplate birthdayMailTemplate) {
+    public BirthdayMailTemplate saveOrUpdateTemplate(long companyId, BirthdayMailTemplate birthdayMailTemplate) {
         BirthdayMailTemplate existing = mailTemplateRepository.getTemplate(companyId);
-        if (existing == null) {
-            mailTemplateRepository.save(birthdayMailTemplate);
-        } else {
+        if (existing != null) {
             existing.setText(birthdayMailTemplate.getText());
             existing.setHeaderImagePath(birthdayMailTemplate.getHeaderImagePath());
             existing.setBackgroundColor(birthdayMailTemplate.getBackgroundColor());
+            mailTemplateRepository.save(existing);
+            return existing;
+        } else {
+            mailTemplateRepository.save(birthdayMailTemplate);
+            return birthdayMailTemplate;
         }
     }
 

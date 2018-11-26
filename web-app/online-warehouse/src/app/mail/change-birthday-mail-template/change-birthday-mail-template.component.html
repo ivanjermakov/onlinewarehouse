@@ -20,5 +20,9 @@
     <input id="fileToUpload" type="file"
            [formControl]="templateForm.controls['headerImagePath']"
            style="display:none;">
+    <div class="row">
+      <button mat-button (click)="loadBirthdayTemplate()">Отмена</button>
+      <button mat-button (click)="editBirthdayMailTemplate()">Изменить</button>
+    </div>
   </form>
 </div>
