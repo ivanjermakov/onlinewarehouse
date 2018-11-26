@@ -8,6 +8,7 @@ import by.itechart.mail.service.MailTemplateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -29,9 +30,9 @@ public class MailTemplateController {
     }
 
     @PutMapping("/birthday")
-    public void updateBirthdayMailTemplate(@PathVariable long companyId,
-                                           @RequestBody BirthdayMailTemplateDto birthdayMailTemplateDto) {
-        mailTemplateService.updateBirthdayMailTemplate(companyId, birthdayMailTemplateDto);
+    public BirthdayMailTemplateDto updateBirthdayMailTemplate(@PathVariable long companyId,
+                                                              @RequestBody BirthdayMailTemplateDto birthdayMailTemplateDto) throws IOException {
+        return mailTemplateService.updateBirthdayMailTemplate(companyId, birthdayMailTemplateDto);
     }
 
     @GetMapping("/not-celebrated")
