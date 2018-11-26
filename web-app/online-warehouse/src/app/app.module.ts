@@ -91,7 +91,7 @@ const routes: Routes = [
     RootComponent,
     MenuComponent,
     CreateCounterpartyComponent,
-    ChangeBirthdayMailTemplateComponent
+    ChangeBirthdayMailTemplateComponent,
     CreateCounterpartyComponent,
     RegisterComponent,
     GetCounterpartyComponent,
