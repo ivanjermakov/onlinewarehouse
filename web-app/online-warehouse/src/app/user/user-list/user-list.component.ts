@@ -5,7 +5,12 @@ import {UserDto} from "../dto/user.dto";
 import {Pageable} from "../../shared/pagination/pageable";
 import {UserService} from "../service/user.service";
 import {PageEvent} from "@angular/material";
-import {catchError, finalize} from "rxjs/operators";
+import {catchError, debounceTime, distinctUntilChanged, finalize, tap} from "rxjs/operators";
+import {FormBuilder, FormGroup} from "@angular/forms";
+import {ConsignmentNoteFilter} from "../../consignment-note/dto/consignment-note-filter";
+import {UserFilter} from "../dto/user-filter";
+import {ConsignmentNoteService} from "../../consignment-note/consignment-note.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-user-list',
@@ -19,18 +24,35 @@ export class UserListComponent implements OnInit {
   private displayedColumns = ["id", "username", "name", "address", "birth", "enabled", "authorities"];
   private loadingSubject = new BehaviorSubject<boolean>(false);
   loading$ = this.loadingSubject.asObservable();
-  private page: Page<UserDto>;
-
   private pageable: Pageable = new Pageable(0, 10);
   private pageSizeOptions: number[] = [10, 25, 50];
 
+  private page: Page<UserDto>;
+  private userFilterForm: FormGroup;
+  private userFilter: UserFilter = new UserFilter();
+
   private errors: any[];
 
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService,
+              private fb: FormBuilder) {
+    this.userFilterForm = fb.group({
+      "firstname": [''],
+      "lastname": ['']
+    });
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.loadUsers();
+    this.userFilterForm.valueChanges.pipe(debounceTime(500),
+      distinctUntilChanged(),
+      tap(() => {
+        this.page = null;
+        this.pageable.page = 0;
+        let value = this.userFilterForm.value;
+        Object.assign(this.userFilter, value);
+        this.loadUsers();
+      })
+    ).subscribe();
   }
 
   pageChanged(event: PageEvent) {
@@ -45,7 +67,7 @@ export class UserListComponent implements OnInit {
 
   loadUsers(): void {
     this.loadingSubject.next(true);
-    this.userService.getAllUsers(this.pageable, 2).pipe(
+    this.userService.getAllUsers(this.userFilter.toServerFilter(), this.pageable).pipe(
       catchError(() => of([])),
       finalize(() => this.loadingSubject.next(false))
     )

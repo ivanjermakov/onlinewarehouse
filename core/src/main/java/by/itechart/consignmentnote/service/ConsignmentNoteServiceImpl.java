@@ -2,10 +2,7 @@ package by.itechart.consignmentnote.service;
 
 import by.itechart.common.utils.ObjectMapperUtils;
 import by.itechart.company.entity.Company;
-import by.itechart.consignmentnote.dto.ConsignmentNoteDto;
-import by.itechart.consignmentnote.dto.ConsignmentNoteFilter;
-import by.itechart.consignmentnote.dto.ConsignmentNoteListDto;
-import by.itechart.consignmentnote.dto.CreateConsignmentNoteDto;
+import by.itechart.consignmentnote.dto.*;
 import by.itechart.consignmentnote.entity.ConsignmentNote;
 import by.itechart.consignmentnote.entity.ConsignmentNoteGoods;
 import by.itechart.consignmentnote.enums.ConsignmentNoteStatus;
@@ -57,12 +54,25 @@ public class ConsignmentNoteServiceImpl implements ConsignmentNoteService {
         consignmentNote.setId(null);
         consignmentNote.setRegistration(LocalDate.now());
         consignmentNote.setConsignmentNoteStatus(ConsignmentNoteStatus.NOT_PROCESSED);
-        // TODO driverId? creatorId
         Long id = consignmentNoteRepository.save(consignmentNote).getId();
         List<ConsignmentNoteGoods> consignmentNoteGoodsList = createConsignmentNoteDto.getConsignmentNoteGoodsList()
                 .stream().map(dto -> {
                     ConsignmentNoteGoods consignmentNoteGoods = ObjectMapperUtils.map(dto, ConsignmentNoteGoods.class);
-//                    consignmentNoteGoods.setId(null);
+                    consignmentNoteGoods.setConsignmentNote(new ConsignmentNote(id));
+                    return consignmentNoteGoods;
+                }).collect(Collectors.toList());
+        consignmentNoteGoodsRepository.saveAll(consignmentNoteGoodsList);
+        return id;
+    }
+
+    @Override
+    @Transactional
+    public Long updateConsignmentNote(UpdateConsignmentNoteDto consignmentNoteDto, long companyId) {
+        ConsignmentNote consignmentNote = ObjectMapperUtils.map(consignmentNoteDto, ConsignmentNote.class);
+        Long id = consignmentNoteRepository.save(consignmentNote).getId();
+        List<ConsignmentNoteGoods> consignmentNoteGoodsList = consignmentNoteDto.getConsignmentNoteGoodsList()
+                .stream().map(dto -> {
+                    ConsignmentNoteGoods consignmentNoteGoods = ObjectMapperUtils.map(dto, ConsignmentNoteGoods.class);
                     consignmentNoteGoods.setConsignmentNote(new ConsignmentNote(id));
                     return consignmentNoteGoods;
                 }).collect(Collectors.toList());

@@ -2,8 +2,6 @@ package by.itechart.warehouse.dto;
 
 import by.itechart.common.enums.MeasurementUnit;
 import by.itechart.common.enums.PlacementType;
-import by.itechart.warehouse.entity.PlacementGoods;
-import by.itechart.warehouse.entity.Warehouse;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;

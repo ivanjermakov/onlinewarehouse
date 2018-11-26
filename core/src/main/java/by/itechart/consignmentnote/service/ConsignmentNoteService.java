@@ -1,9 +1,6 @@
 package by.itechart.consignmentnote.service;
 
-import by.itechart.consignmentnote.dto.ConsignmentNoteDto;
-import by.itechart.consignmentnote.dto.ConsignmentNoteFilter;
-import by.itechart.consignmentnote.dto.ConsignmentNoteListDto;
-import by.itechart.consignmentnote.dto.CreateConsignmentNoteDto;
+import by.itechart.consignmentnote.dto.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -14,4 +11,6 @@ public interface ConsignmentNoteService {
     ConsignmentNoteDto getConsignmentNote(long companyId, long consignmentNoteId);
 
     Long saveConsignmentNote(CreateConsignmentNoteDto consignmentNote, long companyId);
+
+    Long updateConsignmentNote(UpdateConsignmentNoteDto consignmentNote, long companyId);
 }

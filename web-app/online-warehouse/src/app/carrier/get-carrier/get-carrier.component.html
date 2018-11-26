@@ -34,11 +34,11 @@
   </div>
 
   <div style="display: flex; justify-content: center; align-items: center">
-    <table mat-table [dataSource]="carrierDto ? carrierDto.driverInfo : null">
+    <table mat-table [dataSource]="carrierDto ? carrierDto.drivers : null">
 
       <ng-container matColumnDef="driverInfo">
         <th mat-header-cell *matHeaderCellDef>Driver info</th>
-        <td mat-cell *matCellDef="let driverInfo">{{driverInfo}}</td>
+        <td mat-cell *matCellDef="let drivers">{{drivers.info}}</td>
       </ng-container>
 
       <ng-container matColumnDef="seq">

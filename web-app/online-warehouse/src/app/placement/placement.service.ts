@@ -5,6 +5,7 @@ import {Pageable} from "../shared/pagination/pageable";
 import HttpParamsBuilder from "../shared/http/http-params-builder";
 import {Page} from "../shared/pagination/page";
 import {API_BASE_URL} from "../base-server-url";
+import {PlacementDto} from "./dto/placement-dto";
 
 @Injectable({
   providedIn: 'root'

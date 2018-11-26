@@ -1,18 +1,28 @@
-.parent {
-  width: 500px;
+td.mat-cell.border-right {
+  border-right: 1px solid rgba(0, 0, 0, .12);
+  border-bottom: 1px solid rgba(0, 0, 0, .12);
 }
 
-.row {
+.consignment-note-header {
+  margin-left: 30px;
+  font-family: 'Helvetica Neue', sans-serif;
+  font-size: 18pt;
+}
+
+.centre {
   display: flex;
-  margin-bottom: 10px;
+  justify-content: center;
+  align-items: center;
 }
 
-.label {
-  width: 30%;
-  font-weight: bold;
-}
-
-.value {
+.not-found {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 1em;
+}
+
+.updateButton {
+  background-color: #7d1616;
+  color: white;
 }

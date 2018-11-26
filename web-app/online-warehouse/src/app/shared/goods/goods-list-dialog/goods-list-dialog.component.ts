@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {GoodsDto} from "../goods.dto";
+import {GoodsDto} from "../dto/goods.dto";
 import {MatDialogRef} from "@angular/material";
 
 @Component({

@@ -8,6 +8,9 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -17,10 +20,12 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Entity
 @Table(name = "driver")
+@Document(indexName = "warehouse", type = "driver")
 public class Driver extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "carrier_id")
+    @Field(type = FieldType.Nested, includeInParent = true)
     private Carrier carrier;
 
     @Column(name = "info")

@@ -8,7 +8,7 @@
       <button mat-button matStepperNext>Next</button>
     </div>
   </mat-step>
-  <mat-step [stepControl]="createCounterpartyForm.controls['counterpartyType']">
+  <mat-step [stepControl]="createCounterpartyForm.controls['counterpartyType']" *ngIf="!counterpartyTypeInput">
     <ng-template matStepLabel>Choose counterparty type</ng-template>
     <mat-form-field>
       <mat-select [formControl]="createCounterpartyForm.controls['counterpartyType']"

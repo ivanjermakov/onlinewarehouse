@@ -1,0 +1,65 @@
+<mat-horizontal-stepper linear #stepper>
+  <mat-step [stepControl]="createCarrierForm.controls['name']">
+    <ng-template matStepLabel>Fill carrier name</ng-template>
+    <mat-form-field>
+      <input matInput placeholder="Carrier name" [formControl]="createCarrierForm.controls['name']" required>
+    </mat-form-field>
+      <mat-checkbox [formControl]="createCarrierForm.controls['trusted']"
+        [color]="'primary'">Trusted</mat-checkbox>
+    <div>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
+  <mat-step [stepControl]="createCarrierForm.controls['carrierType']">
+    <ng-template matStepLabel>Choose carrier type</ng-template>
+    <br>
+      <mat-radio-group [formControl]="createCarrierForm.controls['carrierType']" [required]="true">
+        <mat-radio-button [value]="carrierTypeEnum.AUTOMOBILE"><mat-icon>local_shipping</mat-icon></mat-radio-button>
+        <mat-radio-button [value]="carrierTypeEnum.AVIATION"><mat-icon>flight</mat-icon></mat-radio-button>
+        <mat-radio-button [value]="carrierTypeEnum.RAILWAY"><mat-icon>train</mat-icon></mat-radio-button>
+        <mat-radio-button [value]="carrierTypeEnum.WATERWAY"><mat-icon>directions_boat</mat-icon></mat-radio-button>
+      </mat-radio-group>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
+  <mat-step [stepControl]="createCarrierForm.controls['taxNumber']">
+    <ng-template matStepLabel>Fill tax number</ng-template>
+    <mat-form-field>
+      <input matInput placeholder="Tax number" [formControl]="createCarrierForm.controls['taxNumber']" required>
+    </mat-form-field>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
+  <mat-step [stepControl]="createCarrierForm.controls['address']">
+    <ng-template matStepLabel>Fill address</ng-template>
+    <mat-form-field>
+      <input matInput placeholder="Country"
+             [formControl]="createCarrierForm.controls['address'].controls['country']" required>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Region" [formControl]="createCarrierForm.controls['address'].controls['region']"
+             required>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Locality"
+             [formControl]="createCarrierForm.controls['address'].controls['locality']" required>
+    </mat-form-field>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Done</ng-template>
+    <!--<p>Company name: {{createCounterpartyForm.controls['name'].value}}</p>-->
+    <!--<p>Company plan: {{createCounterpartyForm.controls['sizeType'].value}}</p>-->
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button (click)="onSubmit(createCarrierForm); stepper.reset()">Submit</button>
+    </div>
+  </mat-step>
+</mat-horizontal-stepper>

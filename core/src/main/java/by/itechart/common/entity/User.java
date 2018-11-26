@@ -87,5 +87,9 @@ public class User extends BaseEntity {
             inverseJoinColumns = {@JoinColumn(name = "authority_id", referencedColumnName = "id")})
     private List<Authority> authorities;
 
+    public void addAuthority(Authority authority) {
+        this.authorities.add(authority);
+    }
+
 
 }

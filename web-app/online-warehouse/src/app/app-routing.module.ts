@@ -20,6 +20,7 @@ import {CounterpartyListViewComponent} from "./counterparty/counterparty-list-vi
 import {UserListViewComponent} from "./user/user-list-view/user-list-view.component";
 import {CreateCounterpartyComponent} from "./counterparty/create-counterparty/create-counterparty.component";
 import {ChangeBirthdayMailTemplateComponent} from './mail/change-birthday-mail-template/change-birthday-mail-template.component';
+import {RegisterComponent} from "./auth/registration/register.component";
 
 export const routes: Routes = [
   {path: 'list-users', component: UserListViewComponent, canActivate: [AuthGuard]},
@@ -44,6 +45,8 @@ export const routes: Routes = [
   {path: 'consignment-notes/:id', component: ConsignmentNoteDetailComponent, canActivate: [AuthGuard]},
   {path: 'create-counterparty', component: CreateCounterpartyComponent, canActivate: [AuthGuard]},
   {path: 'change-birthday-mail-template', component: ChangeBirthdayMailTemplateComponent, canActivate: [AuthGuard]},
+  {path: 'register', component: RegisterComponent, canActivate: [AuthGuard]}
+
   // { path: 'heroes', component:  }
 ];
 

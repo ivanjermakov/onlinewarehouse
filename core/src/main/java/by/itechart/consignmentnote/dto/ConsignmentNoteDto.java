@@ -1,6 +1,7 @@
 package by.itechart.consignmentnote.dto;
 
 import by.itechart.carrier.dto.CarrierDto;
+import by.itechart.carrier.dto.DriverDto;
 import by.itechart.common.entity.User;
 import by.itechart.company.dto.CompanyDto;
 import by.itechart.consignmentnote.enums.ConsignmentNoteStatus;
@@ -25,6 +26,7 @@ public class ConsignmentNoteDto {
     private LocalDate shipment;
     private CounterpartyDto counterparty;
     private CarrierDto carrier;
+    private DriverDto driver;
     private String vehicleNumber;
     private User creator;
     @JsonSerialize(using = LocalDateSerializer.class)
