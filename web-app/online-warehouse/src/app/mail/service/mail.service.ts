@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {API_BASE_URL} from '../../base-server-url';
 import {HttpClient} from '@angular/common/http';
-import {Observable, Subscription} from 'rxjs';
+import {Observable} from 'rxjs';
 import {BirthdayMailTemplateDto} from '../dto/BirthdayMailTemplateDto';
 import {UploadService} from '../../upload/service/upload.service';
 

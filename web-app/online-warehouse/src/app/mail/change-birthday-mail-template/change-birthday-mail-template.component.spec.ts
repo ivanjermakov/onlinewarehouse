@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { ChangeBirthdayMailTemplateComponent } from './change-birthday-mail-template.component';
+import {ChangeBirthdayMailTemplateComponent} from './change-birthday-mail-template.component';
 
 describe('ChangeBirthdayMailTemplateComponent', () => {
   let component: ChangeBirthdayMailTemplateComponent;
@@ -8,9 +8,9 @@ describe('ChangeBirthdayMailTemplateComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ChangeBirthdayMailTemplateComponent ]
+      declarations: [ChangeBirthdayMailTemplateComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

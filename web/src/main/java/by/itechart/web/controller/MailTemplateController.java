@@ -31,7 +31,7 @@ public class MailTemplateController {
 
     @PutMapping("/birthday")
     public BirthdayMailTemplateDto updateBirthdayMailTemplate(@PathVariable long companyId,
-                                           @RequestBody BirthdayMailTemplateDto birthdayMailTemplateDto) throws IOException {
+                                                              @RequestBody BirthdayMailTemplateDto birthdayMailTemplateDto) throws IOException {
         return mailTemplateService.updateBirthdayMailTemplate(companyId, birthdayMailTemplateDto);
     }
 

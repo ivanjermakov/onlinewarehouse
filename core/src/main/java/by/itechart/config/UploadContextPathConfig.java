@@ -20,5 +20,4 @@ public class UploadContextPathConfig implements WebMvcConfigurer {
                 .addResourceHandler("/" + webResources + "**")
                 .addResourceLocations("file:/" + uploadPlaceholder);
     }
-
 }
