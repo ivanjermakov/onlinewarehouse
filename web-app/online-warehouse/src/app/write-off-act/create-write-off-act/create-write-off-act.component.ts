@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {WriteOffActTypeEnum} from "../dto/enum/write-off-act-type.enum";
 import {WriteOffActService} from "../service/write-off-act.service";
@@ -15,6 +15,11 @@ import {AuthenticationService} from "../../auth/_services";
   styleUrls: ['./create-write-off-act.component.css']
 })
 export class CreateWriteOffActComponent implements OnInit {
+
+  @Input() emitWhenSubmit: boolean = false;
+  @Input() inputGoods: GoodsDto[];
+
+  @Output() submitted: EventEmitter<CreateWriteOffActDto> = new EventEmitter<CreateWriteOffActDto>();
 
   goodsDtoList: Array<GoodsDto> = [];
   createWriteOffActForm: FormGroup;
@@ -69,7 +74,9 @@ export class CreateWriteOffActComponent implements OnInit {
 
     dialogConfig.disableClose = false;
     dialogConfig.autoFocus = true;
-
+    if (this.inputGoods) {
+      dialogConfig.data = {inputGoods: this.inputGoods};
+    }
     const dialogRef = this.dialog.open(GoodsListDialogComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(
@@ -86,9 +93,13 @@ export class CreateWriteOffActComponent implements OnInit {
     let createWriteOffActDto: CreateWriteOffActDto = new CreateWriteOffActDto(this.auth.getUserId(), null, null, null);
     Object.assign(createWriteOffActDto, value);
     console.log(createWriteOffActDto);
-    this.writeOffActService.saveWriteOffAct(this.auth.getCompanyId(), createWriteOffActDto).subscribe((long: number) => {
-      console.log(long)
-    });
+    if (!this.emitWhenSubmit) {
+      this.writeOffActService.saveWriteOffAct(createWriteOffActDto).subscribe((long: number) => {
+        console.log(long)
+      });
+    } else {
+      this.submitted.emit(createWriteOffActDto);
+    }
     this.clearFrom();
   }
 

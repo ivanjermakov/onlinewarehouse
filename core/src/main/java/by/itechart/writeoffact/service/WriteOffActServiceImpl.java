@@ -1,5 +1,8 @@
 package by.itechart.writeoffact.service;
 
+import by.itechart.commoditylot.dto.CreateCommodityLotDto;
+import by.itechart.commoditylot.service.CommodityLotService;
+import by.itechart.common.dto.Pair;
 import by.itechart.common.service.GoodsService;
 import by.itechart.common.utils.ObjectMapperUtils;
 import by.itechart.company.entity.Company;
@@ -28,12 +31,14 @@ public class WriteOffActServiceImpl implements WriteOffActService {
     private final WriteOffActRepository writeOffActRepository;
     private final WriteOffActGoodsRepository writeOffActGoodsRepository;
     private final GoodsService goodsService;
+    private final CommodityLotService commodityLotService;
 
     @Autowired
-    public WriteOffActServiceImpl(WriteOffActRepository writeOffActRepository, WriteOffActGoodsRepository writeOffActGoodsRepository, GoodsService goodsService) {
+    public WriteOffActServiceImpl(WriteOffActRepository writeOffActRepository, WriteOffActGoodsRepository writeOffActGoodsRepository, GoodsService goodsService, CommodityLotService commodityLotService) {
         this.writeOffActRepository = writeOffActRepository;
         this.writeOffActGoodsRepository = writeOffActGoodsRepository;
         this.goodsService = goodsService;
+        this.commodityLotService = commodityLotService;
     }
 
     @Transactional(readOnly = true)
@@ -73,5 +78,14 @@ public class WriteOffActServiceImpl implements WriteOffActService {
     public WriteOffActDto getWriteOffAct(Long writeOffActId) {
         WriteOffAct writeOffAct = writeOffActRepository.getOne(writeOffActId);
         return ObjectMapperUtils.map(writeOffAct, WriteOffActDto.class);
+    }
+
+    @Transactional
+    @Override
+    public Pair<Long, Long> saveWriteOffActAndCommodityLot(Pair<CreateWriteOffActDto, CreateCommodityLotDto> writeOffActAndCommodityLot,
+                                                           Long companyId) {
+        Long writeOffActId = saveWriteOffAct(writeOffActAndCommodityLot.getValue1(), companyId);
+        Long commodityLotId = commodityLotService.saveCommodityLot(writeOffActAndCommodityLot.getValue2(), companyId);
+        return new Pair<>(writeOffActId, commodityLotId);
     }
 }

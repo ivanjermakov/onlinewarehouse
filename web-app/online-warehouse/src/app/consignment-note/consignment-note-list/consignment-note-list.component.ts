@@ -2,16 +2,15 @@ import {Component, OnInit} from '@angular/core';
 import {Page} from "../../shared/pagination/page";
 import {Pageable} from "../../shared/pagination/pageable";
 import {ConsignmentNoteService} from "../consignment-note.service";
-import {ConsignmentNoteFilter} from "../dto/consignment-note-filter";
 import {ConsignmentNoteListDto} from "../dto/consignment-note-list-dto";
 import {BehaviorSubject} from "rxjs/index";
-import {PageEvent} from "@angular/material";
+import {MatDialog, PageEvent} from "@angular/material";
 import {Router} from "@angular/router";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {debounceTime, distinctUntilChanged, tap} from "rxjs/operators";
-import {Location} from "@angular/common";
 import {ConsignmentNoteStatus} from "../dto/enum/consignment-note-status.enum";
 import {ConsignmentNoteType} from "../dto/enum/consignment-note-type.enum";
+import {ConsignmentNoteDetailDialogComponent} from "./consignment-note-detail-dialog/consignment-note-detail-dialog.component";
 
 @Component({
   selector: 'app-consignment-note-list',
@@ -35,7 +34,8 @@ export class ConsignmentNoteListComponent implements OnInit {
 
   constructor(private consignmentNoteService: ConsignmentNoteService,
               private router: Router,
-              private fb: FormBuilder) {
+              private fb: FormBuilder,
+              private dialog: MatDialog) {
     this.consignmentNoteFilterForm = fb.group({
       "consignmentNoteType": [''],
       "consignmentNoteStatus": [''],
@@ -45,8 +45,9 @@ export class ConsignmentNoteListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if(this.router.url === '/app/registered-consignment-notes') {
+    if (this.router.url === '/app/registered-consignment-notes') {
       this.consignmentNoteFilterForm.patchValue({'consignmentNoteStatus': 'NOT_PROCESSED'});
+      this.displayedColumns.push('consignment Process');
       this.active = false;
     }
     this.getConsignmentNotes();
@@ -61,11 +62,20 @@ export class ConsignmentNoteListComponent implements OnInit {
   }
 
   getConsignmentNotes(): void {
-    this.consignmentNoteService.getConsignmentNotes(this.consignmentNoteFilterForm.value, this.pageable.toServerPageable())
+    this.consignmentNoteService.getConsignmentNotes(this.consignmentNoteFilterForm.value, this.pageable)
       .subscribe((consignmentNotes) =>
           this.consignmentNotes = consignmentNotes,
         error => this.errors = error);
   }
+
+  onRowClicked(row: ConsignmentNoteListDto) {
+    if (!this.active) {
+      this.openModal(row);
+    } else {
+      this.router.navigateByUrl("app/consignment-notes/" + row.id);
+    }
+  }
+
 
   getTypes(): Array<string> {
     return Object.keys(ConsignmentNoteType);
@@ -75,12 +85,22 @@ export class ConsignmentNoteListComponent implements OnInit {
     return Object.keys(ConsignmentNoteStatus);
   }
 
-  onRowClicked(row) {
-    this.router.navigateByUrl("app/consignment-notes/" + row.id);
+  openModal(row: ConsignmentNoteListDto): void {
+    this.consignmentNoteService.getConsignmentNote(row.id).subscribe((consignmentNoteDto) => {
+      const dialogRef = this.dialog.open(ConsignmentNoteDetailDialogComponent, {
+        disableClose: false,
+        autoFocus: true,
+        data: {
+          showWriteOffButtons: true,
+          consignmentNoteDto: consignmentNoteDto
+        }
+      });
+    });
   }
 
   pageChanged(event: PageEvent) {
     this.consignmentNotes = null;
+    console.log(event);
     this.pageable = new Pageable(event.pageIndex, event.pageSize);
     this.getConsignmentNotes();
   }

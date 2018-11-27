@@ -1,0 +1,19 @@
+mat-expansion-panel.mat-expansion-panel {
+  margin: 10px 15px 10px 15px;
+}
+
+.sub-title{
+  color: rgba(0,0,0,.54);
+  font-size: 14px;
+  font-family: Roboto,"Helvetica Neue",sans-serif;
+}
+
+.view-toggle-container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.view-toggle {
+  margin: 20px;
+}

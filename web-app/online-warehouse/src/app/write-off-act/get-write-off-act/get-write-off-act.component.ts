@@ -44,7 +44,7 @@ export class GetWriteOffActComponent implements OnInit {
 
   getWriteOffAct() {
     this.loadingSubject.next(true);
-    this.writeOffActService.getWriteOffAct(2, this.writeOffActId).pipe(
+    this.writeOffActService.getWriteOffAct(this.writeOffActId).pipe(
       catchError(() => of([])),
       finalize(() => this.loadingSubject.next(false))
     )

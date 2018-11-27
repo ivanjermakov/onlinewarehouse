@@ -33,11 +33,13 @@ public class User extends BaseEntity {
     @Size(min = 4, max = 100)
     private String password;
 
+    //    TODO: should be firstName
     @Column(name = "first_name", length = 50)
     @NotNull
     @Size(min = 4, max = 50)
     private String firstname;
 
+    //    TODO: should be lastName
     @Column(name = "last_name", length = 50)
     @NotNull
     @Size(min = 4, max = 50)

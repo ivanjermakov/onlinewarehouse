@@ -10,6 +10,8 @@ import {WriteOffActDto} from "../dto/write-off-act.dto";
 import HttpParamsBuilder from "../../shared/http/http-params-builder";
 import {Page} from "../../shared/pagination/page";
 import {Pageable} from "../../shared/pagination/pageable";
+import {AuthenticationService} from "../../auth/_services";
+import {CreateCommodityLotDto} from "../../commodity-lot/dto/create-commodity-lot.dto";
 
 @Injectable({
   providedIn: 'root'
@@ -18,13 +20,16 @@ import {Pageable} from "../../shared/pagination/pageable";
 
 export class WriteOffActService {
 
+  readonly companyId: number;
   private baseApi: string = API_BASE_URL + '/companies';
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+              private auth: AuthenticationService) {
+    this.companyId = auth.getCompanyId();
   }
 
-  getWriteOffActs(filter: WriteOffActFilter, pageable: Pageable, companyId: number): Observable<Page<WriteOffActListDto>> {
-    const path: string = this.baseApi + '/' + companyId + '/write-off-acts';
+  getWriteOffActs(filter: WriteOffActFilter, pageable: Pageable): Observable<Page<WriteOffActListDto>> {
+    const path: string = this.baseApi + '/' + this.companyId + '/write-off-acts';
     let paramsBuilder = new HttpParamsBuilder();
     pageable.toUrlParameters(paramsBuilder);
     if (filter) {
@@ -33,15 +38,21 @@ export class WriteOffActService {
     return this.http.get<Page<WriteOffActListDto>>(path, {params: paramsBuilder.getHttpParams()});
   }
 
-  saveWriteOffAct(companyId: number, createWriteOffActDto: CreateWriteOffActDto): Observable<number> {
-    const path: string = this.baseApi + '/' + companyId + '/write-off-acts';
+  saveWriteOffAct(createWriteOffActDto: CreateWriteOffActDto): Observable<number> {
+    const path: string = this.baseApi + '/' + this.companyId + '/write-off-acts';
     return this.http.post(path, createWriteOffActDto).pipe(
       map((data: number) => data)
     );
   }
 
-  getWriteOffAct(companyId: number, writeOffActId: number): Observable<WriteOffActDto> {
-    const path: string = this.baseApi + '/' + companyId + '/write-off-acts/' + writeOffActId;
+  saveWriteOffActAndCommodityLot(createWriteOffActDto: CreateWriteOffActDto, createCommodityLotDto: CreateCommodityLotDto): Observable<any> {
+    const path: string = this.baseApi + '/' + this.companyId + '/write-off-acts/create-commodity-lot';
+    let pair = {value1: createWriteOffActDto, value2: createCommodityLotDto};
+    return this.http.put<any>(path, pair);
+  }
+
+  getWriteOffAct(writeOffActId: number): Observable<WriteOffActDto> {
+    const path: string = this.baseApi + '/' + this.companyId + '/write-off-acts/' + writeOffActId;
     return this.http.get<WriteOffActDto>(path);
   }
 }

@@ -1,7 +1,9 @@
-import {PlacementGoodsDto} from "../../placement/dto/placement-goods.dto";
+import {AddressDto} from "../../shared/address/dto/address.dto";
+import {PlacementDto} from "./placement.dto";
 
 export class WarehouseDto {
   id: number;
   name: string;
-  placements: Array<PlacementGoodsDto>;
+  address: AddressDto;
+  placements: Array<PlacementDto>;
 }

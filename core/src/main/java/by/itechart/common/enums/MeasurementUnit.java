@@ -1,5 +1,5 @@
 package by.itechart.common.enums;
 
 public enum MeasurementUnit {
-    TEST
+    NBB, LEF, CLF, NAR, HBX, SET, NPR, TPR, NPL, NMP, CNP, PCE, CEN, MIL
 }

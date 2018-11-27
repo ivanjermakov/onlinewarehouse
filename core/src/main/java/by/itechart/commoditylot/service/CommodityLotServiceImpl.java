@@ -6,6 +6,7 @@ import by.itechart.commoditylot.dto.CommodityLotListDto;
 import by.itechart.commoditylot.dto.CreateCommodityLotDto;
 import by.itechart.commoditylot.entity.CommodityLot;
 import by.itechart.commoditylot.entity.CommodityLotGoods;
+import by.itechart.commoditylot.enums.CommodityLotStatus;
 import by.itechart.commoditylot.repository.CommodityLotGoodsRepository;
 import by.itechart.commoditylot.repository.CommodityLotRepository;
 import by.itechart.common.utils.ObjectMapperUtils;
@@ -47,6 +48,7 @@ public class CommodityLotServiceImpl implements CommodityLotService {
         commodityLot.setId(null);
         commodityLot.setCompany(new Company(companyId));
         commodityLot.setCreation(LocalDate.now());
+        commodityLot.setCommodityLotStatus(CommodityLotStatus.NOT_PROCESSED);
         Long commodityLotId = commodityLotRepository.save(commodityLot).getId();
         List<CommodityLotGoods> commodityLotGoods =
                 ObjectMapperUtils.mapAll(createCommodityLotDto.getCreateCommodityLotGoodsDtoList(), CommodityLotGoods.class);
@@ -63,5 +65,12 @@ public class CommodityLotServiceImpl implements CommodityLotService {
     public CommodityLotDto getCommodityLot(Long commodityLotId, Long companyId) {
         CommodityLot commodityLot = commodityLotRepository.getOne(commodityLotId);
         return ObjectMapperUtils.map(commodityLot, CommodityLotDto.class);
+    }
+
+    @Transactional
+    @Override
+    public Long setCommodityLotStatus(long commodityLotId, long companyId, CommodityLotStatus status) {
+        commodityLotRepository.changeCommodityLotStatus(commodityLotId, companyId, status);
+        return commodityLotId;
     }
 }

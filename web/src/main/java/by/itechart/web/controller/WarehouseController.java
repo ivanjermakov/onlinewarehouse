@@ -1,5 +1,7 @@
 package by.itechart.web.controller;
 
+import by.itechart.common.dto.Pair;
+import by.itechart.consignmentnote.dto.CreateConsignmentNoteDto;
 import by.itechart.warehouse.dto.CreateWarehouseDto;
 import by.itechart.warehouse.dto.WarehouseDto;
 import by.itechart.warehouse.service.WarehouseService;
@@ -38,8 +40,14 @@ public class WarehouseController {
 
     @PutMapping("/{warehouseId}")
     public Long editWarehouse(@PathVariable long companyId, @PathVariable long warehouseId,
-                              @RequestBody CreateWarehouseDto warehouse) {
-        return warehouseService.editWarehouse(warehouse, companyId, warehouseId);
+                              @RequestBody WarehouseDto warehouseDto) {
+        return warehouseService.editWarehouse(warehouseDto, companyId, warehouseId);
+    }
+
+    @PostMapping("/{warehouseId}/create-consignment-note")
+    public Long editWarehouseWithConsignmentNote(@PathVariable long companyId, @PathVariable long warehouseId,
+                                                 @RequestBody Pair<WarehouseDto, CreateConsignmentNoteDto> warehouseDtoAndCreateConsignmentNoteDto) {
+        return warehouseService.editWarehouseWithConsignmentNote(warehouseDtoAndCreateConsignmentNoteDto, companyId, warehouseId);
     }
 
     @DeleteMapping("/{warehouseId}")

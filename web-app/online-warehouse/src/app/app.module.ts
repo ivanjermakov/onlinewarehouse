@@ -8,7 +8,6 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {AppRoutingModule, routes as appRoutes} from './app-routing.module';
 import {HomeComponent} from './home/home.component';
-import {PlacementComponent} from './placement/placement.component';
 import {CompanyListComponent} from './company/company-list/company-list.component';
 import {CreateCompanyComponent} from './company/create-company/create-company.component';
 import {GoodsListComponent} from "./shared/goods/goods-list/goods-list.component";
@@ -42,6 +41,8 @@ import {RouterModule, Routes} from "@angular/router";
 import {RootComponent} from './root/root.component';
 import {MenuComponent} from './menu/menu.component';
 import {CreateCounterpartyComponent} from './counterparty/create-counterparty/create-counterparty.component';
+import {ChangeBirthdayMailTemplateComponent} from './mail/change-birthday-mail-template/change-birthday-mail-template.component';
+
 import {RegisterComponent} from "./auth/registration/register.component";
 import {GetCounterpartyComponent} from './counterparty/get-counterparty/get-counterparty.component';
 import {CreateCounterpartyDialogComponent} from './counterparty/create-counterparty-dialog/create-counterparty-dialog.component';
@@ -49,7 +50,17 @@ import {CreateCarrierComponent} from './carrier/create-carrier/create-carrier.co
 import {CreateCarrierDialogComponent} from './carrier/create-carrier-dialog/create-carrier-dialog.component';
 import {DriverListDialogComponent} from "./carrier/driver/driver-list-dialog/driver-list-dialog.component";
 import {DriverListComponent} from "./carrier/driver/driver-list/driver-list.component";
-import {ChartsModule} from "ng2-charts";
+import {WarehouseListComponent} from './warehouse/warehouse-list/warehouse-list.component';
+import {CreateWarehouseComponent} from './warehouse/create-warehouse/create-warehouse.component';
+import {GetPlacementComponent} from './warehouse/get-placement/get-placement.component';
+import {HighchartsChartModule} from "highcharts-angular";
+import {DistributeGoodsWarehouseComponent} from './warehouse/distribute-goods-warehouse/distribute-goods-warehouse.component';
+import {DistributeGoodsWarehouseDialogComponent} from './warehouse/distribute-goods-warehouse-dialog/distribute-goods-warehouse-dialog.component';
+import {ConsignmentNoteDetailDialogComponent} from './consignment-note/consignment-note-list/consignment-note-detail-dialog/consignment-note-detail-dialog.component';
+import {CreateWriteOffActDialogComponent} from './write-off-act/create-write-off-act-dialog/create-write-off-act-dialog.component';
+import {CreatePlacementComponent} from './warehouse/create-placement/create-placement.component';
+import {RegisterConsignmentNoteDialogComponent} from './consignment-note/register-consignment-note-dialog/register-consignment-note-dialog.component';
+import {CollectGoodsWarehouseComponent} from './warehouse/collect-goods-warehouse/collect-goods-warehouse.component';
 
 const routes: Routes = [
   {path: 'app', component: AppComponent, canActivate: [AuthGuard], children: appRoutes},
@@ -61,7 +72,6 @@ const routes: Routes = [
   declarations: [
     AppComponent,
     HomeComponent,
-    PlacementComponent,
     CompanyListComponent,
     CreateCompanyComponent,
     GoodsListComponent,
@@ -90,13 +100,26 @@ const routes: Routes = [
     RootComponent,
     MenuComponent,
     CreateCounterpartyComponent,
+    ChangeBirthdayMailTemplateComponent,
+    CreateCounterpartyComponent,
     RegisterComponent,
     GetCounterpartyComponent,
     CreateCounterpartyDialogComponent,
     CreateCarrierComponent,
     CreateCarrierDialogComponent,
     DriverListComponent,
-    DriverListDialogComponent
+    DriverListDialogComponent,
+    CreateCarrierDialogComponent,
+    WarehouseListComponent,
+    CreateWarehouseComponent,
+    GetPlacementComponent,
+    DistributeGoodsWarehouseComponent,
+    DistributeGoodsWarehouseDialogComponent,
+    ConsignmentNoteDetailDialogComponent,
+    CreateWriteOffActDialogComponent,
+    CreatePlacementComponent,
+    RegisterConsignmentNoteDialogComponent,
+    CollectGoodsWarehouseComponent
   ],
   imports: [
     BrowserModule,
@@ -108,7 +131,7 @@ const routes: Routes = [
     BrowserAnimationsModule,
     MaterialModule,
     MatNativeDateModule,
-    ChartsModule
+    HighchartsChartModule
   ],
   bootstrap: [RootComponent],
   entryComponents: [
@@ -117,7 +140,11 @@ const routes: Routes = [
     CounterpartyListDialogComponent,
     CreateCounterpartyDialogComponent,
     CreateCarrierDialogComponent,
-    DriverListDialogComponent
+    DriverListDialogComponent,
+    DistributeGoodsWarehouseDialogComponent,
+    ConsignmentNoteDetailDialogComponent,
+    CreateWriteOffActDialogComponent,
+    RegisterConsignmentNoteDialogComponent
   ],
   providers: [
     AuthGuard,

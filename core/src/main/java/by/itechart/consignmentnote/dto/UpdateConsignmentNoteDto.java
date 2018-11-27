@@ -2,7 +2,6 @@ package by.itechart.consignmentnote.dto;
 
 import by.itechart.carrier.dto.CarrierDto;
 import by.itechart.carrier.dto.DriverDto;
-import by.itechart.common.dto.UserDto;
 import by.itechart.company.dto.CompanyDto;
 import by.itechart.consignmentnote.enums.ConsignmentNoteStatus;
 import by.itechart.consignmentnote.enums.ConsignmentNoteType;

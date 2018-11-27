@@ -10,7 +10,7 @@
     </div>
   </mat-step>
 
-  <mat-step [stepControl]="consignmentNoteForm.controls['shipment']">
+  <mat-step [stepControl]="consignmentNoteForm.controls['shipment']" *ngIf="inputConsignmentNoteType !== cnType.OUT">
     <ng-template matStepLabel>Shipment</ng-template>
     <mat-form-field appearance="outline">
       <input matInput [formControl]="consignmentNoteForm.controls['shipment']"
@@ -119,45 +119,55 @@
 
   <mat-step [stepControl]="consignmentNoteForm.controls['consignmentNoteGoodsList']">
     <ng-template matStepLabel>Add goods</ng-template>
-    <table *ngIf="goodsDtoList.length > 0" formArrayName="consignmentNoteGoodsList" class="mat-table">
-      <thead>
-      <tr class="mat-header-row">
-        <th class="mat-header-cell">Name</th>
-        <th class="mat-header-cell">Placement type</th>
-        <th class="mat-header-cell">Measurement Unit</th>
-        <th class="mat-header-cell">Cost</th>
-        <th class="mat-header-cell">Amount</th>
-        <th class="mat-header-cell"></th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let goods of goodsDtoList; let i = index">
-        <td class="mat-cell">{{goods.name}}</td>
-        <td class="mat-cell">{{goods.placementType}}</td>
-        <td class="mat-cell">{{goods.measurementUnit}}</td>
-        <td class="mat-cell">{{goods.cost}}</td>
-        <ng-container formGroupName="{{i}}">
-          <input type="hidden" formControlName="goods">
+    <div *ngIf="!inputWarehouseId">
+      <table *ngIf="goodsDtoList.length > 0" formArrayName="consignmentNoteGoodsList" class="mat-table">
+        <thead>
+        <tr class="mat-header-row">
+          <th class="mat-header-cell">Name</th>
+          <th class="mat-header-cell">Placement type</th>
+          <th class="mat-header-cell">Measurement Unit</th>
+          <th class="mat-header-cell">Cost</th>
+          <th class="mat-header-cell">Amount</th>
+          <th class="mat-header-cell"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let goods of goodsDtoList; let i = index">
+          <td class="mat-cell">{{goods.name}}</td>
+          <td class="mat-cell">{{goods.placementType}}</td>
+          <td class="mat-cell">{{goods.measurementUnit}}</td>
+          <td class="mat-cell">{{goods.cost}}</td>
+          <ng-container formGroupName="{{i}}">
+            <input type="hidden" formControlName="goods">
+            <td class="mat-cell">
+              <mat-form-field>
+                <input matInput placeholder="Amount" type="number" formControlName="amount" required>
+              </mat-form-field>
+            </td>
+          </ng-container>
           <td class="mat-cell">
-            <mat-form-field>
-              <input matInput placeholder="Amount" type="number" formControlName="amount" required>
-            </mat-form-field>
+            <button mat-button (click)="deleteGood(i)">&#10006;</button>
           </td>
-        </ng-container>
-        <td class="mat-cell">
-          <button mat-button (click)="deleteGood(i)">&#10006;</button>
-        </td>
-      </tr>
-      </tbody>
-    </table>
-    <button mat-button (click)="goodsModal()">Add goods</button>
+        </tr>
+        </tbody>
+      </table>
+      <button mat-button (click)="goodsModal()">Add goods</button>
+    </div>
+    <div *ngIf="inputWarehouseId">
+      <app-collect-goods-warehouse [warehouseId]="inputWarehouseId"
+                                   (dataChanged)="deleteGoodsOutCN()"
+                                   (goodsChanged)="addGoodsOutCN($event)"
+                                   (warehouseChanged)="setWarehouseOutCN($event)">
+      </app-collect-goods-warehouse>
+    </div>
     <div>
       <button mat-button matStepperPrevious>Back</button>
       <button mat-button matStepperNext>Next</button>
     </div>
   </mat-step>
 
-  <mat-step [stepControl]="consignmentNoteForm.controls['consignmentNoteType']">
+  <mat-step [stepControl]="consignmentNoteForm.controls['consignmentNoteType']"
+            *ngIf="inputConsignmentNoteType !== cnType.OUT">
     <ng-template matStepLabel>Сonsignment note type</ng-template>
     <mat-form-field>
       <mat-select [formControl]="consignmentNoteForm.controls['consignmentNoteType']"
@@ -177,7 +187,8 @@
   <mat-step [stepControl]="consignmentNoteForm.controls['description']">
     <ng-template matStepLabel>Description</ng-template>
     <mat-form-field>
-      <textarea matInput placeholder="Leave a comment" [formControl]="consignmentNoteForm.controls['description']"></textarea>
+      <textarea matInput placeholder="Leave a comment"
+                [formControl]="consignmentNoteForm.controls['description']"></textarea>
     </mat-form-field>
     <div>
       <button mat-button matStepperPrevious>Back</button>

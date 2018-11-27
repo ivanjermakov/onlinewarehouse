@@ -21,6 +21,9 @@ final class CommodityLotPredicates {
         if (filter.getCommodityLotType() != null) {
             predicate.and(QCommodityLot.commodityLot.commodityLotType.eq(filter.getCommodityLotType()));
         }
+        if (filter.getCommodityLotStatus() != null) {
+            predicate.and(QCommodityLot.commodityLot.commodityLotStatus.eq(filter.getCommodityLotStatus()));
+        }
         if (filter.getFrom() != null) {
             predicate.and(QCommodityLot.commodityLot.creation.after(filter.getFrom()));
         }

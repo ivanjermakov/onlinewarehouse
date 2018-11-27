@@ -1,0 +1,4 @@
+<app-create-write-off-act [emitWhenSubmit]="data.emitWhenSubmit"
+                          [inputGoods]="data.inputGoods"
+                          (submitted)="writeOffActSubmitted($event)"></app-create-write-off-act>
+<button mat-button (click)="closeModal()">Close</button>

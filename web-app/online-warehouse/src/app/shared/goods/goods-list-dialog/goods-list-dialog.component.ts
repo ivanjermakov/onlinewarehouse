@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {GoodsDto} from "../dto/goods.dto";
-import {MatDialogRef} from "@angular/material";
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material";
 
 @Component({
   selector: 'app-goods-list-dialog',
@@ -9,7 +9,8 @@ import {MatDialogRef} from "@angular/material";
 })
 export class GoodsListDialogComponent implements OnInit {
 
-  constructor(private dialogRef: MatDialogRef<GoodsListDialogComponent>) {
+  constructor(private dialogRef: MatDialogRef<GoodsListDialogComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: any) {
   }
 
   ngOnInit() {

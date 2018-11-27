@@ -7,9 +7,7 @@ import {Pageable} from "../../pagination/pageable";
 import {BehaviorSubject, of} from "rxjs";
 import {catchError, debounceTime, distinctUntilChanged, finalize, tap} from "rxjs/operators";
 import {FormBuilder, FormGroup} from "@angular/forms";
-import {UserFilter} from "../../../user/dto/user-filter";
 import {GoodFilter} from "../dto/good-filter";
-import {UserService} from "../../../user/service/user.service";
 
 @Component({
   selector: 'app-goods-list',
@@ -21,6 +19,7 @@ export class GoodsListComponent implements OnInit {
   @Output() goodsSelected: EventEmitter<GoodsDto> = new EventEmitter();
 
   @Input() addButton: Boolean;
+  @Input() inputGoods: GoodsDto[];
 
   private displayedColumns = ["name", "placementType", "measurementUnit", "cost", "weight", "labelling", "description"];
   private loadingSubject = new BehaviorSubject<boolean>(false);
@@ -45,6 +44,7 @@ export class GoodsListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(this.inputGoods);
     this.loadGoods();
     this.goodsFilterForm.valueChanges.pipe(debounceTime(500),
       distinctUntilChanged(),
@@ -70,18 +70,60 @@ export class GoodsListComponent implements OnInit {
   }
 
   private loadGoods() {
-    this.loadingSubject.next(true);
-    this.goodsService.getAllGoods(this.goodsFilter.toServerFilter(), this.pageable).pipe(
-      catchError(() => of([])),
-      finalize(() => this.loadingSubject.next(false))
-    )
-      .subscribe(page => {
-        if (page instanceof Array) {
-          this.errors = page as any[];
-        } else {
-          this.page = page;
-        }
-      });
+    if (this.inputGoods) {
+      this.getFromData();
+    } else {
+      this.loadingSubject.next(true);
+      this.goodsService.getAllGoods(this.goodsFilter.toServerFilter(), this.pageable).pipe(
+        catchError(() => of([])),
+        finalize(() => this.loadingSubject.next(false))
+      )
+        .subscribe(page => {
+          if (page instanceof Array) {
+            this.errors = page as any[];
+          } else {
+            this.page = page;
+          }
+        });
+    }
   }
 
+  private getFromData() {
+    let filteredDataArr = this.inputGoods.filter((goods) => {
+      if (this.checkField(this.goodsFilter.name)) {
+        if (!goods.name.includes(this.goodsFilter.name)) {
+          return false;
+        }
+      }
+      if (this.checkField(this.goodsFilter.placementType)) {
+        if (goods.placementType !== this.goodsFilter.placementType) {
+          return false;
+        }
+      }
+      if (this.checkField(this.goodsFilter.costFrom)) {
+        if (goods.cost <= this.goodsFilter.costFrom) {
+          return false;
+        }
+      }
+      if (this.checkField(this.goodsFilter.costTo)) {
+        if (goods.cost >= this.goodsFilter.costTo) {
+          return false;
+        }
+      }
+      return true;
+    });
+    let page = new Page<GoodsDto>();
+    page.totalElements = filteredDataArr.length;
+    page.size = this.pageable.size;
+    page.number = this.pageable.page;
+    page.content = filteredDataArr.slice(this.pageable.page * this.pageable.size, (this.pageable.page + 1) * this.pageable.size);
+    this.page = page;
+
+
+  }
+
+
+  private checkField(data: any): boolean {
+    return data !== null && data !== undefined && data !== '';
+  }
 }

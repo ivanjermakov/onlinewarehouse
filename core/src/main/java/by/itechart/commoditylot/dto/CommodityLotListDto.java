@@ -1,5 +1,6 @@
 package by.itechart.commoditylot.dto;
 
+import by.itechart.commoditylot.enums.CommodityLotStatus;
 import by.itechart.commoditylot.enums.CommodityLotType;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -14,6 +15,7 @@ public class CommodityLotListDto {
 
     private Long id;
     private String counterpartyName;
+    private CommodityLotStatus commodityLotStatus;
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate creation;

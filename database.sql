@@ -90,6 +90,7 @@ create table driver (
 create table warehouse (
   id         bigserial PRIMARY KEY,
   company_id bigint references company (id),
+  address_id bigint references address (id),
   name       varchar(20),
   deleted    date
 );
@@ -122,11 +123,12 @@ create table consignment_note (
 );
 
 create table commodity_lot (
-  id                 bigserial PRIMARY KEY,
-  company_id         bigint references company (id),
-  counterparty_id    bigint references counterparty (id),
-  creation           date        NOT NULL,
-  commodity_lot_type varchar(20) NOT NULL
+  id                   bigserial PRIMARY KEY,
+  company_id           bigint references company (id),
+  counterparty_id      bigint references counterparty (id),
+  creation             date        NOT NULL,
+  commodity_lot_type   varchar(20) NOT NULL,
+  commodity_lot_status varchar(20) NOT NULL
 );
 
 create table write_off_act (
@@ -168,5 +170,21 @@ create table placement_goods (
   counterparty_id   bigint references counterparty (id),
   amount            integer NOT NULL,
   storage_time_days integer NOT NULL,
+  expiration_date   date NOT NULL,
   deleted           date
 );
+
+create table birthday_mail_template (
+  id bigserial primary key,
+  company_id bigint references company (id),
+  text varchar not null,
+  background_color varchar(7) not null,
+  header_image_path varchar not null
+);
+
+create table birthday_mail_send (
+  id bigserial primary key,
+  user_id bigint references users (id),
+  timestamp date not null,
+  successful boolean not null
+)

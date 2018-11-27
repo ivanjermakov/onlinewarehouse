@@ -10,7 +10,6 @@ public class ObjectMapperUtils {
 
     private static ModelMapper modelMapper = new ModelMapper();
 
-    //    do we need this?
     private ObjectMapperUtils() {
     }
 

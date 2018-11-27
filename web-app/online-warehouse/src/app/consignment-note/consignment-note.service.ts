@@ -54,4 +54,16 @@ export class ConsignmentNoteService {
     const path: string = this.baseApi + '/' + companyId + '/consignment-notes';
     return this.http.put<ConsignmentNoteDto>(path, updateConsignmentNoteDto);
   }
+
+  setConsignmentNoteBeingProcessed(consignmentNoteId: number): Observable<number> {
+    let companyId = this.auth.getCompanyId();
+    const path: string = this.baseApi + '/' + companyId + '/consignment-notes/' + consignmentNoteId + '?status=BEING_PROCESSED';
+    return this.http.put<number>(path, null);
+  }
+
+  setConsignmentNoteProcessed(consignmentNoteId: number): Observable<number> {
+    let companyId = this.auth.getCompanyId();
+    const path: string = this.baseApi + '/' + companyId + '/consignment-notes/' + consignmentNoteId + '?status=PROCESSED';
+    return this.http.put<number>(path, null);
+  }
 }

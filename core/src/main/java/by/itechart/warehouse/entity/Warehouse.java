@@ -1,5 +1,6 @@
 package by.itechart.warehouse.entity;
 
+import by.itechart.common.entity.Address;
 import by.itechart.common.entity.BaseEntity;
 import by.itechart.company.entity.Company;
 import lombok.Getter;
@@ -23,6 +24,10 @@ public class Warehouse extends BaseEntity {
 
     @OneToMany(mappedBy = "warehouse")
     private List<Placement> placements;
+
+    @OneToOne
+    @JoinColumn(name = "address_id")
+    private Address address;
 
     @Column(name = "name")
     private String name;

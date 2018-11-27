@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {GoodsListDialogComponent} from "../../shared/goods/goods-list-dialog/goods-list-dialog.component";
 import {GoodsDto} from "../../shared/goods/dto/goods.dto";
@@ -15,6 +15,9 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {ConsignmentNoteType} from "../dto/enum/consignment-note-type.enum";
 import {ConsignmentNoteDto} from "../dto/consignment-note-dto";
 import {UpdateConsignmentNoteDto} from "../dto/update-consignment-note-dto";
+import {WarehouseDto} from "../../warehouse/dto/warehouse.dto";
+import {WarehouseService} from "../../warehouse/service/warehouse.service";
+import {PlacementGoodsDto} from "../../warehouse/dto/placement-goods.dto";
 
 @Component({
   selector: 'app-register-consignment-note',
@@ -22,6 +25,11 @@ import {UpdateConsignmentNoteDto} from "../dto/update-consignment-note-dto";
   styleUrls: ['./register-consignment-note.component.css']
 })
 export class RegisterConsignmentNoteComponent implements OnInit {
+  // remember
+  @Input() inputWarehouseId: number;
+  @Input() inputConsignmentNoteType: ConsignmentNoteType;
+  private warehouseDto: WarehouseDto;
+  //
   private cnType = ConsignmentNoteType;
   private carrierType = '';
   private consignmentNoteForm: FormGroup;
@@ -33,6 +41,7 @@ export class RegisterConsignmentNoteComponent implements OnInit {
   private updateConsignmentNote: UpdateConsignmentNoteDto = new UpdateConsignmentNoteDto();
 
   constructor(private consignmentNoteService: ConsignmentNoteService,
+              private warehouseService: WarehouseService,
               private fb: FormBuilder,
               private route: ActivatedRoute,
               private dialog: MatDialog,
@@ -51,7 +60,13 @@ export class RegisterConsignmentNoteComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getConsignmentNote();
+    if (this.inputConsignmentNoteType) {
+      this.consignmentNoteForm.controls["consignmentNoteType"].patchValue(this.inputConsignmentNoteType);
+      this.consignmentNoteForm.controls["shipment"].patchValue(new Date());
+    } else {
+      this.getConsignmentNote();
+    }
+
   }
 
   getConsignmentNote(): void {
@@ -60,6 +75,10 @@ export class RegisterConsignmentNoteComponent implements OnInit {
       this.consignmentNoteService.getConsignmentNote(id)
         .subscribe((consignmentNote) => {
           this.updateConsignmentNote.id = consignmentNote.id;
+          this.updateConsignmentNote.company = consignmentNote.company;
+          this.updateConsignmentNote.creatorId = consignmentNote.creator.id;
+          this.updateConsignmentNote.registration = consignmentNote.registration;
+          this.updateConsignmentNote.consignmentNoteStatus = consignmentNote.consignmentNoteStatus;
           this.setData(consignmentNote);
           this.isCreate = false;
         });
@@ -108,7 +127,7 @@ export class RegisterConsignmentNoteComponent implements OnInit {
       disableClose: false,
       autoFocus: true,
       data: {
-        counterpartyType: CounterpartyTypeEnum.CONSIGNEE,
+        counterpartyType: this.inputConsignmentNoteType ? CounterpartyTypeEnum.CONSIGNOR : CounterpartyTypeEnum.CONSIGNEE,
         showCounterpartyTypeFilter: false,
         addButton: true
       }
@@ -131,7 +150,6 @@ export class RegisterConsignmentNoteComponent implements OnInit {
 
   deleteCarrier(): void {
     this.carrier = null;
-    this.driver = null;
     this.carrierType = '';
     this.consignmentNoteForm.patchValue({'carrier': ''});
   }
@@ -196,11 +214,32 @@ export class RegisterConsignmentNoteComponent implements OnInit {
     (this.consignmentNoteForm.controls['consignmentNoteGoodsList'] as FormArray).removeAt(i);
   }
 
+  addGoodsOutCN(placementGoodsDto: PlacementGoodsDto[]): void {
+    placementGoodsDto.forEach((goods) => {
+      (this.consignmentNoteForm.controls['consignmentNoteGoodsList'] as FormArray).push(this.fb.group({
+        "goods": [goods.goods],
+        "amount": [goods.amount]
+      }));
+    })
+  }
+
+  setWarehouseOutCN(warehouseDto: WarehouseDto) {
+    this.warehouseDto = warehouseDto;
+  }
+
+  deleteGoodsOutCN(): void {
+    this.warehouseDto = null;
+    while ((this.consignmentNoteForm.controls['consignmentNoteGoodsList'] as FormArray).length > 0) {
+      (this.consignmentNoteForm.controls['consignmentNoteGoodsList'] as FormArray).removeAt(0);
+    }
+  }
+
   goodsModal(): void {
     const dialogConfig = new MatDialogConfig();
 
     dialogConfig.disableClose = false;
     dialogConfig.autoFocus = true;
+    dialogConfig.data = {inputGoods: null};
 
     const dialogRef = this.dialog.open(GoodsListDialogComponent, dialogConfig);
 
@@ -214,12 +253,17 @@ export class RegisterConsignmentNoteComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (this.isCreate) {
-      this.consignmentNoteService.saveConsignmentNote(this.consignmentNoteForm.value).subscribe();
+    if (this.warehouseDto) {
+      this.warehouseService.updateWarehouseAndCreateConsignmentNote(this.warehouseDto, this.consignmentNoteForm.value).subscribe()
     } else {
-      Object.assign(this.updateConsignmentNote, this.consignmentNoteForm.value);
-      this.consignmentNoteService.updateConsignmentNote(this.updateConsignmentNote).subscribe();
-      this.router.navigateByUrl("app/consignment-notes/" + this.updateConsignmentNote.id);
+      if (this.isCreate) {
+        this.consignmentNoteService.saveConsignmentNote(this.consignmentNoteForm.value).subscribe();
+      } else {
+        Object.assign(this.updateConsignmentNote, this.consignmentNoteForm.value);
+        console.log(this.updateConsignmentNote);
+        this.consignmentNoteService.updateConsignmentNote(this.updateConsignmentNote).subscribe();
+        this.router.navigateByUrl("app/consignment-notes/" + this.updateConsignmentNote.id);
+      }
     }
     this.clearFrom();
   }

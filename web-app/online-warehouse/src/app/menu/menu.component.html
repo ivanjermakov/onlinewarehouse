@@ -22,6 +22,14 @@
      routerLink="list-goods" routerLinkActive="action-active">
     <button mat-button>Список товаров компании</button>
   </a>
+  <a *ngIf="userAuthorities.includes('ROLE_COMPANY_ADMIN' || 'ROLE_WAREHOUSE_OWNER')"
+     routerLink="list-warehouse" routerLinkActive="action-active">
+    <button mat-button>Список складов</button>
+  </a>
+  <a *ngIf="userAuthorities.includes('ROLE_COMPANY_ADMIN' || 'ROLE_WAREHOUSE_OWNER')"
+     routerLink="create-warehouse" routerLinkActive="action-active">
+    <button mat-button>Создать склад</button>
+  </a>
   <a *ngIf="userAuthorities.includes('ROLE_COMPANY_ADMIN' || 'ROLE_DISPATCHER')"
      routerLink="list-commodity-lots" routerLinkActive="action-active">
     <button mat-button>Список товарных партий</button>
@@ -47,7 +55,7 @@
     <button mat-button>Посмотреть ТТН</button>
   </a>
   <a *ngIf="userAuthorities.includes('ROLE_COMPANY_ADMIN' || 'ROLE_MANAGER')"
-     routerLink="" routerLinkActive="action-active">
+     routerLink="registered-commodity-lots" routerLinkActive="action-active">
     <button mat-button>Товарные партии к размещению</button>
   </a>
   <a *ngIf="userAuthorities.includes('ROLE_COMPANY_ADMIN' || 'ROLE_MANAGER' || 'ROLE_DISPATCHER')"
@@ -73,5 +81,9 @@
   <a *ngIf="userAuthorities.includes('ROLE_COMPANY_ADMIN' || 'ROLE_DISPATCHER')"
      routerLink="list-write-off-acts" routerLinkActive="action-active">
     <button mat-button>Список актов</button>
+  </a>
+  <a *ngIf="userAuthorities.includes('ROLE_COMPANY_ADMIN')"
+     routerLink="change-birthday-mail-template" routerLinkActive="action-active">
+    <button mat-button>Шаблон поздравления с др</button>
   </a>
 </div>

@@ -8,8 +8,10 @@
 
     <mat-sidenav-content>
       <mat-toolbar>
-        <button style="margin-left: -20px" (click)="sidenav.toggle(); menu = !menu" mat-button>{{menu ? "<<" : ">>"}}
-        </button>
+        <a class="menu-trigger" (click)="sidenav.toggle(); menu = !menu">
+          <i *ngIf="menu" class="fas fa-arrow-left"></i>
+          <i *ngIf="!menu" class="fas fa-arrow-right"></i>
+        </a>
       </mat-toolbar>
       <router-outlet></router-outlet>
     </mat-sidenav-content>

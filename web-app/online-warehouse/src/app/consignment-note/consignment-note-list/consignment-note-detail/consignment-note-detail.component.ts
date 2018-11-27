@@ -1,9 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {ConsignmentNoteDto} from "../../dto/consignment-note-dto";
 import {ConsignmentNoteService} from "../../consignment-note.service";
 import {ActivatedRoute, Router} from "@angular/router";
+import {MatDialog} from "@angular/material";
+import {CreateWriteOffActDialogComponent} from "../../../write-off-act/create-write-off-act-dialog/create-write-off-act-dialog.component";
+import {CommodityLotService} from "../../../commodity-lot/service/commodity-lot.service";
 import {ConsignmentNoteType} from "../../dto/enum/consignment-note-type.enum";
 import {ConsignmentNoteStatus} from "../../dto/enum/consignment-note-status.enum";
+import {WriteOffActService} from "../../../write-off-act/service/write-off-act.service";
+import {GoodsDto} from "../../../shared/goods/dto/goods.dto";
 
 @Component({
   selector: 'app-consignment-note-detail',
@@ -11,6 +16,10 @@ import {ConsignmentNoteStatus} from "../../dto/enum/consignment-note-status.enum
   styleUrls: ['./consignment-note-detail.component.css']
 })
 export class ConsignmentNoteDetailComponent implements OnInit {
+
+  @Input() showWriteOffButtons: boolean = false;
+  @Input() inputConsignmentNote: ConsignmentNoteDto;
+
   private status = ConsignmentNoteStatus;
   private type = ConsignmentNoteType;
   private consignmentNote: ConsignmentNoteDto;
@@ -19,11 +28,18 @@ export class ConsignmentNoteDetailComponent implements OnInit {
 
   constructor(private consignmentNoteService: ConsignmentNoteService,
               private router: Router,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private dialog: MatDialog,
+              private commodityLotService: CommodityLotService,
+              private writeOffActService: WriteOffActService) {
   }
 
   ngOnInit(): void {
-    this.getConsignmentNote();
+    if (!this.inputConsignmentNote) {
+      this.getConsignmentNote();
+    } else {
+      this.consignmentNote = this.inputConsignmentNote;
+    }
   }
 
   getConsignmentNote(): void {
@@ -40,5 +56,41 @@ export class ConsignmentNoteDetailComponent implements OnInit {
 
   backToList() {
     this.router.navigateByUrl("app/consignment-notes");
+  }
+
+  submitWithAct() {
+    this.consignmentNoteService.setConsignmentNoteBeingProcessed(this.consignmentNote.id).subscribe();
+    const dialogRef = this.dialog.open(CreateWriteOffActDialogComponent, {
+      disableClose: false,
+      autoFocus: true,
+      data: {
+        inputGoods: this.getGoodsDtoArr(),
+        emitWhenSubmit: true
+      }
+    });
+
+    dialogRef.afterClosed().subscribe((createWriteOffActDto) => {
+        if (createWriteOffActDto) {
+          console.log('test');
+          this.writeOffActService
+            .saveWriteOffActAndCommodityLot(createWriteOffActDto,
+              this.commodityLotService.getCommodityLotFromConsignmentNoteAndWriteOffAct(this.consignmentNote, createWriteOffActDto))
+            .subscribe((pair) => {
+              console.log('writeOffActId:' + pair.value1, 'commodityLotId: ' + pair.value2)
+            });
+        }
+      }
+    );
+  }
+
+  submitWithoutAct() {
+    this.consignmentNoteService.setConsignmentNoteProcessed(this.consignmentNote.id).subscribe();
+    this.commodityLotService.saveCommodityLotFromConsignmentNote(this.consignmentNote).subscribe();
+  }
+
+  private getGoodsDtoArr(): GoodsDto[] {
+    return this.consignmentNote.consignmentNoteGoodsList.map((goods) => {
+      return goods.goods;
+    })
   }
 }
