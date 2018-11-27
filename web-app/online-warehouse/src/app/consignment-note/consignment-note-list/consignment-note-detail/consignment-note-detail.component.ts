@@ -51,6 +51,7 @@ export class ConsignmentNoteDetailComponent implements OnInit {
   }
 
   update() {
+    console.log(11);
     this.router.navigateByUrl("app/register-consignment-note/" + this.consignmentNote.id);
   }
 

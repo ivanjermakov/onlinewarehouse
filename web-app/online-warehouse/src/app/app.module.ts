@@ -61,6 +61,7 @@ import {CreateWriteOffActDialogComponent} from './write-off-act/create-write-off
 import {CreatePlacementComponent} from './warehouse/create-placement/create-placement.component';
 import {RegisterConsignmentNoteDialogComponent} from './consignment-note/register-consignment-note-dialog/register-consignment-note-dialog.component';
 import {CollectGoodsWarehouseComponent} from './warehouse/collect-goods-warehouse/collect-goods-warehouse.component';
+import { ChartsModule } from 'ng2-charts';
 
 const routes: Routes = [
   {path: 'app', component: AppComponent, canActivate: [AuthGuard], children: appRoutes},
@@ -131,7 +132,8 @@ const routes: Routes = [
     BrowserAnimationsModule,
     MaterialModule,
     MatNativeDateModule,
-    HighchartsChartModule
+    HighchartsChartModule,
+    ChartsModule
   ],
   bootstrap: [RootComponent],
   entryComponents: [

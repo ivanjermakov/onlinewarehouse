@@ -5,7 +5,7 @@ import by.itechart.consignmentnote.entity.QConsignmentNote;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 
-public class ConsignmentNotePredicate {
+class ConsignmentNotePredicate {
 
     static Predicate findFilter(long companyId, ConsignmentNoteFilter consignmentNoteFilter) {
         BooleanBuilder predicate = new BooleanBuilder();
