@@ -11,7 +11,6 @@ import java.time.LocalDate;
 
 @Data
 public class PlacementGoodsDto {
-
     private Long id;
     private Integer amount;
     private GoodsDto goods;

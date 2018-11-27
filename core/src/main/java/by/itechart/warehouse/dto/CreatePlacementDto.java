@@ -6,7 +6,6 @@ import lombok.Data;
 
 @Data
 public class CreatePlacementDto {
-
     private Long warehouseId;
     private Integer size;
     private PlacementType placementType;

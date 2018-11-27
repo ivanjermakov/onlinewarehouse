@@ -9,4 +9,5 @@ public interface MailTemplateRepository extends JpaRepository<BirthdayMailTempla
 
     @Query("select t from BirthdayMailTemplate t where t.company.id = :companyId")
     BirthdayMailTemplate getTemplate(@Param("companyId") Long companyId);
+
 }

@@ -16,4 +16,5 @@ public interface PlacementService {
     PlacementDto getPlacement(long companyId, long warehouseId, long placementId);
 
     void deletePlacement(long placementId);
+
 }

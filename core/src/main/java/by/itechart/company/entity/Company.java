@@ -18,7 +18,6 @@ import java.util.List;
 @Entity
 @Table(name = "company")
 public class Company extends BaseEntity {
-
     @Column(name = "name")
     private String name;
 

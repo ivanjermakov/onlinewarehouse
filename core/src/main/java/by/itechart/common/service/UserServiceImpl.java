@@ -5,6 +5,7 @@ import by.itechart.common.dto.UserFilter;
 import by.itechart.common.entity.User;
 import by.itechart.common.repository.UserRepository;
 import by.itechart.common.utils.ObjectMapperUtils;
+import by.itechart.exception.NotFoundEntityException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,8 +29,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Page<UserDto> getUsers(Long companyId, UserFilter userFilter, Pageable pageable) {
-        Page<User> users = userRepository.findAll(UserPredicate.findFilter(companyId, userFilter), pageable);
-        return users.map(user -> ObjectMapperUtils.map(user, UserDto.class));
+        return userRepository.findAll(UserPredicate.findFilter(companyId, userFilter), pageable)
+                .map(user -> ObjectMapperUtils.map(user, UserDto.class));
     }
 
     @Override
@@ -39,7 +40,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUser(Long userId) {
-        return userRepository.findById(userId).orElse(null);
+        return userRepository.findById(userId).orElseThrow(() -> new NotFoundEntityException("User"));
     }
 
     @Override

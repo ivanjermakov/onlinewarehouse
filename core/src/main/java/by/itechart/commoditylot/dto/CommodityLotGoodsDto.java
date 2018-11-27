@@ -5,7 +5,6 @@ import lombok.Data;
 
 @Data
 public class CommodityLotGoodsDto {
-
     private Integer amount;
     private GoodsDto goods;
 }

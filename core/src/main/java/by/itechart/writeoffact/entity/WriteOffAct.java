@@ -22,7 +22,6 @@ import java.util.List;
 @Entity
 @Table(name = "write_off_act")
 public class WriteOffAct extends BaseEntity {
-
     @ManyToOne
     @JoinColumn(name = "company_id")
     private Company company;

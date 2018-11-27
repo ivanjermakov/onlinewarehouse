@@ -22,7 +22,6 @@ import java.util.List;
 @Entity
 @Table(name = "carrier")
 public class Carrier extends BaseEntity {
-
     @OneToOne
     @JoinColumn(name = "address_id")
     private Address address;
@@ -51,5 +50,4 @@ public class Carrier extends BaseEntity {
     @JsonDeserialize(using = LocalDateDeserializer.class)
     @Column(name = "deleted")
     private LocalDate deleted;
-
 }

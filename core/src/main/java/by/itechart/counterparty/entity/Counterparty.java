@@ -21,7 +21,6 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "counterparty")
 public class Counterparty extends BaseEntity {
-
     @OneToOne
     @JoinColumn(name = "address_id")
     private Address address;
@@ -44,5 +43,4 @@ public class Counterparty extends BaseEntity {
     @JsonDeserialize(using = LocalDateDeserializer.class)
     @Column(name = "deleted")
     private LocalDate deleted;
-
 }

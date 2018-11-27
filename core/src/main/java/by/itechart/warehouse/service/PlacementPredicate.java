@@ -5,7 +5,7 @@ import by.itechart.warehouse.entity.QPlacement;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 
-public class PlacementPredicate {
+final class PlacementPredicate {
 
     static Predicate findByCompanyIdAndWarehouseId(long companyId, long warehouseId) {
         BooleanBuilder predicate = new BooleanBuilder();
@@ -13,6 +13,7 @@ public class PlacementPredicate {
         predicate.and(QPlacement.placement.warehouse.company.id.eq(companyId))
                 .and(QPlacement.placement.warehouse.id.eq(warehouseId))
                 .and(QPlacement.placement.deleted.isNull());
+
         return predicate;
     }
 
@@ -23,6 +24,7 @@ public class PlacementPredicate {
                 .and(QPlacement.placement.warehouse.id.eq(warehouseId))
                 .and(QPlacement.placement.id.eq(placementId))
                 .and(QPlacement.placement.deleted.isNull());
+
         return predicate;
     }
 }

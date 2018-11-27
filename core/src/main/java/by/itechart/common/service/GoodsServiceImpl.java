@@ -24,8 +24,8 @@ public class GoodsServiceImpl implements GoodsService {
     @Transactional(readOnly = true)
     @Override
     public Page<GoodsDto> getGoods(Long companyId, GoodFilter goodFilter, Pageable pageable) {
-        Page<Goods> goods = goodsRepository.findAll(GoodPredicate.findFilter(companyId, goodFilter), pageable);
-        return goods.map(good -> ObjectMapperUtils.map(good, GoodsDto.class));
+        return goodsRepository.findAll(GoodPredicate.findFilter(companyId, goodFilter), pageable)
+                .map(good -> ObjectMapperUtils.map(good, GoodsDto.class));
     }
 
     @Transactional
@@ -33,13 +33,12 @@ public class GoodsServiceImpl implements GoodsService {
     public void createGoods(GoodsDto goodsDto, Long companyId) {
         Goods goods = ObjectMapperUtils.map(goodsDto, Goods.class);
         goodsRepository.save(goods);
-
     }
 
     @Transactional(readOnly = true)
     @Override
     public Integer getCost(Long goodsId, Integer amount) {
-        Integer costById = goodsRepository.getCostById(goodsId);
-        return costById * amount;
+        Integer goodCost = goodsRepository.getCostById(goodsId);
+        return goodCost * amount;
     }
 }

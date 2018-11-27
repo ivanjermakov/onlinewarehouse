@@ -24,7 +24,6 @@ import java.util.List;
 @ToString
 @Table(name = "consignment_note")
 public class ConsignmentNote extends BaseEntity {
-
     @ManyToOne
     @JoinColumn(name = "company_id")
     private Company company;

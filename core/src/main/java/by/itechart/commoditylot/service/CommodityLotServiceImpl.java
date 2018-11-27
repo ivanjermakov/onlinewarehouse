@@ -11,6 +11,7 @@ import by.itechart.commoditylot.repository.CommodityLotGoodsRepository;
 import by.itechart.commoditylot.repository.CommodityLotRepository;
 import by.itechart.common.utils.ObjectMapperUtils;
 import by.itechart.company.entity.Company;
+import by.itechart.exception.NotFoundEntityException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -36,9 +37,8 @@ public class CommodityLotServiceImpl implements CommodityLotService {
     @Transactional(readOnly = true)
     @Override
     public Page<CommodityLotListDto> getCommodityLots(Long companyId, Pageable pageable, CommodityLotFilter commodityLotFilter) {
-        Page<CommodityLot> commodityLots = commodityLotRepository.findAll(CommodityLotPredicates.findFilter(commodityLotFilter, companyId), pageable);
-        List<CommodityLotListDto> listDtos = ObjectMapperUtils.mapAll(commodityLots.getContent(), CommodityLotListDto.class);
-        return new PageImpl<>(listDtos, pageable, commodityLots.getTotalElements());
+        return commodityLotRepository.findAll(CommodityLotPredicates.findFilter(commodityLotFilter, companyId), pageable)
+                .map(commodityLot -> ObjectMapperUtils.map(commodityLot, CommodityLotListDto.class));
     }
 
     @Transactional
@@ -57,20 +57,23 @@ public class CommodityLotServiceImpl implements CommodityLotService {
             goods.setId(null);
         });
         commodityLotGoodsRepository.saveAll(commodityLotGoods);
+
         return commodityLotId;
     }
 
     @Transactional(readOnly = true)
     @Override
     public CommodityLotDto getCommodityLot(Long commodityLotId, Long companyId) {
-        CommodityLot commodityLot = commodityLotRepository.getOne(commodityLotId);
+        CommodityLot commodityLot = commodityLotRepository.findByCompanyIdAndId(companyId, commodityLotId)
+                .orElseThrow(() -> new NotFoundEntityException("CommodityLot"));
+
         return ObjectMapperUtils.map(commodityLot, CommodityLotDto.class);
     }
 
     @Transactional
     @Override
     public Long setCommodityLotStatus(long commodityLotId, long companyId, CommodityLotStatus status) {
-        commodityLotRepository.changeCommodityLotStatus(commodityLotId, companyId, status);
+        commodityLotRepository.changeCommodityLotStatus(status, commodityLotId, companyId);
         return commodityLotId;
     }
 }

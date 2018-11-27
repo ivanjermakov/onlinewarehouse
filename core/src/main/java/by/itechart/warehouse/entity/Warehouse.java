@@ -17,7 +17,6 @@ import java.util.List;
 @Entity
 @Table(name = "warehouse")
 public class Warehouse extends BaseEntity {
-
     @ManyToOne
     @JoinColumn(name = "company_id")
     private Company company;

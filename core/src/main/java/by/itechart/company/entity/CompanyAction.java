@@ -15,7 +15,6 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "company_action")
 public class CompanyAction extends BaseEntity {
-
     @ManyToOne
     @JoinColumn(name = "company_id")
     private Company company;
@@ -26,5 +25,4 @@ public class CompanyAction extends BaseEntity {
     @Column(name = "action_type")
     @Enumerated(EnumType.STRING)
     private ActionType actionType;
-
 }

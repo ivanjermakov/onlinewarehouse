@@ -7,7 +7,6 @@ import java.util.List;
 
 @Data
 public class CreateWriteOffActDto {
-
     private Long creatorId;
     private String responsiblePerson;
     private WriteOffActType writeOffActType;

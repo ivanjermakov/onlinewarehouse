@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface WarehouseService {
+
     Page<WarehouseDto> getWarehouses(long companyId, Pageable pageable);
 
     Long saveWarehouse(CreateWarehouseDto createWarehouseDto, long companyId);
@@ -19,4 +20,5 @@ public interface WarehouseService {
     void deleteWarehouse(long placementId);
 
     Long editWarehouseWithConsignmentNote(Pair<WarehouseDto, CreateConsignmentNoteDto> warehouseDtoAndCreateConsignmentNoteDto, long companyId, long warehouseId);
+
 }

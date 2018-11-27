@@ -36,6 +36,7 @@ public class CompanyServiceImpl implements CompanyService {
     @Transactional(readOnly = true)
     public Page<CompanyDto> getCompanies(Pageable pageable) {
         Page<Company> all = companyRepository.findAll(CompanyPredicates.findExcludeFirstCompany(), pageable);
+
         List<CompanyDto> companyDtoList = all.getContent().stream().map(company -> {
             CompanyDto companyDto = new CompanyDto();
             companyDto.setId(company.getId());
@@ -49,7 +50,9 @@ public class CompanyServiceImpl implements CompanyService {
             companyDto.setChange(lastCompanyAction.getChange());
             return companyDto;
         }).collect(Collectors.toList());
+
         return new PageImpl<CompanyDto>(companyDtoList, pageable, all.getTotalElements());
+//        return companies.map(company -> ObjectMapperUtils.map(company, CompanyDto.class));
     }
 
     @Override

@@ -23,4 +23,5 @@ public interface UserRepository extends JpaRepository<User, Long>, QuerydslPredi
     Set<User> getUsersWithBirthday(@Param("companyId") Long companyId, @Param("birthDay") LocalDate birthDay);
 
     Set<User> findAllById(List<Long> id);
+
 }

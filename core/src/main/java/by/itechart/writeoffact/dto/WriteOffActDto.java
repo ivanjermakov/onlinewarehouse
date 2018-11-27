@@ -12,7 +12,6 @@ import java.util.List;
 
 @Data
 public class WriteOffActDto {
-
     private Long id;
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)

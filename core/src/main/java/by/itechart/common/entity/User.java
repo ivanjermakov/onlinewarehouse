@@ -22,7 +22,6 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 public class User extends BaseEntity {
-
     @Column(name = "username", length = 50, unique = true)
     @NotNull
     @Size(min = 4, max = 50)
@@ -90,6 +89,4 @@ public class User extends BaseEntity {
     public void addAuthority(Authority authority) {
         this.authorities.add(authority);
     }
-
-
 }

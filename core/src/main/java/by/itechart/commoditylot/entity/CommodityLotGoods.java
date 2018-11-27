@@ -14,7 +14,6 @@ import javax.persistence.*;
 @Entity
 @Table(name = "commodity_lot_goods")
 public class CommodityLotGoods extends BaseEntity {
-
     @ManyToOne
     @JoinColumn(name = "goods_id")
     private Goods goods;
@@ -25,5 +24,4 @@ public class CommodityLotGoods extends BaseEntity {
 
     @Column(name = "amount")
     private Integer amount;
-
 }

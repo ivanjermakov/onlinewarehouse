@@ -48,8 +48,7 @@ public class CarrierController {
     }
 
     @GetMapping("/{carrierId}/drivers")
-    public Page<DriverDto> getCarriersList(@PathVariable long companyId,
-                                           @PathVariable long carrierId,
+    public Page<DriverDto> getCarriersList(@PathVariable long carrierId,
                                            Pageable pageable) {
         return carrierService.getDrivers(carrierId, pageable);
     }

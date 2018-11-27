@@ -29,27 +29,23 @@ public class CounterpartyController {
 
     @PostMapping
     public Long saveCounterparty(@PathVariable long companyId, @RequestBody CreateCounterpartyDto counterparty) {
-        // save counterparty and return generated counterparty id
         return counterpartyService.saveOrUpdateCounterparty(counterparty);
     }
 
     //    why we need companyId here if counterparty itself has it's own id?
     @GetMapping("/{counterpartyId}")
     public CounterpartyDto getCounterparty(@PathVariable long companyId, @PathVariable long counterpartyId) {
-        // return counterparty with companyId and counterpartyId
-        return counterpartyService.getCounterparty(counterpartyId);
+        return counterpartyService.getCounterparty(companyId, counterpartyId);
     }
 
     @PutMapping("/{counterpartyId}")
     public Long updateCounterparty(@PathVariable long companyId, @PathVariable long counterpartyId,
                                    @RequestBody CreateCounterpartyDto counterparty) {
-        // update counterparty and return counterparty id
         return counterpartyService.saveOrUpdateCounterparty(counterparty);
     }
 
     @DeleteMapping("/{counterpartyId}")
     public void deleteCounterparty(@PathVariable long companyId, @PathVariable long counterpartyId) {
-//         delete counterparty with companyId and counterpartyId
         counterpartyService.deleteCounterparty(counterpartyId);
     }
 }

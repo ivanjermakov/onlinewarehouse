@@ -22,7 +22,6 @@ import java.time.LocalDate;
 @Table(name = "driver")
 @Document(indexName = "warehouse", type = "driver")
 public class Driver extends BaseEntity {
-
     @ManyToOne
     @JoinColumn(name = "carrier_id")
     @Field(type = FieldType.Nested, includeInParent = true)
@@ -35,5 +34,4 @@ public class Driver extends BaseEntity {
     @JsonDeserialize(using = LocalDateDeserializer.class)
     @Column(name = "deleted")
     private LocalDate deleted;
-
 }

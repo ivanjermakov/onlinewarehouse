@@ -14,7 +14,6 @@ import java.util.List;
 @Entity
 @Table(name = "authority")
 public class Authority extends BaseEntity{
-
     @Column(name = "name", length = 50)
     @NotNull
     @Enumerated(EnumType.STRING)
@@ -22,5 +21,4 @@ public class Authority extends BaseEntity{
 
     @ManyToMany(mappedBy = "authorities", fetch = FetchType.LAZY)
     private List<User> users;
-
 }

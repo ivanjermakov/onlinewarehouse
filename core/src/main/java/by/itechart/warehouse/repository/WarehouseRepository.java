@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 
 public interface WarehouseRepository extends JpaRepository<Warehouse, Long>, QuerydslPredicateExecutor<Warehouse> {
+
     Page<Warehouse> findWarehousesByCompanyId(long companyId, Pageable pageable);
 
     Warehouse findByCompanyIdAndId(long companyId, long warehouseId);
@@ -16,4 +17,5 @@ public interface WarehouseRepository extends JpaRepository<Warehouse, Long>, Que
     @Modifying
     @Query("update Warehouse w set w.deleted = current_date where w.id = ?1")
     void setDeleted(long warehouseId);
+
 }

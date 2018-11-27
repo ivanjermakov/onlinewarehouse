@@ -9,4 +9,5 @@ public interface GoodsRepository extends JpaRepository<Goods, Long>, QuerydslPre
 
     @Query("select g.cost from Goods g where g.id = ?1")
     Integer getCostById(Long id);
+
 }

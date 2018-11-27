@@ -15,7 +15,8 @@ public interface WriteOffActService {
 
     Long saveWriteOffAct(CreateWriteOffActDto writeOffAct, Long companyId);
 
-    WriteOffActDto getWriteOffAct(Long writeOffActId);
+    WriteOffActDto getWriteOffAct(Long companyId, Long writeOffActId);
 
     Pair<Long, Long> saveWriteOffActAndCommodityLot(Pair<CreateWriteOffActDto, CreateCommodityLotDto> writeOffActAndCommodityLot, Long companyId);
+
 }

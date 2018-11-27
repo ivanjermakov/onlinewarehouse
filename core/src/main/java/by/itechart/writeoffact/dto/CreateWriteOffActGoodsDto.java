@@ -5,7 +5,6 @@ import lombok.Data;
 
 @Data
 public class CreateWriteOffActGoodsDto {
-
     private Long goodsId;
     private WriteOffType writeOffType;
     private Integer amount;

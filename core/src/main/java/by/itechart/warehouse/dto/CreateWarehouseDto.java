@@ -7,7 +7,6 @@ import java.util.List;
 
 @Data
 public class CreateWarehouseDto {
-
     private AddressDto address;
     private String name;
 }

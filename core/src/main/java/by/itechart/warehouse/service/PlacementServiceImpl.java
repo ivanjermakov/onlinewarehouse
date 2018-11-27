@@ -2,6 +2,7 @@ package by.itechart.warehouse.service;
 
 import by.itechart.common.utils.ObjectMapperUtils;
 import by.itechart.company.entity.Company;
+import by.itechart.exception.NotFoundEntityException;
 import by.itechart.warehouse.dto.CreatePlacementDto;
 import by.itechart.warehouse.dto.PlacementDto;
 import by.itechart.warehouse.entity.Placement;
@@ -30,9 +31,8 @@ public class PlacementServiceImpl implements PlacementService {
     @Override
     @Transactional(readOnly = true)
     public Page<PlacementDto> getPlacements(long companyId, long warehouseId, Pageable pageable) {
-        Page<Placement> placements = placementRepository
-                .findAll(PlacementPredicate.findByCompanyIdAndWarehouseId(companyId, warehouseId), pageable);
-        return placements.map(placement -> ObjectMapperUtils.map(placement, PlacementDto.class));
+        return placementRepository.findAll(PlacementPredicate.findByCompanyIdAndWarehouseId(companyId, warehouseId), pageable)
+                .map(placement -> ObjectMapperUtils.map(placement, PlacementDto.class));
     }
 
     @Override
@@ -64,7 +64,9 @@ public class PlacementServiceImpl implements PlacementService {
     @Override
     public PlacementDto getPlacement(long companyId, long warehouseId, long placementId) {
         Placement placement = placementRepository
-                .findOne(PlacementPredicate.findByCompanyIdAndWarehouseIdAndId(companyId, warehouseId, placementId)).orElse(null);
+                .findOne(PlacementPredicate.findByCompanyIdAndWarehouseIdAndId(companyId, warehouseId, placementId))
+                .orElseThrow(() -> new NotFoundEntityException("Placement"));
+
         return ObjectMapperUtils.map(placement, PlacementDto.class);
     }
 

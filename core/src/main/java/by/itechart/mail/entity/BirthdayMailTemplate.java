@@ -14,7 +14,6 @@ import javax.persistence.*;
 @Entity
 @Table(name = "birthday_mail_template")
 public class BirthdayMailTemplate extends BaseEntity {
-
     @ManyToOne
     @JoinColumn(name = "company_id")
     private Company company;

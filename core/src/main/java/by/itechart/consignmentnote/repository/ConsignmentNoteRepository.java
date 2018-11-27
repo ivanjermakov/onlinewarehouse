@@ -7,11 +7,14 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 
+import java.util.Optional;
+
 public interface ConsignmentNoteRepository extends JpaRepository<ConsignmentNote, Long>, QuerydslPredicateExecutor<ConsignmentNote> {
 
-    ConsignmentNote findByCompanyIdAndId(long companyId, long consignmentNoteId);
+    Optional<ConsignmentNote> findByCompanyIdAndId(long companyId, long consignmentNoteId);
 
     @Modifying
     @Query("update ConsignmentNote cn set cn.consignmentNoteStatus = ?3 where cn.company.id = ?1 and cn.id =?2")
     void setConsignmentNoteStatus(long companyId, long consignmentNoteId, ConsignmentNoteStatus consignmentNoteStatus);
+
 }

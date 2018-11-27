@@ -9,9 +9,6 @@ import org.apache.commons.lang3.StringUtils;
 
 final class CommodityLotPredicates {
 
-    private CommodityLotPredicates() {
-    }
-
     static Predicate findFilter(CommodityLotFilter filter, Long companyId) {
         BooleanBuilder predicate = new BooleanBuilder();
 
@@ -31,6 +28,7 @@ final class CommodityLotPredicates {
             predicate.and(QCommodityLot.commodityLot.creation.before(filter.getTo()));
         }
         predicate.and(QCommodityLot.commodityLot.company.id.eq(companyId));
+
         return predicate;
     }
 
@@ -39,6 +37,7 @@ final class CommodityLotPredicates {
 
         predicate.and(QCommodityLot.commodityLot.id.eq(commodityLotId));
         predicate.and(QCommodityLot.commodityLot.company.id.eq(companyId));
+
         return predicate;
     }
 
@@ -46,6 +45,7 @@ final class CommodityLotPredicates {
         BooleanBuilder predicate = new BooleanBuilder();
 
         predicate.and(QCommodityLotGoods.commodityLotGoods.commodityLot.id.eq(commodityLotId));
+
         return predicate;
     }
 }

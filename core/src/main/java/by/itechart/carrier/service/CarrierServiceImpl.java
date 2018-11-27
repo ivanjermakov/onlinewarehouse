@@ -5,18 +5,17 @@ import by.itechart.carrier.entity.Carrier;
 import by.itechart.carrier.entity.Driver;
 import by.itechart.carrier.repository.CarrierRepository;
 import by.itechart.carrier.repository.DriverRepository;
+import by.itechart.exception.NotFoundEntityException;
 import by.itechart.common.repository.AddressRepository;
 import by.itechart.common.utils.ObjectMapperUtils;
 import by.itechart.company.entity.Company;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class CarrierServiceImpl implements CarrierService {
@@ -35,29 +34,31 @@ public class CarrierServiceImpl implements CarrierService {
     @Transactional(readOnly = true)
     @Override
     public Page<CarrierListDto> getCarriers(CarrierFilter filter, Long companyId, Pageable pageable) {
-        Page<Carrier> result = carrierRepository.findAll(CarrierPredicates.findFilter(filter, companyId), pageable);
-        List<CarrierListDto> carrierListDto = ObjectMapperUtils.mapAll(result.getContent(), CarrierListDto.class);
-        return new PageImpl<>(carrierListDto, pageable, result.getTotalElements());
+        return carrierRepository.findAll(CarrierPredicates.findFilter(filter, companyId), pageable)
+                .map(carrier -> ObjectMapperUtils.map(carrier, CarrierListDto.class));
     }
 
     @Transactional
     @Override
     public Long saveCarrier(CreateCarrierDto createCarrierDto, Long companyId) {
         Carrier carrier = ObjectMapperUtils.map(createCarrierDto, Carrier.class);
+
         Long addressId = addressRepository.save(carrier.getAddress()).getId();
         carrier.getAddress().setId(addressId);
         carrier.setCompany(new Company(companyId));
+
         return carrierRepository.save(carrier).getId();
     }
 
     @Transactional(readOnly = true)
     @Override
     public CarrierDto getCarrier(Long companyId, Long carrierId) {
-        Carrier carrier = carrierRepository.findOne(CarrierPredicates.findByCompanyIdAndId(companyId, carrierId)).orElse(null);
+        Carrier carrier = carrierRepository.findOne(CarrierPredicates.findByCompanyIdAndId(companyId, carrierId)).orElseThrow(() -> new NotFoundEntityException("Carrier"));
         CarrierDto carrierDto = ObjectMapperUtils.map(carrier, CarrierDto.class);
         ArrayList<String> driversInfo = new ArrayList<>();
         driverRepository.findAll(CarrierPredicates.findDriverByCarrierId(carrierId)).forEach(driver -> driversInfo.add(driver.getInfo()));
         carrierDto.setDriverInfo(driversInfo);
+
         return carrierDto;
     }
 
@@ -76,8 +77,8 @@ public class CarrierServiceImpl implements CarrierService {
 
     @Transactional(readOnly = true)
     @Override
-    public Page<DriverDto> getDrivers(Long companyId, Pageable pageable) {
-        Page<Driver> drivers = driverRepository.findByCarrierId(companyId, pageable);
+    public Page<DriverDto> getDrivers(Long carrierId, Pageable pageable) {
+        Page<Driver> drivers = driverRepository.findByCarrierId(carrierId, pageable);
         return drivers.map(driver -> ObjectMapperUtils.map(driver, DriverDto.class));
     }
 }

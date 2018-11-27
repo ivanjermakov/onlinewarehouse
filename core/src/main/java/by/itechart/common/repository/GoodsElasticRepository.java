@@ -6,5 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.elasticsearch.repository.ElasticsearchCrudRepository;
 
 public interface GoodsElasticRepository extends ElasticsearchCrudRepository<Goods, Long> {
+
     Page<Goods> findGoodsByCompanyIdAndDeletedIsFalse(Long companyId, Pageable pageable);
+
 }

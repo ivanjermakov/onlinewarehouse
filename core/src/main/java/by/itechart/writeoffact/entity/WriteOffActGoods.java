@@ -15,7 +15,6 @@ import javax.persistence.*;
 @Entity
 @Table(name = "write_off_act_goods")
 public class WriteOffActGoods extends BaseEntity {
-
     @ManyToOne
     @JoinColumn(name = "goods_id")
     private Goods goods;
@@ -30,5 +29,4 @@ public class WriteOffActGoods extends BaseEntity {
 
     @Column(name = "amount")
     private Integer amount;
-
 }

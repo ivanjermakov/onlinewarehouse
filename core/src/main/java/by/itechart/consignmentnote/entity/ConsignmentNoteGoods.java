@@ -5,6 +5,7 @@ import by.itechart.common.entity.Goods;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 
@@ -12,9 +13,9 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @Entity
+@ToString
 @Table(name = "consignment_note_goods")
 public class ConsignmentNoteGoods extends BaseEntity {
-
     @ManyToOne
     @JoinColumn(name = "goods_id")
     private Goods goods;
@@ -25,5 +26,4 @@ public class ConsignmentNoteGoods extends BaseEntity {
 
     @Column(name = "amount")
     private Integer amount;
-
 }

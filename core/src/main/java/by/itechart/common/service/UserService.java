@@ -23,4 +23,5 @@ public interface UserService {
     Set<User> getUsersWithBirthday(Long companyId, LocalDate birthDay);
 
     Set<User> getAllById(List<Long> id);
+
 }

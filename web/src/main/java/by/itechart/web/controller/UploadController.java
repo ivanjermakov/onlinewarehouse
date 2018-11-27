@@ -25,5 +25,4 @@ public class UploadController {
     public String upload(@RequestParam("file") MultipartFile multipartFile) throws IOException {
         return uploadService.upload(multipartFile);
     }
-
 }

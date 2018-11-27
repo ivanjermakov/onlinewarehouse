@@ -20,7 +20,6 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "placement_goods")
 public class PlacementGoods extends BaseEntity {
-
     @ManyToOne
     @JoinColumn(name = "goods_id")
     private Goods goods;

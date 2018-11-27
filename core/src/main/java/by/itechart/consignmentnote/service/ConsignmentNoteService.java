@@ -16,4 +16,5 @@ public interface ConsignmentNoteService {
     Long updateConsignmentNote(UpdateConsignmentNoteDto consignmentNote, long companyId);
 
     Long setConsignmentNoteStatus(long consignmentNoteId, ConsignmentNoteStatus consignmentNoteStatus, long companyId);
+
 }

@@ -14,4 +14,5 @@ public interface BirthdayMailSendService {
     List<User> getUsersToCongratulate();
 
     List<User> getNotCelebratedUsers();
+
 }

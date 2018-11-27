@@ -26,6 +26,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class WarehouseServiceImpl implements WarehouseService {
+
     private WarehouseRepository warehouseRepository;
     private PlacementRepository placementRepository;
     private PlacementGoodsRepository placementGoodsRepository;
@@ -48,8 +49,8 @@ public class WarehouseServiceImpl implements WarehouseService {
     @Transactional(readOnly = true)
     @Override
     public Page<WarehouseDto> getWarehouses(long companyId, Pageable pageable) {
-        Page<Warehouse> warehouses = warehouseRepository.findWarehousesByCompanyId(companyId, pageable);
-        return warehouses.map(warehouse -> ObjectMapperUtils.map(warehouse, WarehouseDto.class));
+        return warehouseRepository.findWarehousesByCompanyId(companyId, pageable)
+                .map(warehouse -> ObjectMapperUtils.map(warehouse, WarehouseDto.class));
     }
 
     @Transactional

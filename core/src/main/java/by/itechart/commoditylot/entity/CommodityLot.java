@@ -23,7 +23,6 @@ import java.util.List;
 @Entity
 @Table(name = "commodity_lot")
 public class CommodityLot extends BaseEntity {
-
     @ManyToOne
     @JoinColumn(name = "company_id")
     private Company company;
@@ -47,5 +46,4 @@ public class CommodityLot extends BaseEntity {
 
     @OneToMany(mappedBy = "commodityLot")
     private List<CommodityLotGoods> commodityLotGoodsList;
-
 }

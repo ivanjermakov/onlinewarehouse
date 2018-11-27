@@ -14,4 +14,5 @@ public interface CompanyService {
     Long saveCompany(CreateCompanyDto createCompanyDto);
 
     void newCompanyAction(Long companyId, ActionType actionType);
+
 }

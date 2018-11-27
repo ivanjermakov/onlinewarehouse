@@ -12,7 +12,6 @@ import java.time.LocalDate;
 
 @Data
 public class WriteOffActFilter {
-
     private WriteOffActType writeOffActType;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @JsonSerialize(using = LocalDateSerializer.class)
