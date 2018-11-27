@@ -20,7 +20,7 @@ public class BirthdayMailSend extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Column(name = "date")
+    @Column(name = "timestamp")
     private LocalDate date;
 
     @Column(name = "successful")
