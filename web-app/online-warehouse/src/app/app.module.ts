@@ -41,6 +41,8 @@ import {RouterModule, Routes} from "@angular/router";
 import {RootComponent} from './root/root.component';
 import {MenuComponent} from './menu/menu.component';
 import {CreateCounterpartyComponent} from './counterparty/create-counterparty/create-counterparty.component';
+import {ChangeBirthdayMailTemplateComponent} from './mail/change-birthday-mail-template/change-birthday-mail-template.component';
+
 import {RegisterComponent} from "./auth/registration/register.component";
 import {GetCounterpartyComponent} from './counterparty/get-counterparty/get-counterparty.component';
 import {CreateCounterpartyDialogComponent} from './counterparty/create-counterparty-dialog/create-counterparty-dialog.component';
@@ -97,6 +99,8 @@ const routes: Routes = [
     UserListViewComponent,
     RootComponent,
     MenuComponent,
+    CreateCounterpartyComponent,
+    ChangeBirthdayMailTemplateComponent,
     CreateCounterpartyComponent,
     RegisterComponent,
     GetCounterpartyComponent,

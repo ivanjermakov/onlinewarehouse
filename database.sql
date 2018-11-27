@@ -173,3 +173,18 @@ create table placement_goods (
   expiration_date   date NOT NULL,
   deleted           date
 );
+
+create table birthday_mail_template (
+  id bigserial primary key,
+  company_id bigint references company (id),
+  text varchar not null,
+  background_color varchar(7) not null,
+  header_image_path varchar not null
+);
+
+create table birthday_mail_send (
+  id bigserial primary key,
+  user_id bigint references users (id),
+  timestamp date not null,
+  successful boolean not null
+)

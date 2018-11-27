@@ -1,0 +1,16 @@
+#birthday-template-from {
+  display: flex;
+  flex-direction: column;
+
+  width: 600px;
+}
+
+#birthday-template-from mat-button-toggle {
+  margin: 0 10px 10px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}

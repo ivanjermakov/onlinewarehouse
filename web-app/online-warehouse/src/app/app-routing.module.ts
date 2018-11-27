@@ -19,6 +19,7 @@ import {AuthGuard} from "./auth/_guards";
 import {CounterpartyListViewComponent} from "./counterparty/counterparty-list-view/counterparty-list-view.component";
 import {UserListViewComponent} from "./user/user-list-view/user-list-view.component";
 import {CreateCounterpartyComponent} from "./counterparty/create-counterparty/create-counterparty.component";
+import {ChangeBirthdayMailTemplateComponent} from './mail/change-birthday-mail-template/change-birthday-mail-template.component';
 import {RegisterComponent} from "./auth/registration/register.component";
 import {GetCounterpartyComponent} from "./counterparty/get-counterparty/get-counterparty.component";
 import {CreateCarrierComponent} from "./carrier/create-carrier/create-carrier.component";
@@ -53,6 +54,7 @@ export const routes: Routes = [
   {path: 'registered-consignment-notes', component: ConsignmentNoteListComponent, canActivate: [AuthGuard]},
   {path: 'consignment-notes/:id', component: ConsignmentNoteDetailComponent, canActivate: [AuthGuard]},
   {path: 'create-counterparty', component: CreateCounterpartyComponent, canActivate: [AuthGuard]},
+  {path: 'change-birthday-mail-template', component: ChangeBirthdayMailTemplateComponent, canActivate: [AuthGuard]},
   {path: 'register', component: RegisterComponent, canActivate: [AuthGuard]},
   {path: 'list-warehouse', component: WarehouseListComponent, canActivate: [AuthGuard]},
   {path: 'create-warehouse', component: CreateWarehouseComponent, canActivate: [AuthGuard]},
