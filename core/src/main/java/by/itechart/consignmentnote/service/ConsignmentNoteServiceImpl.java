@@ -67,16 +67,16 @@ public class ConsignmentNoteServiceImpl implements ConsignmentNoteService {
 
     @Override
     @Transactional
-    public Long updateConsignmentNote(UpdateConsignmentNoteDto consignmentNoteDto, long companyId) {
-        ConsignmentNote consignmentNote = ObjectMapperUtils.map(consignmentNoteDto, ConsignmentNote.class);
-        Long id = consignmentNoteRepository.save(consignmentNote).getId();
-        List<ConsignmentNoteGoods> consignmentNoteGoodsList = consignmentNoteDto.getConsignmentNoteGoodsList()
-                .stream().map(dto -> {
-                    ConsignmentNoteGoods consignmentNoteGoods = ObjectMapperUtils.map(dto, ConsignmentNoteGoods.class);
-                    consignmentNoteGoods.setConsignmentNote(new ConsignmentNote(id));
-                    return consignmentNoteGoods;
-                }).collect(Collectors.toList());
-        consignmentNoteGoodsRepository.saveAll(consignmentNoteGoodsList);
-        return id;
+    public Long updateConsignmentNote(UpdateConsignmentNoteDto updateDto, long companyId) {
+        ConsignmentNote consignmentNote = consignmentNoteRepository.getOne(updateDto.getId());
+        ObjectMapperUtils.map(updateDto, consignmentNote);
+
+//        List<ConsignmentNoteGoods> consignmentNoteGoodsList = updateDto.getConsignmentNoteGoodsList()
+//                .stream().map(dto -> {
+//                    ConsignmentNoteGoods consignmentNoteGoods = ObjectMapperUtils.map(dto, ConsignmentNoteGoods.class);
+//                    consignmentNoteGoods.setConsignmentNote(new ConsignmentNote(updateDto.getId()));
+//                    return consignmentNoteGoods;
+//                }).collect(Collectors.toList());
+        return consignmentNote.getId();
     }
 }

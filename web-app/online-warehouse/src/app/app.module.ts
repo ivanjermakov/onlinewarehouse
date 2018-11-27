@@ -49,6 +49,7 @@ import {CreateCarrierComponent} from './carrier/create-carrier/create-carrier.co
 import {CreateCarrierDialogComponent} from './carrier/create-carrier-dialog/create-carrier-dialog.component';
 import {DriverListDialogComponent} from "./carrier/driver/driver-list-dialog/driver-list-dialog.component";
 import {DriverListComponent} from "./carrier/driver/driver-list/driver-list.component";
+import {ChartsModule} from "ng2-charts";
 
 const routes: Routes = [
   {path: 'app', component: AppComponent, canActivate: [AuthGuard], children: appRoutes},
@@ -107,6 +108,7 @@ const routes: Routes = [
     BrowserAnimationsModule,
     MaterialModule,
     MatNativeDateModule,
+    ChartsModule
   ],
   bootstrap: [RootComponent],
   entryComponents: [

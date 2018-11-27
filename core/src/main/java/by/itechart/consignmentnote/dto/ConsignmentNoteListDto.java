@@ -13,7 +13,7 @@ import java.time.LocalDate;
 
 @Data
 public class ConsignmentNoteListDto {
-    private long id;
+    private Long id;
     private String number;
     private CompanyDto company;
     @JsonSerialize(using = LocalDateSerializer.class)

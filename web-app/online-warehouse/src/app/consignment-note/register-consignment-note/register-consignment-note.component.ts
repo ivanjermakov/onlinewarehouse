@@ -60,10 +60,6 @@ export class RegisterConsignmentNoteComponent implements OnInit {
       this.consignmentNoteService.getConsignmentNote(id)
         .subscribe((consignmentNote) => {
           this.updateConsignmentNote.id = consignmentNote.id;
-          this.updateConsignmentNote.company = consignmentNote.company;
-          this.updateConsignmentNote.creatorId = consignmentNote.creator.id;
-          this.updateConsignmentNote.registration = consignmentNote.registration;
-          this.updateConsignmentNote.consignmentNoteStatus = consignmentNote.consignmentNoteStatus;
           this.setData(consignmentNote);
           this.isCreate = false;
         });
@@ -135,6 +131,7 @@ export class RegisterConsignmentNoteComponent implements OnInit {
 
   deleteCarrier(): void {
     this.carrier = null;
+    this.driver = null;
     this.carrierType = '';
     this.consignmentNoteForm.patchValue({'carrier': ''});
   }
@@ -221,7 +218,6 @@ export class RegisterConsignmentNoteComponent implements OnInit {
       this.consignmentNoteService.saveConsignmentNote(this.consignmentNoteForm.value).subscribe();
     } else {
       Object.assign(this.updateConsignmentNote, this.consignmentNoteForm.value);
-      console.log(this.updateConsignmentNote);
       this.consignmentNoteService.updateConsignmentNote(this.updateConsignmentNote).subscribe();
       this.router.navigateByUrl("app/consignment-notes/" + this.updateConsignmentNote.id);
     }

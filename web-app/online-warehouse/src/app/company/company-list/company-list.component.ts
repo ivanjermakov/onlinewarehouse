@@ -8,7 +8,6 @@ import {catchError, finalize} from "rxjs/operators";
 import {PageEvent} from "@angular/material";
 import {ActionTypeEnum} from "../dto/enum/action-type.enum";
 
-
 @Component({
   selector: 'app-company-list',
   templateUrl: './company-list.component.html',
@@ -66,5 +65,19 @@ export class CompanyListComponent implements OnInit {
           this.page = page;
         }
       });
+  }
+
+// CHART
+  public pieChartLabels:string[] = ['Small', 'Average', 'Big'];
+  public pieChartData:number[] = [300, 500, 100];
+  public pieChartType:string = 'pie';
+
+  // events
+  public chartClicked(e:any):void {
+    console.log(e);
+  }
+
+  public chartHovered(e:any):void {
+    console.log(e);
   }
 }

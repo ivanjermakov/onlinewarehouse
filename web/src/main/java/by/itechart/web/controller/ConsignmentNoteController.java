@@ -33,14 +33,12 @@ public class ConsignmentNoteController {
     @PostMapping
     public Long saveConsignmentNote(@PathVariable long companyId,
                                                   @RequestBody CreateConsignmentNoteDto consignmentNote) {
-        System.out.println(consignmentNote);
         return consignmentNoteService.saveConsignmentNote(consignmentNote, companyId);
     }
 
     @PutMapping
     public Long updateConsignmentNote(@PathVariable long companyId,
                                     @RequestBody UpdateConsignmentNoteDto consignmentNote) {
-        System.out.println(consignmentNote);
         return consignmentNoteService.updateConsignmentNote(consignmentNote, companyId);
     }
 }

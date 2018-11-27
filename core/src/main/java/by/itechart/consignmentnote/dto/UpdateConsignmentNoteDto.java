@@ -22,7 +22,6 @@ import java.util.List;
 public class UpdateConsignmentNoteDto {
     private Long id;
     private String number;
-    private CompanyDto company;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
@@ -30,14 +29,9 @@ public class UpdateConsignmentNoteDto {
     private CounterpartyDto counterparty;
     private CarrierDto carrier;
     private DriverDto driver;
-    private Long creatorId;
     private String vehicleNumber;
-    @JsonSerialize(using = LocalDateSerializer.class)
-    @JsonDeserialize(using = LocalDateDeserializer.class)
-    private LocalDate registration;
     @JsonBackReference
     private List<ConsignmentNoteGoodsDto> consignmentNoteGoodsList;
     private ConsignmentNoteType consignmentNoteType;
-    private ConsignmentNoteStatus consignmentNoteStatus;
     private String description;
 }

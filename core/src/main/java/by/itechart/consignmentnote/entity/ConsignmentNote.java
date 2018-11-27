@@ -11,6 +11,7 @@ import by.itechart.counterparty.entity.Counterparty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -20,6 +21,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @Entity
+@ToString
 @Table(name = "consignment_note")
 public class ConsignmentNote extends BaseEntity {
 

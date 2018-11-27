@@ -49,6 +49,7 @@ export class ConsignmentNoteService {
   }
 
   updateConsignmentNote(updateConsignmentNoteDto: UpdateConsignmentNoteDto): Observable<ConsignmentNoteDto> {
+    console.log(updateConsignmentNoteDto);
     var companyId = this.auth.getCompanyId();
     const path: string = this.baseApi + '/' + companyId + '/consignment-notes';
     return this.http.put<ConsignmentNoteDto>(path, updateConsignmentNoteDto);

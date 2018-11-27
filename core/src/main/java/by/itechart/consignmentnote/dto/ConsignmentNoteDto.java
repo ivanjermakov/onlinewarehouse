@@ -18,7 +18,7 @@ import java.util.List;
 
 @Data
 public class ConsignmentNoteDto {
-    private long id;
+    private Long id;
     private CompanyDto company;
     private String number;
     @JsonSerialize(using = LocalDateSerializer.class)
