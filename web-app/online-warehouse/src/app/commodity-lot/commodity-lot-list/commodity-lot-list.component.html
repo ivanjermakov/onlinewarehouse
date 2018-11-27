@@ -1,6 +1,6 @@
 <form [formGroup]="commodityLotFilterForm">
 
-  <mat-form-field appearance="outline">
+  <mat-form-field *ngIf="disabled" appearance="outline">
     <mat-label>Type</mat-label>
     <mat-select [formControl]="commodityLotFilterForm.controls['commodityLotType']"
                 placeholder="Type" name="commodityLotType">

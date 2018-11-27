@@ -1,7 +1,11 @@
 package by.itechart.web.controller;
 
 import by.itechart.commoditylot.dto.CreateCommodityLotDto;
-import by.itechart.writeoffact.dto.*;
+import by.itechart.common.dto.Pair;
+import by.itechart.writeoffact.dto.CreateWriteOffActDto;
+import by.itechart.writeoffact.dto.WriteOffActDto;
+import by.itechart.writeoffact.dto.WriteOffActFilter;
+import by.itechart.writeoffact.dto.WriteOffActListDto;
 import by.itechart.writeoffact.service.WriteOffActService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

@@ -8,6 +8,7 @@ import {CommodityLotService} from "../../../commodity-lot/service/commodity-lot.
 import {ConsignmentNoteType} from "../../dto/enum/consignment-note-type.enum";
 import {ConsignmentNoteStatus} from "../../dto/enum/consignment-note-status.enum";
 import {WriteOffActService} from "../../../write-off-act/service/write-off-act.service";
+import {GoodsDto} from "../../../shared/goods/dto/goods.dto";
 
 @Component({
   selector: 'app-consignment-note-detail',
@@ -63,6 +64,7 @@ export class ConsignmentNoteDetailComponent implements OnInit {
       disableClose: false,
       autoFocus: true,
       data: {
+        inputGoods: this.getGoodsDtoArr(),
         emitWhenSubmit: true
       }
     });
@@ -84,5 +86,11 @@ export class ConsignmentNoteDetailComponent implements OnInit {
   submitWithoutAct() {
     this.consignmentNoteService.setConsignmentNoteProcessed(this.consignmentNote.id).subscribe();
     this.commodityLotService.saveCommodityLotFromConsignmentNote(this.consignmentNote).subscribe();
+  }
+
+  private getGoodsDtoArr(): GoodsDto[] {
+    return this.consignmentNote.consignmentNoteGoodsList.map((goods) => {
+      return goods.goods;
+    })
   }
 }

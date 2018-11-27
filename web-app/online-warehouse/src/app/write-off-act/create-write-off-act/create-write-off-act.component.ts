@@ -17,6 +17,7 @@ import {AuthenticationService} from "../../auth/_services";
 export class CreateWriteOffActComponent implements OnInit {
 
   @Input() emitWhenSubmit: boolean = false;
+  @Input() inputGoods: GoodsDto[];
 
   @Output() submitted: EventEmitter<CreateWriteOffActDto> = new EventEmitter<CreateWriteOffActDto>();
 
@@ -73,7 +74,9 @@ export class CreateWriteOffActComponent implements OnInit {
 
     dialogConfig.disableClose = false;
     dialogConfig.autoFocus = true;
-
+    if (this.inputGoods) {
+      dialogConfig.data = {inputGoods: this.inputGoods};
+    }
     const dialogRef = this.dialog.open(GoodsListDialogComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(

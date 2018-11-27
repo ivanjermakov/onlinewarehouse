@@ -127,7 +127,7 @@ create table commodity_lot (
   company_id           bigint references company (id),
   counterparty_id      bigint references counterparty (id),
   creation             date        NOT NULL,
-  commodity_lot_type   varchar(20) NOT NULL
+  commodity_lot_type   varchar(20) NOT NULL,
   commodity_lot_status varchar(20) NOT NULL
 );
 

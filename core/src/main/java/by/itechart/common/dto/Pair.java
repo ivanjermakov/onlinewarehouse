@@ -1,4 +1,4 @@
-package by.itechart.writeoffact.dto;
+package by.itechart.common.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

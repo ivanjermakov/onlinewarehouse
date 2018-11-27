@@ -50,9 +50,9 @@ export class CommodityLotListComponent implements OnInit {
   ngOnInit() {
     if (this.router.url === '/app/registered-commodity-lots') {
       this.commodityLotFilterForm.patchValue({'commodityLotStatus': 'NOT_PROCESSED'});
+      this.commodityLotFilterForm.patchValue({'commodityLotType': 'IN'});
       this.displayedColumns.push('commodityLotProcess');
       this.disabled = false;
-      console.log('test123')
     }
     this.loadCommodityLots();
     this.commodityLotFilterForm.valueChanges.pipe(debounceTime(250),

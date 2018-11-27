@@ -9,6 +9,8 @@ import {WarehouseDto} from "../dto/warehouse.dto";
 import {AuthenticationService} from "../../auth/_services";
 import {CreateWarehouseDto} from "../dto/create-warehouse.dto";
 import {PlacementDto} from "../dto/placement.dto";
+import {CreateConsignmentNoteDto} from "../../consignment-note/dto/create-consignment-note-dto";
+import {CreateWriteOffActDto} from "../../write-off-act/dto/create-write-off-act.dto";
 
 @Injectable({
   providedIn: 'root'
@@ -55,5 +57,16 @@ export class WarehouseService {
   savePlacement(placementDto: PlacementDto) {
     const path: string = this.baseApi + '/' + this.companyId + '/warehouses/' + placementDto.warehouseId + '/placements';
     return this.http.post<number>(path, placementDto);
+  }
+
+  updateWarehouseAndCreateConsignmentNote(warehouseDto: WarehouseDto, createConsignmentNoteDto: CreateConsignmentNoteDto): Observable<number> {
+    createConsignmentNoteDto.creatorId = this.auth.getUserId();
+    const path: string = this.baseApi + '/' + this.companyId + '/warehouses/' + warehouseDto.id + '/create-consignment-note';
+    return this.http.post<number>(path, {value1: warehouseDto, value2: createConsignmentNoteDto});
+  }
+
+  updateWarehouseAndCreateWriteOffAct(warehouseDto: WarehouseDto, createWriteOffActDto: CreateWriteOffActDto): Observable<number> {
+    const path: string = this.baseApi + '/' + this.companyId + '/warehouses/' + warehouseDto.id + '/create-write-off-act';
+    return this.http.post<number>(path, {value1: warehouseDto, value2: createWriteOffActDto});
   }
 }

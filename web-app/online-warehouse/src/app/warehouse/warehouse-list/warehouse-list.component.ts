@@ -5,8 +5,10 @@ import {Pageable} from "../../shared/pagination/pageable";
 import {finalize} from "rxjs/operators";
 import {WarehouseDto} from "../dto/warehouse.dto";
 import {WarehouseService} from "../service/warehouse.service";
-import {PageEvent} from "@angular/material";
+import {MatDialog, PageEvent} from "@angular/material";
 import {Router} from "@angular/router";
+import {ConsignmentNoteType} from "../../consignment-note/dto/enum/consignment-note-type.enum";
+import {RegisterConsignmentNoteDialogComponent} from "../../consignment-note/register-consignment-note-dialog/register-consignment-note-dialog.component";
 
 @Component({
   selector: 'app-warehouse-list',
@@ -31,7 +33,8 @@ export class WarehouseListComponent implements OnInit {
   private error: any;
 
   constructor(private warehouseService: WarehouseService,
-              private router: Router) {
+              private router: Router,
+              private dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -52,6 +55,21 @@ export class WarehouseListComponent implements OnInit {
     this.router.navigateByUrl('app/warehouse/' + id + '/create-placement')
   }
 
+  createOutCN(warehouseId: number) {
+    let data = {
+      inputConsignmentNoteType: ConsignmentNoteType.OUT,
+      inputWarehouseId: warehouseId
+    };
+    console.log(data);
+    const dialogRef = this.dialog.open(RegisterConsignmentNoteDialogComponent, {
+      disableClose: false,
+      autoFocus: true,
+      data: data
+    });
+
+    dialogRef.afterClosed().subscribe();
+  }
+
   loadWarehouses() {
     this.loadingSubject.next(true);
     this.warehouseService.getWarehouses(this.pageable).pipe(
@@ -65,5 +83,4 @@ export class WarehouseListComponent implements OnInit {
         }
       );
   }
-
 }

@@ -1,5 +1,7 @@
 package by.itechart.warehouse.service;
 
+import by.itechart.common.dto.Pair;
+import by.itechart.consignmentnote.dto.CreateConsignmentNoteDto;
 import by.itechart.warehouse.dto.CreateWarehouseDto;
 import by.itechart.warehouse.dto.WarehouseDto;
 import org.springframework.data.domain.Page;
@@ -15,4 +17,6 @@ public interface WarehouseService {
     WarehouseDto getWarehouse(long companyId, long warehouseId);
 
     void deleteWarehouse(long placementId);
+
+    Long editWarehouseWithConsignmentNote(Pair<WarehouseDto, CreateConsignmentNoteDto> warehouseDtoAndCreateConsignmentNoteDto, long companyId, long warehouseId);
 }

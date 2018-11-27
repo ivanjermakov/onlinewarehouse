@@ -41,8 +41,8 @@ INSERT INTO user_authority (user_id, authority_id) VALUES (3, 5);
 --админ компании, возможно менеджер, создал склад и указал помещения в нем
 INSERT INTO address (country, region, locality) VALUES ('Belarus', 'Minsk', 'Novogorca str. 35');
 INSERT INTO warehouse (company_id, name, address_id) values (2, 'First warehouse', 5);
-INSERT INTO placement (warehouse_id, placement_type, storage_cost, "size", measurement_unit_type) VALUES (1, 'FREEZER', 5, 100, 'TEST');
-INSERT INTO placement (warehouse_id, placement_type, storage_cost, "size", measurement_unit_type) VALUES (1, 'UNHEATED', 2, 100, 'TEST');
+INSERT INTO placement (warehouse_id, placement_type, storage_cost, "size", measurement_unit_type) VALUES (1, 'FREEZER', 5, 100, 'PCE');
+INSERT INTO placement (warehouse_id, placement_type, storage_cost, "size", measurement_unit_type) VALUES (1, 'UNHEATED', 2, 100, 'PCE');
 
 --кто-то из работников предварительно добавил в систему перевозчика и отправителя
 INSERT INTO address (country, region, locality) VALUES ('Belarus', 'Minsk', 'Carrier Tolstogo str. 10');
@@ -56,9 +56,9 @@ INSERT INTO driver (carrier_id, info) VALUES (1, 'Good driver');
 INSERT INTO consignment_note (company_id, carrier_id, driver_id, counterparty_id, creator_id, number, consignment_note_type, shipment, registration, vehicle_number, consignment_note_status, description)
 VALUES (2, 1, 1, 1, 3, '12302143', 'IN', '2018-10-23', '2018-10-24', '1754-ВС 7', 'PROCESSED', 'ha');
 -- товары которые были в ТТН, добавляем в справочник
-INSERT INTO goods (company_id, name, placement_type, measurement_unit_type, cost, weight, labelling, description) VALUES (2, 'Some goods 1 name', 'FREEZER', 'TEST', 10, 1, 'some label', 'some description');
-INSERT INTO goods (company_id, name, placement_type, measurement_unit_type, cost, weight, labelling, description) VALUES (2, 'Some goods 2 name', 'UNHEATED', 'TEST', 1, 0.2, 'some label', 'some description');
-INSERT INTO goods (company_id, name, placement_type, measurement_unit_type, cost, weight, labelling, description) VALUES (2, 'Some goods 3 name', 'UNHEATED', 'TEST', 3, 15, 'some label', 'some description');
+INSERT INTO goods (company_id, name, placement_type, measurement_unit_type, cost, weight, labelling, description) VALUES (2, 'Some goods 1 name', 'FREEZER', 'PCE', 10, 1, 'some label', 'some description');
+INSERT INTO goods (company_id, name, placement_type, measurement_unit_type, cost, weight, labelling, description) VALUES (2, 'Some goods 2 name', 'UNHEATED', 'PCE', 1, 0.2, 'some label', 'some description');
+INSERT INTO goods (company_id, name, placement_type, measurement_unit_type, cost, weight, labelling, description) VALUES (2, 'Some goods 3 name', 'UNHEATED', 'PCE', 3, 15, 'some label', 'some description');
 -- и добавляем в список к ТТНке
 INSERT INTO consignment_note_goods (goods_id, consignment_note_id, amount) VALUES (1, 1, 10);
 INSERT INTO consignment_note_goods (goods_id, consignment_note_id, amount) VALUES (2, 1, 15);

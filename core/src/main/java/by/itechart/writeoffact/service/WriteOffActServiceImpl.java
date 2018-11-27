@@ -2,10 +2,14 @@ package by.itechart.writeoffact.service;
 
 import by.itechart.commoditylot.dto.CreateCommodityLotDto;
 import by.itechart.commoditylot.service.CommodityLotService;
+import by.itechart.common.dto.Pair;
 import by.itechart.common.service.GoodsService;
 import by.itechart.common.utils.ObjectMapperUtils;
 import by.itechart.company.entity.Company;
-import by.itechart.writeoffact.dto.*;
+import by.itechart.writeoffact.dto.CreateWriteOffActDto;
+import by.itechart.writeoffact.dto.WriteOffActDto;
+import by.itechart.writeoffact.dto.WriteOffActFilter;
+import by.itechart.writeoffact.dto.WriteOffActListDto;
 import by.itechart.writeoffact.entity.WriteOffAct;
 import by.itechart.writeoffact.entity.WriteOffActGoods;
 import by.itechart.writeoffact.repository.WriteOffActGoodsRepository;

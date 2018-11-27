@@ -1,4 +1,5 @@
 <mat-vertical-stepper (selectionChange)="selectionChange($event)" linear #stepper *ngIf="warehouses">
+
   <mat-step [stepControl]="warehouseControl">
     <ng-template matStepLabel>Choose warehouse</ng-template>
     <mat-form-field>
@@ -15,6 +16,7 @@
       <button mat-button matStepperNext>Next</button>
     </div>
   </mat-step>
+
   <mat-step [stepControl]="distributeGoodsForm.controls['storageTime']">
     <ng-template matStepLabel>Specify the storage period</ng-template>
     <mat-form-field>
@@ -27,34 +29,39 @@
       <button mat-button matStepperNext>Next</button>
     </div>
   </mat-step>
+
   <mat-step *ngIf="commodityLot">
     <ng-template matStepLabel>Distribute goods</ng-template>
     <div cdkDropListGroup *ngIf="commodityLot && placementDropListArray">
       <div class="example-container" [formGroup]="goodsCount">
-        <!--<div class="example-container">-->
-        <h2>To do</h2>
-        <!--[cdkDropListData]="commodityLot.commodityLotGoodsList"-->
+        <h2>Commodity lot</h2>
         <div
           cdkDropList
           [cdkDropListData]="commodityLot.commodityLotGoodsList"
           class="example-list"
           (cdkDropListDropped)="drop($event)"
           formArrayName="arr">
-          <div class="example-box" *ngFor="let item of commodityLot.commodityLotGoodsList; let i = index" cdkDrag>
-            {{item.goods.name}},{{i}}
+          <div
+            id="{{'drag-' + i + '_' + item.goods.placementType + '_' + item.goods.measurementUnit + '_' + item.amount}}"
+            class="example-box"
+            *ngFor="let item of commodityLot.commodityLotGoodsList; let i = index"
+            cdkDrag>
+            {{item.goods.name}}, {{item.goods.placementType}}, {{item.goods.measurementUnit}}
             <i>{{item.amount}}</i>
             <button mat-icon-button [matMenuTriggerFor]="menu" #menuTrigger="matMenuTrigger">
               <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #menu="matMenu">
-              <div mat-menu-item [disabled]="true"
-                   style="display: flex">
-                <span style="font-size: 8px">
-                <mat-form-field>
-                  <input matInput style="width: 40%" type="number" formControlName="{{i}}"/>
+              <div mat-menu-item [disabled]="true" class="divide-menu">
+                <mat-form-field appearance="outline">
+                  <mat-label>Count</mat-label>
+                  <input matInput type="number" formControlName="{{i}}" required>
+                  <mat-error *ngIf="goodsCount.controls['arr'].controls[i].invalid">Fit correct count</mat-error>
                 </mat-form-field>
-                <button mat-button (click)="divide(item, i); menuTrigger.closeMenu()">Divide</button>
-                </span>
+                <button mat-button
+                        [disabled]="goodsCount.controls['arr'].controls[i].invalid || !goodsCount.controls['arr'].controls[i].dirty"
+                        (click)="divide(item, i); menuTrigger.closeMenu()">Divide
+                </button>
               </div>
             </mat-menu>
           </div>
@@ -62,13 +69,15 @@
       </div>
 
       <div class="example-container">
-        <ng-container *ngFor="let placementDropList of placementDropListArray">
-          <h2>{{placementDropList.size}}, {{placementDropList.placementType}}</h2>
+        <ng-container *ngFor="let placementDropList of placementDropListArray; let i = index">
+          <h2>{{placementDropList.placementLoad + countAdded(placementDropList.arr)}}/{{placementDropList.size}},
+            {{placementDropList.placementType}}, {{placementDropList.measurementUnit}}</h2>
           <div
             cdkDropList
             [cdkDropListData]="placementDropList.arr"
+            [id]="i + '_' + placementDropList.placementType + '_' + placementDropList.measurementUnit + '_' + placementDropList.size + '_' + (placementDropList.placementLoad + countAdded(placementDropList.arr))"
             class="example-list"
-            (cdkDropListDropped)="drop($event)">
+            (cdkDropListDropped)="drop($event)" [cdkDropListEnterPredicate]="specialUseCase">
             <div class="example-box" *ngFor="let item of placementDropList.arr" cdkDrag>
               {{item.goods.name}},{{item.amount}}
             </div>
@@ -76,7 +85,9 @@
         </ng-container>
       </div>
     </div>
-    <button mat-button (click)="saveUpdatedWarehouse()">Save</button>
+    <button mat-button [disabled]="commodityLot.commodityLotGoodsList.length !== 0" (click)="saveUpdatedWarehouse()">
+      Save
+    </button>
   </mat-step>
 </mat-vertical-stepper>
 

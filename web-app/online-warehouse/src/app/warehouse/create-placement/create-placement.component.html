@@ -19,7 +19,7 @@
       <mat-select [formControl]="createPlacementForm.controls['measurementUnit']"
                   placeholder="Measurement unit" [required]="true">
         <mat-option *ngFor="let type of getMeasurementUnit()" [value]="type">
-          {{type}}
+          {{measurementUnit[type]}}
         </mat-option>
       </mat-select>
     </mat-form-field>

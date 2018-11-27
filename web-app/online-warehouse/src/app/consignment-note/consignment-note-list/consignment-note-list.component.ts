@@ -62,7 +62,7 @@ export class ConsignmentNoteListComponent implements OnInit {
   }
 
   getConsignmentNotes(): void {
-    this.consignmentNoteService.getConsignmentNotes(this.consignmentNoteFilterForm.value, this.pageable.toServerPageable())
+    this.consignmentNoteService.getConsignmentNotes(this.consignmentNoteFilterForm.value, this.pageable)
       .subscribe((consignmentNotes) =>
           this.consignmentNotes = consignmentNotes,
         error => this.errors = error);
@@ -100,6 +100,7 @@ export class ConsignmentNoteListComponent implements OnInit {
 
   pageChanged(event: PageEvent) {
     this.consignmentNotes = null;
+    console.log(event);
     this.pageable = new Pageable(event.pageIndex, event.pageSize);
     this.getConsignmentNotes();
   }

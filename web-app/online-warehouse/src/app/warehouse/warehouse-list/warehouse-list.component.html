@@ -48,7 +48,7 @@
         </mat-expansion-panel>
       </mat-card-content>
       <mat-card-actions>
-        <button mat-button>Create CN</button>
+        <button mat-button (click)="createOutCN(warehouse.id)">Create CN</button>
         <button mat-button (click)="addPlacement(warehouse.id)">Add placement</button>
       </mat-card-actions>
     </mat-card>
@@ -102,7 +102,7 @@
         </tbody>
       </table>
       <br>
-      <button mat-button>Create CN</button>
+      <button mat-button (click)="createOutCN(warehouse.id)">Create CN</button>
       <button mat-button (click)="addPlacement(warehouse.id)">Add placement</button>
     </mat-expansion-panel>
     <!--<table mat-table [dataSource]="page ? page.content : null" class="hoverable-table">-->

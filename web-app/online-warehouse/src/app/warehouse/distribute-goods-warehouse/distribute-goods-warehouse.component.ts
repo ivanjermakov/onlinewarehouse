@@ -10,7 +10,7 @@ import {PlacementGoodsDto} from "../dto/placement-goods.dto";
 import {PlacementDto} from "../dto/placement.dto";
 import {CommodityLotService} from "../../commodity-lot/service/commodity-lot.service";
 import {CommodityLotDto} from "../../commodity-lot/dto/commodity-lot.dto";
-import {CdkDragDrop, moveItemInArray, transferArrayItem} from "@angular/cdk/drag-drop";
+import {CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray, transferArrayItem} from "@angular/cdk/drag-drop";
 import {BehaviorSubject} from "rxjs";
 import {finalize} from "rxjs/operators";
 
@@ -26,6 +26,8 @@ export class DistributeGoodsWarehouseComponent implements OnInit {
   goodsCount: FormGroup;
   placementDropListArray: PlacementDropList[];
   error: any;
+  test = false;
+  testControl = new FormControl([''], [Validators.min(3), Validators.max(5)])
   private loadingSubject = new BehaviorSubject<boolean>(false);
   loading$ = this.loadingSubject.asObservable();
   private warehouses: WarehouseDto[];
@@ -61,7 +63,7 @@ export class DistributeGoodsWarehouseComponent implements OnInit {
     //
     this.commodityLot.commodityLotGoodsList.forEach((commodityLotGoods) => {
       (this.goodsCount.controls['arr'] as FormArray)
-        .push(this.fb.control([''], [Validators.max(commodityLotGoods.amount - 1), Validators.min(1)]))
+        .push(this.fb.control([''], [Validators.max(commodityLotGoods.amount - 1), Validators.min(1), Validators.required]))
     });
 
     // if (!this.commodityLot) {
@@ -151,6 +153,15 @@ export class DistributeGoodsWarehouseComponent implements OnInit {
     }
   }
 
+  specialUseCase(drag?: CdkDrag, drop?: CdkDropList) {
+    let dragArr = drag.element.nativeElement.id.split('_');
+    let dropArr = drop.id.split('_');
+    return (dragArr[1] === dropArr[1] && //placementType equals
+      dragArr[2] === dropArr[2] && //measurementUnit equals
+      parseInt(dragArr[3]) <= parseInt(dropArr[3]) - parseInt(dropArr[4]) // amount <= size - current load
+    );
+  }
+
   selectionChange() {
     if (true) {
       this.placementDropListArray = this.mapWarehouseToPlacementDropGroup(this.warehouses[this.warehouseControl.value]);
@@ -159,13 +170,16 @@ export class DistributeGoodsWarehouseComponent implements OnInit {
 
   divide(item, index: number) {
     let formValue: number = (this.goodsCount.controls['arr'] as FormArray).at(index).value;
+    (this.goodsCount.controls['arr'] as FormArray).at(index).reset();
     this.commodityLot.commodityLotGoodsList[index].amount -= formValue;
     let newCommodityLotGoods: CommodityLotGoodsDto =
       Object.assign({}, this.commodityLot.commodityLotGoodsList[index]) as CommodityLotGoodsDto;
     newCommodityLotGoods.amount = formValue;
+    (this.goodsCount.controls['arr'] as FormArray).at(index)
+      .setValidators(Validators.max(this.commodityLot.commodityLotGoodsList[index].amount - 1));
     this.commodityLot.commodityLotGoodsList.splice(index, 0, newCommodityLotGoods);
     (this.goodsCount.controls['arr'] as FormArray)
-      .insert(index, this.fb.control([''], [Validators.max(formValue - 1), Validators.min(1)]));
+      .insert(index, this.fb.control([''], [Validators.max(formValue - 1), Validators.min(1), Validators.required]));
   }
 
   dateEquals(d1: Date, d2: Date) {
@@ -190,9 +204,17 @@ export class DistributeGoodsWarehouseComponent implements OnInit {
     return result; //.toISOString().split('T')[0];
   }
 
+  countAdded(arr: Array<CommodityLotGoodsDto>): number {
+    let result: number = 0;
+    arr.forEach((goods) => {
+      result += goods.amount;
+    });
+    return result;
+  }
+
   private placementGoodsEquals(p1: PlacementGoodsDto, p2: PlacementGoodsDto) {
     let b = (p1.counterpartyId === p2.counterpartyId &&
-      p1.goods === p2.goods &&
+      p1.goods.id === p2.goods.id &&
       this.dateEquals(p1.expirationDate, p2.expirationDate) &&
       p1.storageTimeDays == p2.storageTimeDays);
     return b;
