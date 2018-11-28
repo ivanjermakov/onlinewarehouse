@@ -1,21 +1,9 @@
-<div class="content">
-  <mat-sidenav-container class="example-container">
-    <mat-sidenav #sidenav mode="side" opened>
-      <mat-toolbar>My App</mat-toolbar>
-      <app-menu></app-menu>
-      <app-logout></app-logout>
-    </mat-sidenav>
-
-    <mat-sidenav-content>
-      <mat-toolbar>
-        <a class="menu-trigger" (click)="sidenav.toggle(); menu = !menu">
-          <i *ngIf="menu" class="fas fa-arrow-left"></i>
-          <i *ngIf="!menu" class="fas fa-arrow-right"></i>
-        </a>
-      </mat-toolbar>
-      <router-outlet></router-outlet>
-    </mat-sidenav-content>
-  </mat-sidenav-container>
+<mat-toolbar>
+  <span class="company-name">Some text here</span>
+  <app-menu style="padding-bottom: 0.5em"></app-menu>
+</mat-toolbar>
+<div class="container">
+  <router-outlet></router-outlet>
 </div>
 
 
