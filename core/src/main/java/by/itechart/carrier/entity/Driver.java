@@ -1,10 +1,6 @@
 package by.itechart.carrier.entity;
 
 import by.itechart.common.entity.BaseEntity;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,8 +18,7 @@ import java.time.LocalDate;
 @Table(name = "driver")
 @Document(indexName = "warehouse", type = "drivers")
 public class Driver extends BaseEntity {
-
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "carrier_id")
     @Field(type = FieldType.Nested, includeInParent = true)
     private Carrier carrier;
@@ -31,9 +26,6 @@ public class Driver extends BaseEntity {
     @Column(name = "info")
     private String info;
 
-    @JsonSerialize(using = LocalDateSerializer.class)
-    @JsonDeserialize(using = LocalDateDeserializer.class)
     @Column(name = "deleted")
     private LocalDate deleted;
-
 }

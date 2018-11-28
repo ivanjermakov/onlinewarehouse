@@ -5,7 +5,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.elasticsearch.repository.ElasticsearchCrudRepository;
 
-
 public interface CarrierElasticRepository extends ElasticsearchCrudRepository<Carrier, String> {
+
     Page<Carrier> findByName(String name, Pageable pageable);
+
 }

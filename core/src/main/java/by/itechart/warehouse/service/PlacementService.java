@@ -11,9 +11,10 @@ public interface PlacementService {
 
     Long savePlacement(CreatePlacementDto placementDto, long companyId, long warehouseId);
 
-    Long editPlacement(CreatePlacementDto editDto, long companyId, long warehouseId, long placementId);
+    Long editPlacement(PlacementDto editDto);
 
     PlacementDto getPlacement(long companyId, long warehouseId, long placementId);
 
     void deletePlacement(long placementId);
+
 }

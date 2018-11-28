@@ -12,7 +12,6 @@ import by.itechart.company.enums.ActionType;
 import by.itechart.company.repository.CompanyActionRepository;
 import by.itechart.company.repository.CompanyElasticRepository;
 import by.itechart.company.repository.CompanyRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -32,7 +31,6 @@ public class CompanyServiceImpl implements CompanyService {
     private CompanyActionRepository companyActionRepository;
     private final CompanyElasticRepository companyElasticRepository;
 
-    @Autowired
     public CompanyServiceImpl(CompanyRepository companyRepository,
                               CompanyActionRepository companyActionRepository, CompanyElasticRepository companyElasticRepository) {
         this.companyRepository = companyRepository;
@@ -44,6 +42,7 @@ public class CompanyServiceImpl implements CompanyService {
     @Transactional(readOnly = true)
     public Page<CompanyDto> getCompanies(Pageable pageable) {
         Page<Company> all = companyRepository.findAll(CompanyPredicates.findExcludeFirstCompany(), pageable);
+
         List<CompanyDto> companyDtoList = all.getContent().stream().map(company -> {
             CompanyDto companyDto = new CompanyDto();
             companyDto.setId(company.getId());
@@ -57,7 +56,9 @@ public class CompanyServiceImpl implements CompanyService {
             companyDto.setChange(lastCompanyAction.getChange());
             return companyDto;
         }).collect(Collectors.toList());
+
         return new PageImpl<CompanyDto>(companyDtoList, pageable, all.getTotalElements());
+//        return companies.map(company -> ObjectMapperUtils.map(company, CompanyDto.class));
     }
 
     @Override

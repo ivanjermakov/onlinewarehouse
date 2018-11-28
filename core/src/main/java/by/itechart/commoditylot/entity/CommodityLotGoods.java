@@ -14,16 +14,14 @@ import javax.persistence.*;
 @Entity
 @Table(name = "commodity_lot_goods")
 public class CommodityLotGoods extends BaseEntity {
-
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "goods_id")
     private Goods goods;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "commodity_lot_id")
     private CommodityLot commodityLot;
 
     @Column(name = "amount")
     private Integer amount;
-
 }

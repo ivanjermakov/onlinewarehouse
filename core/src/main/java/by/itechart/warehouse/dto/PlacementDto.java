@@ -8,7 +8,6 @@ import java.util.List;
 
 @Data
 public class PlacementDto {
-
     private Long id;
     private Long warehouseId;
     private Integer size;

@@ -7,9 +7,14 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 
+import java.util.Optional;
+
 public interface CommodityLotRepository extends JpaRepository<CommodityLot, Long>, QuerydslPredicateExecutor<CommodityLot> {
 
+    Optional<CommodityLot> findByCompanyIdAndId(Long companyId, Long commodityLotId);
+
     @Modifying
-    @Query("update CommodityLot cl set cl.commodityLotStatus = ?3 where cl.id = ?1 and cl.company.id = ?2")
-    void changeCommodityLotStatus(long commodityLotId, long companyId, CommodityLotStatus status);
+    @Query("update CommodityLot cl set cl.commodityLotStatus = ?1 where cl.id = ?2 and cl.company.id = ?3")
+    void changeCommodityLotStatus(CommodityLotStatus status, long commodityLotId, long companyId);
+
 }

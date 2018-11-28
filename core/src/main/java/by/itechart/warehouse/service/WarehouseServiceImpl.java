@@ -16,7 +16,6 @@ import by.itechart.warehouse.repository.PlacementGoodsRepository;
 import by.itechart.warehouse.repository.PlacementRepository;
 import by.itechart.warehouse.repository.WarehouseElasticRepository;
 import by.itechart.warehouse.repository.WarehouseRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -27,6 +26,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class WarehouseServiceImpl implements WarehouseService {
+
     private WarehouseRepository warehouseRepository;
     private PlacementRepository placementRepository;
     private PlacementGoodsRepository placementGoodsRepository;
@@ -34,7 +34,6 @@ public class WarehouseServiceImpl implements WarehouseService {
     private ConsignmentNoteService consignmentNoteService;
     private final WarehouseElasticRepository warehouseElasticRepository;
 
-    @Autowired
     public WarehouseServiceImpl(WarehouseRepository warehouseRepository,
                                 PlacementRepository placementRepository,
                                 PlacementGoodsRepository placementGoodsRepository,
@@ -52,8 +51,8 @@ public class WarehouseServiceImpl implements WarehouseService {
     @Transactional(readOnly = true)
     @Override
     public Page<WarehouseDto> getWarehouses(long companyId, Pageable pageable) {
-        Page<Warehouse> warehouses = warehouseRepository.findWarehousesByCompanyId(companyId, pageable);
-        return warehouses.map(warehouse -> ObjectMapperUtils.map(warehouse, WarehouseDto.class));
+        return warehouseRepository.findWarehousesByCompanyId(companyId, pageable)
+                .map(warehouse -> ObjectMapperUtils.map(warehouse, WarehouseDto.class));
     }
 
     @Transactional

@@ -21,4 +21,5 @@ public interface BirthdayMailSendRepository extends JpaRepository<BirthdayMailSe
             "from birthday_mail_send\n" +
             "where user_id = ?1 and date = ?2 and successful = false", nativeQuery = true)
     Integer getCelebrateAttemptsCount(Long userId, LocalDate date);
+
 }

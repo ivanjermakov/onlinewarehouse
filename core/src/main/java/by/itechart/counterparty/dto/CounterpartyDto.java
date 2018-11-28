@@ -6,7 +6,6 @@ import lombok.Data;
 
 @Data
 public class CounterpartyDto {
-
     private Long id;
     private AddressDto address;
     private String name;

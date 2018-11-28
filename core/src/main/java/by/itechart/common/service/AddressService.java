@@ -5,4 +5,5 @@ import by.itechart.common.dto.AddressDto;
 public interface AddressService {
 
     Long saveAddress(AddressDto addressDto);
+
 }

@@ -24,5 +24,4 @@ public class UploadServiceImpl implements UploadService {
 
         return webResources + multipartFile.getOriginalFilename();
     }
-
 }

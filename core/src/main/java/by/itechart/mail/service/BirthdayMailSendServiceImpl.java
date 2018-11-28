@@ -40,6 +40,7 @@ public class BirthdayMailSendServiceImpl implements BirthdayMailSendService {
                 .stream()
                 .map(BigInteger::longValue)
                 .collect(Collectors.toList());
+
         return new ArrayList<>(userService.getAllById(us));
     }
 

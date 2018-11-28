@@ -20,7 +20,6 @@ import java.util.List;
 @Table(name = "company")
 @Document(indexName = "warehouse", type = "companies")
 public class Company extends BaseEntity {
-
     @Column(name = "name")
     private String name;
 
@@ -28,13 +27,13 @@ public class Company extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private CompanySize sizeType;
 
-    @OneToMany(mappedBy = "company")
+    @OneToMany(mappedBy = "company", fetch = FetchType.LAZY)
     private List<Warehouse> warehouses;
 
-    @OneToMany(mappedBy = "company")
+    @OneToMany(mappedBy = "company", fetch = FetchType.LAZY)
     private List<User> users;
 
-    @OneToMany(mappedBy = "company")
+    @OneToMany(mappedBy = "company", fetch = FetchType.LAZY)
     private List<CompanyAction> companyActions;
 
     public Company(Long id) {

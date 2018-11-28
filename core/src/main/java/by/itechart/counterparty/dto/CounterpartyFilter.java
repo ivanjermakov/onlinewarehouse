@@ -5,7 +5,6 @@ import lombok.Data;
 
 @Data
 public class CounterpartyFilter {
-
     private String name;
     private String taxNumber;
     private CounterpartyType counterpartyType;

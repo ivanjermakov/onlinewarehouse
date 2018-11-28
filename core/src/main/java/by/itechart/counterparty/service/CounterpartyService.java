@@ -12,7 +12,8 @@ public interface CounterpartyService {
 
     Long saveOrUpdateCounterparty(CreateCounterpartyDto counterparty);
 
-    CounterpartyDto getCounterparty(Long counterpartyId);
+    CounterpartyDto getCounterparty(Long companyId, Long counterpartyId);
 
     void deleteCounterparty(Long counterpartyId);
+
 }

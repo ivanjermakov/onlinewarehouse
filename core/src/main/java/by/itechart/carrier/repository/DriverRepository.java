@@ -15,4 +15,5 @@ public interface DriverRepository extends JpaRepository<Driver, Long>, QuerydslP
     @Modifying
     @Query("update Driver d set d.deleted = current_date where d.id = :id")
     void setDeleted(Long id);
+
 }

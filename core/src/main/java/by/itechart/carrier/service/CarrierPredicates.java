@@ -9,9 +9,6 @@ import org.apache.commons.lang3.StringUtils;
 
 final class CarrierPredicates {
 
-    private CarrierPredicates() {
-    }
-
     static Predicate findFilter(CarrierFilter filter, Long companyId) {
         BooleanBuilder predicate = new BooleanBuilder();
 
@@ -24,8 +21,10 @@ final class CarrierPredicates {
         if (filter.getCarrierType() != null) {
             predicate.and(QCarrier.carrier.carrierType.eq(filter.getCarrierType()));
         }
+
         predicate.and(QCarrier.carrier.deleted.isNull());
         predicate.and(QCarrier.carrier.company.id.eq(companyId));
+
         return predicate;
     }
 
@@ -35,6 +34,7 @@ final class CarrierPredicates {
         predicate.and(QCarrier.carrier.company.id.eq(companyId))
                 .and(QCarrier.carrier.id.eq(carrierId))
                 .and(QCarrier.carrier.deleted.isNull());
+
         return predicate;
     }
 
@@ -42,6 +42,7 @@ final class CarrierPredicates {
         BooleanBuilder predicate = new BooleanBuilder();
 
         predicate.and(QDriver.driver.carrier.id.eq(carrierId));
+
         return predicate;
     }
 }

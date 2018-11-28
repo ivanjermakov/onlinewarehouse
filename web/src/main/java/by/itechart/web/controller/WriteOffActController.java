@@ -32,7 +32,7 @@ public class WriteOffActController {
 
     @GetMapping("/{writeOffActId}")
     public WriteOffActDto getWriteOffAct(@PathVariable long companyId, @PathVariable long writeOffActId) {
-        return writeOffActService.getWriteOffAct(writeOffActId);
+        return writeOffActService.getWriteOffAct(companyId, writeOffActId);
     }
 
     @PostMapping

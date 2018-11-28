@@ -60,6 +60,7 @@ public class PersistenceConfig {
         factory.setPackagesToScan("by.itechart");
         factory.setDataSource(dataSource());
         factory.setJpaProperties(jpaProperties());
+
         return factory;
     }
 
@@ -81,5 +82,3 @@ public class PersistenceConfig {
         return transactionManager;
     }
 }
-
-

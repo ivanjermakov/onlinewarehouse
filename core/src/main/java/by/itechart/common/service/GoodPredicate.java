@@ -5,7 +5,7 @@ import by.itechart.common.entity.QGoods;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 
-public class GoodPredicate {
+final class GoodPredicate {
 
     static Predicate findFilter(long companyId, GoodFilter goodFilter) {
         BooleanBuilder predicate = new BooleanBuilder();

@@ -12,7 +12,6 @@ import javax.persistence.*;
 @NoArgsConstructor
 @MappedSuperclass
 public class BaseEntity {
-
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

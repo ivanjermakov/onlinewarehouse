@@ -6,7 +6,6 @@ import lombok.Data;
 
 @Data
 public class CreateCounterpartyDto {
-
     private AddressDto address;
     private Long companyId;
     private String name;

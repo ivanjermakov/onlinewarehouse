@@ -5,7 +5,6 @@ import lombok.Data;
 
 @Data
 public class CarrierListDto {
-
     private Long id;
     private String name;
     private String taxNumber;

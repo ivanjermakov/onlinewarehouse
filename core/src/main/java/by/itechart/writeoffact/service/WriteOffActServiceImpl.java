@@ -6,6 +6,7 @@ import by.itechart.common.dto.Pair;
 import by.itechart.common.service.GoodsService;
 import by.itechart.common.utils.ObjectMapperUtils;
 import by.itechart.company.entity.Company;
+import by.itechart.exception.NotFoundEntityException;
 import by.itechart.writeoffact.dto.CreateWriteOffActDto;
 import by.itechart.writeoffact.dto.WriteOffActDto;
 import by.itechart.writeoffact.dto.WriteOffActFilter;
@@ -14,9 +15,7 @@ import by.itechart.writeoffact.entity.WriteOffAct;
 import by.itechart.writeoffact.entity.WriteOffActGoods;
 import by.itechart.writeoffact.repository.WriteOffActGoodsRepository;
 import by.itechart.writeoffact.repository.WriteOffActRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,7 +32,6 @@ public class WriteOffActServiceImpl implements WriteOffActService {
     private final GoodsService goodsService;
     private final CommodityLotService commodityLotService;
 
-    @Autowired
     public WriteOffActServiceImpl(WriteOffActRepository writeOffActRepository, WriteOffActGoodsRepository writeOffActGoodsRepository, GoodsService goodsService, CommodityLotService commodityLotService) {
         this.writeOffActRepository = writeOffActRepository;
         this.writeOffActGoodsRepository = writeOffActGoodsRepository;
@@ -44,10 +42,8 @@ public class WriteOffActServiceImpl implements WriteOffActService {
     @Transactional(readOnly = true)
     @Override
     public Page<WriteOffActListDto> getWriteOffActs(Long companyId, Pageable pageable, WriteOffActFilter writeOffActFilter) {
-        Page<WriteOffAct> writeOffActList =
-                writeOffActRepository.findAll(WriteOffActsPredicates.findByWriteOffActFilter(writeOffActFilter, companyId), pageable);
-        List<WriteOffActListDto> writeOffActListDto = ObjectMapperUtils.mapAll(writeOffActList.getContent(), WriteOffActListDto.class);
-        return new PageImpl<>(writeOffActListDto, pageable, writeOffActList.getTotalElements());
+        return writeOffActRepository.findAll(WriteOffActsPredicates.findByWriteOffActFilter(writeOffActFilter, companyId), pageable)
+                .map(writeOffAct -> ObjectMapperUtils.map(writeOffAct, WriteOffActListDto.class));
     }
 
     @Transactional
@@ -70,13 +66,16 @@ public class WriteOffActServiceImpl implements WriteOffActService {
             return writeOffActGoods;
         }).collect(Collectors.toList());
         writeOffActGoodsRepository.saveAll(writeOffActGoodsList);
+
         return id;
     }
 
     @Transactional(readOnly = true)
     @Override
-    public WriteOffActDto getWriteOffAct(Long writeOffActId) {
-        WriteOffAct writeOffAct = writeOffActRepository.getOne(writeOffActId);
+    public WriteOffActDto getWriteOffAct(Long companyId, Long writeOffActId) {
+        WriteOffAct writeOffAct = writeOffActRepository.findByCompanyIdAndId(companyId, writeOffActId)
+                .orElseThrow(() -> new NotFoundEntityException("WriteOffAct"));
+
         return ObjectMapperUtils.map(writeOffAct, WriteOffActDto.class);
     }
 

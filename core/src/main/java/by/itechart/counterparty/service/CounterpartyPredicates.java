@@ -7,8 +7,6 @@ import com.querydsl.core.types.Predicate;
 import org.apache.commons.lang3.StringUtils;
 
 final class CounterpartyPredicates {
-    private CounterpartyPredicates() {
-    }
 
     static Predicate findFilter(CounterpartyFilter filter, Long companyId) {
         BooleanBuilder predicate = new BooleanBuilder();
@@ -24,6 +22,7 @@ final class CounterpartyPredicates {
         }
         predicate.and(QCounterparty.counterparty.deleted.isNull());
         predicate.and(QCounterparty.counterparty.company.id.eq(companyId));
+
         return predicate;
     }
 }

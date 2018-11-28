@@ -5,10 +5,6 @@ import by.itechart.commoditylot.enums.CommodityLotType;
 import by.itechart.common.entity.BaseEntity;
 import by.itechart.company.entity.Company;
 import by.itechart.counterparty.entity.Counterparty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,12 +19,11 @@ import java.util.List;
 @Entity
 @Table(name = "commodity_lot")
 public class CommodityLot extends BaseEntity {
-
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id")
     private Company company;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "counterparty_id")
     private Counterparty counterparty;
 
@@ -40,12 +35,9 @@ public class CommodityLot extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private CommodityLotStatus commodityLotStatus;
 
-    @JsonSerialize(using = LocalDateSerializer.class)
-    @JsonDeserialize(using = LocalDateDeserializer.class)
     @Column(name = "creation")
     private LocalDate creation;
 
-    @OneToMany(mappedBy = "commodityLot")
+    @OneToMany(mappedBy = "commodityLot", fetch = FetchType.LAZY)
     private List<CommodityLotGoods> commodityLotGoodsList;
-
 }

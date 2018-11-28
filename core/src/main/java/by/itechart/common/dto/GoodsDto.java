@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class GoodsDto {
-
     private Long id;
     private String name;
     private PlacementType placementType;
@@ -17,5 +16,4 @@ public class GoodsDto {
     private Float weight;
     private String labelling;
     private String description;
-
 }

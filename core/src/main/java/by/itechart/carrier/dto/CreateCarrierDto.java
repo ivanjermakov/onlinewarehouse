@@ -6,7 +6,6 @@ import lombok.Data;
 
 @Data
 public class CreateCarrierDto {
-
     private AddressDto address;
     private String name;
     private CarrierType carrierType;

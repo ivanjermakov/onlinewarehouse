@@ -5,7 +5,6 @@ import lombok.Data;
 
 @Data
 public class CreateCompanyDto {
-
     private String name;
     private CompanySize sizeType;
     private String username;

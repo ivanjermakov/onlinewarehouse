@@ -9,4 +9,6 @@ public interface GoodsElasticRepository extends ElasticsearchCrudRepository<Good
 
     Page<Goods> findGoodsByNameAndDeletedIsFalse(String name, Pageable pageable);
 
+    Page<Goods> findGoodsByCompanyIdAndDeletedIsFalse(Long companyId, Pageable pageable);
+
 }

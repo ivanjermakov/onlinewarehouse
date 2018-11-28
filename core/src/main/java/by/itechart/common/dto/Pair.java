@@ -8,8 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Pair<K, V> {
-
     private K value1;
     private V value2;
-
 }

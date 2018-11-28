@@ -13,4 +13,5 @@ public interface PlacementRepository extends JpaRepository<Placement, Long>, Que
     @Modifying
     @Query("update Placement p set p.deleted = current_date where p.id = ?1")
     void setDeleted(long placementId);
+
 }

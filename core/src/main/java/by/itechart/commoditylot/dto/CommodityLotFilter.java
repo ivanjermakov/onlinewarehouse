@@ -13,7 +13,6 @@ import java.time.LocalDate;
 
 @Data
 public class CommodityLotFilter {
-
     private CommodityLotStatus commodityLotStatus;
     private CommodityLotType commodityLotType;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
@@ -25,5 +24,4 @@ public class CommodityLotFilter {
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate to;
     private String counterpartyName;
-
 }

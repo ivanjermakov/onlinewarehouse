@@ -14,4 +14,5 @@ public interface MailTemplateService {
     BirthdayMailTemplate getTemplate(long companyId);
 
     BirthdayMailTemplate saveOrUpdateTemplate(long companyId, BirthdayMailTemplate birthdayMailTemplate);
+
 }

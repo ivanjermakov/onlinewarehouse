@@ -21,4 +21,5 @@ public interface CarrierRepository extends JpaRepository<Carrier, Long>, Queryds
     @Modifying
     @Query("update Carrier c set c.deleted = current_date where c.id = ?1 and c.company.id = ?2")
     void setDeleted(Long carrierId, Long companyId);
+
 }

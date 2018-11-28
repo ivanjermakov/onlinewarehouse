@@ -11,7 +11,6 @@ import java.time.LocalDate;
 
 @Data
 public class WriteOffActListDto {
-
     private Long id;
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
@@ -20,5 +19,4 @@ public class WriteOffActListDto {
     private String responsiblePerson;
     private Integer totalAmount;
     private WriteOffActType writeOffActType;
-
 }

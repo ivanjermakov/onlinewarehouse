@@ -17,4 +17,5 @@ public interface CommodityLotService {
     CommodityLotDto getCommodityLot(Long commodityLotId, Long companyId);
 
     Long setCommodityLotStatus(long commodityLotId, long companyId, CommodityLotStatus status);
+
 }

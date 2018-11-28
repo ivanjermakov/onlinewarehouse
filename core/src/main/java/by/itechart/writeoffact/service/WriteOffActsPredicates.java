@@ -6,8 +6,6 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 
 final class WriteOffActsPredicates {
-    private WriteOffActsPredicates() {
-    }
 
     static Predicate findByWriteOffActFilter(WriteOffActFilter filter, Long companyId) {
         BooleanBuilder predicate = new BooleanBuilder();
@@ -22,6 +20,7 @@ final class WriteOffActsPredicates {
             predicate.and(QWriteOffAct.writeOffAct.creation.before(filter.getTo())).or(QWriteOffAct.writeOffAct.creation.eq(filter.getTo()));
         }
         predicate.and(QWriteOffAct.writeOffAct.company.id.eq(companyId));
+
         return predicate;
     }
 }

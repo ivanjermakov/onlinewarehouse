@@ -66,18 +66,4 @@ export class CompanyListComponent implements OnInit {
         }
       });
   }
-
-// CHART
-  public pieChartLabels:string[] = ['Small', 'Average', 'Big'];
-  public pieChartData:number[] = [300, 500, 100];
-  public pieChartType:string = 'pie';
-
-  // events
-  public chartClicked(e:any):void {
-    console.log(e);
-  }
-
-  public chartHovered(e:any):void {
-    console.log(e);
-  }
 }
