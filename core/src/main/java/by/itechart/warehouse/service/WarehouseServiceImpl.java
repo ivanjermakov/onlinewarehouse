@@ -14,6 +14,7 @@ import by.itechart.warehouse.entity.PlacementGoods;
 import by.itechart.warehouse.entity.Warehouse;
 import by.itechart.warehouse.repository.PlacementGoodsRepository;
 import by.itechart.warehouse.repository.PlacementRepository;
+import by.itechart.warehouse.repository.WarehouseElasticRepository;
 import by.itechart.warehouse.repository.WarehouseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -31,18 +32,21 @@ public class WarehouseServiceImpl implements WarehouseService {
     private PlacementGoodsRepository placementGoodsRepository;
     private AddressRepository addressRepository;
     private ConsignmentNoteService consignmentNoteService;
+    private final WarehouseElasticRepository warehouseElasticRepository;
 
     @Autowired
     public WarehouseServiceImpl(WarehouseRepository warehouseRepository,
                                 PlacementRepository placementRepository,
                                 PlacementGoodsRepository placementGoodsRepository,
                                 AddressRepository addressRepository,
-                                ConsignmentNoteService consignmentNoteService) {
+                                ConsignmentNoteService consignmentNoteService,
+                                WarehouseElasticRepository warehouseElasticRepository) {
         this.warehouseRepository = warehouseRepository;
         this.placementRepository = placementRepository;
         this.placementGoodsRepository = placementGoodsRepository;
         this.addressRepository = addressRepository;
         this.consignmentNoteService = consignmentNoteService;
+        this.warehouseElasticRepository = warehouseElasticRepository;
     }
 
     @Transactional(readOnly = true)
@@ -61,6 +65,7 @@ public class WarehouseServiceImpl implements WarehouseService {
         warehouse.setAddress(address);
 
         Long id = warehouseRepository.save(warehouse).getId();
+        warehouseElasticRepository.save(warehouse);
 //        List<Placement> placementList = createWarehouseDto.getPlacements()
 //                .stream().map(dto -> {
 //                    Placement placement = ObjectMapperUtils.map(dto, Placement.class);
@@ -100,6 +105,7 @@ public class WarehouseServiceImpl implements WarehouseService {
         })).collect(Collectors.toList());
         Warehouse one = warehouseRepository.getOne(warehouseId);
         one.setPlacements(placementList);
+        warehouseElasticRepository.save(one);
         return warehouseRepository.save(one).getId();
     }
 
@@ -121,5 +127,11 @@ public class WarehouseServiceImpl implements WarehouseService {
     public Long editWarehouseWithConsignmentNote(Pair<WarehouseDto, CreateConsignmentNoteDto> warehouseDtoAndCreateConsignmentNoteDto, long companyId, long warehouseId) {
         editWarehouse(warehouseDtoAndCreateConsignmentNoteDto.getValue1(), companyId, warehouseId);
         return consignmentNoteService.saveConsignmentNote(warehouseDtoAndCreateConsignmentNoteDto.getValue2(), companyId);
+    }
+
+    @Transactional
+    @Override
+    public Page<Warehouse> findByName(String name, Pageable pageable) {
+        return warehouseElasticRepository.findByNameAndCompany_IdAndDeletedIsNull(name, pageable);
     }
 }

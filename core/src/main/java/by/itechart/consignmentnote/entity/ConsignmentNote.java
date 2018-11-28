@@ -12,6 +12,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.data.elasticsearch.annotations.Document;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -23,6 +24,7 @@ import java.util.List;
 @Entity
 @ToString
 @Table(name = "consignment_note")
+@Document(indexName = "warehouse", type = "consignmentNotes")
 public class ConsignmentNote extends BaseEntity {
 
     @ManyToOne

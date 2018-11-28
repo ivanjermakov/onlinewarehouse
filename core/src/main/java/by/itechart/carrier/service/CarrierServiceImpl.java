@@ -3,7 +3,9 @@ package by.itechart.carrier.service;
 import by.itechart.carrier.dto.*;
 import by.itechart.carrier.entity.Carrier;
 import by.itechart.carrier.entity.Driver;
+import by.itechart.carrier.repository.CarrierElasticRepository;
 import by.itechart.carrier.repository.CarrierRepository;
+import by.itechart.carrier.repository.DriverElasticRepository;
 import by.itechart.carrier.repository.DriverRepository;
 import by.itechart.common.repository.AddressRepository;
 import by.itechart.common.utils.ObjectMapperUtils;
@@ -24,12 +26,16 @@ public class CarrierServiceImpl implements CarrierService {
     private final CarrierRepository carrierRepository;
     private final AddressRepository addressRepository;
     private final DriverRepository driverRepository;
+    private final CarrierElasticRepository carrierElasticRepository;
+    private final DriverElasticRepository driverElasticRepository;
 
     @Autowired
-    public CarrierServiceImpl(CarrierRepository carrierRepository, AddressRepository addressRepository, DriverRepository driverRepository) {
+    public CarrierServiceImpl(CarrierRepository carrierRepository, AddressRepository addressRepository, DriverRepository driverRepository, CarrierElasticRepository carrierElasticRepository, DriverElasticRepository driverElasticRepository) {
         this.carrierRepository = carrierRepository;
         this.addressRepository = addressRepository;
         this.driverRepository = driverRepository;
+        this.carrierElasticRepository = carrierElasticRepository;
+        this.driverElasticRepository = driverElasticRepository;
     }
 
     @Transactional(readOnly = true)
@@ -47,6 +53,7 @@ public class CarrierServiceImpl implements CarrierService {
         Long addressId = addressRepository.save(carrier.getAddress()).getId();
         carrier.getAddress().setId(addressId);
         carrier.setCompany(new Company(companyId));
+        carrierElasticRepository.save(carrier);
         return carrierRepository.save(carrier).getId();
     }
 
@@ -79,5 +86,17 @@ public class CarrierServiceImpl implements CarrierService {
     public Page<DriverDto> getDrivers(Long companyId, Pageable pageable) {
         Page<Driver> drivers = driverRepository.findByCarrierId(companyId, pageable);
         return drivers.map(driver -> ObjectMapperUtils.map(driver, DriverDto.class));
+    }
+
+    @Transactional
+    @Override
+    public Page<Carrier> findByName(String name, Pageable pageable) {
+        return carrierElasticRepository.findByName(name, pageable);
+    }
+
+    @Transactional
+    @Override
+    public Page<Driver> findDriversByInfo(String name, Pageable pageable) {
+        return driverElasticRepository.findDriversByInfoAndDeletedIsFalse(name, pageable);
     }
 }

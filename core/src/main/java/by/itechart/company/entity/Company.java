@@ -8,6 +8,7 @@ import by.itechart.warehouse.entity.Warehouse;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.elasticsearch.annotations.Document;
 
 import javax.persistence.*;
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "company")
+@Document(indexName = "warehouse", type = "companies")
 public class Company extends BaseEntity {
 
     @Column(name = "name")

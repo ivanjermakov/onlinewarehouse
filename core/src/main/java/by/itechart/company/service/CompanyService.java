@@ -14,4 +14,6 @@ public interface CompanyService {
     Long saveCompany(CreateCompanyDto createCompanyDto);
 
     void newCompanyAction(Long companyId, ActionType actionType);
+
+    Page<Company> findAllByName(String name, Pageable pageable);
 }

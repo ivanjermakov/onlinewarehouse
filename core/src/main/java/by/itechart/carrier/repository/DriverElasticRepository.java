@@ -7,5 +7,5 @@ import org.springframework.data.elasticsearch.repository.ElasticsearchCrudReposi
 
 
 public interface DriverElasticRepository extends ElasticsearchCrudRepository<Driver, String> {
-    Page<Driver> findByInfoAndDeletedIsFalse(String name, Pageable pageable);
+    Page<Driver> findDriversByInfoAndDeletedIsFalse(String name, Pageable pageable);
 }

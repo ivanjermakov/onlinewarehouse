@@ -20,7 +20,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Entity
 @Table(name = "driver")
-@Document(indexName = "warehouse", type = "driver")
+@Document(indexName = "warehouse", type = "drivers")
 public class Driver extends BaseEntity {
 
     @ManyToOne
