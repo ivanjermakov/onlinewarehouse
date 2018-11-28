@@ -9,13 +9,10 @@ import by.itechart.counterparty.dto.CreateCounterpartyDto;
 import by.itechart.counterparty.entity.Counterparty;
 import by.itechart.counterparty.repository.CounterpartyRepository;
 import by.itechart.exception.NotFoundEntityException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
 
 @Service
 public class CounterpartyServiceImpl implements CounterpartyService {
@@ -23,7 +20,6 @@ public class CounterpartyServiceImpl implements CounterpartyService {
     private final CounterpartyRepository counterpartyRepository;
     private final AddressService addressService;
 
-    @Autowired
     public CounterpartyServiceImpl(CounterpartyRepository counterpartyRepository, AddressService addressService) {
         this.counterpartyRepository = counterpartyRepository;
         this.addressService = addressService;

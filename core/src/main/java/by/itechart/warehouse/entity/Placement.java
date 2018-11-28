@@ -17,7 +17,7 @@ import java.util.List;
 @Entity
 @Table(name = "placement")
 public class Placement extends BaseEntity {
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "warehouse_id")
     private Warehouse warehouse;
 

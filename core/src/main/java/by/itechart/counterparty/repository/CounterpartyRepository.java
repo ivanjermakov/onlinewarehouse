@@ -1,6 +1,5 @@
 package by.itechart.counterparty.repository;
 
-import by.itechart.consignmentnote.entity.ConsignmentNote;
 import by.itechart.counterparty.entity.Counterparty;
 import by.itechart.counterparty.enums.CounterpartyType;
 import org.springframework.data.domain.Page;
@@ -16,7 +15,7 @@ public interface CounterpartyRepository extends JpaRepository<Counterparty, Long
 
     Optional<Counterparty> findByCompanyIdAndId(long companyId, long counterpartyId);
 
-    Page<Counterparty> findAllByCompany_IdAndCounterpartyType(Long companyId, CounterpartyType counterpartyType, Pageable pageable);
+    Page<Counterparty> findAllByCompanyIdAndCounterpartyType(Long companyId, CounterpartyType counterpartyType, Pageable pageable);
 
     @Modifying
     @Query("update Counterparty c set c.deleted = current_date where c.id = ?1")

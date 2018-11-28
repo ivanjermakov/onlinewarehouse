@@ -15,7 +15,6 @@ import by.itechart.warehouse.entity.Warehouse;
 import by.itechart.warehouse.repository.PlacementGoodsRepository;
 import by.itechart.warehouse.repository.PlacementRepository;
 import by.itechart.warehouse.repository.WarehouseRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -33,7 +32,6 @@ public class WarehouseServiceImpl implements WarehouseService {
     private AddressRepository addressRepository;
     private ConsignmentNoteService consignmentNoteService;
 
-    @Autowired
     public WarehouseServiceImpl(WarehouseRepository warehouseRepository,
                                 PlacementRepository placementRepository,
                                 PlacementGoodsRepository placementGoodsRepository,

@@ -15,11 +15,11 @@ import javax.persistence.*;
 @Entity
 @Table(name = "write_off_act_goods")
 public class WriteOffActGoods extends BaseEntity {
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "goods_id")
     private Goods goods;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "write_off_act_id")
     private WriteOffAct writeOffAct;
 

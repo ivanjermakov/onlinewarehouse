@@ -39,9 +39,8 @@ public class PlacementController {
     }
 
     @PutMapping("/{placementId}")
-    public Long editPlacement(@PathVariable long companyId, @PathVariable long warehouseId,
-                                      @PathVariable long placementId, @RequestBody CreatePlacementDto placement) {
-        return placementService.editPlacement(placement, companyId, warehouseId, placementId);
+    public Long editPlacement(@RequestBody PlacementDto placement) {
+        return placementService.editPlacement(placement);
     }
 
     @ResponseStatus(HttpStatus.OK)

@@ -25,13 +25,13 @@ public class Company extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private CompanySize sizeType;
 
-    @OneToMany(mappedBy = "company")
+    @OneToMany(mappedBy = "company", fetch = FetchType.LAZY)
     private List<Warehouse> warehouses;
 
-    @OneToMany(mappedBy = "company")
+    @OneToMany(mappedBy = "company", fetch = FetchType.LAZY)
     private List<User> users;
 
-    @OneToMany(mappedBy = "company")
+    @OneToMany(mappedBy = "company", fetch = FetchType.LAZY)
     private List<CompanyAction> companyActions;
 
     public Company(Long id) {

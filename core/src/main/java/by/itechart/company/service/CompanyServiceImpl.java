@@ -8,7 +8,6 @@ import by.itechart.company.entity.CompanyAction;
 import by.itechart.company.enums.ActionType;
 import by.itechart.company.repository.CompanyActionRepository;
 import by.itechart.company.repository.CompanyRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -25,7 +24,6 @@ public class CompanyServiceImpl implements CompanyService {
     private CompanyRepository companyRepository;
     private CompanyActionRepository companyActionRepository;
 
-    @Autowired
     public CompanyServiceImpl(CompanyRepository companyRepository,
                               CompanyActionRepository companyActionRepository) {
         this.companyRepository = companyRepository;

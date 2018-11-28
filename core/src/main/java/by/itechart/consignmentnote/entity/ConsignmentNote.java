@@ -24,7 +24,7 @@ import java.util.List;
 @ToString
 @Table(name = "consignment_note")
 public class ConsignmentNote extends BaseEntity {
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id")
     private Company company;
 
@@ -34,32 +34,32 @@ public class ConsignmentNote extends BaseEntity {
     @Column(name = "shipment")
     private LocalDate shipment;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "counterparty_id")
     private Counterparty counterparty;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "carrier_id")
     private Carrier carrier;
 
     @Column(name = "vehicle_number")
     private String vehicleNumber;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "creator_id")
     private User creator;
 
     @Column(name = "registration")
     private LocalDate registration;
 
-    @OneToMany(mappedBy = "consignmentNote")
+    @OneToMany(mappedBy = "consignmentNote", fetch = FetchType.LAZY)
     private List<ConsignmentNoteGoods> consignmentNoteGoodsList;
 
     @Column(name = "consignment_note_type")
     @Enumerated(EnumType.STRING)
     private ConsignmentNoteType consignmentNoteType;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "driver_id")
     private Driver driver;
 

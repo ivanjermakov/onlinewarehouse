@@ -5,7 +5,6 @@ import by.itechart.common.dto.GoodsDto;
 import by.itechart.common.entity.Goods;
 import by.itechart.common.repository.GoodsRepository;
 import by.itechart.common.utils.ObjectMapperUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -16,7 +15,6 @@ public class GoodsServiceImpl implements GoodsService {
 
     private final GoodsRepository goodsRepository;
 
-    @Autowired
     public GoodsServiceImpl(GoodsRepository goodsRepository) {
         this.goodsRepository = goodsRepository;
     }
