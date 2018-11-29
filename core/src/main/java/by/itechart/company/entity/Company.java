@@ -8,6 +8,7 @@ import by.itechart.warehouse.entity.Warehouse;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.elasticsearch.annotations.Document;
 
 import javax.persistence.*;
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "company")
+@Document(indexName = "warehouse", type = "companies")
 public class Company extends BaseEntity {
     @Column(name = "name")
     private String name;
@@ -25,13 +27,13 @@ public class Company extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private CompanySize sizeType;
 
-    @OneToMany(mappedBy = "company")
+    @OneToMany(mappedBy = "company", fetch = FetchType.LAZY)
     private List<Warehouse> warehouses;
 
-    @OneToMany(mappedBy = "company")
+    @OneToMany(mappedBy = "company", fetch = FetchType.LAZY)
     private List<User> users;
 
-    @OneToMany(mappedBy = "company")
+    @OneToMany(mappedBy = "company", fetch = FetchType.LAZY)
     private List<CompanyAction> companyActions;
 
     public Company(Long id) {

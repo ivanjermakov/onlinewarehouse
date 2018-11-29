@@ -7,4 +7,6 @@ import lombok.Data;
 public class CreateCompanyDto {
     private String name;
     private CompanySize sizeType;
+    private String username;
+    private String password;
 }

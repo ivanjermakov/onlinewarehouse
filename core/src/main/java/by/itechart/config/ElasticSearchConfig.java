@@ -16,30 +16,39 @@ import org.springframework.data.elasticsearch.repository.config.EnableElasticsea
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
+
 @Configuration
 @EnableElasticsearchRepositories
 @ComponentScan
 public class ElasticSearchConfig {
 
-    @Value("${elasticsearch.home:/usr/local/Cellar/elasticsearch/5.6.0}")
-    private String elasticsearchHome;
+    @Configuration
+    @EnableElasticsearchRepositories(basePackages = "by.itechart.*.repository")
+    public class Config {
 
-    @Value("${elasticsearch.cluster.name:elasticsearch}")
-    private String clusterName;
+        @Value("${elasticsearch.home:/usr/local/Cellar/elasticsearch/5.6.0}")
+        private String elasticsearchHome;
 
-    @Bean
-    public Client client() throws UnknownHostException {
-        Settings elasticsearchSettings = Settings.builder()
-                .put("client.transport.sniff", true)
-                .put("path.home", elasticsearchHome)
-                .put("cluster.name", clusterName).build();
-        TransportClient client = new PreBuiltTransportClient(elasticsearchSettings);
-        client.addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("127.0.0.1"), 9300));
-        return client;
+        @Value("${elasticsearch.cluster.name:elasticsearch}")
+        private String clusterName;
+
+        @Bean
+        public Client client() throws UnknownHostException {
+            Settings elasticsearchSettings = Settings.builder()
+                    .put("client.transport.sniff", true)
+                    .put("path.home", elasticsearchHome)
+                    .put("cluster.name", clusterName).build();
+            TransportClient client = new PreBuiltTransportClient(elasticsearchSettings);
+            client.addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("127.0.0.1"), 9200));
+            return client;
+        }
+
+        @Bean
+        public ElasticsearchOperations elasticsearchTemplate() throws UnknownHostException {
+            return new ElasticsearchTemplate(client());
+        }
     }
 
-    @Bean
-    public ElasticsearchOperations elasticsearchTemplate() throws UnknownHostException {
-        return new ElasticsearchTemplate(client());
-    }
+
 }
+

@@ -28,7 +28,7 @@ public class CounterpartyController {
     }
 
     @PostMapping
-    public Long saveCounterparty(@PathVariable long companyId, @RequestBody CreateCounterpartyDto counterparty) {
+    public Long saveCounterparty(@RequestBody CreateCounterpartyDto counterparty) {
         return counterpartyService.saveOrUpdateCounterparty(counterparty);
     }
 
@@ -39,8 +39,7 @@ public class CounterpartyController {
     }
 
     @PutMapping("/{counterpartyId}")
-    public Long updateCounterparty(@PathVariable long companyId, @PathVariable long counterpartyId,
-                                   @RequestBody CreateCounterpartyDto counterparty) {
+    public Long updateCounterparty(@RequestBody CreateCounterpartyDto counterparty) {
         return counterpartyService.saveOrUpdateCounterparty(counterparty);
     }
 

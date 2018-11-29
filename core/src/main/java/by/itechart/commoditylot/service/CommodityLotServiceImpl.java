@@ -12,9 +12,7 @@ import by.itechart.commoditylot.repository.CommodityLotRepository;
 import by.itechart.common.utils.ObjectMapperUtils;
 import by.itechart.company.entity.Company;
 import by.itechart.exception.NotFoundEntityException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,7 +26,6 @@ public class CommodityLotServiceImpl implements CommodityLotService {
     private final CommodityLotRepository commodityLotRepository;
     private final CommodityLotGoodsRepository commodityLotGoodsRepository;
 
-    @Autowired
     public CommodityLotServiceImpl(CommodityLotRepository commodityLotRepository, CommodityLotGoodsRepository commodityLotGoodsRepository) {
         this.commodityLotRepository = commodityLotRepository;
         this.commodityLotGoodsRepository = commodityLotGoodsRepository;

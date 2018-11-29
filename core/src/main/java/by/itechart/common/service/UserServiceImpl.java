@@ -6,7 +6,6 @@ import by.itechart.common.entity.User;
 import by.itechart.common.repository.UserRepository;
 import by.itechart.common.utils.ObjectMapperUtils;
 import by.itechart.exception.NotFoundEntityException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -22,7 +21,6 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
-    @Autowired
     public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }

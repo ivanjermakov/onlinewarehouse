@@ -15,9 +15,7 @@ import by.itechart.writeoffact.entity.WriteOffAct;
 import by.itechart.writeoffact.entity.WriteOffActGoods;
 import by.itechart.writeoffact.repository.WriteOffActGoodsRepository;
 import by.itechart.writeoffact.repository.WriteOffActRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,7 +32,6 @@ public class WriteOffActServiceImpl implements WriteOffActService {
     private final GoodsService goodsService;
     private final CommodityLotService commodityLotService;
 
-    @Autowired
     public WriteOffActServiceImpl(WriteOffActRepository writeOffActRepository, WriteOffActGoodsRepository writeOffActGoodsRepository, GoodsService goodsService, CommodityLotService commodityLotService) {
         this.writeOffActRepository = writeOffActRepository;
         this.writeOffActGoodsRepository = writeOffActGoodsRepository;

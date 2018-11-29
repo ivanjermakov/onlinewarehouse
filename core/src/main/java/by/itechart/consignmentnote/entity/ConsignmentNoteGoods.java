@@ -16,11 +16,11 @@ import javax.persistence.*;
 @ToString
 @Table(name = "consignment_note_goods")
 public class ConsignmentNoteGoods extends BaseEntity {
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "goods_id")
     private Goods goods;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "consignment_note_id")
     private ConsignmentNote consignmentNote;
 

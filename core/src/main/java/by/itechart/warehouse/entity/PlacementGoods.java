@@ -3,10 +3,6 @@ package by.itechart.warehouse.entity;
 import by.itechart.common.entity.BaseEntity;
 import by.itechart.common.entity.Goods;
 import by.itechart.counterparty.entity.Counterparty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,15 +16,15 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "placement_goods")
 public class PlacementGoods extends BaseEntity {
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "goods_id")
     private Goods goods;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "placement_id")
     private Placement placement;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "counterparty_id")
     private Counterparty counterparty;
 
@@ -38,13 +34,9 @@ public class PlacementGoods extends BaseEntity {
     @Column(name = "storage_time_days")
     private Integer storageTimeDays;
 
-    @JsonSerialize(using = LocalDateSerializer.class)
-    @JsonDeserialize(using = LocalDateDeserializer.class)
     @Column(name = "expiration_date")
     private LocalDate expirationDate;
 
-    @JsonSerialize(using = LocalDateSerializer.class)
-    @JsonDeserialize(using = LocalDateDeserializer.class)
     @Column(name = "deleted")
     private LocalDate deleted;
 

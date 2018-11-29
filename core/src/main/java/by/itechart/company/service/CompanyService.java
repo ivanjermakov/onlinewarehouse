@@ -15,4 +15,6 @@ public interface CompanyService {
 
     void newCompanyAction(Long companyId, ActionType actionType);
 
+    Page<Company> findAllByName(String name, Pageable pageable);
+
 }

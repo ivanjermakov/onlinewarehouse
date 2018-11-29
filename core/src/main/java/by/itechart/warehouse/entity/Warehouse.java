@@ -6,6 +6,7 @@ import by.itechart.company.entity.Company;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.elasticsearch.annotations.Document;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -16,15 +17,16 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "warehouse")
+@Document(indexName = "warehouse", type = "warehouses")
 public class Warehouse extends BaseEntity {
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id")
     private Company company;
 
-    @OneToMany(mappedBy = "warehouse")
+    @OneToMany(mappedBy = "warehouse", fetch = FetchType.LAZY)
     private List<Placement> placements;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "address_id")
     private Address address;
 

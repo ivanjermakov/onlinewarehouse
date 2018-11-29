@@ -1,5 +1,8 @@
 package by.itechart.company.service;
 
+import by.itechart.common.entity.Authority;
+import by.itechart.common.entity.AuthorityName;
+import by.itechart.common.entity.User;
 import by.itechart.common.utils.ObjectMapperUtils;
 import by.itechart.company.dto.CompanyDto;
 import by.itechart.company.dto.CreateCompanyDto;
@@ -7,11 +10,13 @@ import by.itechart.company.entity.Company;
 import by.itechart.company.entity.CompanyAction;
 import by.itechart.company.enums.ActionType;
 import by.itechart.company.repository.CompanyActionRepository;
+import by.itechart.company.repository.CompanyElasticRepository;
 import by.itechart.company.repository.CompanyRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,12 +29,13 @@ public class CompanyServiceImpl implements CompanyService {
 
     private CompanyRepository companyRepository;
     private CompanyActionRepository companyActionRepository;
+    private final CompanyElasticRepository companyElasticRepository;
 
-    @Autowired
     public CompanyServiceImpl(CompanyRepository companyRepository,
-                              CompanyActionRepository companyActionRepository) {
+                              CompanyActionRepository companyActionRepository, CompanyElasticRepository companyElasticRepository) {
         this.companyRepository = companyRepository;
         this.companyActionRepository = companyActionRepository;
+        this.companyElasticRepository = companyElasticRepository;
     }
 
     @Override
@@ -61,7 +67,17 @@ public class CompanyServiceImpl implements CompanyService {
         Company company = ObjectMapperUtils.map(createCompanyDto, Company.class);
         //TODO: here should create new User with role COMPANY_ADMIN
         Long companyId = companyRepository.save(company).getId();
+        User user = new User();
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String hashedPassword = passwordEncoder.encode(createCompanyDto.getPassword());
+        user.setPassword(hashedPassword);
+        user.setUsername(createCompanyDto.getUsername());
+        user.setCompany(company);
+        Authority authority = new Authority();
+        authority.setName(AuthorityName.ROLE_COMPANY_ADMIN);
+        user.addAuthority(authority);
         newCompanyAction(companyId, ActionType.ENABLED);
+        companyElasticRepository.save(company);
         return companyId;
     }
 
@@ -73,5 +89,11 @@ public class CompanyServiceImpl implements CompanyService {
         companyAction.setActionType(actionType);
         companyAction.setChange(LocalDateTime.now());
         companyActionRepository.save(companyAction);
+    }
+
+    @Override
+    @Transactional
+    public Page<Company> findAllByName(String name, Pageable pageable) {
+        return companyElasticRepository.findAllByName(name, pageable);
     }
 }
