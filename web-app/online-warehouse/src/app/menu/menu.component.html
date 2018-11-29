@@ -63,7 +63,7 @@
     </div>
   </div>
   <div *ngIf="userAuthorities.includes('ROLE_MANAGER')">
-    <a class="menu-collapse text-dark" (click)="toggle(4)">Inspector</a>
+    <a class="menu-collapse text-dark" (click)="toggle(4)">Manager</a>
     <div [@openClose]="isOpenArr[4] ? 'open' : 'closed'"
          class="menu-a-container">
       <a class="menu-a text-dark" routerLink="list-goods" routerLinkActive="action-active">
@@ -84,7 +84,7 @@
     </div>
   </div>
   <div *ngIf="userAuthorities.includes('ROLE_INSPECTOR')">
-    <a class="menu-collapse text-dark" (click)="toggle(5)">Manager</a>
+    <a class="menu-collapse text-dark" (click)="toggle(5)">Inspector</a>
     <div [@openClose]="isOpenArr[5] ? 'open' : 'closed'"
          class="menu-a-container">
       <a class="menu-a text-dark" routerLink="list-warehouse" routerLinkActive="action-active">
