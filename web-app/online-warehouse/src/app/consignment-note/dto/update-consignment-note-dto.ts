@@ -8,9 +8,9 @@ export class UpdateConsignmentNoteDto {
   id: number;
   number: string;
   shipment: Date;
-  counterparty: CounterpartyDto;
-  carrier: CarrierDto;
-  driver: DriverDto;
+  // counterparty: CounterpartyDto;
+  // carrier: CarrierDto;
+  // driver: DriverDto;
   vehicleNumber: string;
   consignmentNoteGoodsList: Array<ConsignmentNoteGoodsDto>;
   consignmentNoteType: ConsignmentNoteType;

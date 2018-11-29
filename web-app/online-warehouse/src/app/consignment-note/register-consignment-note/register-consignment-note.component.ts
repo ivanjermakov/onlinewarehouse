@@ -254,7 +254,16 @@ export class RegisterConsignmentNoteComponent implements OnInit {
       if (this.isCreate) {
         this.consignmentNoteService.saveConsignmentNote(this.consignmentNoteForm.value).subscribe();
       } else {
-        Object.assign(this.updateConsignmentNote, this.consignmentNoteForm.value);
+        // Object.assign(this.updateConsignmentNote, this.consignmentNoteForm.value);
+        this.updateConsignmentNote.id = 4;
+        this.updateConsignmentNote.number = '4425';
+        this.updateConsignmentNote.shipment = new Date('2018-10-10');
+        // counterparty: CounterpartyDto;
+        // carrier: CarrierDto;
+        // driver: DriverDto;
+        this.updateConsignmentNote.vehicleNumber = '4425';
+        this.updateConsignmentNote.consignmentNoteType = ConsignmentNoteType.IN;
+        this.updateConsignmentNote.description = '4425';
         this.consignmentNoteService.updateConsignmentNote(this.updateConsignmentNote).subscribe();
         this.router.navigateByUrl("app/consignment-notes/" + this.updateConsignmentNote.id);
       }

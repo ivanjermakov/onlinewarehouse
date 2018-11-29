@@ -23,9 +23,14 @@ public class UpdateConsignmentNoteDto {
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate shipment;
-    private CounterpartyDto counterparty;
-    private CarrierDto carrier;
-    private DriverDto driver;
+//    private CounterpartyDto counterparty;
+//    private CarrierDto carrier;
+//    private DriverDto driver;
+
+    private Long counterpartyId;
+    private Long carrierId;
+    private Long driverId;
+
     private String vehicleNumber;
     @JsonBackReference
     private List<ConsignmentNoteGoodsDto> consignmentNoteGoodsList;
