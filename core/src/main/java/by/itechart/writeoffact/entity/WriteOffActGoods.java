@@ -6,6 +6,7 @@ import by.itechart.writeoffact.enums.WriteOffType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 

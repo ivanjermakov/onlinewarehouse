@@ -16,11 +16,18 @@ public class ObjectMapperUtils {
     private ObjectMapperUtils() {
     }
 
-//    static {
-//        TypeMap<UpdateConsignmentNoteDto, ConsignmentNote> typeMap = modelMapper
-//                .createTypeMap(UpdateConsignmentNoteDto.class, ConsignmentNote.class);
-//        typeMap.addMappings(mapper -> mapper.skip(ConsignmentNote::setCounterparty));
-//    }
+    static {
+        TypeMap<UpdateConsignmentNoteDto, ConsignmentNote> typeMap = modelMapper
+                .createTypeMap(UpdateConsignmentNoteDto.class, ConsignmentNote.class);
+        typeMap.addMappings(mapper -> {
+//            mapper.skip(ConsignmentNote::setCarrier);
+//            mapper.skip(ConsignmentNote::setCarrier);
+//            mapper.skip(ConsignmentNote::setDriver);
+            mapper.<Long>skip((d, v) -> d.getCounterparty().setId(v));
+            mapper.<Long>skip((d, v) -> d.getCarrier().setId(v));
+            mapper.<Long>skip((d, v) -> d.getDriver().setId(v));
+        });
+    }
 
     public static <D, T> D map(T entity, Class<D> outClass) {
         return modelMapper.map(entity, outClass);

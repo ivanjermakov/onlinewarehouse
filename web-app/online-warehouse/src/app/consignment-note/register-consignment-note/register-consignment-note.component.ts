@@ -97,6 +97,7 @@ export class RegisterConsignmentNoteComponent implements OnInit {
     consignmentNote.consignmentNoteGoodsList.forEach(item => {
       this.goodsDtoList.push(item.goods);
       (this.consignmentNoteForm.controls['consignmentNoteGoodsList'] as FormArray).push(this.fb.group({
+        "id": item.id,
         "goods": item.goods,
         "amount": item.amount
       }));
@@ -146,6 +147,7 @@ export class RegisterConsignmentNoteComponent implements OnInit {
   deleteCarrier(): void {
     this.carrier = null;
     this.carrierType = '';
+    this.driver = null;
     this.consignmentNoteForm.patchValue({'carrier': ''});
   }
 
@@ -254,16 +256,16 @@ export class RegisterConsignmentNoteComponent implements OnInit {
       if (this.isCreate) {
         this.consignmentNoteService.saveConsignmentNote(this.consignmentNoteForm.value).subscribe();
       } else {
-        // Object.assign(this.updateConsignmentNote, this.consignmentNoteForm.value);
-        this.updateConsignmentNote.id = 4;
-        this.updateConsignmentNote.number = '4425';
-        this.updateConsignmentNote.shipment = new Date('2018-10-10');
-        // counterparty: CounterpartyDto;
-        // carrier: CarrierDto;
-        // driver: DriverDto;
-        this.updateConsignmentNote.vehicleNumber = '4425';
-        this.updateConsignmentNote.consignmentNoteType = ConsignmentNoteType.IN;
-        this.updateConsignmentNote.description = '4425';
+        this.updateConsignmentNote.number = this.consignmentNoteForm.controls['number'].value;
+        this.updateConsignmentNote.shipment = this.consignmentNoteForm.controls['shipment'].value;
+        this.updateConsignmentNote.counterpartyId = this.counterparty.id;
+        this.updateConsignmentNote.carrierId = this.carrier.id;
+        this.updateConsignmentNote.driverId = this.driver.id;
+        this.updateConsignmentNote.vehicleNumber = this.consignmentNoteForm.controls['vehicleNumber'].value;
+        this.updateConsignmentNote.consignmentNoteGoodsList = this.consignmentNoteForm.controls['consignmentNoteGoodsList'].value;
+        this.updateConsignmentNote.consignmentNoteType = this.consignmentNoteForm.controls['consignmentNoteType'].value;
+        this.updateConsignmentNote.description = this.consignmentNoteForm.controls['description'].value;
+
         this.consignmentNoteService.updateConsignmentNote(this.updateConsignmentNote).subscribe();
         this.router.navigateByUrl("app/consignment-notes/" + this.updateConsignmentNote.id);
       }

@@ -1,9 +1,7 @@
 package by.itechart.common.entity;
 
 import by.itechart.company.entity.Company;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

@@ -4,6 +4,7 @@ package by.itechart.common.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 
@@ -13,7 +14,7 @@ import javax.persistence.*;
 @MappedSuperclass
 public class BaseEntity {
     @Id
-    @Column(name = "id")
+    @Column(name = "id", insertable = false, nullable = false, updatable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

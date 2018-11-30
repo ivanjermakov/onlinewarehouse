@@ -6,6 +6,7 @@ import by.itechart.counterparty.entity.Counterparty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDate;

@@ -5,6 +5,7 @@ import lombok.Data;
 
 @Data
 public class ConsignmentNoteGoodsDto {
+    private Long id;
     private GoodsDto goods;
     private Integer amount;
 }

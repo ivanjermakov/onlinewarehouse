@@ -1,9 +1,6 @@
 package by.itechart.consignmentnote.dto;
 
-import by.itechart.carrier.dto.CarrierDto;
-import by.itechart.carrier.dto.DriverDto;
 import by.itechart.consignmentnote.enums.ConsignmentNoteType;
-import by.itechart.counterparty.dto.CounterpartyDto;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -23,14 +20,9 @@ public class UpdateConsignmentNoteDto {
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate shipment;
-//    private CounterpartyDto counterparty;
-//    private CarrierDto carrier;
-//    private DriverDto driver;
-
     private Long counterpartyId;
     private Long carrierId;
     private Long driverId;
-
     private String vehicleNumber;
     @JsonBackReference
     private List<ConsignmentNoteGoodsDto> consignmentNoteGoodsList;
