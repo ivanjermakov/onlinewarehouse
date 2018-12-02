@@ -15,4 +15,7 @@ export class RegisterConsignmentNoteDialogComponent implements OnInit {
   ngOnInit() {
   }
 
+  closeModal() {
+    this.dialogRef.close();
+  }
 }

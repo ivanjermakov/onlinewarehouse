@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {GoodsListDialogComponent} from "../../shared/goods/goods-list-dialog/goods-list-dialog.component";
 import {GoodsDto} from "../../shared/goods/dto/goods.dto";
@@ -28,6 +28,7 @@ export class RegisterConsignmentNoteComponent implements OnInit {
   // remember
   @Input() inputWarehouseId: number;
   @Input() inputConsignmentNoteType: ConsignmentNoteType;
+  @Output() submitted: EventEmitter<> = new EventEmitter();
   private warehouseDto: WarehouseDto;
   //
   private cnType = ConsignmentNoteType;
@@ -271,6 +272,7 @@ export class RegisterConsignmentNoteComponent implements OnInit {
         this.router.navigateByUrl("app/consignment-notes/" + this.updateConsignmentNote.id);
       }
     }
+    this.submitted.emit();
     this.clearFrom();
   }
 
