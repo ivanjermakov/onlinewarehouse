@@ -8,6 +8,7 @@ import {BehaviorSubject, of} from "rxjs";
 import {catchError, debounceTime, distinctUntilChanged, finalize, tap} from "rxjs/operators";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {GoodFilter} from "../dto/good-filter";
+import {PlacementTypeEnum} from "../../enum/placement-type.enum";
 
 @Component({
   selector: 'app-goods-list',
@@ -18,6 +19,7 @@ export class GoodsListComponent implements OnInit {
 
   @Output() goodsSelected: EventEmitter<GoodsDto> = new EventEmitter();
 
+  @Input() hoverable: boolean = false;
   @Input() addButton: Boolean;
   @Input() inputGoods: GoodsDto[];
 
@@ -30,6 +32,8 @@ export class GoodsListComponent implements OnInit {
   private page: Page<GoodsDto>;
   private goodsFilterForm: FormGroup;
   private goodsFilter: GoodFilter = new GoodFilter();
+
+  private placementTypeEnum = PlacementTypeEnum;
 
   private errors: any[];
 
