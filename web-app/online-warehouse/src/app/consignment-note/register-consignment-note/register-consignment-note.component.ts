@@ -28,7 +28,7 @@ export class RegisterConsignmentNoteComponent implements OnInit {
   // remember
   @Input() inputWarehouseId: number;
   @Input() inputConsignmentNoteType: ConsignmentNoteType;
-  @Output() submitted: EventEmitter<> = new EventEmitter();
+  @Output() submitted: EventEmitter<any> = new EventEmitter();
   private warehouseDto: WarehouseDto;
   //
   private cnType = ConsignmentNoteType;
