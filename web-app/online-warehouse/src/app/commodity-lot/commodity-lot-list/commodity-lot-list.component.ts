@@ -30,6 +30,9 @@ export class CommodityLotListComponent implements OnInit {
   private pageable: Pageable = new Pageable(0, 10);
   private pageSizeOptions: number[] = [10, 25, 50];
 
+  private commodityLotTypeEnum = CommodityLotTypeEnum;
+  private commodityLotStatusEnum = CommodityLotStatusEnum;
+
   private disabled = true;
 
   private errors: any[];
@@ -68,12 +71,12 @@ export class CommodityLotListComponent implements OnInit {
       .subscribe();
   }
 
+  onProcessClicked(i: number) {
+    this.openModal(this.page.content[i]);
+  }
+
   onRowClicked(commodityLotListDto: CommodityLotListDto) {
-    if (!this.disabled) {
-      this.openModal(commodityLotListDto);
-    } else {
-      this.router.navigateByUrl('app/commodity-lot/' + commodityLotListDto.id);
-    }
+    this.router.navigateByUrl('app/commodity-lot/' + commodityLotListDto.id);
   }
 
   openModal(commodityLotListDto: CommodityLotListDto): void {

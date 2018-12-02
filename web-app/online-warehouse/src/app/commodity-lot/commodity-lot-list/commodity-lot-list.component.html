@@ -6,7 +6,7 @@
                 placeholder="Type" name="commodityLotType">
       <mat-option>None</mat-option>
       <mat-option *ngFor="let type of getCommodityLotTypes()" [value]="type">
-        {{type}}
+        {{commodityLotTypeEnum[type]}}
       </mat-option>
     </mat-select>
   </mat-form-field>
@@ -16,7 +16,7 @@
                 placeholder="Status" name="commodityLotType">
       <mat-option>None</mat-option>
       <mat-option *ngFor="let type of getCommodityLotStatuses()" [value]="type">
-        {{type}}
+        {{commodityLotStatusEnum[type]}}
       </mat-option>
     </mat-select>
   </mat-form-field>
@@ -55,25 +55,43 @@
 
     <ng-container matColumnDef="commodityLotType">
       <th mat-header-cell *matHeaderCellDef>Type</th>
-      <td mat-cell *matCellDef="let commodityLot">{{commodityLot.commodityLotType}}</td>
+      <td mat-cell *matCellDef="let commodityLot">
+        <span matTooltip="In" [matTooltipPosition]="'before'"
+              *ngIf="commodityLot.commodityLotType === commodityLotTypeEnum.IN">
+          <mat-icon>local_shipping</mat-icon>
+          <mat-icon>forward</mat-icon>
+          <mat-icon>store</mat-icon>
+        </span>
+        <span matTooltip="Out" [matTooltipPosition]="'before'"
+              *ngIf="commodityLot.commodityLotType === commodityLotTypeEnum.OUT">
+          <mat-icon>store</mat-icon>
+          <mat-icon>forward</mat-icon>
+          <mat-icon>local_shipping</mat-icon>
+        </span>
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="commodityLotStatus">
       <th mat-header-cell *matHeaderCellDef>Status</th>
-      <td mat-cell *matCellDef="let commodityLot">{{commodityLot.commodityLotStatus}}</td>
+      <td mat-cell *matCellDef="let commodityLot">{{commodityLotStatusEnum[commodityLot.commodityLotStatus]}}</td>
     </ng-container>
 
     <ng-container matColumnDef="commodityLotProcess">
       <th mat-header-cell *matHeaderCellDef></th>
-      <td mat-cell *matCellDef="let commodityLot">
-        <button mat-button>Process</button>
+      <td mat-cell *matCellDef="let commodityLot; let i = index;">
+        <button mat-raised-button (click)="onProcessClicked(i)">Process</button>
       </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
 
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"
-        (click)="onRowClicked(row)"></tr>
+    <ng-container *ngIf="!disabled">
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </ng-container>
+    <ng-container *ngIf="disabled">
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"
+          (click)="onRowClicked(row)"></tr>
+    </ng-container>
   </table>
 </div>
 
