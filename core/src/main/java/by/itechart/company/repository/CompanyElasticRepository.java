@@ -1,6 +1,5 @@
 package by.itechart.company.repository;
 
-import by.itechart.common.entity.Goods;
 import by.itechart.company.entity.Company;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

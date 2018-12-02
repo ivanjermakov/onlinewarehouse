@@ -15,6 +15,8 @@ import by.itechart.writeoffact.entity.WriteOffAct;
 import by.itechart.writeoffact.entity.WriteOffActGoods;
 import by.itechart.writeoffact.repository.WriteOffActGoodsRepository;
 import by.itechart.writeoffact.repository.WriteOffActRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -26,6 +28,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class WriteOffActServiceImpl implements WriteOffActService {
+    private final static Logger LOGGER = LoggerFactory.getLogger(WriteOffActServiceImpl.class);
 
     private final WriteOffActRepository writeOffActRepository;
     private final WriteOffActGoodsRepository writeOffActGoodsRepository;
@@ -66,6 +69,8 @@ public class WriteOffActServiceImpl implements WriteOffActService {
             return writeOffActGoods;
         }).collect(Collectors.toList());
         writeOffActGoodsRepository.saveAll(writeOffActGoodsList);
+
+        LOGGER.info("Write off act was created with id: {}", id);
 
         return id;
     }

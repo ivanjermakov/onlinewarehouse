@@ -1,5 +1,7 @@
 package by.itechart.mail.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
@@ -12,6 +14,7 @@ import javax.mail.internet.MimeMessage;
 
 @Service
 public class MailServiceImpl implements MailService {
+    private final static Logger LOGGER = LoggerFactory.getLogger(MailServiceImpl.class);
 
     private final JavaMailSenderImpl mailSender;
 
@@ -25,6 +28,8 @@ public class MailServiceImpl implements MailService {
 
     @Override
     public void send(String to, String subject, String content) {
+        LOGGER.info("Sending message to: {}", to);
+
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(from);
         message.setTo(to);
@@ -35,6 +40,8 @@ public class MailServiceImpl implements MailService {
 
     @Override
     public void sendHtml(String to, String subject, String html) throws MessagingException {
+        LOGGER.info("Sending html-message to: {}", to);
+
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, false, "utf-8");
         helper.setFrom(from);

@@ -6,6 +6,8 @@ import by.itechart.common.entity.Goods;
 import by.itechart.common.repository.GoodsElasticRepository;
 import by.itechart.common.repository.GoodsRepository;
 import by.itechart.common.utils.ObjectMapperUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class GoodsServiceImpl implements GoodsService {
+    private final static Logger LOGGER = LoggerFactory.getLogger(GoodsServiceImpl.class);
 
     private final GoodsRepository goodsRepository;
     private final GoodsElasticRepository goodsElasticRepository;
@@ -36,7 +39,9 @@ public class GoodsServiceImpl implements GoodsService {
     public void createGoods(GoodsDto goodsDto, Long companyId) {
         Goods goods = ObjectMapperUtils.map(goodsDto, Goods.class);
         goodsElasticRepository.save(goods);
-        goodsRepository.save(goods);
+        Long id = goodsRepository.save(goods).getId();
+
+        LOGGER.info("Good was created with id: {}", id);
     }
 
     @Transactional(readOnly = true)
@@ -49,6 +54,7 @@ public class GoodsServiceImpl implements GoodsService {
     @Transactional
     @Override
     public Page<Goods> findGoodsByNameAndDeletedIsFalse(String name, Pageable pageable) {
+        LOGGER.info("Find Goods by name: {}", name);
         return goodsElasticRepository.findGoodsByNameAndDeletedIsFalse(name, pageable);
     }
 }

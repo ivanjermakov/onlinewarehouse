@@ -1,6 +1,5 @@
 package by.itechart.warehouse.repository;
 
-import by.itechart.carrier.entity.Carrier;
 import by.itechart.warehouse.entity.Warehouse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

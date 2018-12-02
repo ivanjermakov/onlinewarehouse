@@ -9,6 +9,8 @@ import by.itechart.counterparty.dto.CreateCounterpartyDto;
 import by.itechart.counterparty.entity.Counterparty;
 import by.itechart.counterparty.repository.CounterpartyRepository;
 import by.itechart.exception.NotFoundEntityException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CounterpartyServiceImpl implements CounterpartyService {
+    private final static Logger LOGGER = LoggerFactory.getLogger(CounterpartyServiceImpl.class);
 
     private final CounterpartyRepository counterpartyRepository;
     private final AddressService addressService;
@@ -40,8 +43,11 @@ public class CounterpartyServiceImpl implements CounterpartyService {
         Counterparty counterparty = ObjectMapperUtils.map(counterpartyDto, Counterparty.class);
         counterparty.setId(null);
         counterparty.setAddress(new Address(addressId));
+        Long id = counterpartyRepository.save(counterparty).getId();
 
-        return counterpartyRepository.save(counterparty).getId();
+        LOGGER.info("Carrier was created/updated with id: {}", id);
+
+        return id;
     }
 
     @Transactional(readOnly = true)
@@ -56,6 +62,7 @@ public class CounterpartyServiceImpl implements CounterpartyService {
     @Transactional
     @Override
     public void deleteCounterparty(Long counterpartyId) {
+        LOGGER.info("Delete counterparty with id: {}", counterpartyId);
         counterpartyRepository.setDeleted(counterpartyId);
     }
 }

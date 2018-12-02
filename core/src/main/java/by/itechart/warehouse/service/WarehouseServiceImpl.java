@@ -16,6 +16,8 @@ import by.itechart.warehouse.repository.PlacementGoodsRepository;
 import by.itechart.warehouse.repository.PlacementRepository;
 import by.itechart.warehouse.repository.WarehouseElasticRepository;
 import by.itechart.warehouse.repository.WarehouseRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -26,6 +28,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class WarehouseServiceImpl implements WarehouseService {
+    private final static Logger LOGGER = LoggerFactory.getLogger(WarehouseServiceImpl.class);
 
     private WarehouseRepository warehouseRepository;
     private PlacementRepository placementRepository;
@@ -73,6 +76,8 @@ public class WarehouseServiceImpl implements WarehouseService {
 //                }).collect(Collectors.toList());
 //        placementRepository.saveAll(placementList);
 
+        LOGGER.info("Warehouse was created with id: {}", id);
+
         return id;
     }
 
@@ -104,8 +109,11 @@ public class WarehouseServiceImpl implements WarehouseService {
         })).collect(Collectors.toList());
         Warehouse one = warehouseRepository.getOne(warehouseId);
         one.setPlacements(placementList);
-        warehouseElasticRepository.save(one);
-        return warehouseRepository.save(one).getId();
+        Long id = warehouseElasticRepository.save(one).getId();
+
+        LOGGER.info("Edit warehouse with id: {}", id);
+
+        return id;
     }
 
     @Transactional(readOnly = true)
@@ -118,6 +126,7 @@ public class WarehouseServiceImpl implements WarehouseService {
     @Transactional
     @Override
     public void deleteWarehouse(long warehouseId) {
+        LOGGER.info("Delete warehouse with id: {}", warehouseId);
         warehouseRepository.setDeleted(warehouseId);
     }
 
@@ -131,6 +140,7 @@ public class WarehouseServiceImpl implements WarehouseService {
     @Transactional
     @Override
     public Page<Warehouse> findByName(String name, Pageable pageable) {
+        LOGGER.info("Find warehouse by name: {}", name);
         return warehouseElasticRepository.findByNameAndCompany_IdAndDeletedIsNull(name, pageable);
     }
 }

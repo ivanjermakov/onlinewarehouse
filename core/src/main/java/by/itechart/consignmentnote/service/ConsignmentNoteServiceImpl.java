@@ -15,18 +15,20 @@ import by.itechart.consignmentnote.repository.ConsignmentNoteRepository;
 import by.itechart.counterparty.entity.Counterparty;
 import by.itechart.counterparty.repository.CounterpartyRepository;
 import by.itechart.exception.NotFoundEntityException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class ConsignmentNoteServiceImpl implements ConsignmentNoteService {
+    private final static Logger LOGGER = LoggerFactory.getLogger(ConsignmentNoteServiceImpl.class);
 
     private ConsignmentNoteRepository consignmentNoteRepository;
     private ConsignmentNoteGoodsRepository consignmentNoteGoodsRepository;
@@ -83,12 +85,15 @@ public class ConsignmentNoteServiceImpl implements ConsignmentNoteService {
                 }).collect(Collectors.toList());
         consignmentNoteGoodsRepository.saveAll(consignmentNoteGoodsList);
 
+        LOGGER.info("Consignment note was created with id: {}", id);
+
         return id;
     }
 
     @Override
     @Transactional
     public Long setConsignmentNoteStatus(long consignmentNoteId, ConsignmentNoteStatus consignmentNoteStatus, long companyId) {
+        LOGGER.info("Consignment note status change to: {}", consignmentNoteStatus);
         consignmentNoteRepository.setConsignmentNoteStatus(companyId, consignmentNoteId, consignmentNoteStatus);
         return consignmentNoteId;
     }
@@ -120,6 +125,8 @@ public class ConsignmentNoteServiceImpl implements ConsignmentNoteService {
         consignmentNote.setCarrier(carrier);
         consignmentNote.setDriver(driver);
 //        consignmentNote.setConsignmentNoteGoodsList(consignmentNoteGoodsList);
+
+        LOGGER.info("Edit consignment note with id: {}", consignmentNote.getId());
 
         return consignmentNote.getId();
     }
