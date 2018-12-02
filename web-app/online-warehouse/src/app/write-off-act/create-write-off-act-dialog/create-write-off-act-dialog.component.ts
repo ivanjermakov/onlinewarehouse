@@ -1,6 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material";
 import {CreateWriteOffActDto} from "../dto/create-write-off-act.dto";
+import {PlacementCreateWriteOffActDto} from "../dto/placement-create-write-off-act.dto";
 
 @Component({
   selector: 'app-create-write-off-act-dialog',
@@ -23,6 +24,11 @@ export class CreateWriteOffActDialogComponent implements OnInit {
 
   writeOffActSubmitted(createWriteOffActDto: CreateWriteOffActDto) {
     this.dialogRef.close(createWriteOffActDto);
+  }
+
+  placementWriteOffActSubmitted(placementCreateWriteOffActDto: PlacementCreateWriteOffActDto) {
+    this.dialogRef.close(placementCreateWriteOffActDto);
+    console.log(placementCreateWriteOffActDto);
   }
 
 }

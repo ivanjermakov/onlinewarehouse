@@ -61,6 +61,7 @@ import {CreateWriteOffActDialogComponent} from './write-off-act/create-write-off
 import {CreatePlacementComponent} from './warehouse/create-placement/create-placement.component';
 import {RegisterConsignmentNoteDialogComponent} from './consignment-note/register-consignment-note-dialog/register-consignment-note-dialog.component';
 import {CollectGoodsWarehouseComponent} from './warehouse/collect-goods-warehouse/collect-goods-warehouse.component';
+import {PlacementGoodsListDialogComponent} from './warehouse/placement-goods-list-dialog/placement-goods-list-dialog.component';
 
 const routes: Routes = [
   {path: 'app', component: AppComponent, canActivate: [AuthGuard], children: appRoutes},
@@ -119,7 +120,8 @@ const routes: Routes = [
     CreateWriteOffActDialogComponent,
     CreatePlacementComponent,
     RegisterConsignmentNoteDialogComponent,
-    CollectGoodsWarehouseComponent
+    CollectGoodsWarehouseComponent,
+    PlacementGoodsListDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -144,7 +146,8 @@ const routes: Routes = [
     DistributeGoodsWarehouseDialogComponent,
     ConsignmentNoteDetailDialogComponent,
     CreateWriteOffActDialogComponent,
-    RegisterConsignmentNoteDialogComponent
+    RegisterConsignmentNoteDialogComponent,
+    PlacementGoodsListDialogComponent
   ],
   providers: [
     AuthGuard,
