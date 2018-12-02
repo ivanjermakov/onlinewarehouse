@@ -3,6 +3,7 @@ package by.itechart.web.controller;
 import by.itechart.warehouse.dto.CreatePlacementDto;
 import by.itechart.warehouse.dto.PlacementDto;
 import by.itechart.warehouse.service.PlacementService;
+import by.itechart.writeoffact.dto.PlacementCreateWriteOffActDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,7 +29,7 @@ public class PlacementController {
 
     @PostMapping
     public Long savePlacement(@PathVariable long companyId, @PathVariable long warehouseId,
-                                   @RequestBody CreatePlacementDto placement) {
+                              @RequestBody CreatePlacementDto placement) {
         return placementService.savePlacement(placement, companyId, warehouseId);
     }
 
@@ -41,6 +42,12 @@ public class PlacementController {
     @PutMapping("/{placementId}")
     public Long editPlacement(@RequestBody PlacementDto placement) {
         return placementService.editPlacement(placement);
+    }
+
+    @PostMapping("/{placementId}/create-write-off-act")
+    public Long saveWriteOffAct(@PathVariable long companyId, @PathVariable long warehouseId,
+                                @PathVariable long placementId, @RequestBody PlacementCreateWriteOffActDto placementCreateWriteOffActDto) {
+        return placementService.savePlacementWriteOffAct(companyId, warehouseId, placementId, placementCreateWriteOffActDto);
     }
 
     @ResponseStatus(HttpStatus.OK)

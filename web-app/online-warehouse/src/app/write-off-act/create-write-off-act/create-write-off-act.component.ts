@@ -8,6 +8,9 @@ import {WriteOffTypeEnum} from "../dto/enum/write-off-type.enum";
 import {MatDialog, MatDialogConfig} from "@angular/material";
 import {GoodsListDialogComponent} from "../../shared/goods/goods-list-dialog/goods-list-dialog.component";
 import {AuthenticationService} from "../../auth/_services";
+import {PlacementGoodsDto} from "../../warehouse/dto/placement-goods.dto";
+import {PlacementGoodsListDialogComponent} from "../../warehouse/placement-goods-list-dialog/placement-goods-list-dialog.component";
+import {PlacementCreateWriteOffActDto} from "../dto/placement-create-write-off-act.dto";
 
 @Component({
   selector: 'app-create-write-off-act',
@@ -18,10 +21,13 @@ export class CreateWriteOffActComponent implements OnInit {
 
   @Input() emitWhenSubmit: boolean = false;
   @Input() inputGoods: GoodsDto[];
+  @Input() placementGoods: PlacementGoodsDto[];
 
   @Output() submitted: EventEmitter<CreateWriteOffActDto> = new EventEmitter<CreateWriteOffActDto>();
+  @Output() placementSubmitted: EventEmitter<PlacementCreateWriteOffActDto> = new EventEmitter<PlacementCreateWriteOffActDto>();
 
   goodsDtoList: Array<GoodsDto> = [];
+  placementGoodsDtoList: Array<PlacementGoodsDto> = [];
   createWriteOffActForm: FormGroup;
   writeOffActType = WriteOffActTypeEnum;
   writeOffType = WriteOffTypeEnum;
@@ -42,10 +48,6 @@ export class CreateWriteOffActComponent implements OnInit {
   ngOnInit() {
   }
 
-  printToConsole(smth: any) {
-    console.log(smth)
-  }
-
   getWriteOffActsTypes(): Array<string> {
     return Object.keys(this.writeOffActType);
   }
@@ -64,32 +66,64 @@ export class CreateWriteOffActComponent implements OnInit {
     }));
   }
 
+  addPlacementGoods(goods: PlacementGoodsDto): void {
+    this.placementGoodsDtoList.push(goods);
+    console.log(this.placementGoodsDtoList);
+    let index = this.placementGoodsDtoList.length - 1;
+    (this.createWriteOffActForm.controls['writeOffActGoodsDtoList'] as FormArray).push(this.fb.group({
+      "placementGoods": [this.placementGoodsDtoList[index]],
+      "writeOffType": ['', Validators.required],
+      "amount": ['', [Validators.required, Validators.min(1), Validators.max(this.placementGoodsDtoList[index].amount)]]
+    }));
+  }
+
   deleteItem(i: number): void {
     this.goodsDtoList.splice(i, 1);
     (this.createWriteOffActForm.controls['writeOffActGoodsDtoList'] as FormArray).removeAt(i);
   }
 
+  deletePlacementItem(i: number): void {
+    this.placementGoodsDtoList.splice(i, 1);
+    (this.createWriteOffActForm.controls['writeOffActGoodsDtoList'] as FormArray).removeAt(i);
+  }
+
   openModal(): void {
     const dialogConfig = new MatDialogConfig();
-
     dialogConfig.disableClose = false;
     dialogConfig.autoFocus = true;
     if (this.inputGoods) {
       dialogConfig.data = {inputGoods: this.inputGoods};
     }
-    const dialogRef = this.dialog.open(GoodsListDialogComponent, dialogConfig);
+    let dialogRef;
+    if (this.placementGoods) {
+      dialogConfig.data = {placementGoods: this.placementGoods};
+      dialogRef = this.dialog.open(PlacementGoodsListDialogComponent, dialogConfig);
 
-    dialogRef.afterClosed().subscribe(
-      data => {
-        if (data) {
-          this.addGoods(data);
+      dialogRef.afterClosed().subscribe(
+        data => {
+          console.log('dialog closed with', data);
+
+          if (data) {
+            this.addPlacementGoods(data);
+          }
         }
-      }
-    );
+      );
+    } else {
+      dialogRef = this.dialog.open(GoodsListDialogComponent, dialogConfig);
+
+      dialogRef.afterClosed().subscribe(
+        data => {
+          if (data) {
+            this.addGoods(data);
+          }
+        }
+      );
+    }
   }
 
   onSubmit(createWriteOffActForm: FormGroup): void {
     let value = createWriteOffActForm.value;
+    console.log('Form value', createWriteOffActForm.value);
     let createWriteOffActDto: CreateWriteOffActDto = new CreateWriteOffActDto(this.auth.getUserId(), null, null, null);
     Object.assign(createWriteOffActDto, value);
     console.log(createWriteOffActDto);
@@ -98,7 +132,16 @@ export class CreateWriteOffActComponent implements OnInit {
         console.log(long)
       });
     } else {
-      this.submitted.emit(createWriteOffActDto);
+      if (this.placementGoods) {
+        this.placementSubmitted.emit(new PlacementCreateWriteOffActDto(
+          this.auth.getUserId(),
+          value.responsiblePerson,
+          value.writeOffActType,
+          value.writeOffActGoodsDtoList
+        ))
+      } else {
+        this.submitted.emit(createWriteOffActDto);
+      }
     }
     this.clearFrom();
   }
