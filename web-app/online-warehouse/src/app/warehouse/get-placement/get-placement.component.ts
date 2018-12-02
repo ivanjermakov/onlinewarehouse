@@ -10,6 +10,7 @@ import {MatDialog} from "@angular/material";
 import {PlacementCreateWriteOffActDto} from "../../write-off-act/dto/placement-create-write-off-act.dto";
 import {PlacementGoodsDto} from "../dto/placement-goods.dto";
 import {PlacementWriteOffActGoodsDto} from "../../write-off-act/dto/placement-write-off-act-goods.dto";
+import {PlacementTypeEnum} from "../../shared/enum/placement-type.enum";
 
 @Component({
   selector: 'app-get-placement',
@@ -107,6 +108,7 @@ export class GetPlacementComponent implements OnInit {
   loading$ = this.loadingSubject.asObservable();
   private placement: PlacementDto;
 
+  placementType = PlacementTypeEnum;
 
   private error: any;
 

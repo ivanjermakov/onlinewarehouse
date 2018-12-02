@@ -9,6 +9,7 @@ import {MatDialog, PageEvent} from "@angular/material";
 import {Router} from "@angular/router";
 import {ConsignmentNoteType} from "../../consignment-note/dto/enum/consignment-note-type.enum";
 import {RegisterConsignmentNoteDialogComponent} from "../../consignment-note/register-consignment-note-dialog/register-consignment-note-dialog.component";
+import {PlacementTypeEnum} from "../../shared/enum/placement-type.enum";
 
 @Component({
   selector: 'app-warehouse-list',
@@ -26,6 +27,8 @@ export class WarehouseListComponent implements OnInit {
   private loadingSubject = new BehaviorSubject<boolean>(false);
   loading$ = this.loadingSubject.asObservable();
   private page: Page<WarehouseDto>;
+
+  placementType = PlacementTypeEnum;
 
   private pageable: Pageable = new Pageable(0, 10);
   private pageSizeOptions: number[] = [10, 25, 50];
