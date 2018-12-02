@@ -248,6 +248,9 @@ export class RegisterConsignmentNoteComponent implements OnInit {
   }
 
   onSubmit(): void {
+    if (this.carrierType !== 'AUTOMOBILE') {
+      this.consignmentNoteForm.value.driver = null;
+    }
     if (this.warehouseDto) {
       this.warehouseService.updateWarehouseAndCreateConsignmentNote(this.warehouseDto, this.consignmentNoteForm.value).subscribe()
     } else {
