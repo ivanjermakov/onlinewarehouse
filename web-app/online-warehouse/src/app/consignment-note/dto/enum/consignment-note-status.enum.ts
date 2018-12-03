@@ -1,5 +1,5 @@
 export enum ConsignmentNoteStatus {
-  NOT_PROCESSED = 'NOT PROCESSED',
-  PROCESSED = 'PROCESSED',
-  BEING_PROCESSED = 'BEING PROCESSED'
+  NOT_PROCESSED = 'Not processed',
+  PROCESSED = 'Processed',
+  BEING_PROCESSED = 'Being processed'
 }

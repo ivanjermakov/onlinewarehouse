@@ -1,6 +1,6 @@
 export enum CarrierTypeEnum {
-  RAILWAY = 'RAILWAY',
-  AUTOMOBILE = 'AUTOMOBILE',
-  WATERWAY = 'WATERWAY',
-  AVIATION = 'AVIATION'
+  RAILWAY = 'Railway',
+  AUTOMOBILE = 'Automobile',
+  WATERWAY = 'Waterway',
+  AVIATION = 'Aviation'
 }

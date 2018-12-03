@@ -62,7 +62,20 @@
 
       <ng-container matColumnDef="consignment Note Type">
         <th mat-header-cell *matHeaderCellDef>Consignment Note Type</th>
-        <td mat-cell *matCellDef="let consignmentNote">{{cnType[consignmentNote.consignmentNoteType]}}</td>
+        <td mat-cell *matCellDef="let consignmentNote">
+          <span matTooltip="In" [matTooltipPosition]="'before'"
+                *ngIf="consignmentNote.consignmentNoteType === cnType.IN">
+          <mat-icon>local_shipping</mat-icon>
+          <mat-icon>forward</mat-icon>
+          <mat-icon>store</mat-icon>
+        </span>
+          <span matTooltip="Out" [matTooltipPosition]="'before'"
+                *ngIf="consignmentNote.consignmentNoteType === cnType.OUT">
+          <mat-icon>store</mat-icon>
+          <mat-icon>forward</mat-icon>
+          <mat-icon>local_shipping</mat-icon>
+        </span>
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="consignment Note Status">
@@ -73,7 +86,7 @@
       <ng-container matColumnDef="consignment Process">
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let consignmentNote">
-          <button mat-button>Process</button>
+          <button mat-raised-button>Process</button>
         </td>
       </ng-container>
 
