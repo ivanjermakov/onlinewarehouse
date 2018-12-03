@@ -12,23 +12,35 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.List;
 
 @Data
 public class CreateConsignmentNoteDto {
+    @NotEmpty
     private String number;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
+    @NotNull
+    @FutureOrPresent
     private LocalDate shipment;
+    @NotNull
     private CounterpartyDto counterparty;
+    @NotNull
     private CarrierDto carrier;
     private DriverDto driver;
+    @NotNull
     private Long creatorId;
+    @NotEmpty
     private String vehicleNumber;
+    @NotEmpty
     @JsonBackReference
     private List<ConsignmentNoteGoodsDto> consignmentNoteGoodsList;
+    @NotNull
     private ConsignmentNoteType consignmentNoteType;
     private String description;
 }

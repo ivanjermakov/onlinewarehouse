@@ -9,7 +9,8 @@ import org.springframework.context.annotation.Import;
         MailConfig.class,
         UploadConfig.class,
         UploadContextPathConfig.class,
-        ElasticSearchConfig.class})
+        ElasticSearchConfig.class,
+        ValidationConfig.class})
 public class CoreConfig {
 
 }

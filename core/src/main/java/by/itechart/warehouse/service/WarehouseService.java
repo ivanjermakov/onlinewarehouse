@@ -7,14 +7,18 @@ import by.itechart.warehouse.dto.WarehouseDto;
 import by.itechart.warehouse.entity.Warehouse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.validation.annotation.Validated;
 
+import javax.validation.Valid;
+
+@Validated
 public interface WarehouseService {
 
     Page<WarehouseDto> getWarehouses(long companyId, Pageable pageable);
 
-    Long saveWarehouse(CreateWarehouseDto createWarehouseDto, long companyId);
+    Long saveWarehouse(@Valid CreateWarehouseDto createWarehouseDto, long companyId);
 
-    Long editWarehouse(WarehouseDto warehouseDto, long companyId, long warehouseId);
+    Long editWarehouse(@Valid WarehouseDto warehouseDto, long companyId, long warehouseId);
 
     WarehouseDto getWarehouse(long companyId, long warehouseId);
 

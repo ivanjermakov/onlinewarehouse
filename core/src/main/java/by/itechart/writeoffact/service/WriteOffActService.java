@@ -8,12 +8,16 @@ import by.itechart.writeoffact.dto.WriteOffActFilter;
 import by.itechart.writeoffact.dto.WriteOffActListDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.validation.annotation.Validated;
 
+import javax.validation.Valid;
+
+@Validated
 public interface WriteOffActService {
 
     Page<WriteOffActListDto> getWriteOffActs(Long companyId, Pageable pageable, WriteOffActFilter writeOffActFilter);
 
-    Long saveWriteOffAct(CreateWriteOffActDto writeOffAct, Long companyId);
+    Long saveWriteOffAct(@Valid CreateWriteOffActDto writeOffAct, Long companyId);
 
     WriteOffActDto getWriteOffAct(Long companyId, Long writeOffActId);
 
