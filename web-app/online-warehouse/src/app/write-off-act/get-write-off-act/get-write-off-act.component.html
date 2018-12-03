@@ -9,7 +9,7 @@
   <table class="mat-table">
     <thead>
     <tr class="mat-header-row">
-      <th class="mat-header-cell">Creator Id</th>
+      <th class="mat-header-cell">Creator</th>
       <th class="mat-header-cell">Creation</th>
       <th class="mat-header-cell">Responsible Person</th>
       <th class="mat-header-cell">Total amount</th>
@@ -18,7 +18,7 @@
     </thead>
     <tbody>
     <tr>
-      <td class="mat-cell">{{writeOffAct.creatorId}}</td>
+      <td class="mat-cell">{{writeOffAct.creator.firstname + ' ' + writeOffAct.creator.lastname}}</td>
       <td class="mat-cell">{{writeOffAct.creation}}</td>
       <td class="mat-cell">{{writeOffAct.responsiblePerson}}</td>
       <td class="mat-cell">{{writeOffAct.totalAmount}}</td>

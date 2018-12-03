@@ -75,7 +75,6 @@ public class WriteOffActServiceImpl implements WriteOffActService {
     public WriteOffActDto getWriteOffAct(Long companyId, Long writeOffActId) {
         WriteOffAct writeOffAct = writeOffActRepository.findByCompanyIdAndId(companyId, writeOffActId)
                 .orElseThrow(() -> new NotFoundEntityException("WriteOffAct"));
-
         return ObjectMapperUtils.map(writeOffAct, WriteOffActDto.class);
     }
 

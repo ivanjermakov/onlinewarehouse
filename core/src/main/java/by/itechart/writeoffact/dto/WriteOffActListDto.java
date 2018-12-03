@@ -1,5 +1,6 @@
 package by.itechart.writeoffact.dto;
 
+import by.itechart.common.dto.UserDto;
 import by.itechart.writeoffact.enums.WriteOffActType;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -15,7 +16,7 @@ public class WriteOffActListDto {
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate creation;
-    private Long creatorId;
+    private UserDto creator;
     private String responsiblePerson;
     private Integer totalAmount;
     private WriteOffActType writeOffActType;
