@@ -20,9 +20,9 @@ public class ObjectMapperUtils {
         TypeMap<UpdateConsignmentNoteDto, ConsignmentNote> typeMap = modelMapper
                 .createTypeMap(UpdateConsignmentNoteDto.class, ConsignmentNote.class);
         typeMap.addMappings(mapper -> {
-//            mapper.skip(ConsignmentNote::setCarrier);
-//            mapper.skip(ConsignmentNote::setCarrier);
-//            mapper.skip(ConsignmentNote::setDriver);
+            mapper.skip(ConsignmentNote::setCounterparty);
+            mapper.skip(ConsignmentNote::setCarrier);
+            mapper.skip(ConsignmentNote::setDriver);
             mapper.<Long>skip((d, v) -> d.getCounterparty().setId(v));
             mapper.<Long>skip((d, v) -> d.getCarrier().setId(v));
             mapper.<Long>skip((d, v) -> d.getDriver().setId(v));

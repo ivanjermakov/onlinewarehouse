@@ -260,7 +260,7 @@ export class RegisterConsignmentNoteComponent implements OnInit {
         this.updateConsignmentNote.shipment = this.consignmentNoteForm.controls['shipment'].value;
         this.updateConsignmentNote.counterpartyId = this.counterparty.id;
         this.updateConsignmentNote.carrierId = this.carrier.id;
-        this.updateConsignmentNote.driverId = this.driver.id;
+        this.updateConsignmentNote.driverId = this.driver ? this.driver.id : null;
         this.updateConsignmentNote.vehicleNumber = this.consignmentNoteForm.controls['vehicleNumber'].value;
         this.updateConsignmentNote.consignmentNoteGoodsList = this.consignmentNoteForm.controls['consignmentNoteGoodsList'].value;
         this.updateConsignmentNote.consignmentNoteType = this.consignmentNoteForm.controls['consignmentNoteType'].value;

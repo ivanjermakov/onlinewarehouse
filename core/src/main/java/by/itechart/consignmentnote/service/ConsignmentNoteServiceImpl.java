@@ -101,30 +101,31 @@ public class ConsignmentNoteServiceImpl implements ConsignmentNoteService {
     @Override
     @Transactional
     public Long updateConsignmentNote(UpdateConsignmentNoteDto consignmentNoteDto, long companyId) {
-        System.out.println(consignmentNoteDto.getConsignmentNoteGoodsList());
-
         ConsignmentNote consignmentNote = consignmentNoteRepository.findById(consignmentNoteDto.getId())
                 .orElseThrow(() -> new NotFoundEntityException("ConsignmentNote"));
         ObjectMapperUtils.map(consignmentNoteDto, consignmentNote);
 
         Counterparty counterparty = counterpartyRepository.getOne(consignmentNoteDto.getCounterpartyId());
         Carrier carrier = carrierRepository.getOne(consignmentNoteDto.getCarrierId());
-        Driver driver = driverRepository.getOne(consignmentNoteDto.getDriverId());
-
-//
-//        List<ConsignmentNoteGoods> consignmentNoteGoodsList = consignmentNoteDto.getConsignmentNoteGoodsList()
-//                .stream().map(dto -> {
-//                    ConsignmentNoteGoods consignmentNoteGoods = ObjectMapperUtils.map(dto, ConsignmentNoteGoods.class);
-//                    consignmentNoteGoods.setConsignmentNote(new ConsignmentNote(consignmentNoteDto.getId()));
-//                    return consignmentNoteGoodsRepository.getOne(consignmentNoteGoods.getId());
-//                }).collect(Collectors.toList());
-//
-//        System.out.println(consignmentNoteGoodsList);
-
         consignmentNote.setCounterparty(counterparty);
         consignmentNote.setCarrier(carrier);
-        consignmentNote.setDriver(driver);
-//        consignmentNote.setConsignmentNoteGoodsList(consignmentNoteGoodsList);
+        if (consignmentNoteDto.getDriverId() != null) {
+            Driver driver = driverRepository.getOne(consignmentNoteDto.getDriverId());
+            consignmentNote.setDriver(driver);
+        } else {
+            consignmentNote.setDriver(null);
+        }
+
+        consignmentNoteDto.getConsignmentNoteGoodsList().forEach(dto -> {
+            ConsignmentNoteGoods consignmentNoteGoods =
+                    ObjectMapperUtils.map(dto, ConsignmentNoteGoods.class);
+            if (consignmentNoteGoods.getId() != null) {
+                consignmentNoteGoodsRepository.getOne(consignmentNoteGoods.getId());
+            } else {
+                consignmentNoteGoods.setConsignmentNote(consignmentNote);
+                consignmentNoteGoodsRepository.save(consignmentNoteGoods);
+            }
+        });
 
         LOGGER.info("Edit consignment note with id: {}", consignmentNote.getId());
 
