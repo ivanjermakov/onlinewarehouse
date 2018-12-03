@@ -1,8 +1,8 @@
 export enum WriteOffTypeEnum {
-  CARRIER_LOSS = 'CARRIER_LOSS',
-  WAREHOUSE_LOSS = 'WAREHOUSE_LOSS',
-  WAREHOUSE_THEFT = 'WAREHOUSE_THEFT',
-  CARRIER_SHORTFALL = 'CARRIER_SHORTFALL',
-  CONFISCATION = 'CONFISCATION',
-  UTILIZATION = 'UTILIZATION'
+  CARRIER_LOSS = 'Carrier loss',
+  WAREHOUSE_LOSS = 'Warehouse loss',
+  WAREHOUSE_THEFT = 'Warehouse theft',
+  CARRIER_SHORTFALL = 'Carrier shortfall',
+  CONFISCATION = 'Confiscation',
+  UTILIZATION = 'Utilization'
 }

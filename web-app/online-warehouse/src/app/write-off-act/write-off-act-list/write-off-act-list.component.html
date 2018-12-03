@@ -61,7 +61,7 @@
 
     <ng-container matColumnDef="writeOffActType">
       <th mat-header-cell *matHeaderCellDef>Type</th>
-      <td mat-cell *matCellDef="let writeOffAct">{{writeOffAct.writeOffActType}}</td>
+      <td mat-cell *matCellDef="let writeOffAct">{{writeOffActType[writeOffAct.writeOffActType]}}</td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

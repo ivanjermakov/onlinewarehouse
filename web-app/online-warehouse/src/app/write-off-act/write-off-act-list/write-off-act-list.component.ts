@@ -32,6 +32,8 @@ export class WriteOffActListComponent implements OnInit {
   private minDate: Date = new Date(2000, 0, 1);
   private today: Date = new Date();
 
+  private writeOffActType = WriteOffActTypeEnum;
+
   private errors: any[];
 
   constructor(private writeOffActService: WriteOffActService,
