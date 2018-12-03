@@ -30,6 +30,8 @@ export class RegisterConsignmentNoteComponent implements OnInit {
   @Input() inputConsignmentNoteType: ConsignmentNoteType;
   @Output() submitted: EventEmitter<any> = new EventEmitter();
   private warehouseDto: WarehouseDto;
+
+  private today: Date = new Date();
   //
   private cnType = ConsignmentNoteType;
   private carrierType = '';

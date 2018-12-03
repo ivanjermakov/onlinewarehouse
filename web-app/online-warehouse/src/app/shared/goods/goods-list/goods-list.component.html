@@ -17,11 +17,19 @@
     </mat-form-field>
     <mat-form-field appearance="outline">
       <mat-label>Cost from</mat-label>
-      <input [formControl]="goodsFilterForm.controls['costFrom']" matInput placeholder="Cost from">
+      <input matInput
+             type="number"
+             [formControl]="goodsFilterForm.controls['costFrom']"
+             [min]="0"
+             placeholder="Cost from">
     </mat-form-field>
     <mat-form-field appearance="outline">
       <mat-label>Cost to</mat-label>
-      <input [formControl]="goodsFilterForm.controls['costTo']" matInput placeholder="Cost to">
+      <input matInput
+             type="number"
+             [formControl]="goodsFilterForm.controls['costTo']"
+             [min]="0"
+             placeholder="Cost to">
     </mat-form-field>
   </form>
 

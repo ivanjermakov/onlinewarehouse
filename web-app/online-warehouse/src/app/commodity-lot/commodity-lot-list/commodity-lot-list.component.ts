@@ -35,6 +35,9 @@ export class CommodityLotListComponent implements OnInit {
 
   private disabled = true;
 
+  private minDate: Date = new Date(2000, 0, 1);
+  private today: Date = new Date();
+
   private errors: any[];
 
   constructor(private commodityLotService: CommodityLotService,

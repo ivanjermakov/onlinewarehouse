@@ -29,6 +29,9 @@ export class ConsignmentNoteListComponent implements OnInit {
   private errors: any[];
   private active = true;
 
+  private minDate: Date = new Date(2000, 0, 1);
+  private today: Date = new Date();
+
   private consignmentNotes: Page<ConsignmentNoteListDto>;
   private consignmentNoteFilterForm: FormGroup;
 

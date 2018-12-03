@@ -13,14 +13,20 @@
   <mat-form-field appearance="outline">
     <mat-label>From</mat-label>
     <input matInput [formControl]="writeOffActFilterForm.controls['from']"
-           [matDatepicker]="pickerFrom" placeholder="From">
+           [matDatepicker]="pickerFrom"
+           [min]="minDate"
+           [max]="writeOffActFilterForm.controls['to'].value !== '' ? writeOffActFilterForm.controls['to'].value : today"
+           placeholder="From">
     <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
     <mat-datepicker #pickerFrom></mat-datepicker>
   </mat-form-field>
   <mat-form-field appearance="outline">
     <mat-label>To</mat-label>
     <input matInput [formControl]="writeOffActFilterForm.controls['to']"
-           [matDatepicker]="pickerTo" placeholder="To">
+           [matDatepicker]="pickerTo"
+           [min]="writeOffActFilterForm.controls['from'].value !== '' ? writeOffActFilterForm.controls['from'].value : minDate"
+           [max]="today"
+           placeholder="To">
     <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
     <mat-datepicker #pickerTo></mat-datepicker>
   </mat-form-field>
