@@ -1,12 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {map} from "rxjs/operators";
 import {API_BASE_URL} from "../../base-server-url";
-import {CarrierFilter} from "../dto/carrier.filter";
-import {CarrierListDto} from "../dto/carrier-list.dto";
-import {CreateCarrierDto} from "../dto/create-carrier.dto";
-import {CarrierDto} from "../dto/carrier.dto";
 import {Page} from "../../shared/pagination/page";
 import HttpParamsBuilder from "../../shared/http/http-params-builder";
 import {Pageable} from "../../shared/pagination/pageable";
@@ -30,7 +25,11 @@ export class DriverService {
     const path: string = this.baseApi + '/' + this.companyId + '/carriers/' + carrierId + "/drivers";
     let paramsBuilder = new HttpParamsBuilder();
     pageable.toUrlParameters(paramsBuilder);
-
     return this.http.get<Page<DriverDto>>(path, {params: paramsBuilder.getHttpParams()});
+  }
+
+  saveDriver(carrierId: number, driverDto: DriverDto): Observable<number> {
+    const path: string = this.baseApi + '/' + this.companyId + '/carriers/' + carrierId + "/drivers";
+    return this.http.post<number>(path, driverDto);
   }
 }

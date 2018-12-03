@@ -24,4 +24,7 @@ public interface CarrierService {
 
     Page<Driver> findDriversByInfo(String name, Pageable pageable);
 
+    Long saveDriver(long carrierId, DriverDto driverDto);
+
+    Long changeCarrierTrustedValue(long carrierId);
 }

@@ -27,6 +27,10 @@
     </mat-progress-spinner>
   </div>
 
+  <div style="display: flex; justify-content: center; align-items: center">
+    <button mat-stroked-button color="primary" (click)="addDriverModal()">Add driver</button>
+  </div>
+
   <mat-paginator [length]="page ? page.totalElements : 0"
                  [pageIndex]="pageable.page"
                  [pageSize]="pageable.size"

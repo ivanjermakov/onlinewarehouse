@@ -2,10 +2,11 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {BehaviorSubject, of} from "rxjs/index";
 import {Pageable} from "../../../shared/pagination/pageable";
 import {Page} from "../../../shared/pagination/page";
-import {PageEvent} from "@angular/material";
+import {MatDialog, PageEvent} from "@angular/material";
 import {DriverDto} from "../driver.dto";
 import {DriverService} from "../driver.service";
 import {catchError, finalize} from "rxjs/internal/operators";
+import {CreateDriverDialogComponent} from "../create-driver-dialog/create-driver-dialog.component";
 
 @Component({
   selector: 'app-driver-list',
@@ -24,8 +25,10 @@ export class DriverListComponent implements OnInit {
   private pageable: Pageable = new Pageable(0, 10);
   private pageSizeOptions: number[] = [10, 25, 50];
   private errors: any[];
+  private error: any;
 
-  constructor(private driverService: DriverService) {
+  constructor(private driverService: DriverService,
+              private dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -55,5 +58,27 @@ export class DriverListComponent implements OnInit {
           this.page = page;
         }
       });
+  }
+
+  addDriverModal() {
+    const dialogRef = this.dialog.open(CreateDriverDialogComponent, {
+      disableClose: false,
+      autoFocus: true,
+    });
+
+    dialogRef.afterClosed().subscribe(
+      data => {
+        if (data) {
+          this.driverService.saveDriver(this.carrierId, data)
+            .subscribe(long => {
+                console.log(long);
+                this.loadDrivers();
+              }, (err: any) => {
+                this.error = err;
+              }
+            );
+        }
+      }
+    );
   }
 }

@@ -1,0 +1,11 @@
+.create-driver {
+  min-width: 600px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.mat-error {
+  font-size: 12px;
+}

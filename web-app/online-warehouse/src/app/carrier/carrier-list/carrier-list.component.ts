@@ -30,6 +30,8 @@ export class CarrierListComponent implements OnInit {
   private carrierFilterForm: FormGroup;
   private filter: CarrierFilter = new CarrierFilter('', '', '');
 
+  private carrierTypeEnum = CarrierTypeEnum;
+
   private pageable: Pageable = new Pageable(0, 10);
   private pageSizeOptions: number[] = [10, 25, 50];
 

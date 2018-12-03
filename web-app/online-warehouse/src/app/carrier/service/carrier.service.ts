@@ -54,6 +54,11 @@ export class CarrierService {
     );
   }
 
+  changeTrustedValue(carrierId: number): Observable<number> {
+    const path: string = this.baseApi + '/' + this.companyId + '/carriers/' + carrierId + '/change-trusted';
+    return this.http.post<number>(path, null);
+  }
+
   deleteCarrier(carrierId: number): void {
     const path: string = this.baseApi + '/' + this.companyId + '/carriers/' + carrierId;
     this.http.delete(path);

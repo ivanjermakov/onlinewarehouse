@@ -52,4 +52,15 @@ public class CarrierController {
                                            Pageable pageable) {
         return carrierService.getDrivers(carrierId, pageable);
     }
+
+    @PostMapping("/{carrierId}/drivers")
+    public Long getCarriersList(@PathVariable long carrierId,
+                                @RequestBody DriverDto driverDto) {
+        return carrierService.saveDriver(carrierId, driverDto);
+    }
+
+    @PostMapping("/{carrierId}/change-trusted")
+    public Long changeCarrierTrustedValue(@PathVariable long carrierId) {
+        return carrierService.changeCarrierTrustedValue(carrierId);
+    }
 }

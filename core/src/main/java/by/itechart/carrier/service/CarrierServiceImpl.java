@@ -18,7 +18,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class CarrierServiceImpl implements CarrierService {
@@ -101,5 +100,20 @@ public class CarrierServiceImpl implements CarrierService {
     @Override
     public Page<Driver> findDriversByInfo(String name, Pageable pageable) {
         return driverElasticRepository.findDriversByInfoAndDeletedIsFalse(name, pageable);
+    }
+
+    @Transactional
+    @Override
+    public Long saveDriver(long carrierId, DriverDto driverDto) {
+        Driver driver = ObjectMapperUtils.map(driverDto, Driver.class);
+        driver.setCarrier(new Carrier(carrierId));
+        return driverRepository.save(driver).getId();
+    }
+
+    @Transactional
+    @Override
+    public Long changeCarrierTrustedValue(long carrierId) {
+        carrierRepository.setTrusted(carrierId, !carrierRepository.getOne(carrierId).getTrusted());
+        return carrierId;
     }
 }

@@ -46,4 +46,8 @@ public class Carrier extends BaseEntity {
 
     @Column(name = "deleted")
     private LocalDate deleted;
+
+    public Carrier(Long id) {
+        super(id);
+    }
 }

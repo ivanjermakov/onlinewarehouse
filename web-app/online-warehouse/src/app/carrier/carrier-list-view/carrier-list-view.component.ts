@@ -19,4 +19,7 @@ export class CarrierListViewComponent implements OnInit {
     this.router.navigate(['app/carrier/' + carrier.id]);
   }
 
+  newCarrier() {
+    this.router.navigate(['app/create-carrier']);
+  }
 }

@@ -4,8 +4,9 @@
     <mat-form-field>
       <input matInput placeholder="Carrier name" [formControl]="createCarrierForm.controls['name']" required>
     </mat-form-field>
-      <mat-checkbox [formControl]="createCarrierForm.controls['trusted']"
-        [color]="'primary'">Trusted</mat-checkbox>
+    <mat-checkbox [formControl]="createCarrierForm.controls['trusted']"
+                  [color]="'primary'">Trusted
+    </mat-checkbox>
     <div>
       <button mat-button matStepperNext>Next</button>
     </div>
@@ -13,12 +14,20 @@
   <mat-step [stepControl]="createCarrierForm.controls['carrierType']">
     <ng-template matStepLabel>Choose carrier type</ng-template>
     <br>
-      <mat-radio-group [formControl]="createCarrierForm.controls['carrierType']" [required]="true">
-        <mat-radio-button [value]="carrierTypeEnum.AUTOMOBILE"><mat-icon>local_shipping</mat-icon></mat-radio-button>
-        <mat-radio-button [value]="carrierTypeEnum.AVIATION"><mat-icon>flight</mat-icon></mat-radio-button>
-        <mat-radio-button [value]="carrierTypeEnum.RAILWAY"><mat-icon>train</mat-icon></mat-radio-button>
-        <mat-radio-button [value]="carrierTypeEnum.WATERWAY"><mat-icon>directions_boat</mat-icon></mat-radio-button>
-      </mat-radio-group>
+    <mat-radio-group [formControl]="createCarrierForm.controls['carrierType']" [required]="true">
+      <mat-radio-button class="space" color="primary" [value]="'AUTOMOBILE'">
+        <mat-icon>local_shipping</mat-icon>
+      </mat-radio-button>
+      <mat-radio-button class="space" color="primary" [value]="'AVIATION'">
+        <mat-icon>flight</mat-icon>
+      </mat-radio-button>
+      <mat-radio-button class="space" color="primary" [value]="'RAILWAY'">
+        <mat-icon>train</mat-icon>
+      </mat-radio-button>
+      <mat-radio-button class="space" color="primary" [value]="'WATERWAY'">
+        <mat-icon>directions_boat</mat-icon>
+      </mat-radio-button>
+    </mat-radio-group>
     <div>
       <button mat-button matStepperPrevious>Back</button>
       <button mat-button matStepperNext>Next</button>
