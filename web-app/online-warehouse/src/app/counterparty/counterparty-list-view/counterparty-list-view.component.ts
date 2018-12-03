@@ -18,4 +18,8 @@ export class CounterpartyListViewComponent implements OnInit {
   selected(counterparty: CounterpartyDto) {
     this.router.navigate(['app/counterparty/' + counterparty.id]);
   }
+
+  newCounterparty() {
+    this.router.navigate(['app/create-counterparty']);
+  }
 }
