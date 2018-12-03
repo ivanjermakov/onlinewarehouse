@@ -7,6 +7,7 @@ import by.itechart.commoditylot.dto.CreateCommodityLotDto;
 import by.itechart.commoditylot.entity.CommodityLot;
 import by.itechart.commoditylot.entity.CommodityLotGoods;
 import by.itechart.commoditylot.enums.CommodityLotStatus;
+import by.itechart.commoditylot.enums.CommodityLotType;
 import by.itechart.commoditylot.repository.CommodityLotGoodsRepository;
 import by.itechart.commoditylot.repository.CommodityLotRepository;
 import by.itechart.common.utils.ObjectMapperUtils;
@@ -72,5 +73,10 @@ public class CommodityLotServiceImpl implements CommodityLotService {
     public Long setCommodityLotStatus(long commodityLotId, long companyId, CommodityLotStatus status) {
         commodityLotRepository.changeCommodityLotStatus(status, commodityLotId, companyId);
         return commodityLotId;
+    }
+
+    @Override
+    public List<CommodityLot> getAllByCommodityLotType(CommodityLotType commodityLotType) {
+        return  commodityLotRepository.getAllByCommodityLotType(commodityLotType);
     }
 }
