@@ -86,9 +86,4 @@ public class PaymentServiceImpl implements PaymentService {
            return rates.get(act.getCompany().getSizeType()).getRate();
         }).mapToLong(i -> i).sum();
     }
-
-    @Override
-    public void delete(Long id) {
-        paymentRepository.setDeleted(id);
-    }
 }

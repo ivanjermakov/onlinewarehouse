@@ -6,8 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -18,8 +18,13 @@ import java.time.LocalDateTime;
 public class PaymentAct extends BaseEntity {
 
     private LocalDateTime paymentDate;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "company_id")
     private Company company;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "rate_id")
     private Rate rateExacted;
-    private LocalDateTime deleted;
 
 }

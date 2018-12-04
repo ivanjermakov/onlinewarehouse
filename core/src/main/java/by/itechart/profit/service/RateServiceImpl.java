@@ -26,8 +26,4 @@ public class RateServiceImpl implements RateService{
         return rateRepository.save(rate);
     }
 
-    @Override
-    public void delete(Long id) {
-        rateRepository.setDeleted(id);
-    }
 }

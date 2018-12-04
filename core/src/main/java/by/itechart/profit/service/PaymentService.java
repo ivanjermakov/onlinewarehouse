@@ -16,5 +16,4 @@ public interface PaymentService {
 
     Long getDamages(LocalDate start, LocalDate end);
 
-    void delete(Long id);
 }

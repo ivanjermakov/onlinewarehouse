@@ -11,5 +11,4 @@ public interface RateService {
 
     Rate persist(Rate rate);
 
-    void delete(Long id);
 }

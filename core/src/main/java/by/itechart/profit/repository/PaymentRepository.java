@@ -11,7 +11,4 @@ import java.util.List;
 public interface PaymentRepository extends PagingAndSortingRepository<PaymentAct, Long> {
     List<PaymentAct> getAllByPaymentDateBetween(LocalDateTime start, LocalDateTime end);
 
-    @Modifying
-    @Query("update PaymentAct r set r.deleted = current_timestamp where c.id = ?1")
-    void setDeleted(Long id);
 }

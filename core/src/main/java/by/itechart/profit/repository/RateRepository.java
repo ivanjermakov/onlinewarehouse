@@ -16,7 +16,4 @@ public interface RateRepository extends PagingAndSortingRepository<Rate, Long> {
             "and r.companySize = :companySize")
     Rate getLastRate(LocalDateTime endDate, CompanySize companySize);
 
-    @Modifying
-    @Query("update Rate r set r.deleted = current_timestamp where c.id = ?1")
-    void setDeleted(Long id);
 }
