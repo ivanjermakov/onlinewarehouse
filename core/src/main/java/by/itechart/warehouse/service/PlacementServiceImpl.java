@@ -11,6 +11,7 @@ import by.itechart.warehouse.entity.PlacementGoods;
 import by.itechart.warehouse.entity.Warehouse;
 import by.itechart.warehouse.repository.PlacementGoodsRepository;
 import by.itechart.warehouse.repository.PlacementRepository;
+import by.itechart.writeoffact.dto.PlacementCreateWriteOffActDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import by.itechart.writeoffact.dto.CreateWriteOffActDto;

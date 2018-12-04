@@ -51,6 +51,8 @@
         <querydsl.version>4.2.1</querydsl.version>
         <jackson.datatype.version>2.9.6</jackson.datatype.version>
         <jsonwebtoken.version>0.9.1</jsonwebtoken.version>
+        <poi.version>3.14</poi.version>
+        <ooxml-schemas.version>1.3</ooxml-schemas.version>
     </properties>
 
     <dependencies>

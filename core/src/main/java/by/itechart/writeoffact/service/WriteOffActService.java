@@ -24,7 +24,7 @@ public interface WriteOffActService {
 
     Long saveWriteOffAct(@Valid CreateWriteOffActDto writeOffAct, Long companyId);
 
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = true) //TODO
     List<WriteOffAct> findDamages(LocalDate start, LocalDate end);
 
     WriteOffActDto getWriteOffAct(Long companyId, Long writeOffActId);
