@@ -21,8 +21,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 public class WriteOffActServiceImpl implements WriteOffActService {
@@ -44,6 +46,16 @@ public class WriteOffActServiceImpl implements WriteOffActService {
     public Page<WriteOffActListDto> getWriteOffActs(Long companyId, Pageable pageable, WriteOffActFilter writeOffActFilter) {
         return writeOffActRepository.findAll(WriteOffActsPredicates.findByWriteOffActFilter(writeOffActFilter, companyId), pageable)
                 .map(writeOffAct -> ObjectMapperUtils.map(writeOffAct, WriteOffActListDto.class));
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<WriteOffAct> findDamages(LocalDate start, LocalDate end) {
+        return StreamSupport.stream(
+                writeOffActRepository.findAll(
+                        WriteOffActsPredicates.findDamages(start, end)
+                ).spliterator(), false)
+                .collect(Collectors.toList());
     }
 
     @Transactional
