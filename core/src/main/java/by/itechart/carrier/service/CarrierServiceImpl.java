@@ -11,6 +11,8 @@ import by.itechart.common.repository.AddressRepository;
 import by.itechart.common.utils.ObjectMapperUtils;
 import by.itechart.company.entity.Company;
 import by.itechart.exception.NotFoundEntityException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +23,7 @@ import java.util.ArrayList;
 
 @Service
 public class CarrierServiceImpl implements CarrierService {
+    private final static Logger LOGGER = LoggerFactory.getLogger(CarrierServiceImpl.class);
 
     private final CarrierRepository carrierRepository;
     private final AddressRepository addressRepository;
@@ -54,8 +57,10 @@ public class CarrierServiceImpl implements CarrierService {
         carrier.getAddress().setId(addressId);
         carrier.setCompany(new Company(companyId));
         carrierElasticRepository.save(carrier);
+        Long id = carrierRepository.save(carrier).getId();
 
-        return carrierRepository.save(carrier).getId();
+        LOGGER.info("Carrier was created with id: {}", id);
+        return id;
     }
 
     @Transactional(readOnly = true)
@@ -73,6 +78,8 @@ public class CarrierServiceImpl implements CarrierService {
     @Transactional
     @Override
     public Long editCarrier(CreateCarrierDto createCarrierDto, Long companyId, Long carrierId) {
+        LOGGER.info("Edit carrier with id: {}", carrierId);
+
         deleteCarrier(companyId, carrierId);
         return saveCarrier(createCarrierDto, companyId);
     }
@@ -80,6 +87,7 @@ public class CarrierServiceImpl implements CarrierService {
     @Transactional
     @Override
     public void deleteCarrier(Long companyId, Long carrierId) {
+        LOGGER.info("Delete carrier with id: {}", carrierId);
         carrierRepository.setDeleted(carrierId, companyId);
     }
 
@@ -93,12 +101,15 @@ public class CarrierServiceImpl implements CarrierService {
     @Transactional
     @Override
     public Page<Carrier> findByName(String name, Pageable pageable) {
+        LOGGER.info("Find carrier by name: {}", name);
+
         return carrierElasticRepository.findByName(name, pageable);
     }
 
     @Transactional
     @Override
     public Page<Driver> findDriversByInfo(String name, Pageable pageable) {
+        LOGGER.info("Find drivers by info: {}", name);
         return driverElasticRepository.findDriversByInfoAndDeletedIsFalse(name, pageable);
     }
 

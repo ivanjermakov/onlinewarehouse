@@ -10,6 +10,8 @@ import org.springframework.context.annotation.Import;
         UploadConfig.class,
         UploadContextPathConfig.class,
         ElasticSearchConfig.class,
+        ValidationConfig.class,
+        ElasticSearchConfig.class,
         QuartzConfig.class})
 public class CoreConfig {
 

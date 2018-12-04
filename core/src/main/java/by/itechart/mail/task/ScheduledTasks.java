@@ -7,6 +7,8 @@ import by.itechart.mail.entity.BirthdayMailTemplate;
 import by.itechart.mail.service.BirthdayMailSendService;
 import by.itechart.mail.service.MailService;
 import by.itechart.mail.service.MailTemplateService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -18,6 +20,7 @@ import java.time.temporal.ChronoUnit;
 
 @Component
 public class ScheduledTasks {
+    private final static Logger LOGGER = LoggerFactory.getLogger(ScheduledTasks.class);
 
     private final MailService mailService;
     private final MailTemplateService mailTemplateService;
@@ -66,6 +69,7 @@ public class ScheduledTasks {
             mailService.sendHtml(user.getEmail(), subject, html);
             birthdayMailSendService.generate(user, true);
         } catch (MessagingException e) {
+            LOGGER.error("Exception sending message: {}", e);
             birthdayMailSendService.generate(user, false);
         }
     }

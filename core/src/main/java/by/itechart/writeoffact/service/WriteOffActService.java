@@ -9,19 +9,23 @@ import by.itechart.writeoffact.dto.WriteOffActListDto;
 import by.itechart.writeoffact.entity.WriteOffAct;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.validation.Valid;
+
+@Validated
 public interface WriteOffActService {
 
     Page<WriteOffActListDto> getWriteOffActs(Long companyId, Pageable pageable, WriteOffActFilter writeOffActFilter);
 
-    @Transactional(readOnly = true)
-    List<WriteOffAct> findDamages(LocalDate start, LocalDate end);
+    Long saveWriteOffAct(@Valid CreateWriteOffActDto writeOffAct, Long companyId);
 
-    Long saveWriteOffAct(CreateWriteOffActDto writeOffAct, Long companyId);
+    @Transactional(readOnly = true) //TODO
+    List<WriteOffAct> findDamages(LocalDate start, LocalDate end);
 
     WriteOffActDto getWriteOffAct(Long companyId, Long writeOffActId);
 

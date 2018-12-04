@@ -11,7 +11,6 @@ import by.itechart.counterparty.entity.Counterparty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 import org.springframework.data.elasticsearch.annotations.Document;
 
 import javax.persistence.*;
@@ -22,7 +21,6 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @Entity
-@ToString
 @Table(name = "consignment_note")
 @Document(indexName = "warehouse", type = "consignmentNotes")
 public class ConsignmentNote extends BaseEntity {

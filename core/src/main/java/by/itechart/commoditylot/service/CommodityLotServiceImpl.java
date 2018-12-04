@@ -13,6 +13,8 @@ import by.itechart.commoditylot.repository.CommodityLotRepository;
 import by.itechart.common.utils.ObjectMapperUtils;
 import by.itechart.company.entity.Company;
 import by.itechart.exception.NotFoundEntityException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,7 @@ import java.util.List;
 
 @Service
 public class CommodityLotServiceImpl implements CommodityLotService {
+    private final static Logger LOGGER = LoggerFactory.getLogger(CommodityLotServiceImpl.class);
 
     private final CommodityLotRepository commodityLotRepository;
     private final CommodityLotGoodsRepository commodityLotGoodsRepository;
@@ -55,6 +58,7 @@ public class CommodityLotServiceImpl implements CommodityLotService {
             goods.setId(null);
         });
         commodityLotGoodsRepository.saveAll(commodityLotGoods);
+        LOGGER.info("Commodity lot was created with id: {}", commodityLotId);
 
         return commodityLotId;
     }
@@ -71,6 +75,7 @@ public class CommodityLotServiceImpl implements CommodityLotService {
     @Transactional
     @Override
     public Long setCommodityLotStatus(long commodityLotId, long companyId, CommodityLotStatus status) {
+        LOGGER.info("Commodity lot status change to: {}", status);
         commodityLotRepository.changeCommodityLotStatus(status, commodityLotId, companyId);
         return commodityLotId;
     }

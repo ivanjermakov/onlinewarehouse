@@ -9,14 +9,18 @@ import by.itechart.commoditylot.enums.CommodityLotStatus;
 import by.itechart.commoditylot.enums.CommodityLotType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
+@Validated
 public interface CommodityLotService {
 
     Page<CommodityLotListDto> getCommodityLots(Long companyId, Pageable pageable, CommodityLotFilter commodityLotFilter);
 
-    Long saveCommodityLot(CreateCommodityLotDto createCommodityLotDto, Long companyId);
+    Long saveCommodityLot(@Valid CreateCommodityLotDto createCommodityLotDto, Long companyId);
 
     CommodityLotDto getCommodityLot(Long commodityLotId, Long companyId);
 

@@ -11,8 +11,10 @@ import by.itechart.warehouse.entity.PlacementGoods;
 import by.itechart.warehouse.entity.Warehouse;
 import by.itechart.warehouse.repository.PlacementGoodsRepository;
 import by.itechart.warehouse.repository.PlacementRepository;
-import by.itechart.writeoffact.dto.CreateWriteOffActDto;
 import by.itechart.writeoffact.dto.PlacementCreateWriteOffActDto;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import by.itechart.writeoffact.dto.CreateWriteOffActDto;
 import by.itechart.writeoffact.service.WriteOffActService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,6 +26,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class PlacementServiceImpl implements PlacementService {
+    private final static Logger LOGGER = LoggerFactory.getLogger(PlacementServiceImpl.class);
 
     private PlacementRepository placementRepository;
     private PlacementGoodsRepository placementGoodsRepository;
@@ -62,6 +65,8 @@ public class PlacementServiceImpl implements PlacementService {
 //                }).collect(Collectors.toList());
 //        placementGoodsRepository.saveAll(placementGoodsList);
 
+        LOGGER.info("Placement was created with id: {}", id);
+
         return id;
     }
 
@@ -70,6 +75,8 @@ public class PlacementServiceImpl implements PlacementService {
     public Long editPlacement(PlacementDto editDto) {
         Placement placement = placementRepository.getOne(editDto.getId());
         ObjectMapperUtils.map(editDto, placement);
+
+        LOGGER.info("Edit placement with id: {}", placement.getId());
 
         return placement.getId();
     }
@@ -87,6 +94,7 @@ public class PlacementServiceImpl implements PlacementService {
     @Transactional
     @Override
     public void deletePlacement(long placementId) {
+        LOGGER.info("Delete placement with id: {}", placementId);
         placementRepository.setDeleted(placementId);
     }
 

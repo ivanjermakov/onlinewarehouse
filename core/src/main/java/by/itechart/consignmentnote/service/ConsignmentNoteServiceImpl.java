@@ -1,5 +1,9 @@
 package by.itechart.consignmentnote.service;
 
+import by.itechart.carrier.entity.Carrier;
+import by.itechart.carrier.entity.Driver;
+import by.itechart.carrier.repository.CarrierRepository;
+import by.itechart.carrier.repository.DriverRepository;
 import by.itechart.common.utils.ObjectMapperUtils;
 import by.itechart.company.entity.Company;
 import by.itechart.consignmentnote.dto.*;
@@ -8,7 +12,11 @@ import by.itechart.consignmentnote.entity.ConsignmentNoteGoods;
 import by.itechart.consignmentnote.enums.ConsignmentNoteStatus;
 import by.itechart.consignmentnote.repository.ConsignmentNoteGoodsRepository;
 import by.itechart.consignmentnote.repository.ConsignmentNoteRepository;
+import by.itechart.counterparty.entity.Counterparty;
+import by.itechart.counterparty.repository.CounterpartyRepository;
 import by.itechart.exception.NotFoundEntityException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -20,14 +28,24 @@ import java.util.stream.Collectors;
 
 @Service
 public class ConsignmentNoteServiceImpl implements ConsignmentNoteService {
+    private final static Logger LOGGER = LoggerFactory.getLogger(ConsignmentNoteServiceImpl.class);
 
     private ConsignmentNoteRepository consignmentNoteRepository;
     private ConsignmentNoteGoodsRepository consignmentNoteGoodsRepository;
+    private CounterpartyRepository counterpartyRepository;
+    private CarrierRepository carrierRepository;
+    private DriverRepository driverRepository;
 
     public ConsignmentNoteServiceImpl(ConsignmentNoteRepository consignmentNoteRepository,
-                                      ConsignmentNoteGoodsRepository consignmentNoteGoodsRepository) {
+                                      ConsignmentNoteGoodsRepository consignmentNoteGoodsRepository,
+                                      CarrierRepository carrierRepository,
+                                      CounterpartyRepository counterpartyRepository,
+                                      DriverRepository driverRepository) {
         this.consignmentNoteRepository = consignmentNoteRepository;
         this.consignmentNoteGoodsRepository = consignmentNoteGoodsRepository;
+        this.counterpartyRepository = counterpartyRepository;
+        this.carrierRepository = carrierRepository;
+        this.driverRepository = driverRepository;
     }
 
     @Override
@@ -67,12 +85,15 @@ public class ConsignmentNoteServiceImpl implements ConsignmentNoteService {
                 }).collect(Collectors.toList());
         consignmentNoteGoodsRepository.saveAll(consignmentNoteGoodsList);
 
+        LOGGER.info("Consignment note was created with id: {}", id);
+
         return id;
     }
 
     @Override
     @Transactional
     public Long setConsignmentNoteStatus(long consignmentNoteId, ConsignmentNoteStatus consignmentNoteStatus, long companyId) {
+        LOGGER.info("Consignment note status change to: {}", consignmentNoteStatus);
         consignmentNoteRepository.setConsignmentNoteStatus(companyId, consignmentNoteId, consignmentNoteStatus);
         return consignmentNoteId;
     }
@@ -80,12 +101,33 @@ public class ConsignmentNoteServiceImpl implements ConsignmentNoteService {
     @Override
     @Transactional
     public Long updateConsignmentNote(UpdateConsignmentNoteDto consignmentNoteDto, long companyId) {
-        System.out.println(consignmentNoteDto);
-        ConsignmentNote consignmentNote = consignmentNoteRepository.getOne(consignmentNoteDto.getId());
-        consignmentNote.setNumber(consignmentNoteDto.getNumber());
-        consignmentNote.getCarrier().setId(2L);
+        ConsignmentNote consignmentNote = consignmentNoteRepository.findById(consignmentNoteDto.getId())
+                .orElseThrow(() -> new NotFoundEntityException("ConsignmentNote"));
+        ObjectMapperUtils.map(consignmentNoteDto, consignmentNote);
 
-//        ObjectMapperUtils.map(consignmentNoteDto, consignmentNote);
+        Counterparty counterparty = counterpartyRepository.getOne(consignmentNoteDto.getCounterpartyId());
+        Carrier carrier = carrierRepository.getOne(consignmentNoteDto.getCarrierId());
+        consignmentNote.setCounterparty(counterparty);
+        consignmentNote.setCarrier(carrier);
+        if (consignmentNoteDto.getDriverId() != null) {
+            Driver driver = driverRepository.getOne(consignmentNoteDto.getDriverId());
+            consignmentNote.setDriver(driver);
+        } else {
+            consignmentNote.setDriver(null);
+        }
+
+        consignmentNoteDto.getConsignmentNoteGoodsList().forEach(dto -> {
+            ConsignmentNoteGoods consignmentNoteGoods =
+                    ObjectMapperUtils.map(dto, ConsignmentNoteGoods.class);
+            if (consignmentNoteGoods.getId() != null) {
+                consignmentNoteGoodsRepository.getOne(consignmentNoteGoods.getId());
+            } else {
+                consignmentNoteGoods.setConsignmentNote(consignmentNote);
+                consignmentNoteGoodsRepository.save(consignmentNoteGoods);
+            }
+        });
+
+        LOGGER.info("Edit consignment note with id: {}", consignmentNote.getId());
 
         return consignmentNote.getId();
     }
