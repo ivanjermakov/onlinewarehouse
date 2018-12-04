@@ -118,13 +118,17 @@ public class CarrierServiceImpl implements CarrierService {
     public Long saveDriver(long carrierId, DriverDto driverDto) {
         Driver driver = ObjectMapperUtils.map(driverDto, Driver.class);
         driver.setCarrier(new Carrier(carrierId));
-        return driverRepository.save(driver).getId();
+        Long id = driverRepository.save(driver).getId();
+        LOGGER.info("Driver was created with id: {}", id);
+        return id;
     }
 
     @Transactional
     @Override
     public Long changeCarrierTrustedValue(long carrierId) {
-        carrierRepository.setTrusted(carrierId, !carrierRepository.getOne(carrierId).getTrusted());
+        Boolean trusted = carrierRepository.getOne(carrierId).getTrusted();
+        carrierRepository.setTrusted(carrierId, !trusted);
+        LOGGER.info("Carrier trusted value was changed to: {}", !trusted);
         return carrierId;
     }
 }
