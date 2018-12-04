@@ -6,8 +6,9 @@ import {Page} from "../../pagination/page";
 import {Pageable} from "../../pagination/pageable";
 import {BehaviorSubject, of} from "rxjs";
 import {catchError, debounceTime, distinctUntilChanged, finalize, tap} from "rxjs/operators";
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {GoodFilter} from "../dto/good-filter";
+import {PlacementTypeEnum} from "../../enum/placement-type.enum";
 
 @Component({
   selector: 'app-goods-list',
@@ -18,6 +19,7 @@ export class GoodsListComponent implements OnInit {
 
   @Output() goodsSelected: EventEmitter<GoodsDto> = new EventEmitter();
 
+  @Input() hoverable: boolean = false;
   @Input() addButton: Boolean;
   @Input() inputGoods: GoodsDto[];
 
@@ -31,6 +33,10 @@ export class GoodsListComponent implements OnInit {
   private goodsFilterForm: FormGroup;
   private goodsFilter: GoodFilter = new GoodFilter();
 
+  private maxInt: number = Number.MAX_SAFE_INTEGER;
+
+  private placementTypeEnum = PlacementTypeEnum;
+
   private errors: any[];
 
   constructor(private goodsService: GoodService,
@@ -38,8 +44,8 @@ export class GoodsListComponent implements OnInit {
     this.goodsFilterForm = fb.group({
       "name": [''],
       "placementType": [''],
-      "costFrom": [''],
-      "costTo": ['']
+      "costFrom": ['', [Validators.min(0)]],
+      "costTo": ['', [Validators.min(0)]]
     });
   }
 
@@ -121,7 +127,6 @@ export class GoodsListComponent implements OnInit {
 
 
   }
-
 
   private checkField(data: any): boolean {
     return data !== null && data !== undefined && data !== '';

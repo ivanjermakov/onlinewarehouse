@@ -1,6 +1,6 @@
 export enum PlacementTypeEnum {
-  HEATED = 'HEATED',
-  UNHEATED = 'UNHEATED',
-  FREEZER = 'FREEZER',
-  OPEN_SPACE = 'OPEN_SPACE'
+  HEATED = 'Heated',
+  UNHEATED = 'Unheated',
+  FREEZER = 'Freezer',
+  OPEN_SPACE = 'Open space'
 }

@@ -5,7 +5,7 @@
       <mat-select [formControl]="createPlacementForm.controls['placementType']"
                   placeholder="Type" [required]="true">
         <mat-option *ngFor="let type of getPlacementType()" [value]="type">
-          {{type}}
+          {{placementType[type]}}
         </mat-option>
       </mat-select>
     </mat-form-field>

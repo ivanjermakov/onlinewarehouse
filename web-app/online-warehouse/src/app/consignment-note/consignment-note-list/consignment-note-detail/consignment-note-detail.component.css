@@ -26,3 +26,11 @@ td.mat-cell.border-right {
   background-color: #7d1616;
   color: white;
 }
+
+tr.mat-footer-row {
+  font-weight: bold;
+}
+
+.mat-footer-cell {
+  font-size: 20px;
+}

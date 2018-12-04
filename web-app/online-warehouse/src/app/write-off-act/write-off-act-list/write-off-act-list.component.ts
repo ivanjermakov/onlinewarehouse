@@ -29,6 +29,11 @@ export class WriteOffActListComponent implements OnInit {
   private pageable: Pageable = new Pageable(0, 10);
   private pageSizeOptions: number[] = [10, 25, 50];
 
+  private minDate: Date = new Date(2000, 0, 1);
+  private today: Date = new Date();
+
+  private writeOffActType = WriteOffActTypeEnum;
+
   private errors: any[];
 
   constructor(private writeOffActService: WriteOffActService,

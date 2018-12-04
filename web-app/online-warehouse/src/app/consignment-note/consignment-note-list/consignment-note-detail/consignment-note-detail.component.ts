@@ -9,6 +9,10 @@ import {ConsignmentNoteType} from "../../dto/enum/consignment-note-type.enum";
 import {ConsignmentNoteStatus} from "../../dto/enum/consignment-note-status.enum";
 import {WriteOffActService} from "../../../write-off-act/service/write-off-act.service";
 import {GoodsDto} from "../../../shared/goods/dto/goods.dto";
+import {ConsignmentNoteGoodsDto} from "../../dto/consignment-note-goods-dto";
+import {CounterpartyTypeEnum} from "../../../counterparty/dto/enum/counterparty-type.enum";
+import {CarrierTypeEnum} from "../../../carrier/dto/enum/carrier-type.enum";
+import {BehaviorSubject} from "rxjs";
 
 @Component({
   selector: 'app-consignment-note-detail',
@@ -20,8 +24,17 @@ export class ConsignmentNoteDetailComponent implements OnInit {
   @Input() showWriteOffButtons: boolean = false;
   @Input() inputConsignmentNote: ConsignmentNoteDto;
 
+  private totalCost: number = 0;
+  private totalWeight: number = 0;
+
+  private loadingSubject = new BehaviorSubject<boolean>(false);
+  loading$ = this.loadingSubject.asObservable();
+
+  private counterpartyType = CounterpartyTypeEnum;
+  private carrierTypeEnum = CarrierTypeEnum;
   private status = ConsignmentNoteStatus;
   private type = ConsignmentNoteType;
+
   private consignmentNote: ConsignmentNoteDto;
   private displayedColumns: string[] = ['Name', 'Labelling', 'Measurement unit', 'Placement type',
     'Weight', 'Cost', 'Description', 'Amount'];
@@ -45,8 +58,13 @@ export class ConsignmentNoteDetailComponent implements OnInit {
   getConsignmentNote(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     if (!Number.isNaN(id) && id != 0) {
+      this.loadingSubject.next(true);
       this.consignmentNoteService.getConsignmentNote(id)
-        .subscribe((consignmentNote) => this.consignmentNote = consignmentNote);
+        .subscribe((consignmentNote) => {
+          this.consignmentNote = consignmentNote;
+          this.getTotal();
+          this.loadingSubject.next(false);
+        });
     }
   }
 
@@ -92,6 +110,13 @@ export class ConsignmentNoteDetailComponent implements OnInit {
   private getGoodsDtoArr(): GoodsDto[] {
     return this.consignmentNote.consignmentNoteGoodsList.map((goods) => {
       return goods.goods;
+    })
+  }
+
+  private getTotal() {
+    this.consignmentNote.consignmentNoteGoodsList.forEach((goods: ConsignmentNoteGoodsDto) => {
+      this.totalCost += goods.amount * goods.goods.cost;
+      this.totalWeight += goods.amount * goods.goods.weight;
     })
   }
 }

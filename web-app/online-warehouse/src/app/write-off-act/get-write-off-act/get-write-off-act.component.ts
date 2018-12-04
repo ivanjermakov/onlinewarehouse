@@ -4,6 +4,10 @@ import {ActivatedRoute} from "@angular/router";
 import {WriteOffActDto} from "../dto/write-off-act.dto";
 import {BehaviorSubject, of} from "rxjs";
 import {catchError, finalize} from "rxjs/operators";
+import {WriteOffActGoodsDto} from "../dto/write-off-act-goods.dto";
+import {WriteOffActTypeEnum} from "../dto/enum/write-off-act-type.enum";
+import {PlacementTypeEnum} from "../../shared/enum/placement-type.enum";
+import {WriteOffTypeEnum} from "../dto/enum/write-off-type.enum";
 
 @Component({
   selector: 'app-get-write-off-act',
@@ -14,10 +18,15 @@ export class GetWriteOffActComponent implements OnInit {
 
   writeOffActId: number;
   writeOffAct: WriteOffActDto;
-
   displayedColumns = ["writeOffType", "amount", "name", "placementType", "measurementUnit", "cost", "weight", "labelling", "description"];
+  private totalCost: number = 0;
+  private totalWeight: number = 0;
   private loadingSubject = new BehaviorSubject<boolean>(false);
   loading$ = this.loadingSubject.asObservable();
+
+  private writeOffTypeEnum = WriteOffTypeEnum;
+  private placementTypeEnum = PlacementTypeEnum;
+  private writeOffActTypeEnum = WriteOffActTypeEnum;
 
   private errors: any[];
 
@@ -54,9 +63,17 @@ export class GetWriteOffActComponent implements OnInit {
           console.log('test', this.errors)
         } else {
           this.writeOffAct = page;
+          this.getTotal();
           console.log('test', this.writeOffAct)
         }
       });
+  }
+
+  private getTotal() {
+    this.writeOffAct.writeOffActGoodsList.forEach((goods: WriteOffActGoodsDto) => {
+      this.totalCost += goods.amount * goods.goods.cost;
+      this.totalWeight += goods.amount * goods.goods.weight;
+    })
   }
 
 }

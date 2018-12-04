@@ -14,7 +14,10 @@
     <ng-template matStepLabel>Shipment</ng-template>
     <mat-form-field appearance="outline">
       <input matInput [formControl]="consignmentNoteForm.controls['shipment']"
-             [matDatepicker]="pickerTo" placeholder="Shipment" required>
+             [matDatepicker]="pickerTo"
+             [max]="today"
+             placeholder="Shipment"
+             required>
       <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
       <mat-datepicker #pickerTo></mat-datepicker>
     </mat-form-field>

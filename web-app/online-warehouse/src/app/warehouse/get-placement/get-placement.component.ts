@@ -5,6 +5,12 @@ import {finalize} from "rxjs/operators";
 import {PlacementDto} from "../dto/placement.dto";
 import {WarehouseService} from "../service/warehouse.service";
 import * as Highcharts from 'highcharts';
+import {CreateWriteOffActDialogComponent} from "../../write-off-act/create-write-off-act-dialog/create-write-off-act-dialog.component";
+import {MatDialog} from "@angular/material";
+import {PlacementCreateWriteOffActDto} from "../../write-off-act/dto/placement-create-write-off-act.dto";
+import {PlacementGoodsDto} from "../dto/placement-goods.dto";
+import {PlacementWriteOffActGoodsDto} from "../../write-off-act/dto/placement-write-off-act-goods.dto";
+import {PlacementTypeEnum} from "../../shared/enum/placement-type.enum";
 
 @Component({
   selector: 'app-get-placement',
@@ -102,12 +108,14 @@ export class GetPlacementComponent implements OnInit {
   loading$ = this.loadingSubject.asObservable();
   private placement: PlacementDto;
 
+  placementType = PlacementTypeEnum;
 
   private error: any;
 
   constructor(private warehouseService: WarehouseService,
               private router: Router,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private dialog: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -162,4 +170,56 @@ export class GetPlacementComponent implements OnInit {
     }
   }
 
+  createWriteOffAct() {
+    const dialogRef = this.dialog.open(CreateWriteOffActDialogComponent, {
+      disableClose: false,
+      autoFocus: true,
+      data: {
+        emitWhenSubmit: true,
+        placementGoods: this.placement.placementGoodsList
+      }
+    });
+
+    dialogRef.afterClosed().subscribe((placementCreateWriteOffActDto: PlacementCreateWriteOffActDto) => {
+        console.info('Write-off case dialog closed');
+        if (placementCreateWriteOffActDto) {
+          console.info('Write-off case dialog emit data closed');
+          console.info(placementCreateWriteOffActDto);
+
+          let noDuplicates: boolean = true;
+          let checkDuplicatesArr = [];
+          placementCreateWriteOffActDto.placementGoodsDtoList.forEach((placementWriteOffActGoodsDto: PlacementWriteOffActGoodsDto) => {
+            checkDuplicatesArr.push(placementWriteOffActGoodsDto.placementGoods.id);
+          });
+          checkDuplicatesArr.sort();
+          for (let i = 0; i < checkDuplicatesArr.length - 1; i++) {
+            if (checkDuplicatesArr[i + 1] === checkDuplicatesArr[i]) {
+              noDuplicates = false;
+              break;
+            }
+          }
+
+          if (noDuplicates) {
+            console.info('Write-off case correct. Start save');
+            this.warehouseService
+              .createPlacementWriteOffAct(this.placement.warehouseId, this.placement.id, placementCreateWriteOffActDto)
+              .subscribe((data) => {
+                console.info('Write-off case saved', data);
+              });
+          } else {
+            console.log('Error, duplicates in write-off case');
+          }
+        }
+      }
+    );
+  }
+
+
+  private comparePlacementGoodsDto(dto1: PlacementGoodsDto, dto2: PlacementGoodsDto): boolean {
+    return dto1.id === dto2.id &&
+      dto1.goods.id === dto2.goods.id &&
+      dto1.counterpartyId === dto2.counterpartyId &&
+      dto1.storageTimeDays === dto2.storageTimeDays &&
+      dto1.expirationDate.getTime() === dto2.expirationDate.getTime();
+  }
 }

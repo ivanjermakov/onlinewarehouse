@@ -1,4 +1,4 @@
 export enum CommodityLotStatusEnum {
-  NOT_PROCESSED = 'NOT_PROCESSED',
-  PROCESSED = 'PROCESSED'
+  NOT_PROCESSED = 'Not processed',
+  PROCESSED = 'Processed'
 }

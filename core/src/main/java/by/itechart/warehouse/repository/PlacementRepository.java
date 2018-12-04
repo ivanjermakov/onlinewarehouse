@@ -10,6 +10,8 @@ public interface PlacementRepository extends JpaRepository<Placement, Long>, Que
 
     Placement findPlacementById(long id);
 
+    Placement findPlacementByWarehouse_Company_IdAndWarehouse_IdAndId(long companyId, long warehouseId, long id);
+
     @Modifying
     @Query("update Placement p set p.deleted = current_date where p.id = ?1")
     void setDeleted(long placementId);
