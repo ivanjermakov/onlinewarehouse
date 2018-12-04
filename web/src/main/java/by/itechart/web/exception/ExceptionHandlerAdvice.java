@@ -1,6 +1,5 @@
 package by.itechart.web.exception;
 
-import by.itechart.commoditylot.service.CommodityLotServiceImpl;
 import by.itechart.exception.NotFoundEntityException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
