@@ -8,15 +8,17 @@ import by.itechart.profit.PaymentAct;
 import by.itechart.profit.Rate;
 import by.itechart.profit.repository.PaymentRepository;
 import by.itechart.profit.repository.RateRepository;
+import by.itechart.writeoffact.entity.WriteOffAct;
+import by.itechart.writeoffact.service.WriteOffActService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 
 @Component
 public class PaymentServiceImpl implements PaymentService {
@@ -24,12 +26,17 @@ public class PaymentServiceImpl implements PaymentService {
     private final PaymentRepository paymentRepository;
     private final RateRepository rateRepository;
     private final CommodityLotService commodityLotService;
+    private final WriteOffActService writeOffActService;
 
     @Autowired
-    public PaymentServiceImpl(PaymentRepository paymentRepository, RateRepository rateRepository, CommodityLotService commodityLotService) {
+    public PaymentServiceImpl(PaymentRepository paymentRepository,
+                              RateRepository rateRepository,
+                              CommodityLotService commodityLotService,
+                              WriteOffActService writeOffActService) {
         this.paymentRepository = paymentRepository;
         this.rateRepository = rateRepository;
         this.commodityLotService = commodityLotService;
+        this.writeOffActService = writeOffActService;
     }
 
     @Override
@@ -62,6 +69,22 @@ public class PaymentServiceImpl implements PaymentService {
         }).forEach(paymentActList::add);
 
         return paymentActList;
+    }
+
+    @Override
+    public Long getDamages(LocalDate start, LocalDate end) {
+        List<WriteOffAct> writeOffActs = writeOffActService.findDamages(start, end);
+        Map<CompanySize, Rate> rates = new EnumMap<>(CompanySize.class);
+
+        LocalDateTime findDate = end.plusDays(1).atStartOfDay();
+
+        rates.put(CompanySize.SMALL, rateRepository.getLastRate(findDate, CompanySize.SMALL));
+        rates.put(CompanySize.MEDIUM, rateRepository.getLastRate(findDate, CompanySize.MEDIUM));
+        rates.put(CompanySize.LARGE, rateRepository.getLastRate(findDate, CompanySize.LARGE));
+
+         return writeOffActs.stream().map(act -> {
+           return rates.get(act.getCompany().getSizeType()).getRate();
+        }).mapToLong(i -> i).sum();
     }
 
     @Override
