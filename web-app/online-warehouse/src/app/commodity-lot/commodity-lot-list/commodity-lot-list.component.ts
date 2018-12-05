@@ -131,7 +131,6 @@ export class CommodityLotListComponent implements OnInit {
     )
       .subscribe((page) => {
           this.page = page;
-          this.errorToast.handleSuccess('Commodity lots loaded successfully', 'Loaded successfully');
         }, (err: any) => {
           this.errorToast.handleError(err);
         }

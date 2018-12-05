@@ -121,6 +121,9 @@ export class GetPlacementComponent implements OnInit {
   }
 
   calculateCount() {
+    this.chartOptionsLoadPercentage.series[0].data = [];
+    this.chartOptionsLoadDate.series[0].data = [];
+
     let placementLoad: number = 0;
     this.placement.placementGoodsList.forEach((placementGoods) => {
       placementLoad += placementGoods.amount;
@@ -147,6 +150,10 @@ export class GetPlacementComponent implements OnInit {
     placementLoadDynamic.forEach((arr) => {
       this.chartOptionsLoadDate.series[0].data.push(arr)
     });
+  }
+
+  saveInstance(chartInstance, chart) {
+    chart = chartInstance;
   }
 
   getPlacement(): void {
@@ -203,12 +210,13 @@ export class GetPlacementComponent implements OnInit {
               .createPlacementWriteOffAct(this.placement.warehouseId, this.placement.id, placementCreateWriteOffActDto)
               .subscribe((data) => {
                   this.errorToast.handleSuccess('Write-off case saved successfully', 'Saved successfully');
+                  this.getPlacement();
                 }, (err: any) => {
                   this.errorToast.handleError(err);
                 }
               );
           } else {
-            console.log('Error, duplicates in write-off case');
+            this.errorToast.handleCustomError('Error, duplicates in write-off case', 'Error');
           }
         }
       }

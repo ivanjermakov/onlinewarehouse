@@ -32,4 +32,8 @@ export class RequestErrorToastHandlerService {
   handleSuccess(message: string, title: string) {
     this.toastr.success(message, title);
   }
+
+  handleCustomError(message: string, title: string) {
+    this.toastr.error(message, title);
+  }
 }
