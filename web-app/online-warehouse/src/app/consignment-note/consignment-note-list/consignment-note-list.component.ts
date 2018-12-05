@@ -95,8 +95,9 @@ export class ConsignmentNoteListComponent implements OnInit {
   }
 
   openModal(row: ConsignmentNoteListDto): void {
+
     this.consignmentNoteService.getConsignmentNote(row.id).subscribe((consignmentNoteDto) => {
-        const dialogRef = this.dialog.open(ConsignmentNoteDetailDialogComponent, {
+        let dialogRef = this.dialog.open(ConsignmentNoteDetailDialogComponent, {
           disableClose: false,
           autoFocus: true,
           data: {
@@ -104,6 +105,14 @@ export class ConsignmentNoteListComponent implements OnInit {
             consignmentNoteDto: consignmentNoteDto
           }
         });
+
+        dialogRef.afterClosed().subscribe(
+          data => {
+            if (data) {
+              this.getConsignmentNotes();
+            }
+          }
+        );
       }, (err: any) => {
         this.errorToast.handleError(err);
       }

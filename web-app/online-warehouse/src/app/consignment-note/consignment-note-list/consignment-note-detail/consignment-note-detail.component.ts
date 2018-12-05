@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {ConsignmentNoteDto} from "../../dto/consignment-note-dto";
 import {ConsignmentNoteService} from "../../consignment-note.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {MatDialog} from "@angular/material";
+import {MatDialog, MatDialogRef} from "@angular/material";
 import {CreateWriteOffActDialogComponent} from "../../../write-off-act/create-write-off-act-dialog/create-write-off-act-dialog.component";
 import {CommodityLotService} from "../../../commodity-lot/service/commodity-lot.service";
 import {ConsignmentNoteType} from "../../dto/enum/consignment-note-type.enum";
@@ -42,6 +42,7 @@ export class ConsignmentNoteDetailComponent implements OnInit {
     'Weight', 'Cost', 'Description', 'Amount'];
 
   constructor(private consignmentNoteService: ConsignmentNoteService,
+              private dialogRef: MatDialogRef<ConsignmentNoteDetailComponent>,
               private router: Router,
               private route: ActivatedRoute,
               private dialog: MatDialog,
@@ -55,6 +56,7 @@ export class ConsignmentNoteDetailComponent implements OnInit {
       this.getConsignmentNote();
     } else {
       this.consignmentNote = this.inputConsignmentNote;
+      this.getTotal();
     }
   }
 
@@ -101,16 +103,27 @@ export class ConsignmentNoteDetailComponent implements OnInit {
             .saveWriteOffActAndCommodityLot(createWriteOffActDto,
               this.commodityLotService.getCommodityLotFromConsignmentNoteAndWriteOffAct(this.consignmentNote, createWriteOffActDto))
             .subscribe((pair) => {
-              console.log('writeOffActId:' + pair.value1, 'commodityLotId: ' + pair.value2)
-            });
+                this.errorToast.handleSuccess('Commodity lot created successfully', 'Created successfully');
+                this.dialogRef.close(true);
+              }, (err: any) => {
+                this.errorToast.handleError(err);
+              }
+            );
         }
+
       }
     );
   }
 
   submitWithoutAct() {
     this.consignmentNoteService.setConsignmentNoteProcessed(this.consignmentNote.id).subscribe();
-    this.commodityLotService.saveCommodityLotFromConsignmentNote(this.consignmentNote).subscribe();
+    this.commodityLotService.saveCommodityLotFromConsignmentNote(this.consignmentNote).subscribe(() => {
+        this.errorToast.handleSuccess('Commodity lot created successfully', 'Created successfully');
+        this.dialogRef.close(true);
+      }, (err: any) => {
+        this.errorToast.handleError(err);
+      }
+    );
   }
 
   private getGoodsDtoArr(): GoodsDto[] {
