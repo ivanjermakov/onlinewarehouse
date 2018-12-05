@@ -18,10 +18,10 @@ final class WriteOffActsPredicates {
             predicate.and(QWriteOffAct.writeOffAct.writeOffActType.eq(filter.getWriteOffActType()));
         }
         if (filter.getFrom() != null) {
-            predicate.and(QWriteOffAct.writeOffAct.creation.after(filter.getFrom())).or(QWriteOffAct.writeOffAct.creation.eq(filter.getFrom()));
+            predicate.and((QWriteOffAct.writeOffAct.creation.after(filter.getFrom())).or(QWriteOffAct.writeOffAct.creation.eq(filter.getFrom())));
         }
         if (filter.getTo() != null) {
-            predicate.and(QWriteOffAct.writeOffAct.creation.before(filter.getTo())).or(QWriteOffAct.writeOffAct.creation.eq(filter.getTo()));
+            predicate.and((QWriteOffAct.writeOffAct.creation.before(filter.getTo())).or(QWriteOffAct.writeOffAct.creation.eq(filter.getTo())));
         }
         predicate.and(QWriteOffAct.writeOffAct.company.id.eq(companyId));
 
