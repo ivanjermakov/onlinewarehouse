@@ -1,5 +1,16 @@
+<h1 class="header" *ngIf="!addButton">
+  Goods
+  <button mat-icon-button [matMenuTriggerFor]="menu">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item
+            (click)="newGoods()">
+      <span>New goods</span>
+    </button>
+  </mat-menu>
+</h1>
 <div>
-
   <form>
     <mat-form-field appearance="outline">
       <mat-label>Name</mat-label>
@@ -104,7 +115,7 @@
   <br>
   <div *ngIf="addButton && addButton === true"
        style="display: flex; justify-content: center; align-items: center">
-    <button mat-stroked-button color="primary">Add goods</button>
+    <button mat-stroked-button color="primary" (click)="addGoodsModal()">Add goods</button>
   </div>
 
   <mat-paginator [length]="page ? page.totalElements : 0"

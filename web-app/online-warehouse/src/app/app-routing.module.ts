@@ -30,6 +30,7 @@ import {DistributeGoodsWarehouseComponent} from "./warehouse/distribute-goods-wa
 import {CreatePlacementComponent} from "./warehouse/create-placement/create-placement.component";
 import {GetUserComponent} from "./user/get-user/get-user.component";
 import {CreateUserComponent} from "./user/create-user/create-user.component";
+import {CreateGoodsComponent} from "./shared/goods/create-goods/create-goods.component";
 
 export const routes: Routes = [
   {path: 'list-users', component: UserListViewComponent, canActivate: [AuthGuard]},
@@ -64,6 +65,7 @@ export const routes: Routes = [
   {path: 'distribute-goods', component: DistributeGoodsWarehouseComponent, canActivate: [AuthGuard]},
   {path: 'registered-commodity-lots', component: CommodityLotListComponent, canActivate: [AuthGuard]},
   {path: 'warehouse/:id/create-placement', component: CreatePlacementComponent, canActivate: [AuthGuard]},
+  {path: 'create-goods', component: CreateGoodsComponent, canActivate: [AuthGuard]}
 
   // { path: 'heroes', component:  }
 ];

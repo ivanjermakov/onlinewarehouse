@@ -5,7 +5,7 @@ export class GoodsDto {
   constructor(
     public id: number,
     public name: string,
-    public  placementType: PlacementTypeEnum,
+    public placementType: PlacementTypeEnum,
     public measurementUnit: MeasurementUnitEnum,
     public cost: number,
     public weight: number,

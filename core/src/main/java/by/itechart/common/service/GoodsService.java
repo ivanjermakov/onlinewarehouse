@@ -14,7 +14,7 @@ public interface GoodsService {
 
     Page<GoodsDto> getGoods(Long companyId, GoodFilter goodFilter, Pageable pageable);
 
-    void createGoods(@Valid GoodsDto goodsDto, Long companyId);
+    Long createGoods(@Valid GoodsDto goodsDto, Long companyId);
 
     Integer getCost(Long goodsId, Integer amount);
 

@@ -244,7 +244,11 @@ export class RegisterConsignmentNoteComponent implements OnInit {
 
     dialogConfig.disableClose = false;
     dialogConfig.autoFocus = true;
-    dialogConfig.data = {inputGoods: null};
+    dialogConfig.data = {
+      inputGoods: null,
+      addButton: true,
+      hoverable: true
+    };
 
     const dialogRef = this.dialog.open(GoodsListDialogComponent, dialogConfig);
 

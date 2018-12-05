@@ -68,6 +68,8 @@ import {GetUserComponent} from './user/get-user/get-user.component';
 import {CreateUserComponent} from './user/create-user/create-user.component';
 import {ToastrModule} from "ngx-toastr";
 import {TOAST_CONFIG} from "./toast-config";
+import {CreateGoodsComponent} from './shared/goods/create-goods/create-goods.component';
+import {CreateGoodsDialogComponent} from './shared/goods/create-goods-dialog/create-goods-dialog.component';
 
 const routes: Routes = [
   {path: 'app', component: AppComponent, canActivate: [AuthGuard], children: appRoutes},
@@ -130,7 +132,9 @@ const routes: Routes = [
     PlacementGoodsListDialogComponent,
     CreateDriverDialogComponent,
     GetUserComponent,
-    CreateUserComponent
+    CreateUserComponent,
+    CreateGoodsComponent,
+    CreateGoodsDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -158,7 +162,8 @@ const routes: Routes = [
     CreateWriteOffActDialogComponent,
     RegisterConsignmentNoteDialogComponent,
     PlacementGoodsListDialogComponent,
-    CreateDriverDialogComponent
+    CreateDriverDialogComponent,
+    CreateGoodsDialogComponent
   ],
   providers: [
     AuthGuard,

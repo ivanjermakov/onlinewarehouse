@@ -1,0 +1,57 @@
+<div class="form-container">
+  <mat-form-field appearance="outline">
+    <input matInput
+           placeholder="Name"
+           [formControl]="createGoodsForm.controls['name']"
+           required>
+  </mat-form-field>
+  <div>
+    <mat-form-field appearance="outline">
+      <mat-select [formControl]="createGoodsForm.controls['placementType']"
+                  placeholder="Placement type">
+        <mat-option *ngFor="let type of getPlacementTypes()" [value]="type">
+          {{placementTypeEnum[type]}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-select [formControl]="createGoodsForm.controls['measurementUnit']"
+                  placeholder="Measurement unit">
+        <mat-option *ngFor="let unit of getMeasurementUnits()" [value]="unit">
+          {{unit}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <input matInput
+             type="number"
+             placeholder="Cost"
+             [formControl]="createGoodsForm.controls['cost']"
+             required>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <input matInput
+             type="number"
+             placeholder="Weight"
+             [formControl]="createGoodsForm.controls['weight']"
+             required>
+      <span matSuffix>kg</span>
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-form-field appearance="outline">
+      <input matInput
+             placeholder="Labelling"
+             [formControl]="createGoodsForm.controls['labelling']"
+             required>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <textarea matInput
+                placeholder="Description"
+                [formControl]="createGoodsForm.controls['description']">
+      </textarea>
+    </mat-form-field>
+  </div>
+  <button mat-raised-button (click)="onSubmit()" [disabled]="!createGoodsForm.valid">Submit</button>
+</div>

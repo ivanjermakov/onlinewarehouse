@@ -6,6 +6,7 @@ import by.itechart.common.entity.Goods;
 import by.itechart.common.repository.GoodsElasticRepository;
 import by.itechart.common.repository.GoodsRepository;
 import by.itechart.common.utils.ObjectMapperUtils;
+import by.itechart.company.entity.Company;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,12 +37,14 @@ public class GoodsServiceImpl implements GoodsService {
 
     @Transactional
     @Override
-    public void createGoods(GoodsDto goodsDto, Long companyId) {
+    public Long createGoods(GoodsDto goodsDto, Long companyId) {
         Goods goods = ObjectMapperUtils.map(goodsDto, Goods.class);
+        goods.setCompany(new Company(companyId));
         goodsElasticRepository.save(goods);
         Long id = goodsRepository.save(goods).getId();
 
         LOGGER.info("Good was created with id: {}", id);
+        return id;
     }
 
     @Transactional(readOnly = true)
