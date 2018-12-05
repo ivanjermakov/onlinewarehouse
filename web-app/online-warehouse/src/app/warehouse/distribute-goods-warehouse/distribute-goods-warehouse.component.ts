@@ -13,6 +13,7 @@ import {CommodityLotDto} from "../../commodity-lot/dto/commodity-lot.dto";
 import {CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray, transferArrayItem} from "@angular/cdk/drag-drop";
 import {BehaviorSubject} from "rxjs";
 import {finalize} from "rxjs/operators";
+import {RequestErrorToastHandlerService} from "../../shared/toast/request-error-handler/request-error-toast-handler.service";
 
 @Component({
   selector: 'app-distribute-goods-warehouse',
@@ -25,7 +26,6 @@ export class DistributeGoodsWarehouseComponent implements OnInit {
   @Output() submitted: EventEmitter<any> = new EventEmitter<any>();
   goodsCount: FormGroup;
   placementDropListArray: PlacementDropList[];
-  error: any;
   test = false;
   testControl = new FormControl([''], [Validators.min(3), Validators.max(5)])
   private loadingSubject = new BehaviorSubject<boolean>(false);
@@ -39,7 +39,8 @@ export class DistributeGoodsWarehouseComponent implements OnInit {
 
   constructor(private warehouseService: WarehouseService,
               private commodityLotService: CommodityLotService,
-              private fb: FormBuilder) {
+              private fb: FormBuilder,
+              private errorToast: RequestErrorToastHandlerService) {
   }
 
   ngOnInit() {
@@ -51,7 +52,7 @@ export class DistributeGoodsWarehouseComponent implements OnInit {
       .subscribe(page => {
           this.warehouses = page.content;
         }, (err: any) => {
-          this.error = err;
+          this.errorToast.handleError(err);
         }
       );
     this.distributeGoodsForm = this.fb.group({
@@ -87,7 +88,13 @@ export class DistributeGoodsWarehouseComponent implements OnInit {
 
   saveUpdatedWarehouse() {
     this.joinPlacementDropGroupAndWarehouse(this.placementDropListArray, this.warehouses[this.warehouseControl.value]);
-    this.warehouseService.updateWarehouse(this.warehouses[this.warehouseControl.value]).subscribe();
+    this.warehouseService.updateWarehouse(this.warehouses[this.warehouseControl.value])
+      .subscribe(() => {
+          this.errorToast.handleSuccess('Commodity lot distributed successfully', 'Saved successfully');
+        }, (err: any) => {
+          this.errorToast.handleError(err);
+        }
+      );
     this.submitted.emit();
   }
 

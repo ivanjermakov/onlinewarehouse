@@ -2,12 +2,13 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {CommodityLotDto} from "../dto/commodity-lot.dto";
 import {CommodityLotService} from "../service/commodity-lot.service";
-import {BehaviorSubject, of} from "rxjs";
-import {catchError, finalize} from "rxjs/operators";
+import {BehaviorSubject} from "rxjs";
+import {finalize} from "rxjs/operators";
 import {CommodityLotTypeEnum} from "../dto/enum/commodity-lot-type.enum";
 import {CommodityLotStatusEnum} from "../dto/enum/commodity-lot-status.enum";
 import {PlacementTypeEnum} from "../../shared/enum/placement-type.enum";
 import {CommodityLotGoodsDto} from "../dto/commodity-lot-goods.dto";
+import {RequestErrorToastHandlerService} from "../../shared/toast/request-error-handler/request-error-toast-handler.service";
 
 @Component({
   selector: 'app-get-commodity-lot',
@@ -28,12 +29,12 @@ export class GetCommodityLotComponent implements OnInit {
   private totalCost: number = 0;
   private totalWeight: number = 0;
 
-  private errors: any[];
 
   constructor(
     private commodityLotService: CommodityLotService,
     private route: ActivatedRoute,
-    private router: Router) {
+    private router: Router,
+    private errorToast: RequestErrorToastHandlerService) {
   }
 
   ngOnInit() {
@@ -56,17 +57,15 @@ export class GetCommodityLotComponent implements OnInit {
     this.loadingSubject.next(true);
     this.commodityLotService.getCommodityLot(this.commodityLotId)
       .pipe(
-        catchError(() => of([])),
         finalize(() => this.loadingSubject.next(false))
       )
-      .subscribe(commodityLotDto => {
-        if (commodityLotDto instanceof Array) {
-          this.errors = commodityLotDto as any[];
-        } else {
+      .subscribe((commodityLotDto) => {
           this.commodityLotDto = commodityLotDto;
           this.getTotal();
+        }, (err: any) => {
+          this.errorToast.handleError(err);
         }
-      });
+      );
   }
 
   navigateToCounterparty(i: number) {

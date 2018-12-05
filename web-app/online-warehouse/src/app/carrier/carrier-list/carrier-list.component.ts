@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {BehaviorSubject, of} from "rxjs";
-import {catchError, debounceTime, distinctUntilChanged, finalize, tap} from "rxjs/operators";
+import {BehaviorSubject} from "rxjs";
+import {debounceTime, distinctUntilChanged, finalize, tap} from "rxjs/operators";
 import {CarrierService} from "../service/carrier.service";
 import {CarrierFilter} from "../dto/carrier.filter";
 import {CarrierListDto} from "../dto/carrier-list.dto";
@@ -10,6 +10,7 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 import {CarrierTypeEnum} from "../dto/enum/carrier-type.enum";
 import {MatDialog, PageEvent} from "@angular/material";
 import {CreateCarrierDialogComponent} from "../create-carrier-dialog/create-carrier-dialog.component";
+import {RequestErrorToastHandlerService} from "../../shared/toast/request-error-handler/request-error-toast-handler.service";
 
 @Component({
   selector: 'app-carrier-list',
@@ -35,11 +36,12 @@ export class CarrierListComponent implements OnInit {
   private pageable: Pageable = new Pageable(0, 10);
   private pageSizeOptions: number[] = [10, 25, 50];
 
-  private errors: any[];
+  private error: any;
 
   constructor(private carrierService: CarrierService,
               private fb: FormBuilder,
-              private dialog: MatDialog) {
+              private dialog: MatDialog,
+              private errorToast: RequestErrorToastHandlerService) {
     this.carrierFilterForm = fb.group({
       "name": [''],
       "taxNumber": [''],
@@ -91,15 +93,14 @@ export class CarrierListComponent implements OnInit {
   loadCarriers() {
     this.loadingSubject.next(true);
     this.carrierService.getCarriers(this.filter, this.pageable).pipe(
-      catchError(() => of([])),
       finalize(() => this.loadingSubject.next(false))
     )
-      .subscribe(page => {
-        if (page instanceof Array) {
-          this.errors = page as any[];
-        } else {
+      .subscribe((page) => {
           this.page = page;
+        }, (err: any) => {
+          this.error = err;
+          this.errorToast.handleError(err)
         }
-      });
+      );
   }
 }

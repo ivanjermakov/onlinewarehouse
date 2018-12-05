@@ -1,15 +1,16 @@
 import {Component, OnInit} from '@angular/core';
-import {BehaviorSubject, of} from "rxjs";
+import {BehaviorSubject} from "rxjs";
 import {Page} from "../../shared/pagination/page";
 import {UserDto} from "../dto/user.dto";
 import {Pageable} from "../../shared/pagination/pageable";
 import {UserService} from "../service/user.service";
 import {PageEvent} from "@angular/material";
-import {catchError, debounceTime, distinctUntilChanged, finalize, tap} from "rxjs/operators";
+import {debounceTime, distinctUntilChanged, finalize, tap} from "rxjs/operators";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {UserFilter} from "../dto/user-filter";
 import {Router} from "@angular/router";
 import {AuthorityNameEnum} from "../dto/enum/authority-name.enum";
+import {RequestErrorToastHandlerService} from "../../shared/toast/request-error-handler/request-error-toast-handler.service";
 
 @Component({
   selector: 'app-user-list',
@@ -30,11 +31,10 @@ export class UserListComponent implements OnInit {
 
   private authorityNameEnum = AuthorityNameEnum;
 
-  private errors: any[];
-
   constructor(private userService: UserService,
               private fb: FormBuilder,
-              private router: Router) {
+              private router: Router,
+              private errorToast: RequestErrorToastHandlerService) {
     this.userFilterForm = fb.group({
       "firstname": [''],
       "lastname": ['']
@@ -68,16 +68,15 @@ export class UserListComponent implements OnInit {
   loadUsers(): void {
     this.loadingSubject.next(true);
     this.userService.getAllUsers(this.userFilter.toServerFilter(), this.pageable).pipe(
-      catchError(() => of([])),
       finalize(() => this.loadingSubject.next(false))
     )
-      .subscribe(page => {
-        if (page instanceof Array) {
-          this.errors = page as any[];
-        } else {
+      .subscribe((page) => {
           this.page = page;
+        }, (err: any) => {
+          console.log('test');
+          this.errorToast.handleError(err);
         }
-      });
+      );
   }
 
 }

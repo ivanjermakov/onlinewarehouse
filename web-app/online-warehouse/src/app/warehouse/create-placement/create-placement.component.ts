@@ -4,6 +4,7 @@ import {WarehouseService} from "../service/warehouse.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {PlacementTypeEnum} from "../../shared/enum/placement-type.enum";
 import {MeasurementUnitEnum} from "../../shared/enum/measurement-unit.enum";
+import {RequestErrorToastHandlerService} from "../../shared/toast/request-error-handler/request-error-toast-handler.service";
 
 @Component({
   selector: 'app-create-placement',
@@ -13,7 +14,6 @@ import {MeasurementUnitEnum} from "../../shared/enum/measurement-unit.enum";
 export class CreatePlacementComponent implements OnInit {
 
   createPlacementForm: FormGroup;
-  error: any;
 
   placementType = PlacementTypeEnum;
   measurementUnit = MeasurementUnitEnum;
@@ -21,7 +21,8 @@ export class CreatePlacementComponent implements OnInit {
   constructor(private fb: FormBuilder,
               private router: Router,
               private route: ActivatedRoute,
-              private warehouseService: WarehouseService) {
+              private warehouseService: WarehouseService,
+              private errorToast: RequestErrorToastHandlerService) {
     this.createPlacementForm = fb.group({
       warehouseId: ['', Validators.required],
       size: ['', Validators.required],
@@ -49,9 +50,9 @@ export class CreatePlacementComponent implements OnInit {
   onSubmit(createWarehouseForm: FormGroup): void {
     this.warehouseService.savePlacement(this.createPlacementForm.value)
       .subscribe(long => {
-          console.log(long);
+          this.errorToast.handleSuccess('Placement saved successfully', 'Saved successfully');
         }, (err: any) => {
-          this.error = err;
+          this.errorToast.handleError(err);
         }
       );
   }

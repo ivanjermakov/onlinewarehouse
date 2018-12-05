@@ -11,6 +11,7 @@ import {AuthenticationService} from "../../auth/_services";
 import {PlacementGoodsDto} from "../../warehouse/dto/placement-goods.dto";
 import {PlacementGoodsListDialogComponent} from "../../warehouse/placement-goods-list-dialog/placement-goods-list-dialog.component";
 import {PlacementCreateWriteOffActDto} from "../dto/placement-create-write-off-act.dto";
+import {RequestErrorToastHandlerService} from "../../shared/toast/request-error-handler/request-error-toast-handler.service";
 
 @Component({
   selector: 'app-create-write-off-act',
@@ -37,7 +38,8 @@ export class CreateWriteOffActComponent implements OnInit {
   constructor(private fb: FormBuilder,
               private writeOffActService: WriteOffActService,
               private dialog: MatDialog,
-              private auth: AuthenticationService) {
+              private auth: AuthenticationService,
+              private errorToast: RequestErrorToastHandlerService) {
     this.createWriteOffActForm = fb.group({
       "responsiblePerson": ['', Validators.required],
       "writeOffActType": ['', Validators.required],
@@ -128,9 +130,13 @@ export class CreateWriteOffActComponent implements OnInit {
     Object.assign(createWriteOffActDto, value);
     console.log(createWriteOffActDto);
     if (!this.emitWhenSubmit) {
-      this.writeOffActService.saveWriteOffAct(createWriteOffActDto).subscribe((long: number) => {
-        console.log(long)
-      });
+      this.writeOffActService.saveWriteOffAct(createWriteOffActDto)
+        .subscribe((long: number) => {
+            this.errorToast.handleSuccess('Write-off case saved successfully', 'Saved successfully');
+          }, (err: any) => {
+            this.errorToast.handleError(err);
+          }
+        );
     } else {
       if (this.placementGoods) {
         this.placementSubmitted.emit(new PlacementCreateWriteOffActDto(

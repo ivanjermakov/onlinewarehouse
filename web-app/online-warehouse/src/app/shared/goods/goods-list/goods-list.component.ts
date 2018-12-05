@@ -4,11 +4,12 @@ import {GoodsDto} from "../dto/goods.dto";
 import {PageEvent} from "@angular/material";
 import {Page} from "../../pagination/page";
 import {Pageable} from "../../pagination/pageable";
-import {BehaviorSubject, of} from "rxjs";
-import {catchError, debounceTime, distinctUntilChanged, finalize, tap} from "rxjs/operators";
+import {BehaviorSubject} from "rxjs";
+import {debounceTime, distinctUntilChanged, finalize, tap} from "rxjs/operators";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {GoodFilter} from "../dto/good-filter";
 import {PlacementTypeEnum} from "../../enum/placement-type.enum";
+import {RequestErrorToastHandlerService} from "../../toast/request-error-handler/request-error-toast-handler.service";
 
 @Component({
   selector: 'app-goods-list',
@@ -37,10 +38,9 @@ export class GoodsListComponent implements OnInit {
 
   private placementTypeEnum = PlacementTypeEnum;
 
-  private errors: any[];
-
   constructor(private goodsService: GoodService,
-              private fb: FormBuilder) {
+              private fb: FormBuilder,
+              private errorToast: RequestErrorToastHandlerService) {
     this.goodsFilterForm = fb.group({
       "name": [''],
       "placementType": [''],
@@ -80,17 +80,14 @@ export class GoodsListComponent implements OnInit {
       this.getFromData();
     } else {
       this.loadingSubject.next(true);
-      this.goodsService.getAllGoods(this.goodsFilter.toServerFilter(), this.pageable).pipe(
-        catchError(() => of([])),
-        finalize(() => this.loadingSubject.next(false))
-      )
-        .subscribe(page => {
-          if (page instanceof Array) {
-            this.errors = page as any[];
-          } else {
+      this.goodsService.getAllGoods(this.goodsFilter.toServerFilter(), this.pageable)
+        .pipe(finalize(() => this.loadingSubject.next(false)))
+        .subscribe((page) => {
             this.page = page;
+          }, (err: any) => {
+            this.errorToast.handleError(err);
           }
-        });
+        );
     }
   }
 

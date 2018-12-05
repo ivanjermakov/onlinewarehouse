@@ -10,6 +10,7 @@ import {Router} from "@angular/router";
 import {ConsignmentNoteType} from "../../consignment-note/dto/enum/consignment-note-type.enum";
 import {RegisterConsignmentNoteDialogComponent} from "../../consignment-note/register-consignment-note-dialog/register-consignment-note-dialog.component";
 import {PlacementTypeEnum} from "../../shared/enum/placement-type.enum";
+import {RequestErrorToastHandlerService} from "../../shared/toast/request-error-handler/request-error-toast-handler.service";
 
 @Component({
   selector: 'app-warehouse-list',
@@ -20,24 +21,20 @@ export class WarehouseListComponent implements OnInit {
 
   // @Output() warehouseSelected: EventEmitter<WarehouseDto> = new EventEmitter();
 
+  placementType = PlacementTypeEnum;
   private tableView: boolean = false;
-
   private displayedColumns = ["name", "placementsCount"];
-
   private loadingSubject = new BehaviorSubject<boolean>(false);
   loading$ = this.loadingSubject.asObservable();
   private page: Page<WarehouseDto>;
-
-  placementType = PlacementTypeEnum;
-
   private pageable: Pageable = new Pageable(0, 10);
   private pageSizeOptions: number[] = [10, 25, 50];
 
-  private error: any;
 
   constructor(private warehouseService: WarehouseService,
               private router: Router,
-              private dialog: MatDialog) {
+              private dialog: MatDialog,
+              private errorToast: RequestErrorToastHandlerService) {
   }
 
   ngOnInit() {
@@ -80,9 +77,8 @@ export class WarehouseListComponent implements OnInit {
     )
       .subscribe(page => {
           this.page = page;
-          console.log(this.page);
         }, (err: any) => {
-          this.error = err;
+          this.errorToast.handleError(err);
         }
       );
   }

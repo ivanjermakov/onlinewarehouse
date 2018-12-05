@@ -8,6 +8,7 @@ import {AuthorityNameEnum} from "../dto/enum/authority-name.enum";
 import {FormBuilder, FormControl, Validators} from "@angular/forms";
 import {AuthorityDto} from "../dto/authority.dto";
 import {AuthenticationService} from "../../auth/_services";
+import {RequestErrorToastHandlerService} from "../../shared/toast/request-error-handler/request-error-toast-handler.service";
 
 @Component({
   selector: 'app-get-user',
@@ -27,13 +28,13 @@ export class GetUserComponent implements OnInit {
   private showChangeAuthorities: boolean = false;
   private authoritiesForm: FormControl;
 
-  private error: any;
 
   constructor(private userService: UserService,
               private route: ActivatedRoute,
               private fb: FormBuilder,
               private auth: AuthenticationService,
-              private router: Router) {
+              private router: Router,
+              private errorToast: RequestErrorToastHandlerService) {
     this.userJWTId = auth.getUserId()
   }
 
@@ -52,9 +53,8 @@ export class GetUserComponent implements OnInit {
         .subscribe((userDto: UserDto) => {
             this.user = userDto;
             this.buildAuthorityForm();
-            this.loadingSubject.next(false);
           }, (err: any) => {
-            this.error = err;
+            this.errorToast.handleError(err);
           }
         );
     }
@@ -71,12 +71,12 @@ export class GetUserComponent implements OnInit {
     });
     this.showChangeAuthorities = false;
     this.userService.changeAuthorities(this.user.id, authorityDtoList)
+      .pipe(finalize(() => this.loadingSubject.next(false)))
       .subscribe((userId: number) => {
+          this.errorToast.handleSuccess('Authorities changed successfully', 'Changed successfully');
           this.getUser();
-          console.log(userId);
-          this.loadingSubject.next(false);
         }, (err: any) => {
-          this.error = err;
+          this.errorToast.handleError(err);
         }
       );
   }
@@ -95,37 +95,37 @@ export class GetUserComponent implements OnInit {
 
   changeEnableValue() {
     this.userService.changeEnableValue(this.user.id)
+      .pipe(finalize(() => this.loadingSubject.next(false)))
       .subscribe((userId: number) => {
           this.getUser();
-          console.log(userId);
-          this.loadingSubject.next(false);
+          this.errorToast.handleSuccess('Enable value changed successfully', 'Changed successfully');
         }, (err: any) => {
-          this.error = err;
+          this.errorToast.handleError(err);
         }
       );
   }
 
   resetPassword() {
     this.userService.resetPassword(this.user.id)
+      .pipe(finalize(() => this.loadingSubject.next(false)))
       .subscribe((userId: number) => {
           this.getUser();
-          console.log(userId);
-          this.loadingSubject.next(false);
+          this.errorToast.handleSuccess('Password reseted successfully', 'Changed successfully');
         }, (err: any) => {
-          this.error = err;
+          this.errorToast.handleError(err);
         }
       );
   }
 
   deleteUser() {
     this.userService.deleteUser(this.user.id)
+      .pipe(finalize(() => this.loadingSubject.next(false)))
       .subscribe((userId: number) => {
           this.getUser();
           this.router.navigate([`app/list-users`]);
-          console.log(userId);
-          this.loadingSubject.next(false);
+          this.errorToast.handleSuccess('User deleted successfully', 'Deleted successfully');
         }, (err: any) => {
-          this.error = err;
+          this.errorToast.handleError(err);
         }
       );
   }

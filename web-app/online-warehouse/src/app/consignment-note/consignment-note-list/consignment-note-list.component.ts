@@ -11,6 +11,7 @@ import {debounceTime, distinctUntilChanged, finalize, tap} from "rxjs/operators"
 import {ConsignmentNoteStatus} from "../dto/enum/consignment-note-status.enum";
 import {ConsignmentNoteType} from "../dto/enum/consignment-note-type.enum";
 import {ConsignmentNoteDetailDialogComponent} from "./consignment-note-detail-dialog/consignment-note-detail-dialog.component";
+import {RequestErrorToastHandlerService} from "../../shared/toast/request-error-handler/request-error-toast-handler.service";
 
 @Component({
   selector: 'app-consignment-note-list',
@@ -26,7 +27,6 @@ export class ConsignmentNoteListComponent implements OnInit {
   loading$ = this.loadingSubject.asObservable();
   private pageable: Pageable = new Pageable(0, 10);
   private pageSizeOptions: number[] = [10, 25, 50];
-  private errors: any[];
   private active = true;
 
   private minDate: Date = new Date(2000, 0, 1);
@@ -38,7 +38,8 @@ export class ConsignmentNoteListComponent implements OnInit {
   constructor(private consignmentNoteService: ConsignmentNoteService,
               private router: Router,
               private fb: FormBuilder,
-              private dialog: MatDialog) {
+              private dialog: MatDialog,
+              private errorToast: RequestErrorToastHandlerService) {
     this.consignmentNoteFilterForm = fb.group({
       "consignmentNoteType": [''],
       "consignmentNoteStatus": [''],
@@ -68,9 +69,12 @@ export class ConsignmentNoteListComponent implements OnInit {
     this.loadingSubject.next(true);
     this.consignmentNoteService.getConsignmentNotes(this.consignmentNoteFilterForm.value, this.pageable)
       .pipe(finalize(() => this.loadingSubject.next(false)))
-      .subscribe((consignmentNotes) =>
-          this.consignmentNotes = consignmentNotes,
-        error => this.errors = error);
+      .subscribe((consignmentNotes) => {
+          this.consignmentNotes = consignmentNotes
+        }, (err: any) => {
+          this.errorToast.handleError(err);
+        }
+      );
   }
 
   onRowClicked(row: ConsignmentNoteListDto) {
@@ -92,15 +96,18 @@ export class ConsignmentNoteListComponent implements OnInit {
 
   openModal(row: ConsignmentNoteListDto): void {
     this.consignmentNoteService.getConsignmentNote(row.id).subscribe((consignmentNoteDto) => {
-      const dialogRef = this.dialog.open(ConsignmentNoteDetailDialogComponent, {
-        disableClose: false,
-        autoFocus: true,
-        data: {
-          showWriteOffButtons: true,
-          consignmentNoteDto: consignmentNoteDto
-        }
-      });
-    });
+        const dialogRef = this.dialog.open(ConsignmentNoteDetailDialogComponent, {
+          disableClose: false,
+          autoFocus: true,
+          data: {
+            showWriteOffButtons: true,
+            consignmentNoteDto: consignmentNoteDto
+          }
+        });
+      }, (err: any) => {
+        this.errorToast.handleError(err);
+      }
+    );
   }
 
   pageChanged(event: PageEvent) {

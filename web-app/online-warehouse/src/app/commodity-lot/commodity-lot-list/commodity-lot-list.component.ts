@@ -8,10 +8,11 @@ import {Page} from "../../shared/pagination/page";
 import {Pageable} from "../../shared/pagination/pageable";
 import {MatDialog, PageEvent} from "@angular/material";
 import {FormBuilder, FormGroup} from "@angular/forms";
-import {BehaviorSubject, of} from "rxjs";
-import {catchError, debounceTime, distinctUntilChanged, finalize, tap} from "rxjs/operators";
+import {BehaviorSubject} from "rxjs";
+import {debounceTime, distinctUntilChanged, finalize, tap} from "rxjs/operators";
 import {CommodityLotStatusEnum} from "../dto/enum/commodity-lot-status.enum";
 import {DistributeGoodsWarehouseDialogComponent} from "../../warehouse/distribute-goods-warehouse-dialog/distribute-goods-warehouse-dialog.component";
+import {RequestErrorToastHandlerService} from "../../shared/toast/request-error-handler/request-error-toast-handler.service";
 
 @Component({
   selector: 'app-commodity-lot-list',
@@ -38,12 +39,12 @@ export class CommodityLotListComponent implements OnInit {
   private minDate: Date = new Date(2000, 0, 1);
   private today: Date = new Date();
 
-  private errors: any[];
 
   constructor(private commodityLotService: CommodityLotService,
               private router: Router,
               private fb: FormBuilder,
-              private dialog: MatDialog) {
+              private dialog: MatDialog,
+              private errorToast: RequestErrorToastHandlerService) {
     this.commodityLotFilterForm = fb.group({
       "commodityLotType": [''],
       "commodityLotStatus": [''],
@@ -84,22 +85,28 @@ export class CommodityLotListComponent implements OnInit {
 
   openModal(commodityLotListDto: CommodityLotListDto): void {
     this.commodityLotService.getCommodityLot(commodityLotListDto.id).subscribe((commodityLotDto) => {
-      const dialogRef = this.dialog.open(DistributeGoodsWarehouseDialogComponent, {
-        disableClose: false,
-        autoFocus: true,
-        data: {
-          commodityLot: commodityLotDto
-        }
-      });
+        const dialogRef = this.dialog.open(DistributeGoodsWarehouseDialogComponent, {
+          disableClose: false,
+          autoFocus: true,
+          data: {
+            commodityLot: commodityLotDto
+          }
+        });
 
-      dialogRef.afterClosed().subscribe((b) => {
-        if (b) {
-          this.commodityLotService.setCommodityLotProcessed(commodityLotDto.id).subscribe(() => {
-            this.loadCommodityLots();
-          });
-        }
-      })
-    });
+        dialogRef.afterClosed().subscribe((b) => {
+          if (b) {
+            this.commodityLotService.setCommodityLotProcessed(commodityLotDto.id).subscribe(() => {
+                this.loadCommodityLots();
+              }, (err: any) => {
+                this.errorToast.handleError(err);
+              }
+            );
+          }
+        })
+      }, (err: any) => {
+        this.errorToast.handleError(err);
+      }
+    );
   }
 
   pageChanged(event: PageEvent) {
@@ -120,15 +127,14 @@ export class CommodityLotListComponent implements OnInit {
   private loadCommodityLots() {
     this.loadingSubject.next(true);
     this.commodityLotService.getCommodityLots(this.commodityLotFilterForm.value, this.pageable).pipe(
-      catchError(() => of([])),
       finalize(() => this.loadingSubject.next(false))
     )
-      .subscribe(page => {
-        if (page instanceof Array) {
-          this.errors = page as any[];
-        } else {
+      .subscribe((page) => {
           this.page = page;
+          this.errorToast.handleSuccess('Commodity lots loaded successfully', 'Loaded successfully');
+        }, (err: any) => {
+          this.errorToast.handleError(err);
         }
-      });
+      );
   }
 }

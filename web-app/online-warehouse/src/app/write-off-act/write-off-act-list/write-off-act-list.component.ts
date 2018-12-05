@@ -3,14 +3,15 @@ import {WriteOffActListDto} from "../dto/write-off-act-list.dto";
 import {WriteOffActService} from "../service/write-off-act.service";
 import {WriteOffActFilter} from "../dto/write-off-act.filter";
 import {Router} from "@angular/router";
-import {BehaviorSubject, of} from "rxjs";
+import {BehaviorSubject} from "rxjs";
 import {Page} from "../../shared/pagination/page";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {Pageable} from "../../shared/pagination/pageable";
-import {catchError, debounceTime, distinctUntilChanged, finalize, tap} from "rxjs/operators";
+import {debounceTime, distinctUntilChanged, finalize, tap} from "rxjs/operators";
 import {PageEvent} from "@angular/material";
 import {WriteOffActTypeEnum} from "../dto/enum/write-off-act-type.enum";
 import {AuthenticationService} from "../../auth/_services";
+import {RequestErrorToastHandlerService} from "../../shared/toast/request-error-handler/request-error-toast-handler.service";
 
 @Component({
   selector: 'app-write-off-act-list',
@@ -34,12 +35,11 @@ export class WriteOffActListComponent implements OnInit {
 
   private writeOffActType = WriteOffActTypeEnum;
 
-  private errors: any[];
-
   constructor(private writeOffActService: WriteOffActService,
               private router: Router,
               private fb: FormBuilder,
-              private auth: AuthenticationService) {
+              private auth: AuthenticationService,
+              private errorToast: RequestErrorToastHandlerService) {
     this.writeOffActFilterForm = fb.group({
       "writeOffActType": [''],
       "from": [''],
@@ -79,18 +79,13 @@ export class WriteOffActListComponent implements OnInit {
 
   private loadWriteOffActs() {
     this.loadingSubject.next(true);
-    this.writeOffActService.getWriteOffActs(this.filter, this.pageable).pipe(
-      catchError(() => of([])),
-      finalize(() => this.loadingSubject.next(false))
-    )
-      .subscribe(page => {
-        if (page instanceof Array) {
-          this.errors = page as any[];
-          console.log('test', this.errors)
-        } else {
+    this.writeOffActService.getWriteOffActs(this.filter, this.pageable)
+      .pipe(finalize(() => this.loadingSubject.next(false)))
+      .subscribe((page) => {
           this.page = page;
-          console.log('test', this.page)
+        }, (err: any) => {
+          this.errorToast.handleError(err);
         }
-      });
+      );
   }
 }

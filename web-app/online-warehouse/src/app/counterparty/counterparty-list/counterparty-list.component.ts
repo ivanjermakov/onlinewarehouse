@@ -1,15 +1,16 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {BehaviorSubject, of} from "rxjs";
+import {BehaviorSubject} from "rxjs";
 import {Page} from "../../shared/pagination/page";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {Pageable} from "../../shared/pagination/pageable";
-import {catchError, debounceTime, distinctUntilChanged, finalize, tap} from "rxjs/operators";
+import {debounceTime, distinctUntilChanged, finalize, tap} from "rxjs/operators";
 import {MatDialog, PageEvent} from "@angular/material";
 import {CounterpartyDto} from "../dto/counterparty.dto";
 import {CounterpartyFilter} from "../dto/counterparty.filter";
 import {CounterpartyService} from "../service/counterparty.service";
 import {CounterpartyTypeEnum} from "../dto/enum/counterparty-type.enum";
 import {CreateCounterpartyDialogComponent} from "../create-counterparty-dialog/create-counterparty-dialog.component";
+import {RequestErrorToastHandlerService} from "../../shared/toast/request-error-handler/request-error-toast-handler.service";
 
 @Component({
   selector: 'app-counterparty-list',
@@ -36,11 +37,10 @@ export class CounterpartyListComponent implements OnInit {
   private pageable: Pageable = new Pageable(0, 10);
   private pageSizeOptions: number[] = [10, 25, 50];
 
-  private errors: any[];
-
   constructor(private counterpartyService: CounterpartyService,
               private fb: FormBuilder,
-              private dialog: MatDialog) {
+              private dialog: MatDialog,
+              private errorToast: RequestErrorToastHandlerService) {
     this.counterpartyFilterForm = fb.group({
       "name": [''],
       "taxNumber": [''],
@@ -98,16 +98,14 @@ export class CounterpartyListComponent implements OnInit {
   loadCounterparties(): void {
     this.loadingSubject.next(true);
     this.counterpartyService.getCounterparties(this.filter, this.pageable,).pipe(
-      catchError(() => of([])),
       finalize(() => this.loadingSubject.next(false))
     )
-      .subscribe(page => {
-        if (page instanceof Array) {
-          this.errors = page as any[];
-        } else {
+      .subscribe((page) => {
           this.page = page;
+        }, (err: any) => {
+          this.errorToast.handleError(err);
         }
-      });
+      );
   }
 
 }

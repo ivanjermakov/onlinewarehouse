@@ -5,6 +5,7 @@ import {AuthorityNameEnum} from "../dto/enum/authority-name.enum";
 import {UserService} from "../service/user.service";
 import {CreateUserDto} from "../dto/create-user.dto";
 import {AuthorityDto} from "../dto/authority.dto";
+import {RequestErrorToastHandlerService} from "../../shared/toast/request-error-handler/request-error-toast-handler.service";
 
 @Component({
   selector: 'app-create-user',
@@ -18,11 +19,10 @@ export class CreateUserComponent implements OnInit {
 
   private today = new Date();
 
-  private error: any;
-
   constructor(private fb: FormBuilder,
               public usernameValidator: UsernameValidator,
-              private userService: UserService) {
+              private userService: UserService,
+              private errorToast: RequestErrorToastHandlerService) {
     this.createUserDto = fb.group({
       "username": ['',
         Validators.compose(
@@ -84,13 +84,13 @@ export class CreateUserComponent implements OnInit {
     });
     this.userService.saveUser(createUserDto)
       .subscribe((id: number) => {
-          console.log(id);
+          this.errorToast.handleSuccess('New user saved successfully', 'Saved successfully');
           this.clearForm();
         }, (err: any) => {
-          this.error = err;
-          console.log(this.error);
+          this.errorToast.handleError(err);
         }
       );
+
   }
 
   clearForm() {

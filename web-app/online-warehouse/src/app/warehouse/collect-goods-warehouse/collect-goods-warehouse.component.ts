@@ -4,6 +4,7 @@ import {WarehouseDto} from "../dto/warehouse.dto";
 import {BehaviorSubject} from "rxjs";
 import {WarehouseService} from "../service/warehouse.service";
 import {finalize} from "rxjs/operators";
+import {RequestErrorToastHandlerService} from "../../shared/toast/request-error-handler/request-error-toast-handler.service";
 
 @Component({
   selector: 'app-collect-goods-warehouse',
@@ -18,12 +19,12 @@ export class CollectGoodsWarehouseComponent implements OnInit {
 
   show = true;
   resultList: PlacementGoodsDto[] = [];
-  error: any;
   private loadingSubject = new BehaviorSubject<boolean>(false);
   loading$ = this.loadingSubject.asObservable();
   private warehouseDto: WarehouseDto;
 
-  constructor(private warehouseService: WarehouseService) {
+  constructor(private warehouseService: WarehouseService,
+              private errorToast: RequestErrorToastHandlerService) {
   }
 
   ngOnInit() {
@@ -35,7 +36,7 @@ export class CollectGoodsWarehouseComponent implements OnInit {
       .subscribe(warehouseDto => {
           this.warehouseDto = warehouseDto;
         }, (err: any) => {
-          this.error = err;
+          this.errorToast.handleError(err);
         }
       );
   }

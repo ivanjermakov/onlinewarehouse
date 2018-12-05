@@ -4,6 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {BirthdayMailTemplateDto} from '../dto/BirthdayMailTemplateDto';
 import {UploadService} from '../../upload/service/upload.service';
+import {AuthenticationService} from "../../auth/_services";
 
 @Injectable({
   providedIn: 'root'
@@ -11,20 +12,23 @@ import {UploadService} from '../../upload/service/upload.service';
 export class MailService {
 
   private baseApi: string = API_BASE_URL + '/companies';
+  private companyId: number;
 
-  constructor(private http: HttpClient, private uploadService: UploadService) {
+  constructor(private http: HttpClient, private uploadService: UploadService,
+              private auth: AuthenticationService) {
+    this.companyId = auth.getCompanyId();
   }
 
-  getBirthdayMailTemplate(companyId: number): Observable<BirthdayMailTemplateDto> {
-    const path: string = this.baseApi + '/' + companyId + '/mail-templates/birthday';
+  getBirthdayMailTemplate(): Observable<BirthdayMailTemplateDto> {
+    const path: string = this.baseApi + '/' + this.companyId + '/mail-templates/birthday';
     return this.http.get<BirthdayMailTemplateDto>(path);
   }
 
-  editBirthdayMailTemplate(birthdayMailTemplateDto: BirthdayMailTemplateDto, image: File, companyId: number,
+  editBirthdayMailTemplate(birthdayMailTemplateDto: BirthdayMailTemplateDto, image: File,
                            response: (dto: BirthdayMailTemplateDto) => void) {
     this.uploadService.upload(image).subscribe((imagePath) => {
       birthdayMailTemplateDto.headerImagePath = imagePath;
-      const path: string = this.baseApi + '/' + companyId + '/mail-templates/birthday';
+      const path: string = this.baseApi + '/' + this.companyId + '/mail-templates/birthday';
       this.http.put<BirthdayMailTemplateDto>(path, birthdayMailTemplateDto).subscribe((p) => {
         response(p);
       });

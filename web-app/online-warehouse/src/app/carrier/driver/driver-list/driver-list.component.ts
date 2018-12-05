@@ -1,12 +1,13 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {BehaviorSubject, of} from "rxjs/index";
+import {BehaviorSubject} from "rxjs/index";
 import {Pageable} from "../../../shared/pagination/pageable";
 import {Page} from "../../../shared/pagination/page";
 import {MatDialog, PageEvent} from "@angular/material";
 import {DriverDto} from "../driver.dto";
 import {DriverService} from "../driver.service";
-import {catchError, finalize} from "rxjs/internal/operators";
+import {finalize} from "rxjs/internal/operators";
 import {CreateDriverDialogComponent} from "../create-driver-dialog/create-driver-dialog.component";
+import {RequestErrorToastHandlerService} from "../../../shared/toast/request-error-handler/request-error-toast-handler.service";
 
 @Component({
   selector: 'app-driver-list',
@@ -24,11 +25,11 @@ export class DriverListComponent implements OnInit {
   private page: Page<DriverDto>;
   private pageable: Pageable = new Pageable(0, 10);
   private pageSizeOptions: number[] = [10, 25, 50];
-  private errors: any[];
-  private error: any;
+
 
   constructor(private driverService: DriverService,
-              private dialog: MatDialog) {
+              private dialog: MatDialog,
+              private errorToast: RequestErrorToastHandlerService) {
   }
 
   ngOnInit() {
@@ -48,16 +49,14 @@ export class DriverListComponent implements OnInit {
   loadDrivers() {
     this.loadingSubject.next(true);
     this.driverService.getDrivers(this.carrierId, this.pageable).pipe(
-      catchError(() => of([])),
       finalize(() => this.loadingSubject.next(false))
     )
-      .subscribe(page => {
-        if (page instanceof Array) {
-          this.errors = page as any[];
-        } else {
+      .subscribe((page) => {
           this.page = page;
+        }, (err: any) => {
+          this.errorToast.handleError(err)
         }
-      });
+      );
   }
 
   addDriverModal() {
@@ -71,10 +70,10 @@ export class DriverListComponent implements OnInit {
         if (data) {
           this.driverService.saveDriver(this.carrierId, data)
             .subscribe(long => {
-                console.log(long);
+                this.errorToast.handleSuccess('New driver saved successfully', 'Saved successfully');
                 this.loadDrivers();
               }, (err: any) => {
-                this.error = err;
+                this.errorToast.handleError(err);
               }
             );
         }

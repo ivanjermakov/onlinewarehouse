@@ -11,6 +11,7 @@ import {PlacementCreateWriteOffActDto} from "../../write-off-act/dto/placement-c
 import {PlacementGoodsDto} from "../dto/placement-goods.dto";
 import {PlacementWriteOffActGoodsDto} from "../../write-off-act/dto/placement-write-off-act-goods.dto";
 import {PlacementTypeEnum} from "../../shared/enum/placement-type.enum";
+import {RequestErrorToastHandlerService} from "../../shared/toast/request-error-handler/request-error-toast-handler.service";
 
 @Component({
   selector: 'app-get-placement',
@@ -103,19 +104,16 @@ export class GetPlacementComponent implements OnInit {
   };
 
   displayedColumns = ["amount", "name", "storageTimeDays", "expirationDate", "cost", "weight", "labelling", "description"];
-
+  placementType = PlacementTypeEnum;
   private loadingSubject = new BehaviorSubject<boolean>(false);
   loading$ = this.loadingSubject.asObservable();
   private placement: PlacementDto;
 
-  placementType = PlacementTypeEnum;
-
-  private error: any;
-
   constructor(private warehouseService: WarehouseService,
               private router: Router,
               private route: ActivatedRoute,
-              private dialog: MatDialog) {
+              private dialog: MatDialog,
+              private errorToast: RequestErrorToastHandlerService) {
   }
 
   ngOnInit(): void {
@@ -164,7 +162,7 @@ export class GetPlacementComponent implements OnInit {
             this.placement = placement;
             this.calculateCount();
           }, (err: any) => {
-            this.error = err;
+            this.errorToast.handleError(err);
           }
         );
     }
@@ -204,8 +202,11 @@ export class GetPlacementComponent implements OnInit {
             this.warehouseService
               .createPlacementWriteOffAct(this.placement.warehouseId, this.placement.id, placementCreateWriteOffActDto)
               .subscribe((data) => {
-                console.info('Write-off case saved', data);
-              });
+                  this.errorToast.handleSuccess('Write-off case saved successfully', 'Saved successfully');
+                }, (err: any) => {
+                  this.errorToast.handleError(err);
+                }
+              );
           } else {
             console.log('Error, duplicates in write-off case');
           }

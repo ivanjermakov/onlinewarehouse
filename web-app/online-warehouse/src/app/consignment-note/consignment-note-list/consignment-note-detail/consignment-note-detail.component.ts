@@ -13,6 +13,8 @@ import {ConsignmentNoteGoodsDto} from "../../dto/consignment-note-goods-dto";
 import {CounterpartyTypeEnum} from "../../../counterparty/dto/enum/counterparty-type.enum";
 import {CarrierTypeEnum} from "../../../carrier/dto/enum/carrier-type.enum";
 import {BehaviorSubject} from "rxjs";
+import {finalize} from "rxjs/operators";
+import {RequestErrorToastHandlerService} from "../../../shared/toast/request-error-handler/request-error-toast-handler.service";
 
 @Component({
   selector: 'app-consignment-note-detail',
@@ -44,7 +46,8 @@ export class ConsignmentNoteDetailComponent implements OnInit {
               private route: ActivatedRoute,
               private dialog: MatDialog,
               private commodityLotService: CommodityLotService,
-              private writeOffActService: WriteOffActService) {
+              private writeOffActService: WriteOffActService,
+              private errorToast: RequestErrorToastHandlerService) {
   }
 
   ngOnInit(): void {
@@ -60,11 +63,14 @@ export class ConsignmentNoteDetailComponent implements OnInit {
     if (!Number.isNaN(id) && id != 0) {
       this.loadingSubject.next(true);
       this.consignmentNoteService.getConsignmentNote(id)
+        .pipe(finalize(() => this.loadingSubject.next(false)))
         .subscribe((consignmentNote) => {
-          this.consignmentNote = consignmentNote;
-          this.getTotal();
-          this.loadingSubject.next(false);
-        });
+            this.consignmentNote = consignmentNote;
+            this.getTotal();
+          }, (err: any) => {
+            this.errorToast.handleError(err);
+          }
+        );
     }
   }
 

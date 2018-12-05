@@ -18,6 +18,7 @@ import {UpdateConsignmentNoteDto} from "../dto/update-consignment-note-dto";
 import {WarehouseDto} from "../../warehouse/dto/warehouse.dto";
 import {WarehouseService} from "../../warehouse/service/warehouse.service";
 import {PlacementGoodsDto} from "../../warehouse/dto/placement-goods.dto";
+import {RequestErrorToastHandlerService} from "../../shared/toast/request-error-handler/request-error-toast-handler.service";
 
 @Component({
   selector: 'app-register-consignment-note',
@@ -48,7 +49,8 @@ export class RegisterConsignmentNoteComponent implements OnInit {
               private fb: FormBuilder,
               private route: ActivatedRoute,
               private dialog: MatDialog,
-              private router: Router) {
+              private router: Router,
+              private errorToast: RequestErrorToastHandlerService) {
     this.consignmentNoteForm = fb.group({
       "number": [''],
       "shipment": [''],
@@ -76,10 +78,13 @@ export class RegisterConsignmentNoteComponent implements OnInit {
     if (!Number.isNaN(id) && id != 0) {
       this.consignmentNoteService.getConsignmentNote(id)
         .subscribe((consignmentNote) => {
-          this.updateConsignmentNote.id = consignmentNote.id;
-          this.setData(consignmentNote);
-          this.isCreate = false;
-        });
+            this.updateConsignmentNote.id = consignmentNote.id;
+            this.setData(consignmentNote);
+            this.isCreate = false;
+          }, (err: any) => {
+            this.errorToast.handleError(err);
+          }
+        );
     }
   }
 
@@ -257,10 +262,22 @@ export class RegisterConsignmentNoteComponent implements OnInit {
       this.consignmentNoteForm.value.driver = null;
     }
     if (this.warehouseDto) {
-      this.warehouseService.updateWarehouseAndCreateConsignmentNote(this.warehouseDto, this.consignmentNoteForm.value).subscribe()
+      this.warehouseService.updateWarehouseAndCreateConsignmentNote(this.warehouseDto, this.consignmentNoteForm.value)
+        .subscribe(() => {
+            this.errorToast.handleSuccess('Consignment note saved successfully', 'Saved successfully');
+          }, (err: any) => {
+            this.errorToast.handleError(err);
+          }
+        );
     } else {
       if (this.isCreate) {
-        this.consignmentNoteService.saveConsignmentNote(this.consignmentNoteForm.value).subscribe();
+        this.consignmentNoteService.saveConsignmentNote(this.consignmentNoteForm.value)
+          .subscribe(() => {
+              this.errorToast.handleSuccess('Consignment note saved successfully', 'Saved successfully');
+            }, (err: any) => {
+              this.errorToast.handleError(err);
+            }
+          );
       } else {
         this.updateConsignmentNote.number = this.consignmentNoteForm.controls['number'].value;
         this.updateConsignmentNote.shipment = this.consignmentNoteForm.controls['shipment'].value;
@@ -272,7 +289,13 @@ export class RegisterConsignmentNoteComponent implements OnInit {
         this.updateConsignmentNote.consignmentNoteType = this.consignmentNoteForm.controls['consignmentNoteType'].value;
         this.updateConsignmentNote.description = this.consignmentNoteForm.controls['description'].value;
 
-        this.consignmentNoteService.updateConsignmentNote(this.updateConsignmentNote).subscribe();
+        this.consignmentNoteService.updateConsignmentNote(this.updateConsignmentNote)
+          .subscribe(() => {
+              this.errorToast.handleSuccess('Consignment note updated successfully', 'Updated successfully');
+            }, (err: any) => {
+              this.errorToast.handleError(err);
+            }
+          );
         this.router.navigateByUrl("app/consignment-notes/" + this.updateConsignmentNote.id);
       }
     }

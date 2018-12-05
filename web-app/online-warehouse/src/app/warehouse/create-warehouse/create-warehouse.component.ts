@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {WarehouseService} from "../service/warehouse.service";
-import {AuthenticationService} from "../../auth/_services";
 import {CreateWarehouseDto} from "../dto/create-warehouse.dto";
+import {RequestErrorToastHandlerService} from "../../shared/toast/request-error-handler/request-error-toast-handler.service";
 
 @Component({
   selector: 'app-create-warehouse',
@@ -12,10 +12,10 @@ import {CreateWarehouseDto} from "../dto/create-warehouse.dto";
 export class CreateWarehouseComponent implements OnInit {
 
   createWarehouseForm: FormGroup;
-  error: any;
 
   constructor(private fb: FormBuilder,
-              private warehouseService: WarehouseService) {
+              private warehouseService: WarehouseService,
+              private errorToast: RequestErrorToastHandlerService) {
     this.createWarehouseForm = fb.group({
       name: [[''], Validators.required],
       address: fb.group({
@@ -34,9 +34,9 @@ export class CreateWarehouseComponent implements OnInit {
     Object.assign(warehouseDto, createWarehouseForm.value);
     this.warehouseService.saveWarehouse(warehouseDto)
       .subscribe(long => {
-          console.log(long);
+          this.errorToast.handleSuccess('Warehouse saved successfully', 'Saved successfully');
         }, (err: any) => {
-          this.error = err;
+          this.errorToast.handleError(err);
         }
       );
   }

@@ -4,6 +4,7 @@ import {CounterpartyService} from "../service/counterparty.service";
 import {CreateCounterpartyDto} from "../dto/create-counterparty.dto";
 import {AuthenticationService} from "../../auth/_services";
 import {CounterpartyTypeEnum} from "../dto/enum/counterparty-type.enum";
+import {RequestErrorToastHandlerService} from "../../shared/toast/request-error-handler/request-error-toast-handler.service";
 
 @Component({
   selector: 'app-create-counterparty',
@@ -21,7 +22,8 @@ export class CreateCounterpartyComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
               private counterpartyService: CounterpartyService,
-              private auth: AuthenticationService) {
+              private auth: AuthenticationService,
+              private errorToast: RequestErrorToastHandlerService) {
     this.createCounterpartyForm = fb.group({
       name: ['', Validators.required],
       counterpartyType: ['', Validators.required],
@@ -49,10 +51,14 @@ export class CreateCounterpartyComponent implements OnInit {
     let value = createCounterpartyForm.value;
     this.createCounterparty.companyId = this.auth.getCompanyId();
     Object.assign(this.createCounterparty, value);
-    this.counterpartyService.saveCounterparty(this.createCounterparty).subscribe((long: number) => {
-      console.log(long);
-      this.submitted.emit();
-    });
+    this.counterpartyService.saveCounterparty(this.createCounterparty)
+      .subscribe((long: number) => {
+          this.errorToast.handleSuccess('Counterparty saved successfully', 'Saved successfully');
+          this.submitted.emit();
+        }, (err: any) => {
+          this.errorToast.handleError(err);
+        }
+      );
   }
 
 }

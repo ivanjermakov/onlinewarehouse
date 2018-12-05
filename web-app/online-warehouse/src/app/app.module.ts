@@ -66,6 +66,8 @@ import {CreateDriverDialogComponent} from './carrier/driver/create-driver-dialog
 import {UsernameValidator} from "./user/service/username.validator";
 import {GetUserComponent} from './user/get-user/get-user.component';
 import {CreateUserComponent} from './user/create-user/create-user.component';
+import {ToastrModule} from "ngx-toastr";
+import {TOAST_CONFIG} from "./toast-config";
 
 const routes: Routes = [
   {path: 'app', component: AppComponent, canActivate: [AuthGuard], children: appRoutes},
@@ -140,7 +142,8 @@ const routes: Routes = [
     BrowserAnimationsModule,
     MaterialModule,
     MatNativeDateModule,
-    HighchartsChartModule
+    HighchartsChartModule,
+    ToastrModule.forRoot(TOAST_CONFIG)
   ],
   bootstrap: [RootComponent],
   entryComponents: [

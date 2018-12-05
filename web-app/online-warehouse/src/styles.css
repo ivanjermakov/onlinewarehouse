@@ -1,4 +1,5 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "~ngx-toastr/toastr.css";
 
 /*WHOLEPAGE*/
 * {
@@ -7,6 +8,10 @@
 
 *, ::after, ::before {
   box-sizing: border-box;
+}
+
+.toast-container * {
+  font-size: 14px;
 }
 
 /*body {*/

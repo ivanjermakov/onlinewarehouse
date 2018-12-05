@@ -1,10 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {CounterpartyDto} from "../dto/counterparty.dto";
 import {ActivatedRoute, Router} from "@angular/router";
-import {BehaviorSubject, of} from "rxjs";
-import {catchError, finalize} from "rxjs/operators";
+import {BehaviorSubject} from "rxjs";
+import {finalize} from "rxjs/operators";
 import {CounterpartyService} from "../service/counterparty.service";
 import {CounterpartyTypeEnum} from "../dto/enum/counterparty-type.enum";
+import {RequestErrorToastHandlerService} from "../../shared/toast/request-error-handler/request-error-toast-handler.service";
 
 @Component({
   selector: 'app-get-counterparty',
@@ -18,12 +19,11 @@ export class GetCounterpartyComponent implements OnInit {
   loading$ = this.loadingSubject.asObservable();
   private counterparty: CounterpartyDto;
 
-  private error: any;
-
 
   constructor(private counterpartyService: CounterpartyService,
               private router: Router,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private errorToast: RequestErrorToastHandlerService) {
   }
 
   ngOnInit(): void {
@@ -35,13 +35,11 @@ export class GetCounterpartyComponent implements OnInit {
     if (!Number.isNaN(id) && id != 0) {
       this.loadingSubject.next(true);
       this.counterpartyService.getCounterparty(id)
-        .pipe(
-          finalize(() => this.loadingSubject.next(false))
-        )
-        .subscribe(counterparty => {
+        .pipe(finalize(() => this.loadingSubject.next(false)))
+        .subscribe((counterparty) => {
             this.counterparty = counterparty;
           }, (err: any) => {
-            this.error = err;
+            this.errorToast.handleError(err);
           }
         );
     }

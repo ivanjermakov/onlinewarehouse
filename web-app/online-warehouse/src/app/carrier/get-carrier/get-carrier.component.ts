@@ -8,6 +8,7 @@ import {CarrierTypeEnum} from "../dto/enum/carrier-type.enum";
 import {MatDialog} from "@angular/material";
 import {CreateDriverDialogComponent} from "../driver/create-driver-dialog/create-driver-dialog.component";
 import {DriverService} from "../driver/driver.service";
+import {RequestErrorToastHandlerService} from "../../shared/toast/request-error-handler/request-error-toast-handler.service";
 
 @Component({
   selector: 'app-get-carrier',
@@ -22,7 +23,6 @@ export class GetCarrierComponent implements OnInit {
   private driverDisplayedColumns = ['seq', 'driverInfo'];
   private loadingSubject = new BehaviorSubject<boolean>(false);
   loading$ = this.loadingSubject.asObservable();
-  private error: any;
 
   private carrierTypeEnum = CarrierTypeEnum;
 
@@ -30,12 +30,13 @@ export class GetCarrierComponent implements OnInit {
     private carrierService: CarrierService,
     private driverService: DriverService,
     private route: ActivatedRoute,
-    private dialog: MatDialog) {
+    private dialog: MatDialog,
+    private errorToast: RequestErrorToastHandlerService) {
   }
 
   ngOnInit() {
     if (this.idExist()) {
-      this.loadDriver();
+      this.loadCarrier();
     } else {
     }
   }
@@ -49,16 +50,15 @@ export class GetCarrierComponent implements OnInit {
     }
   }
 
-  loadDriver() {
+  loadCarrier() {
     this.loadingSubject.next(true);
-    // TODO: don't forget to change to a variable
     this.carrierService.getCarrier(this.carrierId).pipe(
       finalize(() => this.loadingSubject.next(false))
     )
       .subscribe(data => {
         this.carrierDto = data;
       }, (err: any) => {
-        this.error = err;
+        this.errorToast.handleError(err);
       });
   }
 
@@ -72,11 +72,11 @@ export class GetCarrierComponent implements OnInit {
       data => {
         if (data) {
           this.driverService.saveDriver(this.carrierId, data)
-            .subscribe(long => {
-                console.log(long);
-                this.loadDriver();
+            .subscribe((long) => {
+                this.loadCarrier();
+                this.errorToast.handleSuccess('Driver saved successfully', 'Saved successfully');
               }, (err: any) => {
-                this.error = err;
+                this.errorToast.handleError(err);
               }
             );
         }
@@ -86,11 +86,12 @@ export class GetCarrierComponent implements OnInit {
 
   changeTrustedValue() {
     this.carrierService.changeTrustedValue(this.carrierId)
-      .subscribe(long => {
-        console.log(long);
-        this.loadDriver();
-      }, (err: any) => {
-        this.error = err;
-      })
+      .subscribe((long) => {
+          this.errorToast.handleSuccess('Trusted value changed successfully', 'Changed successfully');
+          this.loadCarrier();
+        }, (err: any) => {
+          this.errorToast.handleError(err);
+        }
+      );
   }
 }

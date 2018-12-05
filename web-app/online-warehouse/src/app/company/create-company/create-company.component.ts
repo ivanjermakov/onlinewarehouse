@@ -7,6 +7,7 @@ import {UsernameValidator} from "../../user/service/username.validator";
 import {AuthorityDto} from "../../user/dto/authority.dto";
 import {AuthorityNameEnum} from "../../user/dto/enum/authority-name.enum";
 import {CreateUserDto} from "../../user/dto/create-user.dto";
+import {RequestErrorToastHandlerService} from "../../shared/toast/request-error-handler/request-error-toast-handler.service";
 
 @Component({
   selector: 'app-create-company',
@@ -21,7 +22,8 @@ export class CreateCompanyComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
               private companyService: CompanyService,
-              public usernameValidator: UsernameValidator) {
+              public usernameValidator: UsernameValidator,
+              private errorToast: RequestErrorToastHandlerService) {
     this.createCompanyForm = fb.group({
       "name": ['', Validators.required],
       "sizeType": ['', Validators.required],
@@ -42,7 +44,6 @@ export class CreateCompanyComponent implements OnInit {
           "locality": ['', Validators.required]
         }),
         "birth": ['', [Validators.required]],
-        // "authorities": [['ROLE_COMPANY_ADMIN'], [Validators.required]]
       })
     });
   }
@@ -81,8 +82,12 @@ export class CreateCompanyComponent implements OnInit {
     console.log(createCompanyDto);
     createCompanyDto.createUserDto.authorities = [];
     createCompanyDto.createUserDto.authorities.push(new AuthorityDto(AuthorityNameEnum.ROLE_COMPANY_ADMIN));
-    this.companyService.saveCompany(createCompanyDto).subscribe((long: number) => {
-      console.log(long)
-    });
+    this.companyService.saveCompany(createCompanyDto)
+      .subscribe(() => {
+          this.errorToast.handleSuccess('Company saved successfully', 'Saved successfully');
+        }, (err: any) => {
+          this.errorToast.handleError(err);
+        }
+      );
   }
 }

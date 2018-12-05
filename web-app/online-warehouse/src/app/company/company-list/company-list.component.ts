@@ -1,12 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {CompanyService} from "../service/company.service";
 import {CompanyDto} from "../dto/company.dto";
-import {BehaviorSubject, of} from "rxjs";
+import {BehaviorSubject} from "rxjs";
 import {Page} from "../../shared/pagination/page";
 import {Pageable} from "../../shared/pagination/pageable";
-import {catchError, finalize} from "rxjs/operators";
+import {finalize} from "rxjs/operators";
 import {PageEvent} from "@angular/material";
 import {ActionTypeEnum} from "../dto/enum/action-type.enum";
+import {RequestErrorToastHandlerService} from "../../shared/toast/request-error-handler/request-error-toast-handler.service";
 
 @Component({
   selector: 'app-company-list',
@@ -25,9 +26,8 @@ export class CompanyListComponent implements OnInit {
   private pageable: Pageable = new Pageable(0, 10);
   private pageSizeOptions: number[] = [10, 25, 50];
 
-  private errors: any[];
-
-  constructor(private companyService: CompanyService) {
+  constructor(private companyService: CompanyService,
+              private errorToast: RequestErrorToastHandlerService) {
   }
 
   ngOnInit() {
@@ -37,13 +37,23 @@ export class CompanyListComponent implements OnInit {
   disableCompany(companyId: number) {
     this.page = null;
     this.loadingSubject.next(true);
-    this.companyService.setCompanyDisabled(companyId).subscribe(() => this.updateCompaniesList());
+    this.companyService.setCompanyDisabled(companyId)
+      .subscribe(() => this.updateCompaniesList(),
+        (err: any) => {
+          this.errorToast.handleError(err);
+        }
+      );
   }
 
   enableCompany(companyId: number) {
     this.page = null;
     this.loadingSubject.next(true);
-    this.companyService.setCompanyEnabled(companyId).subscribe(() => this.updateCompaniesList());
+    this.companyService.setCompanyEnabled(companyId)
+      .subscribe(() => this.updateCompaniesList(),
+        (err: any) => {
+          this.errorToast.handleError(err);
+        }
+      );
   }
 
   pageChanged(event: PageEvent) {
@@ -54,16 +64,13 @@ export class CompanyListComponent implements OnInit {
 
   updateCompaniesList(): void {
     this.loadingSubject.next(true);
-    this.companyService.getAllCompanies(this.pageable).pipe(
-      catchError(() => of([])),
-      finalize(() => this.loadingSubject.next(false))
-    )
-      .subscribe(page => {
-        if (page instanceof Array) {
-          this.errors = page as any[];
-        } else {
+    this.companyService.getAllCompanies(this.pageable)
+      .pipe(finalize(() => this.loadingSubject.next(false)))
+      .subscribe((page) => {
           this.page = page;
+        }, (err: any) => {
+          this.errorToast.handleError(err);
         }
-      });
+      );
   }
 }

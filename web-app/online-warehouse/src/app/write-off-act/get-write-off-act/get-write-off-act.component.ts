@@ -2,12 +2,13 @@ import {Component, OnInit} from '@angular/core';
 import {WriteOffActService} from "../service/write-off-act.service";
 import {ActivatedRoute} from "@angular/router";
 import {WriteOffActDto} from "../dto/write-off-act.dto";
-import {BehaviorSubject, of} from "rxjs";
-import {catchError, finalize} from "rxjs/operators";
+import {BehaviorSubject} from "rxjs";
+import {finalize} from "rxjs/operators";
 import {WriteOffActGoodsDto} from "../dto/write-off-act-goods.dto";
 import {WriteOffActTypeEnum} from "../dto/enum/write-off-act-type.enum";
 import {PlacementTypeEnum} from "../../shared/enum/placement-type.enum";
 import {WriteOffTypeEnum} from "../dto/enum/write-off-type.enum";
+import {RequestErrorToastHandlerService} from "../../shared/toast/request-error-handler/request-error-toast-handler.service";
 
 @Component({
   selector: 'app-get-write-off-act',
@@ -28,11 +29,10 @@ export class GetWriteOffActComponent implements OnInit {
   private placementTypeEnum = PlacementTypeEnum;
   private writeOffActTypeEnum = WriteOffActTypeEnum;
 
-  private errors: any[];
-
   constructor(
     private writeOffActService: WriteOffActService,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute,
+    private errorToast: RequestErrorToastHandlerService) {
   }
 
   ngOnInit() {
@@ -53,20 +53,16 @@ export class GetWriteOffActComponent implements OnInit {
 
   getWriteOffAct() {
     this.loadingSubject.next(true);
-    this.writeOffActService.getWriteOffAct(this.writeOffActId).pipe(
-      catchError(() => of([])),
-      finalize(() => this.loadingSubject.next(false))
-    )
-      .subscribe(page => {
-        if (page instanceof Array) {
-          this.errors = page as any[];
-          console.log('test', this.errors)
-        } else {
+    this.writeOffActService.getWriteOffAct(this.writeOffActId)
+      .pipe(finalize(() => this.loadingSubject.next(false)))
+      .subscribe((page) => {
           this.writeOffAct = page;
           this.getTotal();
-          console.log('test', this.writeOffAct)
+        }, (err: any) => {
+          this.errorToast.handleError(err);
         }
-      });
+      );
+
   }
 
   private getTotal() {
