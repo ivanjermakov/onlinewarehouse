@@ -6,10 +6,7 @@ import by.itechart.common.service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/companies/{companyId}/goods")
@@ -29,8 +26,9 @@ public class GoodsController {
         return goodsService.getGoods(companyId, goodFilter, pageable);
     }
 
-//    @PostMapping()
-//    public Long createGoods(@PathVariable long companyId){
-//        return 1L;
-//    }
+    @PostMapping()
+    public Long createGoods(@PathVariable long companyId,
+                            @RequestBody GoodsDto goodsDto) {
+        return goodsService.createGoods(goodsDto, companyId);
+    }
 }

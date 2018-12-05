@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {GoodService} from "../good.service";
 import {GoodsDto} from "../dto/goods.dto";
-import {PageEvent} from "@angular/material";
+import {MatDialog, PageEvent} from "@angular/material";
 import {Page} from "../../pagination/page";
 import {Pageable} from "../../pagination/pageable";
 import {BehaviorSubject} from "rxjs";
@@ -10,6 +10,8 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {GoodFilter} from "../dto/good-filter";
 import {PlacementTypeEnum} from "../../enum/placement-type.enum";
 import {RequestErrorToastHandlerService} from "../../toast/request-error-handler/request-error-toast-handler.service";
+import {Router} from "@angular/router";
+import {CreateGoodsDialogComponent} from "../create-goods-dialog/create-goods-dialog.component";
 
 @Component({
   selector: 'app-goods-list',
@@ -21,7 +23,7 @@ export class GoodsListComponent implements OnInit {
   @Output() goodsSelected: EventEmitter<GoodsDto> = new EventEmitter();
 
   @Input() hoverable: boolean = false;
-  @Input() addButton: Boolean;
+  @Input() addButton: boolean = false;
   @Input() inputGoods: GoodsDto[];
 
   private displayedColumns = ["name", "placementType", "measurementUnit", "cost", "weight", "labelling", "description"];
@@ -40,6 +42,8 @@ export class GoodsListComponent implements OnInit {
 
   constructor(private goodsService: GoodService,
               private fb: FormBuilder,
+              private router: Router,
+              private dialog: MatDialog,
               private errorToast: RequestErrorToastHandlerService) {
     this.goodsFilterForm = fb.group({
       "name": [''],
@@ -73,6 +77,22 @@ export class GoodsListComponent implements OnInit {
 
   onRowClicked(goods: GoodsDto) {
     this.goodsSelected.emit(goods);
+  }
+
+  addGoodsModal(): void {
+    const dialogRef = this.dialog.open(CreateGoodsDialogComponent, {
+      disableClose: false,
+      autoFocus: true,
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+        this.loadGoods();
+      }
+    );
+  }
+
+  newGoods() {
+    this.router.navigate(['app/create-goods']);
   }
 
   private loadGoods() {
@@ -121,8 +141,6 @@ export class GoodsListComponent implements OnInit {
     page.number = this.pageable.page;
     page.content = filteredDataArr.slice(this.pageable.page * this.pageable.size, (this.pageable.page + 1) * this.pageable.size);
     this.page = page;
-
-
   }
 
   private checkField(data: any): boolean {

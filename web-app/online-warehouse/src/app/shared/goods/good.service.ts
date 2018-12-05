@@ -15,19 +15,24 @@ import {GoodFilter} from "./dto/good-filter";
 
 export class GoodService {
 
+  readonly companyId: number;
   private baseApi: string = API_BASE_URL + '/companies';
 
   constructor(private http: HttpClient,
               private auth: AuthenticationService) {
+    this.companyId = this.auth.getCompanyId();
   }
 
   getAllGoods(goodFilter: GoodFilter, pageable: Pageable): Observable<Page<GoodsDto>> {
-    var companyId = this.auth.getCompanyId();
-    const path: string = this.baseApi + '/' + companyId + '/goods';
+    const path: string = this.baseApi + '/' + this.companyId + '/goods';
     let paramsBuilder = new HttpParamsBuilder();
     pageable.toUrlParameters(paramsBuilder);
     goodFilter.toUrlParameters(paramsBuilder);
     return this.http.get<Page<GoodsDto>>(path, {params: paramsBuilder.getHttpParams()});
   }
 
+  saveGoods(goodsDto: GoodsDto): Observable<number> {
+    const path: string = this.baseApi + '/' + this.companyId + '/goods';
+    return this.http.post<number>(path, goodsDto);
+  }
 }
