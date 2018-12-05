@@ -20,11 +20,50 @@ export class CreateCompanyComponent implements OnInit {
   readonly today: Date = new Date();
 
   constructor(private fb: FormBuilder,
-              private companyService: CompanyService) {
+              private companyService: CompanyService,
+              public usernameValidator: UsernameValidator) {
     this.createCompanyForm = fb.group({
       "name": ['', Validators.required],
-      "sizeType": ['', Validators.required]
+      "sizeType": ['', Validators.required],
+      "createUserDto": fb.group({
+        "username": ['',
+          Validators.compose(
+            [Validators.maxLength(50),
+              Validators.required]),
+          usernameValidator.checkUsername.bind(usernameValidator)],
+        "password": ['', [Validators.required, Validators.minLength(3)]],
+        "firstname": ['', [Validators.required]],
+        "lastname": ['', [Validators.required]],
+        "patronymic": [''],
+        "email": ['', [Validators.required, Validators.email]],
+        "address": fb.group({
+          "country": ['', Validators.required],
+          "region": ['', Validators.required],
+          "locality": ['', Validators.required]
+        }),
+        "birth": ['', [Validators.required]],
+        // "authorities": [['ROLE_COMPANY_ADMIN'], [Validators.required]]
+      })
     });
+  }
+
+  getUsernameErrors() {
+    let createUserDtoGroup: FormGroup = (this.createCompanyForm.controls['createUserDto'] as FormGroup);
+    return createUserDtoGroup.controls['username'].hasError('usernameInUse') ? 'Username is used' :
+      createUserDtoGroup.controls['username'].hasError('required') ? 'Username is required' :
+        createUserDtoGroup.controls['username'].hasError('maxlength') ? 'Username must be shorter than 50 characters' : '';
+  }
+
+  getPasswordErrors() {
+    let createUserDtoGroup: FormGroup = (this.createCompanyForm.controls['createUserDto'] as FormGroup);
+    return createUserDtoGroup.controls['password'].hasError('required') ? 'Password is required' :
+      createUserDtoGroup.controls['password'].hasError('minlength') ? 'Password must be longer than 3 characters' : '';
+  }
+
+  getEmailErrors() {
+    let createUserDtoGroup: FormGroup = (this.createCompanyForm.controls['createUserDto'] as FormGroup);
+    return createUserDtoGroup.controls['email'].hasError('required') ? 'Email is required' :
+      createUserDtoGroup.controls['email'].hasError('email') ? 'Please enter a valid email address' : '';
   }
 
   ngOnInit() {

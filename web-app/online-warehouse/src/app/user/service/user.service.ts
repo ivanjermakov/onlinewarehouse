@@ -17,23 +17,56 @@ import {AuthorityDto} from "../dto/authority.dto";
 })
 export class UserService {
 
+  readonly companyId: number;
   baseApi = API_BASE_URL + '/companies/';
 
   constructor(private http: HttpClient,
               private auth: AuthenticationService) {
+    this.companyId = this.auth.getCompanyId();
   }
 
   getAllUsers(userFilter: UserFilter, pageable: Pageable): Observable<Page<UserDto>> {
-    var companyId = this.auth.getCompanyId();
-    const path: string = this.baseApi + companyId + '/users';
+    const path: string = this.baseApi + this.companyId + '/users';
     let paramsBuilder = new HttpParamsBuilder();
     pageable.toUrlParameters(paramsBuilder);
     userFilter.toUrlParameters(paramsBuilder);
     return this.http.get<Page<UserDto>>(path, {params: paramsBuilder.getHttpParams()});
   }
 
-  getUserById(companyId, userId) {
-    const path: string = this.baseApi + companyId + '/users/' + userId;
+  getUserById(userId: number) {
+    const path: string = this.baseApi + this.companyId + '/users/' + userId;
     return this.http.get(path);
   }
+
+  validateUsername(username: string): Observable<boolean> {
+    const path: string = this.baseApi + this.companyId + '/users/validate-username?username=' + username;
+    return this.http.get<boolean>(path);
+  }
+
+  saveUser(createUserDto: CreateUserDto): Observable<number> {
+    const path: string = this.baseApi + this.companyId + '/users';
+    return this.http.post<number>(path, createUserDto);
+  }
+
+  changeAuthorities(userId: number, authorityDtoList: AuthorityDto[]): Observable<number> {
+    const path: string = this.baseApi + this.companyId + '/users/' + userId + "/authorities";
+    return this.http.put<number>(path, authorityDtoList);
+  }
+
+  changeEnableValue(userId: number): Observable<number> {
+    const path: string = this.baseApi + this.companyId + '/users/' + userId + "/change-enabled";
+    return this.http.post<number>(path, null);
+  }
+
+  resetPassword(userId: number): Observable<number> {
+    const path: string = this.baseApi + this.companyId + '/users/' + userId + "/reset-password";
+    return this.http.post<number>(path, null);
+  }
+
+  deleteUser(userId: number): Observable<number> {
+    const path: string = this.baseApi + this.companyId + '/users/' + userId + "/set-deleted";
+    return this.http.post<number>(path, null);
+  }
+
+
 }

@@ -28,12 +28,18 @@ import java.util.stream.Collectors;
 public class CompanyServiceImpl implements CompanyService {
     private final static Logger LOGGER = LoggerFactory.getLogger(CompanyServiceImpl.class);
     private final CompanyElasticRepository companyElasticRepository;
+    private final UserService userService;
+    private CompanyRepository companyRepository;
+    private CompanyActionRepository companyActionRepository;
 
     public CompanyServiceImpl(CompanyRepository companyRepository,
-                              CompanyActionRepository companyActionRepository, CompanyElasticRepository companyElasticRepository) {
+                              CompanyActionRepository companyActionRepository,
+                              CompanyElasticRepository companyElasticRepository,
+                              UserService userService) {
         this.companyRepository = companyRepository;
         this.companyActionRepository = companyActionRepository;
         this.companyElasticRepository = companyElasticRepository;
+        this.userService = userService;
     }
 
     @Override

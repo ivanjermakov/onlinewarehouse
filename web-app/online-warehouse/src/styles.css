@@ -176,3 +176,7 @@ a {
   width: 100%;
   padding: 30px;
 }
+
+.mat-error {
+  font-size: 12px;
+}

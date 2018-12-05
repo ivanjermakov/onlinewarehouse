@@ -120,4 +120,65 @@ public class UserServiceImpl implements UserService {
     public Set<User> getAllById(List<Long> id) {
         return userRepository.findAllById(id);
     }
+
+    @Override
+    public Boolean canUseUsername(String username) {
+        User userByUsername = userRepository.findUserByUsername(username);
+        return userByUsername == null;
+    }
+
+    @Override
+    public Long changeUserAuthorities(Long userId, Long companyId, List<AuthorityDto> authorities) {
+        List<Authority> persistentAuthoritiesList = getAllAuthorities();
+        List<Authority> userPersistentAuthoritiesList = new ArrayList<>();
+        authorities.forEach(authority -> {
+            persistentAuthoritiesList.forEach(persistentAuthority -> {
+                if (authority.getName().equals(persistentAuthority.getName())) {
+                    userPersistentAuthoritiesList.add(persistentAuthority);
+                }
+            });
+        });
+        User user = userRepository.findUserByCompany_IdAndIdAndDeletedIsNull(companyId, userId);
+        user.setAuthorities(userPersistentAuthoritiesList);
+        return userRepository.save(user).getId();
+    }
+
+    @Override
+    public Long changeEnabledValue(long userId, long companyId) {
+        User user = userRepository.findUserByCompany_IdAndIdAndDeletedIsNull(companyId, userId);
+        user.setEnabled(!user.getEnabled());
+        return userRepository.save(user).getId();
+    }
+
+    @Override
+    public Long setDeleted(long userId, long companyId) {
+        userRepository.setDeleted(userId, companyId);
+        return userId;
+    }
+
+    @Override
+    public Long resetPassword(long userId, long companyId) {
+        PasswordGenerator passwordGenerator = new PasswordGenerator.PasswordGeneratorBuilder()
+                .useDigits(true)
+                .useLower(true)
+                .useUpper(true)
+                .build();
+        String password = passwordGenerator.generate(8);
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String encodedPassword = passwordEncoder.encode(password);
+        User user = userRepository.findUserByCompany_IdAndIdAndDeletedIsNull(companyId, userId);
+        user.setPassword(encodedPassword);
+        user.setLastPasswordResetDate(new Date());
+        userRepository.save(user);
+        String subject = "\"Online warehouse\" account";
+        String createUserEmailMessage = "\"Online warehouse\"\n" +
+                "Password for your account has been successfully changed.\n" +
+                "New password:" + password;
+        mailService.send(user.getEmail(), subject, createUserEmailMessage);
+        return userId;
+    }
+
+    private List<Authority> getAllAuthorities() {
+        return Lists.newArrayList(authorityRepository.findAll());
+    }
 }
