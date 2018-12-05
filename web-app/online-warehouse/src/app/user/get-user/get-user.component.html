@@ -1,0 +1,78 @@
+<div *ngIf="user">
+  <div style="display: flex; justify-content: center; align-items: center">
+    <table class="mat-table">
+      <tbody>
+      <tr class="mat-row">
+        <td class="mat-cell border-right">Username</td>
+        <td class="mat-cell">{{user.username}}</td>
+        <td rowspan="8">
+          <button mat-button (click)="showChangeAuthorities = !showChangeAuthorities">Change authorities</button>
+          <ng-container *ngIf="user.id !== userJWTId">
+            <br>
+            <button mat-button (click)="changeEnableValue()"> {{user.enabled ? 'Disable' : 'Enable'}} user</button>
+            <br>
+            <button mat-button *ngIf="user.id !== userJWTId" (click)="deleteUser()">Delete</button>
+          </ng-container>
+          <br>
+          <button mat-button (click)="resetPassword()">Reset password</button>
+        </td>
+      </tr>
+      <tr class="mat-row">
+        <td class="mat-cell border-right">Firstname</td>
+        <td class="mat-cell">{{user.firstname}}</td>
+      </tr>
+      <tr class="mat-row">
+        <td class="mat-cell border-right">Lastname</td>
+        <td class="mat-cell">{{user.lastname}}</td>
+      </tr>
+      <tr class="mat-row">
+        <td class="mat-cell border-right">Patronymic</td>
+        <td class="mat-cell">{{user.patronymic}}</td>
+      </tr>
+      <tr class="mat-row">
+        <td class="mat-cell border-right">Address</td>
+        <td class="mat-cell">{{user.address.country}}, {{user.address.locality}}, {{user.address.region}}</td>
+      </tr>
+      <tr class="mat-row">
+        <td class="mat-cell border-right">Birth</td>
+        <td class="mat-cell">{{user.birth}}</td>
+      </tr>
+      <tr class="mat-row">
+        <td class="mat-cell border-right">Enabled</td>
+        <td class="mat-cell">{{user.enabled}}</td>
+      </tr>
+      <tr class="mat-row">
+        <td class="mat-cell border-right">Authorities</td>
+        <td class="mat-cell">
+          <mat-chip-list>
+            <mat-chip *ngFor="let authority of user.authorities">
+              {{authorityNameEnum[authority.name]}}
+            </mat-chip>
+          </mat-chip-list>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div *ngIf="showChangeAuthorities">
+    <mat-form-field>
+      <mat-select placeholder="Authorities"
+                  [formControl]="this.authoritiesForm" multiple required>
+        <mat-option *ngFor="let authority of getAuthorities()"
+                    [value]="authority"
+                    [disabled]="authority == 'ROLE_COMPANY_ADMIN'">
+          {{authorityNameEnum[authority]}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-raised-button (click)="submitAuthorityForm()" [disabled]="!this.authoritiesForm.valid">Submit</button>
+  </div>
+</div>
+
+<div *ngIf="loading$ | async"
+     style="display: flex; justify-content: center; align-items: center">
+  <mat-progress-spinner
+    color="primary"
+    mode="indeterminate">
+  </mat-progress-spinner>
+</div>

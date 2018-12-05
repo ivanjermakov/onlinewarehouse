@@ -10,10 +10,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Component
 public class JwtTokenUtil implements Serializable {
@@ -29,6 +28,16 @@ public class JwtTokenUtil implements Serializable {
 
     public String getUsernameFromToken(String token) {
         return getClaimFromToken(token, Claims::getSubject);
+    }
+
+    public List<String> getAuthoritiesFromToken(String token) {
+        ArrayList<LinkedHashMap<String, String>> authorities =
+                getAllClaimsFromToken(token).get("authorities", ArrayList.class);
+        return authorities.stream().map(authority -> authority.get("authority")).collect(Collectors.toList());
+    }
+
+    public Long getCompanyIdFromToken(String token) {
+        return getAllClaimsFromToken(token).get("companyId", Long.class);
     }
 
     public Date getIssuedAtDateFromToken(String token) {
@@ -72,6 +81,7 @@ public class JwtTokenUtil implements Serializable {
             claims.put("companyId", jwtUser.getCompanyId());
             claims.put("userId", jwtUser.getId());
             claims.put("authorities", jwtUser.getAuthorities());
+            claims.put("companyName", jwtUser.getCompanyName());
         }
         return doGenerateToken(claims, userDetails.getUsername());
     }

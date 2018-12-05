@@ -28,16 +28,12 @@ import java.util.Objects;
 @RestController
 public class AuthenticationRestController {
 
+    private final AuthenticationManager authenticationManager;
+    private final JwtTokenUtil jwtTokenUtil;
+    private final UserDetailsService userDetailsService;
+    private final UserService userService;
     @Value("${jwt.header}")
     private String tokenHeader;
-
-    private final AuthenticationManager authenticationManager;
-
-    private final JwtTokenUtil jwtTokenUtil;
-
-    private final UserDetailsService userDetailsService;
-
-    private final UserService userService;
 
     @Autowired
     public AuthenticationRestController(AuthenticationManager authenticationManager, JwtTokenUtil jwtTokenUtil, @Qualifier("jwtUserDetailsService") UserDetailsService userDetailsService, UserService userService) {
@@ -58,7 +54,7 @@ public class AuthenticationRestController {
         newUser.setFirstname(user.getFirstName());
         newUser.setLastname(user.getLastName());
 
-        userService.saveOrUpdateUser(newUser);
+        userService.saveUser(newUser);
 
         return null;
     }

@@ -1,5 +1,7 @@
 package by.itechart.common.service;
 
+import by.itechart.common.dto.AuthorityDto;
+import by.itechart.common.dto.CreateUserDto;
 import by.itechart.common.dto.UserDto;
 import by.itechart.common.dto.UserFilter;
 import by.itechart.common.entity.User;
@@ -17,15 +19,26 @@ public interface UserService {
 
     Page<UserDto> getUsers(Long companyId, UserFilter userFilter, Pageable pageable);
 
-//    TODO UserDto
-    Long saveOrUpdateUser(@Valid User user);
+    //    TODO UserDto
+    Long saveUser(@Valid User user);
+
+    Long saveUser(long companyId, CreateUserDto createUserDto);
 
     User getUser(Long userId);
 
-    void deleteUser(Long userId);
+    UserDto getUser(Long userId, Long companyId);
 
     Set<User> getUsersWithBirthday(Long companyId, LocalDate birthDay);
 
     Set<User> getAllById(List<Long> id);
 
+    Boolean canUseUsername(String username);
+
+    Long changeUserAuthorities(Long userId, Long companyId, List<AuthorityDto> authorities);
+
+    Long changeEnabledValue(long userId, long companyId);
+
+    Long setDeleted(long userId, long companyId);
+
+    Long resetPassword(long userId, long companyId);
 }

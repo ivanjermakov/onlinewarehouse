@@ -1,5 +1,6 @@
 package by.itechart.company.dto;
 
+import by.itechart.common.dto.CreateUserDto;
 import by.itechart.company.enums.CompanySize;
 import lombok.Data;
 
@@ -12,8 +13,6 @@ public class CreateCompanyDto {
     private String name;
     @NotNull
     private CompanySize sizeType;
-    @NotEmpty
-    private String username;
-    @NotEmpty
-    private String password;
+    @NotNull
+    private CreateUserDto createUserDto;
 }

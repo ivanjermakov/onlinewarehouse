@@ -1,19 +1,32 @@
 package by.itechart.common.service;
 
+import by.itechart.common.dto.AuthorityDto;
+import by.itechart.common.dto.CreateUserDto;
 import by.itechart.common.dto.UserDto;
 import by.itechart.common.dto.UserFilter;
+import by.itechart.common.entity.Address;
+import by.itechart.common.entity.Authority;
 import by.itechart.common.entity.User;
+import by.itechart.common.repository.AuthorityRepository;
 import by.itechart.common.repository.UserRepository;
 import by.itechart.common.utils.ObjectMapperUtils;
+import by.itechart.common.utils.PasswordGenerator;
+import by.itechart.company.entity.Company;
 import by.itechart.exception.NotFoundEntityException;
+import by.itechart.mail.service.MailService;
+import com.google.common.collect.Lists;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -23,9 +36,16 @@ public class UserServiceImpl implements UserService {
     private final static Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
 
     private final UserRepository userRepository;
+    private final MailService mailService;
+    private final AddressService addressService;
+    private final AuthorityRepository authorityRepository;
 
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, MailService mailService, AddressService addressService,
+                           AuthorityRepository authorityRepository) {
         this.userRepository = userRepository;
+        this.mailService = mailService;
+        this.addressService = addressService;
+        this.authorityRepository = authorityRepository;
     }
 
     @Override
@@ -35,11 +55,44 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Long saveOrUpdateUser(User user) {
+    public Long saveUser(User user) {
         Long id = userRepository.save(user).getId();
         LOGGER.info("User was created/updated with id: {}", id);
 
         return id;
+    }
+
+    @Override
+    public Long saveUser(long companyId, CreateUserDto createUserDto) {
+        Long addressId = addressService.saveAddress(createUserDto.getAddress());
+        User user = ObjectMapperUtils.map(createUserDto, User.class);
+
+        List<Authority> persistentAuthoritiesList = getAllAuthorities();
+        List<Authority> userPersistentAuthoritiesList = new ArrayList<>();
+        user.getAuthorities().forEach(authority -> {
+            persistentAuthoritiesList.forEach(persistentAuthority -> {
+                if (authority.getName().equals(persistentAuthority.getName())) {
+                    userPersistentAuthoritiesList.add(persistentAuthority);
+                }
+            });
+        });
+        user.setAuthorities(userPersistentAuthoritiesList);
+
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String originalPassword = user.getPassword();
+        user.setPassword(passwordEncoder.encode(originalPassword));
+        user.setCompany(new Company(companyId));
+        user.setAddress(new Address(addressId));
+        user.setEnabled(true);
+        user.setLastPasswordResetDate(new Date());
+        Long userId = saveUser(user);
+        String subject = "\"Online warehouse\" account";
+        String createUserEmailMessage = "\"Online warehouse\"\n" +
+                "Your account has been successfully created.\n" +
+                "Login: " + user.getUsername() + " \n" +
+                "Password:" + originalPassword;
+        mailService.send(user.getEmail(), subject, createUserEmailMessage);
+        return userId;
     }
 
     @Override
@@ -48,9 +101,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUser(Long userId) {
-        LOGGER.info("Delete User with id: {}", userId);
-        userRepository.setDeleted(userId);
+    public UserDto getUser(Long userId, Long companyId) {
+        User user = userRepository.findUserByCompany_IdAndIdAndDeletedIsNull(companyId, userId);
+        if (user == null) {
+            throw new NotFoundEntityException("User");
+        }
+        UserDto userDto = ObjectMapperUtils.map(user, UserDto.class);
+        return userDto;
     }
 
     @Override

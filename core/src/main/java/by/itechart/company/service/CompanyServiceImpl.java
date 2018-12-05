@@ -1,8 +1,8 @@
 package by.itechart.company.service;
 
-import by.itechart.common.entity.Authority;
+import by.itechart.common.dto.AuthorityDto;
 import by.itechart.common.entity.AuthorityName;
-import by.itechart.common.entity.User;
+import by.itechart.common.service.UserService;
 import by.itechart.common.utils.ObjectMapperUtils;
 import by.itechart.company.dto.CompanyDto;
 import by.itechart.company.dto.CreateCompanyDto;
@@ -17,8 +17,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,9 +27,6 @@ import java.util.stream.Collectors;
 @Service
 public class CompanyServiceImpl implements CompanyService {
     private final static Logger LOGGER = LoggerFactory.getLogger(CompanyServiceImpl.class);
-
-    private CompanyRepository companyRepository;
-    private CompanyActionRepository companyActionRepository;
     private final CompanyElasticRepository companyElasticRepository;
 
     public CompanyServiceImpl(CompanyRepository companyRepository,
@@ -68,22 +63,16 @@ public class CompanyServiceImpl implements CompanyService {
     @Transactional
     public Long saveCompany(CreateCompanyDto createCompanyDto) {
         Company company = ObjectMapperUtils.map(createCompanyDto, Company.class);
-        //TODO: here should create new User with role COMPANY_ADMIN
         Long companyId = companyRepository.save(company).getId();
-        User user = new User();
-        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String hashedPassword = passwordEncoder.encode(createCompanyDto.getPassword());
-        user.setPassword(hashedPassword);
-        user.setUsername(createCompanyDto.getUsername());
-        user.setCompany(company);
-        Authority authority = new Authority();
-        authority.setName(AuthorityName.ROLE_COMPANY_ADMIN);
-        user.addAuthority(authority);
+
+        createCompanyDto.getCreateUserDto().getAuthorities().clear();
+        createCompanyDto.getCreateUserDto().getAuthorities().add(new AuthorityDto(AuthorityName.ROLE_COMPANY_ADMIN));
+        userService.saveUser(companyId, createCompanyDto.getCreateUserDto());
+
         newCompanyAction(companyId, ActionType.ENABLED);
         companyElasticRepository.save(company);
 
         LOGGER.info("Company was created with id: {}", companyId);
-
         return companyId;
     }
 

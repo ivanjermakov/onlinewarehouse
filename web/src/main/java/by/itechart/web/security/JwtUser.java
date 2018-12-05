@@ -11,7 +11,7 @@ public class JwtUser implements UserDetails {
 
     private final Long id;
     private final Long companyId;
-
+    private final String companyName;
 
 
     private final String username;
@@ -26,7 +26,7 @@ public class JwtUser implements UserDetails {
     public JwtUser(
             Long id,
             Long companyId,
-            String username,
+            String companyName, String username,
             String firstname,
             String lastname,
             String email,
@@ -36,6 +36,7 @@ public class JwtUser implements UserDetails {
     ) {
         this.id = id;
         this.companyId = companyId;
+        this.companyName = companyName;
         this.username = username;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -53,6 +54,10 @@ public class JwtUser implements UserDetails {
 
     public Long getCompanyId() {
         return companyId;
+    }
+
+    public String getCompanyName() {
+        return companyName;
     }
 
     @Override

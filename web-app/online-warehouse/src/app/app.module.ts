@@ -63,6 +63,9 @@ import {RegisterConsignmentNoteDialogComponent} from './consignment-note/registe
 import {CollectGoodsWarehouseComponent} from './warehouse/collect-goods-warehouse/collect-goods-warehouse.component';
 import {PlacementGoodsListDialogComponent} from './warehouse/placement-goods-list-dialog/placement-goods-list-dialog.component';
 import {CreateDriverDialogComponent} from './carrier/driver/create-driver-dialog/create-driver-dialog.component';
+import {UsernameValidator} from "./user/service/username.validator";
+import {GetUserComponent} from './user/get-user/get-user.component';
+import {CreateUserComponent} from './user/create-user/create-user.component';
 
 const routes: Routes = [
   {path: 'app', component: AppComponent, canActivate: [AuthGuard], children: appRoutes},
@@ -123,7 +126,9 @@ const routes: Routes = [
     RegisterConsignmentNoteDialogComponent,
     CollectGoodsWarehouseComponent,
     PlacementGoodsListDialogComponent,
-    CreateDriverDialogComponent
+    CreateDriverDialogComponent,
+    GetUserComponent,
+    CreateUserComponent
   ],
   imports: [
     BrowserModule,
@@ -156,6 +161,7 @@ const routes: Routes = [
     AuthGuard,
     AuthenticationService,
     UserService,
+    UsernameValidator,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: JwtInterceptor,

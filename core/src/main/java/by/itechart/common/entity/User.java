@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
@@ -42,6 +43,7 @@ public class User extends BaseEntity {
 
     @Column(name = "email", length = 50)
     @NotNull
+    @Email
     @Size(min = 4, max = 50)
     private String email;
 

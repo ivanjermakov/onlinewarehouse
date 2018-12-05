@@ -16,11 +16,14 @@ public interface UserRepository extends JpaRepository<User, Long>, QuerydslPredi
     User findByUsername(String username);
 
     @Modifying
-    @Query("update User u set u.deleted=current_date where u.id = ?1")
-    void setDeleted(Long userId);
+    @Query("update User u set u.deleted=current_date where u.id = ?1 and u.company.id = ?2")
+    void setDeleted(Long userId, Long companyId);
+
 
     @Query("select u from User u where u.company.id = :companyId and u.birth = :birthDay")
     Set<User> getUsersWithBirthday(@Param("companyId") Long companyId, @Param("birthDay") LocalDate birthDay);
+
+    User findUserByCompany_IdAndIdAndDeletedIsNull(Long companyId, Long id);
 
     Set<User> findAllById(List<Long> id);
 

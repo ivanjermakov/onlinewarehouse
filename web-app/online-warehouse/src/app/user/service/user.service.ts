@@ -8,6 +8,8 @@ import HttpParamsBuilder from "../../shared/http/http-params-builder";
 import {UserDto} from "../dto/user.dto";
 import {UserFilter} from "../dto/user-filter";
 import {AuthenticationService} from "../../auth/_services";
+import {CreateUserDto} from "../dto/create-user.dto";
+import {AuthorityDto} from "../dto/authority.dto";
 
 
 @Injectable({

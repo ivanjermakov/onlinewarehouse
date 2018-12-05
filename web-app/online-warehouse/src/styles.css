@@ -58,8 +58,9 @@ body {
   .container {
     max-width: 1140px;
   }
+
   .company-name {
-    margin-right: auto!important;
+    margin-right: auto !important;
   }
 }
 
@@ -67,8 +68,9 @@ body {
   .container {
     max-width: 960px;
   }
+
   .company-name {
-    margin-right: auto!important;
+    margin-right: auto !important;
   }
 }
 
@@ -79,9 +81,9 @@ body {
 }
 
 /*@media (min-width: 576px) {*/
-  /*.container {*/
-    /*max-width: 540px;*/
-  /*}*/
+/*.container {*/
+/*max-width: 540px;*/
+/*}*/
 /*}*/
 
 /*TABLE*/
@@ -149,25 +151,25 @@ a {
 }
 
 /*.mat-toolbar {*/
-  /*background: #abd3ee;*/
-  /*background: -moz-linear-gradient(top, #abd3ee 0%, #ebf1f6 83%, #ebf1f6 83%, #ebf1f6 99%);*/
-  /*background: -webkit-linear-gradient(top, #abd3ee 0%, #ebf1f6 83%, #ebf1f6 83%, #ebf1f6 99%);*/
-  /*background: linear-gradient(to bottom, #abd3ee 0%, #ebf1f6 83%, #ebf1f6 83%, #ebf1f6 99%);*/
-  /*filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#abd3ee', endColorstr='#ebf1f6', GradientType=0);*/
+/*background: #abd3ee;*/
+/*background: -moz-linear-gradient(top, #abd3ee 0%, #ebf1f6 83%, #ebf1f6 83%, #ebf1f6 99%);*/
+/*background: -webkit-linear-gradient(top, #abd3ee 0%, #ebf1f6 83%, #ebf1f6 83%, #ebf1f6 99%);*/
+/*background: linear-gradient(to bottom, #abd3ee 0%, #ebf1f6 83%, #ebf1f6 83%, #ebf1f6 99%);*/
+/*filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#abd3ee', endColorstr='#ebf1f6', GradientType=0);*/
 /*}*/
 
 .mat-toolbar {
-  background-color: #fff!important;
-  display: -ms-flexbox!important;
-  display: flex!important;
-  -ms-flex-align: center!important;
-  align-items: center!important;
-  -ms-flex-direction: row!important;
-  flex-direction: row!important;
-  padding: 1rem!important;
-  margin-bottom: 1rem!important;
-  border-bottom: 1px solid #dee2e6!important;
-  box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
+  background-color: #fff !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
+  -ms-flex-align: center !important;
+  align-items: center !important;
+  -ms-flex-direction: row !important;
+  flex-direction: row !important;
+  padding: 1rem !important;
+  margin-bottom: 1rem !important;
+  border-bottom: 1px solid #dee2e6 !important;
+  box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important;
 }
 
 .mat-table {

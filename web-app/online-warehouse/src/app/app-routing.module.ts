@@ -28,11 +28,13 @@ import {CreateWarehouseComponent} from "./warehouse/create-warehouse/create-ware
 import {GetPlacementComponent} from "./warehouse/get-placement/get-placement.component";
 import {DistributeGoodsWarehouseComponent} from "./warehouse/distribute-goods-warehouse/distribute-goods-warehouse.component";
 import {CreatePlacementComponent} from "./warehouse/create-placement/create-placement.component";
+import {GetUserComponent} from "./user/get-user/get-user.component";
+import {CreateUserComponent} from "./user/create-user/create-user.component";
 
 export const routes: Routes = [
   {path: 'list-users', component: UserListViewComponent, canActivate: [AuthGuard]},
-  // {path: 'user/:id', component: UserComponent, canActivate: [AuthGuard]},
-  // {path: 'user', component: UserComponent, canActivate: [AuthGuard]},
+  {path: 'user/:id', component: GetUserComponent, canActivate: [AuthGuard]},
+  {path: 'create-user', component: CreateUserComponent, canActivate: [AuthGuard]},
   {path: 'list-companies', component: CompanyListComponent, canActivate: [AuthGuard]},
   {path: 'create-company', component: CreateCompanyComponent, canActivate: [AuthGuard]},
   {path: 'list-goods', component: GoodsListComponent, canActivate: [AuthGuard]},

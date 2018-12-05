@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {BehaviorSubject, of} from "rxjs";
 import {Page} from "../../shared/pagination/page";
 import {UserDto} from "../dto/user.dto";
@@ -7,10 +7,9 @@ import {UserService} from "../service/user.service";
 import {PageEvent} from "@angular/material";
 import {catchError, debounceTime, distinctUntilChanged, finalize, tap} from "rxjs/operators";
 import {FormBuilder, FormGroup} from "@angular/forms";
-import {ConsignmentNoteFilter} from "../../consignment-note/dto/consignment-note-filter";
 import {UserFilter} from "../dto/user-filter";
-import {ConsignmentNoteService} from "../../consignment-note/consignment-note.service";
 import {Router} from "@angular/router";
+import {AuthorityNameEnum} from "../dto/enum/authority-name.enum";
 
 @Component({
   selector: 'app-user-list',
@@ -18,8 +17,6 @@ import {Router} from "@angular/router";
   styleUrls: ['./user-list.component.css']
 })
 export class UserListComponent implements OnInit {
-
-  @Output() userSelected: EventEmitter<UserDto> = new EventEmitter();
 
   private displayedColumns = ["id", "username", "name", "address", "birth", "enabled", "authorities"];
   private loadingSubject = new BehaviorSubject<boolean>(false);
@@ -31,10 +28,13 @@ export class UserListComponent implements OnInit {
   private userFilterForm: FormGroup;
   private userFilter: UserFilter = new UserFilter();
 
+  private authorityNameEnum = AuthorityNameEnum;
+
   private errors: any[];
 
   constructor(private userService: UserService,
-              private fb: FormBuilder) {
+              private fb: FormBuilder,
+              private router: Router) {
     this.userFilterForm = fb.group({
       "firstname": [''],
       "lastname": ['']
@@ -61,8 +61,8 @@ export class UserListComponent implements OnInit {
     this.loadUsers();
   }
 
-  onRowClicked(row): void {
-    this.userSelected.emit(row);
+  onRowClicked(row: UserDto): void {
+    this.router.navigate([`app/user/${row.id}`]);
   }
 
   loadUsers(): void {

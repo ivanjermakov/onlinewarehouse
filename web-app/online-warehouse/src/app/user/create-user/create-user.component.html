@@ -1,0 +1,87 @@
+<div class="form-container">
+  <mat-form-field>
+    <input matInput
+           placeholder="Username"
+           [formControl]="createUserDto.controls['username']"
+           required>
+    <mat-error *ngIf="createUserDto.controls['username']">{{getUsernameErrors()}}
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput
+           type="password"
+           placeholder="Password"
+           [formControl]="createUserDto.controls['password']"
+           autocomplete="new-password"
+           required>
+    <mat-error *ngIf="createUserDto.controls['password']">{{getPasswordErrors()}}
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput
+           placeholder="Email"
+           [formControl]="createUserDto.controls['email']"
+           required>
+    <mat-error *ngIf="createUserDto.controls['email']">{{getEmailErrors()}}
+    </mat-error>
+  </mat-form-field>
+  <div>
+    <mat-form-field>
+      <input matInput
+             placeholder="First name"
+             [formControl]="createUserDto.controls['firstname']"
+             required>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput
+             placeholder="Last name"
+             [formControl]="createUserDto.controls['lastname']"
+             required>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput
+             placeholder="Patronymic"
+             [formControl]="createUserDto.controls['patronymic']">
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-form-field>
+      <input matInput
+             placeholder="Country"
+             [formControl]="createUserDto.controls['address'].controls['country']"
+             required>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput
+             placeholder="Region"
+             [formControl]="createUserDto.controls['address'].controls['region']"
+             required>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput
+             placeholder="Locality"
+             [formControl]="createUserDto.controls['address'].controls['locality']"
+             required>
+    </mat-form-field>
+  </div>
+  <mat-form-field style="width: 180px">
+    <input matInput
+           [matDatepicker]="pickerTo"
+           [formControl]="createUserDto.controls['birth']"
+           [max]="today"
+           placeholder="Birth"
+           required>
+    <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
+    <mat-datepicker #pickerTo startView="multi-year"></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-select placeholder="Authorities"
+                [formControl]="createUserDto.controls['authorities']" multiple required>
+      <mat-option *ngFor="let authority of getAuthorities()" [value]="authority">{{authorityNameEnum[authority]}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <button mat-raised-button (click)="onSubmit()" [disabled]="!createUserDto.valid">Submit</button>
+</div>

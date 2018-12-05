@@ -1,5 +1,6 @@
 package by.itechart.web.security;
 
+import by.itechart.web.security.controller.AuthenticationException;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +19,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 @Component
 public class JwtAuthorizationTokenFilter extends OncePerRequestFilter {
@@ -42,12 +44,30 @@ public class JwtAuthorizationTokenFilter extends OncePerRequestFilter {
 
         final String requestHeader = request.getHeader(this.tokenHeader);
 
+        boolean contains = request.getRequestURL().toString().contains("companies/");
+        Long companyId = 0L;
+        if (contains) {
+            try {
+                companyId = Long.parseLong(request.getRequestURL().toString().split("companies/")[1].split("/")[0]);
+            } catch (NumberFormatException ignored) {
+            }
+        }
+
         String username = null;
         String authToken = null;
         if (requestHeader != null && requestHeader.startsWith("Bearer ")) {
             authToken = requestHeader.substring(7);
             try {
                 username = jwtTokenUtil.getUsernameFromToken(authToken);
+
+                List<String> authoritiesFromToken = jwtTokenUtil.getAuthoritiesFromToken(authToken);
+                if (!authoritiesFromToken.contains("ROLE_ADMIN")) {
+                    Long companyIdFromToken = jwtTokenUtil.getCompanyIdFromToken(authToken);
+                    if (!companyIdFromToken.equals(companyId)) {
+                        throw new AuthenticationException("Company id in url and jwt are not equals");
+                    }
+                }
+
             } catch (IllegalArgumentException e) {
                 logger.error("an error occured during getting username from token", e);
             } catch (ExpiredJwtException e) {
