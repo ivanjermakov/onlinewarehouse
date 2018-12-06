@@ -187,4 +187,12 @@ create table birthday_mail_send (
   user_id bigint references users (id),
   timestamp date not null,
   successful boolean not null
-)
+);
+
+create table home_card (
+  id         bigserial PRIMARY KEY,
+  company_id bigint references company (id),
+  title      varchar(50) NOT NULL,
+  src        varchar(80),
+  content    text        NOT NULL
+);

@@ -1,13 +1,13 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 
-import {MatDialogRef, MatNativeDateModule} from '@angular/material';
+import {MatNativeDateModule} from '@angular/material';
 
 import {AppComponent} from './app.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {AppRoutingModule, routes as appRoutes} from './app-routing.module';
-import {HomeComponent} from './home/home.component';
+import {HomeComponent} from './home/home/home.component';
 import {CompanyListComponent} from './company/company-list/company-list.component';
 import {CreateCompanyComponent} from './company/create-company/create-company.component';
 import {GoodsListComponent} from "./shared/goods/goods-list/goods-list.component";
@@ -71,6 +71,7 @@ import {TOAST_CONFIG} from "./toast-config";
 import {CreateGoodsComponent} from './shared/goods/create-goods/create-goods.component';
 import {CreateGoodsDialogComponent} from './shared/goods/create-goods-dialog/create-goods-dialog.component';
 import {RoleGuardService} from "./auth/_guards/role.guard";
+import {CreateHomeComponent} from './home/create-home/create-home.component';
 
 const routes: Routes = [
   {path: 'app', component: AppComponent, canActivate: [AuthGuard], children: appRoutes},
@@ -135,7 +136,8 @@ const routes: Routes = [
     GetUserComponent,
     CreateUserComponent,
     CreateGoodsComponent,
-    CreateGoodsDialogComponent
+    CreateGoodsDialogComponent,
+    CreateHomeComponent
   ],
   imports: [
     BrowserModule,

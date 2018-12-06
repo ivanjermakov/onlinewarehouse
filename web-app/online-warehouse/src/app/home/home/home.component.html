@@ -1,0 +1,13 @@
+<div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center">
+  <mat-card class="card" *ngFor="let card of homeCards">
+    <mat-card-header>
+      <mat-card-title>{{card.title}}</mat-card-title>
+    </mat-card-header>
+    <img mat-card-image *ngIf="card.src" [src]="card.src">
+    <mat-card-content>
+      <p>
+        {{card.content}}
+      </p>
+    </mat-card-content>
+  </mat-card>
+</div>

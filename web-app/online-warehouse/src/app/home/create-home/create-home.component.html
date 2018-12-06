@@ -1,0 +1,20 @@
+<div class="form-container">
+  <mat-form-field appearance="outline">
+    <input matInput
+           placeholder="Title"
+           [formControl]="createHomeCardForm.controls['title']"
+           required>
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <input matInput
+           placeholder="Image url"
+           [formControl]="createHomeCardForm.controls['src']">
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <textarea matInput
+              placeholder="Content"
+              [formControl]="createHomeCardForm.controls['content']"
+              required></textarea>
+  </mat-form-field>
+  <button mat-raised-button (click)="onSubmit()" [disabled]="!createHomeCardForm.valid">Submit</button>
+</div>
