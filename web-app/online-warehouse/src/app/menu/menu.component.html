@@ -84,6 +84,9 @@
       <a class="menu-a text-dark" routerLink="list-write-off-acts" routerLinkActive="action-active">
         Write-off cases
       </a>
+      <a class="menu-a text-dark" routerLink="registered-commodity-lots" routerLinkActive="action-active">
+        Commodity lots
+      </a>
     </div>
   </div>
   <div *ngIf="userAuthorities.includes('ROLE_INSPECTOR')">
@@ -92,9 +95,6 @@
          class="menu-a-container">
       <a class="menu-a text-dark" routerLink="list-warehouse" routerLinkActive="action-active">
         Warehouses
-      </a>
-      <a class="menu-a text-dark" routerLink="registered-commodity-lots" routerLinkActive="action-active">
-        Commodity lots
       </a>
       <a class="menu-a text-dark" routerLink="registered-consignment-notes" routerLinkActive="action-active">
         CN list

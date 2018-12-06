@@ -1,8 +1,6 @@
 //package by.itechart;
 //
-//import org.junit.Test;
-//
-//import static org.junit.Assert.assertTrue;
+//import org.junit.*;
 //
 ///**
 // * Unit test for simple App.

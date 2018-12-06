@@ -48,8 +48,8 @@
         </mat-expansion-panel>
       </mat-card-content>
       <mat-card-actions>
-        <button mat-button (click)="createOutCN(warehouse.id)">Create CN</button>
-        <button mat-button (click)="addPlacement(warehouse.id)">Add placement</button>
+        <button mat-button *ngIf="roleManager" (click)="createOutCN(warehouse.id)">Create CN</button>
+        <button mat-button *ngIf="roleManager" (click)="addPlacement(warehouse.id)">Add placement</button>
       </mat-card-actions>
     </mat-card>
   </div>

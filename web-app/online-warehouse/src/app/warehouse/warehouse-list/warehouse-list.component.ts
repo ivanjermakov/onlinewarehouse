@@ -11,6 +11,7 @@ import {ConsignmentNoteType} from "../../consignment-note/dto/enum/consignment-n
 import {RegisterConsignmentNoteDialogComponent} from "../../consignment-note/register-consignment-note-dialog/register-consignment-note-dialog.component";
 import {PlacementTypeEnum} from "../../shared/enum/placement-type.enum";
 import {RequestErrorToastHandlerService} from "../../shared/toast/request-error-handler/request-error-toast-handler.service";
+import {AuthenticationService} from "../../auth/_services";
 
 @Component({
   selector: 'app-warehouse-list',
@@ -30,11 +31,17 @@ export class WarehouseListComponent implements OnInit {
   private pageable: Pageable = new Pageable(0, 10);
   private pageSizeOptions: number[] = [10, 25, 50];
 
+  private roleManager: boolean;
+
 
   constructor(private warehouseService: WarehouseService,
               private router: Router,
               private dialog: MatDialog,
-              private errorToast: RequestErrorToastHandlerService) {
+              private errorToast: RequestErrorToastHandlerService,
+              private auth: AuthenticationService) {
+    this.roleManager = this.auth.getAuthorities().some(authority => {
+      return authority.authority === 'ROLE_MANAGER';
+    })
   }
 
   ngOnInit() {

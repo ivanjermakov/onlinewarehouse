@@ -121,7 +121,6 @@ export class GetUserComponent implements OnInit {
     this.userService.deleteUser(this.user.id)
       .pipe(finalize(() => this.loadingSubject.next(false)))
       .subscribe((userId: number) => {
-          this.getUser();
           this.router.navigate([`app/list-users`]);
           this.errorToast.handleSuccess('User deleted successfully', 'Deleted successfully');
         }, (err: any) => {

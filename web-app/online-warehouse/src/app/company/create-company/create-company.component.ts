@@ -81,7 +81,7 @@ export class CreateCompanyComponent implements OnInit {
     Object.assign(createCompanyDto, value);
     console.log(createCompanyDto);
     createCompanyDto.createUserDto.authorities = [];
-    createCompanyDto.createUserDto.authorities.push(new AuthorityDto(AuthorityNameEnum.ROLE_COMPANY_ADMIN));
+    createCompanyDto.createUserDto.authorities.push(new AuthorityDto(AuthorityNameEnum['Admin']));
     this.companyService.saveCompany(createCompanyDto)
       .subscribe(() => {
           this.errorToast.handleSuccess('Company saved successfully', 'Saved successfully');

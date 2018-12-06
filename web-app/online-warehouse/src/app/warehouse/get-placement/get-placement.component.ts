@@ -12,6 +12,7 @@ import {PlacementGoodsDto} from "../dto/placement-goods.dto";
 import {PlacementWriteOffActGoodsDto} from "../../write-off-act/dto/placement-write-off-act-goods.dto";
 import {PlacementTypeEnum} from "../../shared/enum/placement-type.enum";
 import {RequestErrorToastHandlerService} from "../../shared/toast/request-error-handler/request-error-toast-handler.service";
+import {AuthenticationService} from "../../auth/_services";
 
 @Component({
   selector: 'app-get-placement',
@@ -109,12 +110,18 @@ export class GetPlacementComponent implements OnInit {
   loading$ = this.loadingSubject.asObservable();
   private placement: PlacementDto;
 
+  roleInspector: boolean;
+
   constructor(private warehouseService: WarehouseService,
               private router: Router,
               private route: ActivatedRoute,
               private dialog: MatDialog,
-              private errorToast: RequestErrorToastHandlerService) {
-  }
+              private errorToast: RequestErrorToastHandlerService,
+              private auth: AuthenticationService) {
+  this.roleInspector = this.auth.getAuthorities().some(authority => {
+    return authority.authority === 'ROLE_INSPECTOR';
+  })
+}
 
   ngOnInit(): void {
     this.getPlacement();

@@ -1,7 +1,7 @@
 <div *ngIf="placement">
   <h1 class="placement-header">
     Placement
-    <button mat-icon-button [matMenuTriggerFor]="menu">
+    <button mat-icon-button *ngIf="roleInspector" [matMenuTriggerFor]="menu">
       <mat-icon>more_vert</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
