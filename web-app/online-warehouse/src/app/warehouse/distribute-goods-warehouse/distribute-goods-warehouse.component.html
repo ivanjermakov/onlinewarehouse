@@ -1,6 +1,6 @@
 <mat-vertical-stepper (selectionChange)="selectionChange($event)" linear #stepper *ngIf="warehouses">
 
-  <mat-step [stepControl]="warehouseControl">
+  <mat-step [stepControl]="warehouseControl" [editable]="false">
     <ng-template matStepLabel>Choose warehouse</ng-template>
     <mat-form-field>
       <mat-select [formControl]="warehouseControl"
@@ -17,7 +17,7 @@
     </div>
   </mat-step>
 
-  <mat-step [stepControl]="distributeGoodsForm.controls['storageTime']">
+  <mat-step [stepControl]="distributeGoodsForm.controls['storageTime']" [editable]="false">
     <ng-template matStepLabel>Specify the storage period</ng-template>
     <mat-form-field>
       <input matInput type="number" placeholder="Storage period"
@@ -30,7 +30,7 @@
     </div>
   </mat-step>
 
-  <mat-step *ngIf="commodityLot">
+  <mat-step *ngIf="commodityLot" [editable]="false">
     <ng-template matStepLabel>Distribute goods</ng-template>
     <div cdkDropListGroup *ngIf="commodityLot && placementDropListArray">
       <div class="example-container" [formGroup]="goodsCount">
