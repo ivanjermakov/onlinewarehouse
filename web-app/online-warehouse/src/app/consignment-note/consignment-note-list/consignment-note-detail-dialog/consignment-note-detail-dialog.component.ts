@@ -15,4 +15,7 @@ export class ConsignmentNoteDetailDialogComponent implements OnInit {
   ngOnInit() {
   }
 
+  closeDialog(b: boolean){
+    this.dialogRef.close(b);
+  }
 }

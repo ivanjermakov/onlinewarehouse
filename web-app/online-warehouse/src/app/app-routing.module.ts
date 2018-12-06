@@ -31,13 +31,33 @@ import {CreatePlacementComponent} from "./warehouse/create-placement/create-plac
 import {GetUserComponent} from "./user/get-user/get-user.component";
 import {CreateUserComponent} from "./user/create-user/create-user.component";
 import {CreateGoodsComponent} from "./shared/goods/create-goods/create-goods.component";
+import {RoleGuardService as RoleGuard} from "./auth/_guards/role.guard";
 
 export const routes: Routes = [
-  {path: 'list-users', component: UserListViewComponent, canActivate: [AuthGuard]},
-  {path: 'user/:id', component: GetUserComponent, canActivate: [AuthGuard]},
-  {path: 'create-user', component: CreateUserComponent, canActivate: [AuthGuard]},
-  {path: 'list-companies', component: CompanyListComponent, canActivate: [AuthGuard]},
-  {path: 'create-company', component: CreateCompanyComponent, canActivate: [AuthGuard]},
+  {path: 'list-companies', component: CompanyListComponent, canActivate: [RoleGuard], data: {
+      expectedRole: ['ROLE_ADMIN']
+    } },
+  {path: 'create-company', component: CreateCompanyComponent, canActivate: [RoleGuard], data: {
+      expectedRole: ['ROLE_ADMIN']
+    } },
+  {path: 'change-birthday-mail-template', component: ChangeBirthdayMailTemplateComponent, canActivate: [RoleGuard], data: {
+      expectedRole: ['ROLE_COMPANY_ADMIN']
+    } },
+  {path: 'list-users', component: UserListViewComponent, canActivate: [RoleGuard], data: {
+      expectedRole: ['ROLE_COMPANY_ADMIN']
+    } },
+  {path: 'user/:id', component: GetUserComponent, canActivate: [RoleGuard], data: {
+      expectedRole: ['ROLE_COMPANY_ADMIN']
+    } },
+  {path: 'create-user', component: CreateUserComponent, canActivate: [RoleGuard], data: {
+      expectedRole: ['ROLE_COMPANY_ADMIN']
+    } },
+  {path: 'create-warehouse', component: CreateWarehouseComponent, canActivate: [RoleGuard], data: {
+      expectedRole: ['ROLE_COMPANY_ADMIN']
+    } },
+  {path: 'register-consignment-note', component: RegisterConsignmentNoteComponent, canActivate: [RoleGuard], data: {
+      expectedRole: ['ROLE_DISPATCHER']
+    } },
   {path: 'list-goods', component: GoodsListComponent, canActivate: [AuthGuard]},
   {path: 'list-write-off-acts', component: WriteOffActListComponent, canActivate: [AuthGuard]},
   {path: 'create-write-off-act', component: CreateWriteOffActComponent, canActivate: [AuthGuard]},
@@ -51,16 +71,13 @@ export const routes: Routes = [
   {path: 'counterparty/:id', component: GetCounterpartyComponent, canActivate: [AuthGuard]},
   {path: 'login', component: LoginComponent},
   {path: '', component: HomeComponent, canActivate: [AuthGuard]},
-  {path: 'register-consignment-note', component: RegisterConsignmentNoteComponent, canActivate: [AuthGuard]},
   {path: 'register-consignment-note/:id', component: RegisterConsignmentNoteComponent, canActivate: [AuthGuard]},
   {path: 'consignment-notes', component: ConsignmentNoteListComponent, canActivate: [AuthGuard]},
   {path: 'registered-consignment-notes', component: ConsignmentNoteListComponent, canActivate: [AuthGuard]},
   {path: 'consignment-notes/:id', component: ConsignmentNoteDetailComponent, canActivate: [AuthGuard]},
   {path: 'create-counterparty', component: CreateCounterpartyComponent, canActivate: [AuthGuard]},
-  {path: 'change-birthday-mail-template', component: ChangeBirthdayMailTemplateComponent, canActivate: [AuthGuard]},
   {path: 'register', component: RegisterComponent, canActivate: [AuthGuard]},
   {path: 'list-warehouse', component: WarehouseListComponent, canActivate: [AuthGuard]},
-  {path: 'create-warehouse', component: CreateWarehouseComponent, canActivate: [AuthGuard]},
   {path: 'placement/:warehouseId/:placementId', component: GetPlacementComponent, canActivate: [AuthGuard]},
   {path: 'distribute-goods', component: DistributeGoodsWarehouseComponent, canActivate: [AuthGuard]},
   {path: 'registered-commodity-lots', component: CommodityLotListComponent, canActivate: [AuthGuard]},

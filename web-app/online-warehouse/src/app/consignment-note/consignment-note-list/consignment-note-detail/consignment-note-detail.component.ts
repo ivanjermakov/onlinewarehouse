@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ConsignmentNoteDto} from "../../dto/consignment-note-dto";
 import {ConsignmentNoteService} from "../../consignment-note.service";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -26,6 +26,8 @@ export class ConsignmentNoteDetailComponent implements OnInit {
   @Input() showWriteOffButtons: boolean = false;
   @Input() inputConsignmentNote: ConsignmentNoteDto;
 
+  @Output() closeDialog: EventEmitter<boolean> = new EventEmitter<boolean>();
+
   private totalCost: number = 0;
   private totalWeight: number = 0;
 
@@ -42,7 +44,6 @@ export class ConsignmentNoteDetailComponent implements OnInit {
     'Weight', 'Cost', 'Description', 'Amount'];
 
   constructor(private consignmentNoteService: ConsignmentNoteService,
-              private dialogRef: MatDialogRef<ConsignmentNoteDetailComponent>,
               private router: Router,
               private route: ActivatedRoute,
               private dialog: MatDialog,
@@ -104,7 +105,7 @@ export class ConsignmentNoteDetailComponent implements OnInit {
               this.commodityLotService.getCommodityLotFromConsignmentNoteAndWriteOffAct(this.consignmentNote, createWriteOffActDto))
             .subscribe((pair) => {
                 this.errorToast.handleSuccess('Commodity lot created successfully', 'Created successfully');
-                this.dialogRef.close(true);
+                this.closeDialog.emit(true);
               }, (err: any) => {
                 this.errorToast.handleError(err);
               }
@@ -119,7 +120,7 @@ export class ConsignmentNoteDetailComponent implements OnInit {
     this.consignmentNoteService.setConsignmentNoteProcessed(this.consignmentNote.id).subscribe();
     this.commodityLotService.saveCommodityLotFromConsignmentNote(this.consignmentNote).subscribe(() => {
         this.errorToast.handleSuccess('Commodity lot created successfully', 'Created successfully');
-        this.dialogRef.close(true);
+        this.closeDialog.emit(true);
       }, (err: any) => {
         this.errorToast.handleError(err);
       }

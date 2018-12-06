@@ -1,7 +1,7 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 
-import {MatNativeDateModule} from '@angular/material';
+import {MatDialogRef, MatNativeDateModule} from '@angular/material';
 
 import {AppComponent} from './app.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -70,6 +70,7 @@ import {ToastrModule} from "ngx-toastr";
 import {TOAST_CONFIG} from "./toast-config";
 import {CreateGoodsComponent} from './shared/goods/create-goods/create-goods.component';
 import {CreateGoodsDialogComponent} from './shared/goods/create-goods-dialog/create-goods-dialog.component';
+import {RoleGuardService} from "./auth/_guards/role.guard";
 
 const routes: Routes = [
   {path: 'app', component: AppComponent, canActivate: [AuthGuard], children: appRoutes},
@@ -167,6 +168,7 @@ const routes: Routes = [
   ],
   providers: [
     AuthGuard,
+    RoleGuardService,
     AuthenticationService,
     UserService,
     UsernameValidator,
