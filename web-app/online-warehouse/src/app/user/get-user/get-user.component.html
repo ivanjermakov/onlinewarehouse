@@ -6,15 +6,22 @@
         <td class="mat-cell border-right">Username</td>
         <td class="mat-cell">{{user.username}}</td>
         <td rowspan="8">
-          <button mat-button (click)="showChangeAuthorities = !showChangeAuthorities">Change authorities</button>
+          <p>
+            <button mat-raised-button (click)="showChangeAuthorities = !showChangeAuthorities">Change authorities
+            </button>
+          </p>
           <ng-container *ngIf="user.id !== userJWTId">
-            <br>
-            <button mat-button (click)="changeEnableValue()"> {{user.enabled ? 'Disable' : 'Enable'}} user</button>
-            <br>
-            <button mat-button *ngIf="user.id !== userJWTId" (click)="deleteUser()">Delete</button>
+            <p>
+              <button mat-raised-button (click)="changeEnableValue()"> {{user.enabled ? 'Disable' : 'Enable'}} user
+              </button>
+            </p>
+            <p>
+              <button mat-raised-button *ngIf="user.id !== userJWTId" (click)="deleteUser()">Delete</button>
+            </p>
           </ng-container>
-          <br>
-          <button mat-button (click)="resetPassword()">Reset password</button>
+          <p>
+            <button mat-raised-button (click)="resetPassword()">Reset password</button>
+          </p>
         </td>
       </tr>
       <tr class="mat-row">

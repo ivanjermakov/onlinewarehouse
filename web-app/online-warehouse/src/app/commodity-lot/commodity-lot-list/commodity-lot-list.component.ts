@@ -55,7 +55,13 @@ export class CommodityLotListComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.router.url === '/app/registered-commodity-lots') {
+    if (this.router.url.includes('/app/dispatcher-commodity-lots')) {
+      this.commodityLotFilterForm.patchValue({'commodityLotStatus': 'NOT_PROCESSED'});
+      this.commodityLotFilterForm.patchValue({'commodityLotType': 'OUT'});
+      this.displayedColumns.push('commodityLotProcessOut');
+      this.disabled = false;
+    }
+    if (this.router.url.includes('/app/manager-commodity-lots')) {
       this.commodityLotFilterForm.patchValue({'commodityLotStatus': 'NOT_PROCESSED'});
       this.commodityLotFilterForm.patchValue({'commodityLotType': 'IN'});
       this.displayedColumns.push('commodityLotProcess');
@@ -76,7 +82,17 @@ export class CommodityLotListComponent implements OnInit {
   }
 
   onProcessClicked(i: number) {
-    this.openModal(this.page.content[i]);
+    if (this.router.url === '/app/dispatcher-commodity-lots') {
+      this.commodityLotService.setCommodityLotProcessed(i).subscribe(() => {
+        this.errorToast.handleSuccess('Commodity lot status updated successfully', 'Updated successfully');
+        this.loadCommodityLots();
+      }, (err: any) => {
+        this.errorToast.handleError(err);
+      });
+    }
+    if (this.router.url === '/app/manager-commodity-lots') {
+      this.openModal(this.page.content[i]);
+    }
   }
 
   onRowClicked(commodityLotListDto: CommodityLotListDto) {

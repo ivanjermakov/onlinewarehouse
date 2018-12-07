@@ -89,6 +89,13 @@
       </td>
     </ng-container>
 
+    <ng-container matColumnDef="commodityLotProcessOut">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let commodityLot; let i = index;">
+        <button mat-raised-button (click)="onProcessClicked(commodityLot.id)">Process</button>
+      </td>
+    </ng-container>
+
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
 
     <ng-container *ngIf="!disabled">

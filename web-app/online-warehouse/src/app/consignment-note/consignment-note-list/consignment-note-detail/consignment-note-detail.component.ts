@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ConsignmentNoteDto} from "../../dto/consignment-note-dto";
 import {ConsignmentNoteService} from "../../consignment-note.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {MatDialog, MatDialogRef} from "@angular/material";
+import {MatDialog} from "@angular/material";
 import {CreateWriteOffActDialogComponent} from "../../../write-off-act/create-write-off-act-dialog/create-write-off-act-dialog.component";
 import {CommodityLotService} from "../../../commodity-lot/service/commodity-lot.service";
 import {ConsignmentNoteType} from "../../dto/enum/consignment-note-type.enum";
@@ -120,6 +120,7 @@ export class ConsignmentNoteDetailComponent implements OnInit {
     this.consignmentNoteService.setConsignmentNoteProcessed(this.consignmentNote.id).subscribe();
     this.commodityLotService.saveCommodityLotFromConsignmentNote(this.consignmentNote).subscribe(() => {
         this.errorToast.handleSuccess('Commodity lot created successfully', 'Created successfully');
+        this.consignmentNoteService.setConsignmentNoteBeingProcessed(this.consignmentNote.id).subscribe();
         this.closeDialog.emit(true);
       }, (err: any) => {
         this.errorToast.handleError(err);

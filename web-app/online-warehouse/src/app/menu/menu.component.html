@@ -63,6 +63,9 @@
       <a class="menu-a text-dark" routerLink="consignment-notes" routerLinkActive="action-active">
         CN list
       </a>
+      <a class="menu-a text-dark" routerLink="dispatcher-commodity-lots" routerLinkActive="action-active">
+        Commodity lots
+      </a>
     </div>
   </div>
   <div *ngIf="userAuthorities.includes('ROLE_MANAGER')">
@@ -84,8 +87,14 @@
       <a class="menu-a text-dark" routerLink="list-write-off-acts" routerLinkActive="action-active">
         Write-off cases
       </a>
-      <a class="menu-a text-dark" routerLink="registered-commodity-lots" routerLinkActive="action-active">
+      <a class="menu-a text-dark" routerLink="list-commodity-lots" routerLinkActive="action-active">
         Commodity lots
+      </a>
+      <a class="menu-a text-dark" routerLink="manager-commodity-lots" routerLinkActive="action-active">
+        Commodity lots to distribute
+      </a>
+      <a class="menu-a text-dark" routerLink="consignment-notes" routerLinkActive="action-active">
+        CN list
       </a>
     </div>
   </div>

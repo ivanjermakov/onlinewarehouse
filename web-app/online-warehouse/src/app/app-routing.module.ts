@@ -83,6 +83,7 @@ export const routes: Routes = [
   {path: 'create-write-off-act', component: CreateWriteOffActComponent, canActivate: [AuthGuard]},
   {path: 'write-off-act/:id', component: GetWriteOffActComponent, canActivate: [AuthGuard]},
   {path: 'list-commodity-lots', component: CommodityLotListComponent, canActivate: [AuthGuard]},
+  {path: 'dispatcher-commodity-lots', component: CommodityLotListComponent, canActivate: [AuthGuard]},
   {path: 'commodity-lot/:id', component: GetCommodityLotComponent, canActivate: [AuthGuard]},
   {path: 'list-carriers', component: CarrierListViewComponent, canActivate: [AuthGuard]},
   {path: 'carrier/:id', component: GetCarrierComponent, canActivate: [AuthGuard]},
@@ -100,7 +101,7 @@ export const routes: Routes = [
   {path: 'list-warehouse', component: WarehouseListComponent, canActivate: [AuthGuard]},
   {path: 'placement/:warehouseId/:placementId', component: GetPlacementComponent, canActivate: [AuthGuard]},
   {path: 'distribute-goods', component: DistributeGoodsWarehouseComponent, canActivate: [AuthGuard]},
-  {path: 'registered-commodity-lots', component: CommodityLotListComponent, canActivate: [AuthGuard]},
+  {path: 'manager-commodity-lots', component: CommodityLotListComponent, canActivate: [AuthGuard]},
   {path: 'warehouse/:id/create-placement', component: CreatePlacementComponent, canActivate: [AuthGuard]},
   {path: 'create-goods', component: CreateGoodsComponent, canActivate: [AuthGuard]},
   {path: 'create-home-card', component: CreateHomeComponent, canActivate: [AuthGuard]}
