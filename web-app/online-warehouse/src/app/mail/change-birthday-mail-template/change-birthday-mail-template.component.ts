@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {MailService} from '../service/mail.service';
 import {BirthdayMailTemplateDto} from '../dto/BirthdayMailTemplateDto';
-import {RequestErrorToastHandlerService} from "../../shared/toast/request-error-handler/request-error-toast-handler.service";
+import {RequestErrorToastHandlerService} from '../../shared/toast/request-error-handler/request-error-toast-handler.service';
 
 @Component({
   selector: 'app-change-birthday-mail-template',

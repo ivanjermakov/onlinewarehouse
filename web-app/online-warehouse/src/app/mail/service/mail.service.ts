@@ -12,7 +12,7 @@ import {AuthenticationService} from '../../auth/_services';
 export class MailService {
 
   private baseApi: string = API_BASE_URL + '/companies';
-  private companyId: number;
+  private readonly companyId: number;
 
   constructor(private http: HttpClient, private uploadService: UploadService,
               private auth: AuthenticationService) {
