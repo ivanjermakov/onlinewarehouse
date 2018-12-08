@@ -40,7 +40,6 @@ public class ScheduledTasks {
 
     //    TODO: optimize: maybe send mail async
     //    in 7:00AM each morning
-    // bitch, for your to do you sould use todoist!!!!!!!!!!!
     @Scheduled(cron = "0 0 7 * * *")
     public void happyBirthday() {
         companyService.getCompanies(Pageable.unpaged()).forEach(c -> {

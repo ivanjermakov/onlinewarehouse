@@ -1,6 +1,7 @@
 package by.itechart.mail.service;
 
 import by.itechart.common.entity.User;
+import by.itechart.mail.entity.BirthdayMailTemplate;
 
 import java.util.List;
 
@@ -14,5 +15,4 @@ public interface BirthdayMailSendService {
     List<User> getUsersToCongratulate();
 
     List<User> getNotCelebratedUsers();
-
 }

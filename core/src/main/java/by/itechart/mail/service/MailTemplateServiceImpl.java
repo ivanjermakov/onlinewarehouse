@@ -17,6 +17,7 @@ import java.util.Optional;
 @Service
 public class MailTemplateServiceImpl implements MailTemplateService {
 
+    private StringTemplate defaultHtml;
     private BirthdayMailTemplate defaultBirthdayMailTemplate;
     private final MailTemplateRepository mailTemplateRepository;
     private final CompanyRepository companyRepository;
@@ -39,13 +40,13 @@ public class MailTemplateServiceImpl implements MailTemplateService {
 
     @Override
     public String generateBirthdayMailHtml(String fullName, Integer age, BirthdayMailTemplate birthdayMailTemplate) {
-        StringTemplate template = new StringTemplate(birthdayMailTemplate.getText());
-        template.setAttribute("backgroundColor", birthdayMailTemplate.getBackgroundColor());
-        template.setAttribute("headerImagePath", birthdayMailTemplate.getHeaderImagePath());
-        template.setAttribute("fullName", fullName);
-        template.setAttribute("age", age);
+        StringTemplate html = new StringTemplate(applyHtml(birthdayMailTemplate));
+        html.setAttribute("backgroundColor", birthdayMailTemplate.getBackgroundColor());
+        html.setAttribute("headerImagePath", birthdayMailTemplate.getHeaderImagePath());
+        html.setAttribute("fullName", fullName);
+        html.setAttribute("age", age);
 
-        return template.toString();
+        return html.toString();
     }
 
     @Override
@@ -68,11 +69,29 @@ public class MailTemplateServiceImpl implements MailTemplateService {
         }
     }
 
+    @Override
+    public String applyHtml(BirthdayMailTemplate birthdayMailTemplate) {
+        defaultHtml.setAttribute("text", birthdayMailTemplate.getText());
+        return defaultHtml.toString();
+    }
+
     @PostConstruct
     private void initBirthdayMailTemplate() {
         //        TODO: something more elegant, maybe read from .html file
         //        TODO: fix mail design
-        String defaultTemplateText = "<head>\n" +
+        String defaultTemplateText = "<p>Уважаемый $fullName$!</p>\n" +
+                "<p>Поздраляем Вас с $age$-и летием. Желаем всего самого наилучшего!</p>\n" +
+                "<p>С уваженем, коллектив ООО ”Склад-Сервис”</p>";
+
+        defaultBirthdayMailTemplate = new BirthdayMailTemplate();
+        defaultBirthdayMailTemplate.setText(defaultTemplateText);
+        defaultBirthdayMailTemplate.setBackgroundColor("#FFFFFF");
+        defaultBirthdayMailTemplate.setHeaderImagePath("#");
+    }
+
+    @PostConstruct
+    private void initHtmlTemplate() {
+        defaultHtml = new StringTemplate("<head>\n" +
                 "    <meta name=\"viewport\" content=\"width=device-width\"/>\n" +
                 "    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"/>\n" +
                 "    <title>С Днем Рождения!</title>\n" +
@@ -85,15 +104,7 @@ public class MailTemplateServiceImpl implements MailTemplateService {
                 "</head>\n" +
                 "<body>\n" +
                 "<img src=\"$headerImagePath$\">\n" +
-                "<p>Уважаемый $fullName$!</p>\n" +
-                "<p>Поздраляем Вас с $age$-и летием. Желаем всего самого наилучшего!</p>\n" +
-                "<p>С уваженем, коллектив ООО ”Склад-Сервис”</p>\n" +
-                "</body>";
-
-
-        defaultBirthdayMailTemplate = new BirthdayMailTemplate();
-        defaultBirthdayMailTemplate.setText(defaultTemplateText);
-        defaultBirthdayMailTemplate.setBackgroundColor("#FFFFFF");
-        defaultBirthdayMailTemplate.setHeaderImagePath("#");
+                "$text$\n" +
+                "</body>");
     }
 }

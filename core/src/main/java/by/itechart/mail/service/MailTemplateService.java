@@ -18,4 +18,5 @@ public interface MailTemplateService {
 
     BirthdayMailTemplate saveOrUpdateTemplate(long companyId, BirthdayMailTemplate birthdayMailTemplate);
 
+    String applyHtml(BirthdayMailTemplate birthdayMailTemplate);
 }
