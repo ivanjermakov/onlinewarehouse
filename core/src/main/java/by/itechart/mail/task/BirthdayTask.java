@@ -19,18 +19,18 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
 @Component
-public class ScheduledTasks {
-    private final static Logger LOGGER = LoggerFactory.getLogger(ScheduledTasks.class);
+public class BirthdayTask {
+
+    private final static Logger LOGGER = LoggerFactory.getLogger(BirthdayTask.class);
 
     private final MailService mailService;
     private final MailTemplateService mailTemplateService;
     private final UserService userService;
     private final CompanyService companyService;
-
     private final BirthdayMailSendService birthdayMailSendService;
 
     @Autowired
-    public ScheduledTasks(MailService mailService, MailTemplateService mailTemplateService, UserService userService, CompanyService companyService, BirthdayMailSendService birthdayMailSendService) {
+    public BirthdayTask(MailService mailService, MailTemplateService mailTemplateService, UserService userService, CompanyService companyService, BirthdayMailSendService birthdayMailSendService) {
         this.mailService = mailService;
         this.mailTemplateService = mailTemplateService;
         this.userService = userService;

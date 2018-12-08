@@ -15,6 +15,7 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "birthday_mail_send")
 public class BirthdayMailSend extends BaseEntity {
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
