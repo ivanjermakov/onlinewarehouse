@@ -38,13 +38,12 @@ public class BirthdayTask {
         this.birthdayMailSendService = birthdayMailSendService;
     }
 
-    //    TODO: optimize: maybe send mail async
     //    in 7:00AM each morning
     @Scheduled(cron = "0 0 7 * * *")
     public void happyBirthday() {
-        companyService.getCompanies(Pageable.unpaged()).forEach(c -> {
+        companyService.getCompanies(Pageable.unpaged()).stream().parallel().forEach(c -> {
             BirthdayMailTemplate birthdayMailTemplate = mailTemplateService.getTemplate(c.getId());
-            userService.getUsersWithBirthday(c.getId(), LocalDate.now()).stream()
+            userService.getUsersWithBirthday(c.getId(), LocalDate.now()).parallelStream()
                     .filter(u -> u.getEmail() != null)
                     .forEach(u -> congratulateUser(u, birthdayMailTemplate));
         });
