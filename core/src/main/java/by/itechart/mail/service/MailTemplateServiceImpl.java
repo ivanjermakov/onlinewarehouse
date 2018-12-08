@@ -5,7 +5,6 @@ import by.itechart.company.repository.CompanyRepository;
 import by.itechart.mail.dto.BirthdayMailTemplateDto;
 import by.itechart.mail.entity.BirthdayMailTemplate;
 import by.itechart.mail.repository.MailTemplateRepository;
-import lombok.Getter;
 import org.antlr.stringtemplate.StringTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +12,6 @@ import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
 import java.util.Optional;
 
-@Getter
 @Service
 public class MailTemplateServiceImpl implements MailTemplateService {
 
@@ -30,7 +28,6 @@ public class MailTemplateServiceImpl implements MailTemplateService {
 
     @Override
     public BirthdayMailTemplateDto updateBirthdayMailTemplate(long companyId, BirthdayMailTemplateDto birthdayMailTemplateDto) {
-//        TODO: check file presence
         BirthdayMailTemplate birthdayMailTemplate = ObjectMapperUtils.map(birthdayMailTemplateDto, BirthdayMailTemplate.class);
         birthdayMailTemplate.setCompany(companyRepository.getById(companyId));
         return ObjectMapperUtils.map(
@@ -77,8 +74,6 @@ public class MailTemplateServiceImpl implements MailTemplateService {
 
     @PostConstruct
     private void initBirthdayMailTemplate() {
-        //        TODO: something more elegant, maybe read from .html file
-        //        TODO: fix mail design
         String defaultTemplateText = "<p>Уважаемый $fullName$!</p>\n" +
                 "<p>Поздраляем Вас с $age$-и летием. Желаем всего самого наилучшего!</p>\n" +
                 "<p>С уваженем, коллектив ООО ”Склад-Сервис”</p>";
@@ -91,9 +86,9 @@ public class MailTemplateServiceImpl implements MailTemplateService {
 
     @PostConstruct
     private void initHtmlTemplate() {
+        //        TODO: something more elegant, maybe read from .html file
+        //        TODO: fix mail design
         defaultHtml = new StringTemplate("<head>\n" +
-                "    <meta name=\"viewport\" content=\"width=device-width\"/>\n" +
-                "    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"/>\n" +
                 "    <title>С Днем Рождения!</title>\n" +
                 "    \n" +
                 "    <style>\n" +
