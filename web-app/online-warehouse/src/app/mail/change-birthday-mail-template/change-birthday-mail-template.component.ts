@@ -44,7 +44,6 @@ export class ChangeBirthdayMailTemplateComponent implements OnInit {
   editBirthdayMailTemplate() {
     this.template = this.templateForm.value;
     const image = (<HTMLInputElement>document.getElementById('fileToUpload')).files[0];
-    // TODO: don't forget to change to a variable
     this.mailService.editBirthdayMailTemplate(this.template, image, (dto) => {
       this.template = dto;
       this.templateForm.controls['text'].setValue(this.template.text);

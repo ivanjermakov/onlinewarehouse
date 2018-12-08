@@ -60,6 +60,7 @@ public class JwtAuthorizationTokenFilter extends OncePerRequestFilter {
             try {
                 username = jwtTokenUtil.getUsernameFromToken(authToken);
 
+//                TODO: investigate why this check breaks file upload
                 List<String> authoritiesFromToken = jwtTokenUtil.getAuthoritiesFromToken(authToken);
                 if (!authoritiesFromToken.contains("ROLE_ADMIN")) {
                     Long companyIdFromToken = jwtTokenUtil.getCompanyIdFromToken(authToken);
