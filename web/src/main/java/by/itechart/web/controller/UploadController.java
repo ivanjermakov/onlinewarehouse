@@ -3,14 +3,11 @@ package by.itechart.web.controller;
 import by.itechart.common.service.UploadService;
 import by.itechart.exception.UploadException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
-@RequestMapping("upload")
+@RequestMapping("/companies/{companyId}/upload")
 public class UploadController {
 
     private final UploadService uploadService;
@@ -21,7 +18,7 @@ public class UploadController {
     }
 
     @PostMapping
-    public String upload(@RequestParam("file") MultipartFile multipartFile) throws UploadException {
+    public String upload(@PathVariable long companyId, @RequestParam("file") MultipartFile multipartFile) throws UploadException {
         return uploadService.upload(multipartFile);
     }
 }
