@@ -27,9 +27,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final JwtAuthenticationEntryPoint unauthorizedHandler;
-
     private final JwtUserDetailsService jwtUserDetailsService;
-
     private final JwtAuthorizationTokenFilter authenticationTokenFilter;
 
     @Value("${jwt.header}")
@@ -87,7 +85,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .headers()
                 .frameOptions().sameOrigin()  // required to set for H2 else H2 Console will be blank.
                 .cacheControl();
-
     }
 
     @Override
@@ -109,10 +106,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/favicon.ico",
                         "/**/*.html",
                         "/**/*.css",
-                        "/**/*.js"
+                        "/**/*.js",
+                        "/files/**"
                 );
-        web
-                .ignoring()
-                .antMatchers("/files/**");
     }
 }
