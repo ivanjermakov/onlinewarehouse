@@ -27,6 +27,7 @@ export class CompanyService {
   }
 
   saveCompany(createCompanyDto: CreateCompanyDto): Observable<number> {
+    console.log(createCompanyDto);
     const path: string = this.baseApi;
     return this.http.post(path, createCompanyDto).pipe(
       map((data: number) => data)

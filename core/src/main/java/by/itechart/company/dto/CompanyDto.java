@@ -19,4 +19,5 @@ public class CompanyDto {
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime change;
     private ActionType actionType;
+    private String logo;
 }

@@ -10,6 +10,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
+import java.util.Base64;
+
+
 @RestController
 @RequestMapping("/companies")
 public class CompanyController {
@@ -28,6 +32,11 @@ public class CompanyController {
 
     @PostMapping
     public Long saveCompany(@RequestBody CreateCompanyDto createCompanyDto) {
+//        System.out.println(createCompanyDto);
+//        byte[] imageByte = Base64.getMimeDecoder().decode(createCompanyDto.getLogo());
+//        System.out.println(imageByte.length);
+//        System.out.println(Arrays.toString(imageByte));
+//        createCompanyDto.setLogo(Arrays.toString(imageByte));
         return companyService.saveCompany(createCompanyDto);
     }
 

@@ -11,8 +11,10 @@ export class AppComponent {
   currentComponentName: string;
   user = localStorage.getItem('currentUser');
   private companyName: string;
+  private companyLogo: string;
 
   constructor(private auth: AuthenticationService) {
     this.companyName = auth.getCompanyName();
+    this.companyLogo = auth.getCompanyLogo();
   }
 }

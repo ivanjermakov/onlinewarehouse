@@ -118,6 +118,21 @@
   <!--<button mat-button matStepperNext>Next</button>-->
   <!--</div>-->
   <!--</mat-step>-->
+  <mat-step [stepControl]="createCompanyForm.controls['logo']">
+    <ng-template matStepLabel>Choose company logotipo</ng-template>
+    <div>
+      <img [src]="imageSrc" style="max-width:300px;max-height:300px"/>
+    </div>
+    <div class="upload-btn-wrapper">
+      <button class="btn">Choose file</button>
+      <input name="imageUrl" type="file" accept="image/*"
+             [formControl]="createCompanyForm.controls['logo']"
+             (change)="handleInputChange($event)">
+    </div>
+    <div>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
   <mat-step>
     <ng-template matStepLabel>Done</ng-template>
     <p>Company name: {{createCompanyForm.controls['name'].value}}</p>

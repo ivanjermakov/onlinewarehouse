@@ -1,4 +1,8 @@
 <mat-toolbar>
+  <span class="logo">
+    <img [src]="companyLogo ? companyLogo :
+    'https://cdn0.iconfinder.com/data/icons/logistic-2/450/warehouse-512.png'"/>
+  </span>
   <span class="company-name">{{companyName ? companyName : 'Online warehouse'}}</span>
   <app-menu style="padding-bottom: 0.5em"></app-menu>
 </mat-toolbar>
