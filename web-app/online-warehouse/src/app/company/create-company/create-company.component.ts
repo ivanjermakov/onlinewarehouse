@@ -16,6 +16,8 @@ import {RequestErrorToastHandlerService} from "../../shared/toast/request-error-
 })
 export class CreateCompanyComponent implements OnInit {
 
+  private imageSrc: string = '';
+
   createCompanyForm: FormGroup;
 
   readonly today: Date = new Date();
@@ -44,7 +46,8 @@ export class CreateCompanyComponent implements OnInit {
           "locality": ['', Validators.required]
         }),
         "birth": ['', [Validators.required]],
-      })
+      }),
+      "logo": ['']
     });
   }
 
@@ -76,10 +79,9 @@ export class CreateCompanyComponent implements OnInit {
 
   onSubmit(createCompanyForm: FormGroup): void {
     let value = createCompanyForm.value;
-    console.log(value);
-    let createCompanyDto: CreateCompanyDto = new CreateCompanyDto(null, null, new CreateUserDto());
+    let createCompanyDto: CreateCompanyDto = new CreateCompanyDto(null, null, new CreateUserDto(), null);
     Object.assign(createCompanyDto, value);
-    console.log(createCompanyDto);
+    createCompanyDto.logo = this.imageSrc;
     createCompanyDto.createUserDto.authorities = [];
     createCompanyDto.createUserDto.authorities.push(new AuthorityDto(AuthorityNameEnum['Admin']));
     this.companyService.saveCompany(createCompanyDto)
@@ -89,5 +91,23 @@ export class CreateCompanyComponent implements OnInit {
           this.errorToast.handleError(err);
         }
       );
+  }
+
+  handleInputChange(e) {
+    let file = e.dataTransfer ? e.dataTransfer.files[0] : e.target.files[0];
+    let pattern = /image-*/;
+    let reader = new FileReader();
+    if (!file.type.match(pattern)) {
+      alert('invalid format');
+      return;
+    }
+    reader.onload = this._handleReaderLoaded.bind(this);
+    reader.readAsDataURL(file);
+  }
+
+  _handleReaderLoaded(e) {
+    let reader = e.target;
+    this.imageSrc = reader.result;
+    console.log(this.imageSrc)
   }
 }

@@ -1,7 +1,8 @@
 create table company (
   id        bigserial PRIMARY KEY,
   name      varchar(40) NOT NULL,
-  size_type varchar(10) NOT NULL
+  size_type varchar(10) NOT NULL,
+  logo text
 );
 
 create table company_action (

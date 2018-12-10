@@ -15,4 +15,5 @@ public class CreateCompanyDto {
     private CompanySize sizeType;
     @NotNull
     private CreateUserDto createUserDto;
+    private String logo;
 }

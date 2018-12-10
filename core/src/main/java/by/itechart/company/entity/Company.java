@@ -27,6 +27,9 @@ public class Company extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private CompanySize sizeType;
 
+    @Column(name = "logo")
+    private String logo;
+
     @OneToMany(mappedBy = "company", fetch = FetchType.LAZY)
     private List<Warehouse> warehouses;
 

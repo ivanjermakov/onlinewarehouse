@@ -5,7 +5,8 @@ export class CreateCompanyDto {
   constructor(
     public name: string,
     public sizeType: CompanySizeEnum,
-    public createUserDto: CreateUserDto
+    public createUserDto: CreateUserDto,
+    public logo: string|any
   ) {
   }
 }
