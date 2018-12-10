@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
@@ -14,15 +14,16 @@ import javax.mail.internet.MimeMessage;
 
 @Service
 public class MailServiceImpl implements MailService {
+
     private final static Logger LOGGER = LoggerFactory.getLogger(MailServiceImpl.class);
 
-    private final JavaMailSenderImpl mailSender;
+    private final JavaMailSender mailSender;
 
     @Value("${spring.mail.username}")
     private String from;
 
     @Autowired
-    public MailServiceImpl(JavaMailSenderImpl mailSender) {
+    public MailServiceImpl(JavaMailSender mailSender) {
         this.mailSender = mailSender;
     }
 

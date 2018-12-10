@@ -27,9 +27,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final JwtAuthenticationEntryPoint unauthorizedHandler;
-
     private final JwtUserDetailsService jwtUserDetailsService;
-
     private final JwtAuthorizationTokenFilter authenticationTokenFilter;
 
     @Value("${jwt.header}")
@@ -108,7 +106,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/favicon.ico",
                         "/**/*.html",
                         "/**/*.css",
-                        "/**/*.js"
+                        "/**/*.js",
+                        "/files/**"
                 );
     }
 }

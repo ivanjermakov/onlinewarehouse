@@ -180,7 +180,7 @@ create table birthday_mail_template (
   company_id bigint references company (id),
   text varchar not null,
   background_color varchar(7) not null,
-  header_image_path varchar not null
+  header_image_path varchar
 );
 
 create table birthday_mail_send (

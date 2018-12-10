@@ -14,6 +14,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "birthday_mail_template")
 public class BirthdayMailTemplate extends BaseEntity {
+
     @ManyToOne
     @JoinColumn(name = "company_id")
     private Company company;
@@ -26,5 +27,4 @@ public class BirthdayMailTemplate extends BaseEntity {
 
     @Column(name = "header_image_path")
     private String headerImagePath;
-
 }

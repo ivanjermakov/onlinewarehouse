@@ -19,18 +19,18 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
 @Component
-public class ScheduledTasks {
-    private final static Logger LOGGER = LoggerFactory.getLogger(ScheduledTasks.class);
+public class BirthdayTask {
+
+    private final static Logger LOGGER = LoggerFactory.getLogger(BirthdayTask.class);
 
     private final MailService mailService;
     private final MailTemplateService mailTemplateService;
     private final UserService userService;
     private final CompanyService companyService;
-
     private final BirthdayMailSendService birthdayMailSendService;
 
     @Autowired
-    public ScheduledTasks(MailService mailService, MailTemplateService mailTemplateService, UserService userService, CompanyService companyService, BirthdayMailSendService birthdayMailSendService) {
+    public BirthdayTask(MailService mailService, MailTemplateService mailTemplateService, UserService userService, CompanyService companyService, BirthdayMailSendService birthdayMailSendService) {
         this.mailService = mailService;
         this.mailTemplateService = mailTemplateService;
         this.userService = userService;
@@ -38,14 +38,12 @@ public class ScheduledTasks {
         this.birthdayMailSendService = birthdayMailSendService;
     }
 
-    //    TODO: optimize: maybe send mail async
     //    in 7:00AM each morning
-    // bitch, for your to do you sould use todoist!!!!!!!!!!!
     @Scheduled(cron = "0 0 7 * * *")
     public void happyBirthday() {
-        companyService.getCompanies(Pageable.unpaged()).forEach(c -> {
+        companyService.getCompanies(Pageable.unpaged()).stream().parallel().forEach(c -> {
             BirthdayMailTemplate birthdayMailTemplate = mailTemplateService.getTemplate(c.getId());
-            userService.getUsersWithBirthday(c.getId(), LocalDate.now()).stream()
+            userService.getUsersWithBirthday(c.getId(), LocalDate.now()).parallelStream()
                     .filter(u -> u.getEmail() != null)
                     .forEach(u -> congratulateUser(u, birthdayMailTemplate));
         });

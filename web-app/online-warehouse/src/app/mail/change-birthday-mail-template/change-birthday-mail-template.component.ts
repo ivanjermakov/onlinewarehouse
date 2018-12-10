@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {MailService} from '../service/mail.service';
 import {BirthdayMailTemplateDto} from '../dto/BirthdayMailTemplateDto';
-import {RequestErrorToastHandlerService} from "../../shared/toast/request-error-handler/request-error-toast-handler.service";
+import {RequestErrorToastHandlerService} from '../../shared/toast/request-error-handler/request-error-toast-handler.service';
 
 @Component({
   selector: 'app-change-birthday-mail-template',
@@ -44,7 +44,6 @@ export class ChangeBirthdayMailTemplateComponent implements OnInit {
   editBirthdayMailTemplate() {
     this.template = this.templateForm.value;
     const image = (<HTMLInputElement>document.getElementById('fileToUpload')).files[0];
-    // TODO: don't forget to change to a variable
     this.mailService.editBirthdayMailTemplate(this.template, image, (dto) => {
       this.template = dto;
       this.templateForm.controls['text'].setValue(this.template.text);
