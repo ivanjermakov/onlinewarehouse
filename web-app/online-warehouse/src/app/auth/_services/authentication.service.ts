@@ -68,4 +68,12 @@ export class AuthenticationService {
     }
     return null;
   }
+
+  getCompanyLogo(): string {
+    if (localStorage.getItem('currentUser')) {
+      let decodeToken = this.jwtHelper.decodeToken(localStorage.getItem('currentUser'));
+      return decodeToken.companyLogo;
+    }
+    return null;
+  }
 }

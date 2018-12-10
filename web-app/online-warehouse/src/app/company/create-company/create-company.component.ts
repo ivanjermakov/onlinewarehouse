@@ -108,6 +108,5 @@ export class CreateCompanyComponent implements OnInit {
   _handleReaderLoaded(e) {
     let reader = e.target;
     this.imageSrc = reader.result;
-    console.log(this.imageSrc)
   }
 }
