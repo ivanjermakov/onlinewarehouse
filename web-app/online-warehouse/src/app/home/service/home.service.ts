@@ -10,21 +10,21 @@ import {Observable} from "rxjs";
 })
 export class HomeService {
 
-  readonly companyId: number;
   baseApi = API_BASE_URL + '/companies/';
 
   constructor(private http: HttpClient,
               private auth: AuthenticationService) {
-    this.companyId = this.auth.getCompanyId();
   }
 
   getHomeCards(): Observable<HomeCard[]> {
-    const path: string = this.baseApi + this.companyId + '/home-cards';
+    var companyId = this.auth.getCompanyId();
+    const path: string = this.baseApi + companyId + '/home-cards';
     return this.http.get<HomeCard[]>(path);
   }
 
   saveCard(homeCard: HomeCard): Observable<number> {
-    const path: string = this.baseApi + this.companyId + '/home-cards';
+    var companyId = this.auth.getCompanyId();
+    const path: string = this.baseApi + companyId + '/home-cards';
     return this.http.post<number>(path, homeCard);
   }
 }

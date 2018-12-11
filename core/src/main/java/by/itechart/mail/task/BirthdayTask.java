@@ -38,7 +38,9 @@ public class BirthdayTask {
         this.birthdayMailSendService = birthdayMailSendService;
     }
 
-    //    in 7:00AM each morning
+    /**
+     * Scheduled method executes in 7:00AM each morning
+     */
     @Scheduled(cron = "0 0 7 * * *")
     public void happyBirthday() {
         companyService.getCompanies(Pageable.unpaged()).stream().parallel().forEach(c -> {
@@ -49,7 +51,9 @@ public class BirthdayTask {
         });
     }
 
-    //    from 8:00AM to 12:00AM every morning each hour (4 times per day)
+    /**
+     * Scheduled method executes from 8:00AM to 12:00AM every morning each hour (4 times per day)
+     */
     @Scheduled(cron = "0 0 8-12 * * *")
     public void retryCongratulation() {
         birthdayMailSendService.getUsersToCongratulate()

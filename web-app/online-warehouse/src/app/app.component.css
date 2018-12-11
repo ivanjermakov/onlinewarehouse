@@ -2,6 +2,10 @@
    margin: 10px;
  }
 
+.logo {
+  width: calc(50px + 1em);
+}
+
 .logo img {
   max-width: 50px;
   max-height: 50px;

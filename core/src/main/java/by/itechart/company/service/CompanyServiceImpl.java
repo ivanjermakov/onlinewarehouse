@@ -100,4 +100,9 @@ public class CompanyServiceImpl implements CompanyService {
         LOGGER.info("Find companies by name: {}", name);
         return companyElasticRepository.findAllByName(name, pageable);
     }
+
+    @Override
+    public String getCompanyLogoById(Long id) {
+        return companyRepository.getCompanyLogoById(id);
+    }
 }
