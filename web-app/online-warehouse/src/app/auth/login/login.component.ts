@@ -46,20 +46,18 @@ export class LoginComponent implements OnInit {
     // this.reqError = {};
     this.loading = true;
     this.authenticationService.login(this.loginForm.value.login, this.loginForm.value.password)
-    // .pipe(first())
-      .subscribe(
-        () => {
-          this.router.navigate([this.returnUrl]);
-        },
-        (error) => {
-          if (error.status === 0) {
-            this.connectionError = true;
-          }
-          if (error.status === 401) {
-            this.credError = true;
-          }
-          this.loading = false;
-        });
+      .then(() => {
+        this.router.navigate([this.returnUrl]);
+      })
+      .catch((error) => {
+        if (error.status === 0) {
+          this.connectionError = true;
+        }
+        if (error.status === 401) {
+          this.credError = true;
+        }
+        this.loading = false;
+      });
   }
 
 }

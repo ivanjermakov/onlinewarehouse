@@ -1,36 +1,38 @@
 ﻿import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {map} from "rxjs/operators";
 import {API_BASE_URL} from "../../base-server-url";
 import {JwtHelperService} from "@auth0/angular-jwt";
 import {User} from "../_models";
+import {CompanyService} from "../../company/service/company.service";
 
 @Injectable()
 export class AuthenticationService {
   private baseApi: string = API_BASE_URL + '/api/authenticate';
   private jwtHelper: JwtHelperService = new JwtHelperService();
+  private companyLogo: string;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+              private companyService: CompanyService) {
   }
 
   login(username: string, password: string) {
-    console.log('test');
     return this.http.post<any>(this.baseApi, {username: username, password: password})
-      .pipe(map(user => {
-        // login successful if there's a jwt token in the response
+      .toPromise()
+      .then((user) => {
         if (user && user.token) {
           // store user details and jwt token in local storage to keep user logged in between page refreshes
           localStorage.setItem('currentUser', JSON.stringify(user));
         }
-
-        return user;
-      }));
+      })
+      .then(() => this.companyService.getCompanyLogo(this.getCompanyId()).toPromise())
+      .then((logo) => {
+        this.companyLogo = logo;
+      })
   }
 
   register(user: User) {
     return this.http.post(`${API_BASE_URL}/api/register`, user);
   }
-
 
   logout() {
     // remove user from local storage to log user out
@@ -70,10 +72,6 @@ export class AuthenticationService {
   }
 
   getCompanyLogo(): string {
-    if (localStorage.getItem('currentUser')) {
-      let decodeToken = this.jwtHelper.decodeToken(localStorage.getItem('currentUser'));
-      return decodeToken.companyLogo;
-    }
-    return null;
+    return this.companyLogo;
   }
 }

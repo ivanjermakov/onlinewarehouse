@@ -44,4 +44,8 @@ export class CompanyService {
     return this.http.patch(path, null);
   }
 
+  getCompanyLogo(companyId: number): Observable<string> {
+    const path: string = this.baseApi + '/' + companyId;
+    return this.http.get<string>(path);
+  }
 }

@@ -21,4 +21,6 @@ public interface CompanyService {
 
     Page<Company> findAllByName(String name, Pageable pageable);
 
+    String getCompanyLogoById(Long id);
+
 }
