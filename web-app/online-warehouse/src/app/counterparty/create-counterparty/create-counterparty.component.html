@@ -37,12 +37,29 @@
   <mat-step [stepControl]="createCounterpartyForm.controls['address']">
     <ng-template matStepLabel>Fill address</ng-template>
     <mat-form-field>
-      <input matInput placeholder="Country"
-             [formControl]="createCounterpartyForm.controls['address'].controls['country']" required>
+      <input matInput
+             placeholder="Country"
+             [matAutocomplete]="countryAuto"
+             [formControl]="createCounterpartyForm.controls['address'].controls['country']"
+             required>
+      <mat-autocomplete #countryAuto="matAutocomplete"
+                        (optionSelected)="getRegions($event)">
+        <mat-option *ngFor="let option of countryFilteredOptions | async" [value]="option">
+          {{option.title}}
+        </mat-option>
+      </mat-autocomplete>
     </mat-form-field>
     <mat-form-field>
-      <input matInput placeholder="Region" [formControl]="createCounterpartyForm.controls['address'].controls['region']"
+      <input matInput
+             placeholder="Region"
+             [matAutocomplete]="regionAuto"
+             [formControl]="createCounterpartyForm.controls['address'].controls['region']"
              required>
+      <mat-autocomplete #regionAuto="matAutocomplete" [displayWith]="regionDisplayFn">
+        <mat-option *ngFor="let option of regionFilteredOptions | async" [value]="option.title">
+          {{option.title}}
+        </mat-option>
+      </mat-autocomplete>
     </mat-form-field>
     <mat-form-field>
       <input matInput placeholder="Locality"

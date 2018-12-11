@@ -8,6 +8,9 @@ import {AuthorityDto} from "../../user/dto/authority.dto";
 import {AuthorityNameEnum} from "../../user/dto/enum/authority-name.enum";
 import {CreateUserDto} from "../../user/dto/create-user.dto";
 import {RequestErrorToastHandlerService} from "../../shared/toast/request-error-handler/request-error-toast-handler.service";
+import {Observable} from "rxjs";
+import {map, startWith} from "rxjs/operators";
+import {AddressService} from "../../shared/address/service/address.service";
 
 @Component({
   selector: 'app-create-company',
@@ -16,15 +19,18 @@ import {RequestErrorToastHandlerService} from "../../shared/toast/request-error-
 })
 export class CreateCompanyComponent implements OnInit {
 
-  private imageSrc: string = '';
-
   createCompanyForm: FormGroup;
-
   readonly today: Date = new Date();
+  public countryOptions: any[];
+  countryFilteredOptions: Observable<any[]>;
+  public regionOptions: any[];
+  regionFilteredOptions: Observable<any[]>;
+  private imageSrc: string = '';
 
   constructor(private fb: FormBuilder,
               private companyService: CompanyService,
               public usernameValidator: UsernameValidator,
+              private addressService: AddressService,
               private errorToast: RequestErrorToastHandlerService) {
     this.createCompanyForm = fb.group({
       "name": ['', Validators.required],
@@ -71,6 +77,42 @@ export class CreateCompanyComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.addressService.getCountries().subscribe((result) => {
+      this.countryOptions = result;
+      this.countryFilteredOptions = ((this.createCompanyForm.controls['createUserDto'] as FormGroup)
+        .controls['address'] as FormGroup).controls['country'].valueChanges
+        .pipe(
+          startWith<string | Object>(''),
+          map((value: any) => typeof value === 'string' || value === null ? value : value.title),
+          map(title => title ? this._countryFilter(title) : this.countryOptions.slice())
+        )
+      ;
+    });
+  }
+
+  regionDisplayFn(region?: any): string | undefined {
+    return region ? region : undefined;
+  }
+
+  getRegions(event) {
+    let id = event.option.value.id;
+    ((this.createCompanyForm.controls['createUserDto'] as FormGroup)
+      .controls['address'] as FormGroup).controls['country'].patchValue(event.option.value.title);
+    if (id !== 0) {
+      this.addressService.getRegions(id).subscribe((result) => {
+        this.regionOptions = result;
+        this.regionFilteredOptions = ((this.createCompanyForm.controls['createUserDto'] as FormGroup)
+          .controls['address'] as FormGroup).controls['region'].valueChanges
+          .pipe(
+            startWith<string | Object>(''),
+            map((value: any) => typeof value === 'string' || value === null ? value : value.title),
+            map(title => title ? this._regionFilter(title) : this.regionOptions.slice())
+          );
+        ((this.createCompanyForm.controls['createUserDto'] as FormGroup)
+          .controls['address'] as FormGroup).controls['country'].valueChanges
+          .subscribe(() => this.regionOptions = [])
+      });
+    }
   }
 
   getSizeTypes(): Array<string> {
@@ -108,5 +150,17 @@ export class CreateCompanyComponent implements OnInit {
   _handleReaderLoaded(e) {
     let reader = e.target;
     this.imageSrc = reader.result;
+  }
+
+  private _countryFilter(title: string): Object[] {
+    const filterValue = title.toLowerCase();
+
+    return this.countryOptions.filter(option => option.title.toLowerCase().indexOf(filterValue) === 0);
+  }
+
+  private _regionFilter(title: string): Object[] {
+    const filterValue = title.toLowerCase();
+
+    return this.regionOptions.filter(option => option.title.toLowerCase().indexOf(filterValue) === 0);
   }
 }

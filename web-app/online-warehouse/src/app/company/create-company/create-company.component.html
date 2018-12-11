@@ -75,14 +75,27 @@
         <mat-form-field>
           <input matInput
                  placeholder="Country"
+                 [matAutocomplete]="countryAuto"
                  [formControl]="createCompanyForm.controls['createUserDto'].controls['address'].controls['country']"
                  required>
+          <mat-autocomplete #countryAuto="matAutocomplete"
+                            (optionSelected)="getRegions($event)">
+            <mat-option *ngFor="let option of countryFilteredOptions | async" [value]="option">
+              {{option.title}}
+            </mat-option>
+          </mat-autocomplete>
         </mat-form-field>
         <mat-form-field>
           <input matInput
                  placeholder="Region"
+                 [matAutocomplete]="regionAuto"
                  [formControl]="createCompanyForm.controls['createUserDto'].controls['address'].controls['region']"
                  required>
+          <mat-autocomplete #regionAuto="matAutocomplete" [displayWith]="regionDisplayFn">
+            <mat-option *ngFor="let option of regionFilteredOptions | async" [value]="option.title">
+              {{option.title}}
+            </mat-option>
+          </mat-autocomplete>
         </mat-form-field>
         <mat-form-field>
           <input matInput
