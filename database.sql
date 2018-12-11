@@ -38,8 +38,8 @@ create table goods (
 
 create table address (
   id       bigserial PRIMARY KEY,
-  country  varchar(30) NOT NULL,
-  region   varchar(50) NOT NULL,
+  country  varchar(40) NOT NULL,
+  region   varchar(55) NOT NULL,
   locality varchar(50) NOT NULL
 );
 
