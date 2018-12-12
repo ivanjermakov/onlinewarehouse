@@ -29,4 +29,6 @@ public interface UserRepository extends JpaRepository<User, Long>, QuerydslPredi
 
     User findUserByUsername(String username);
 
+    User findUserByActivationCode(String code);
+
 }

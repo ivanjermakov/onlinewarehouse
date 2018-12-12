@@ -41,4 +41,6 @@ public interface UserService {
     Long setDeleted(long userId, long companyId);
 
     Long resetPassword(long userId, long companyId);
+
+    boolean activateUser(String code);
 }
