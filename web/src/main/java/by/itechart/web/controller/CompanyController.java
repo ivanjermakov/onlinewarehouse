@@ -32,11 +32,6 @@ public class CompanyController {
 
     @PostMapping
     public Long saveCompany(@RequestBody CreateCompanyDto createCompanyDto) {
-//        System.out.println(createCompanyDto);
-//        byte[] imageByte = Base64.getMimeDecoder().decode(createCompanyDto.getLogo());
-//        System.out.println(imageByte.length);
-//        System.out.println(Arrays.toString(imageByte));
-//        createCompanyDto.setLogo(Arrays.toString(imageByte));
         return companyService.saveCompany(createCompanyDto);
     }
 
@@ -50,5 +45,10 @@ public class CompanyController {
     @ResponseStatus(value = HttpStatus.OK)
     public void enableCompany(@PathVariable long id) {
         companyService.newCompanyAction(id, ActionType.ENABLED);
+    }
+
+    @GetMapping("/{companyId}")
+    public String getCompanyLogo(@PathVariable long companyId) {
+        return companyService.getCompanyLogoById(companyId);
     }
 }

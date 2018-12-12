@@ -1,3 +1,14 @@
+create table _countries (
+  id integer PRIMARY KEY,
+  title varchar(40) NOT NULL
+);
+
+create table _regions (
+  id integer PRIMARY KEY,
+  country_id integer references _countries (id),
+  title varchar(55) NOT NULL
+);
+
 create table company (
   id        bigserial PRIMARY KEY,
   name      varchar(40) NOT NULL,
@@ -27,8 +38,8 @@ create table goods (
 
 create table address (
   id       bigserial PRIMARY KEY,
-  country  varchar(30) NOT NULL,
-  region   varchar(50) NOT NULL,
+  country  varchar(40) NOT NULL,
+  region   varchar(55) NOT NULL,
   locality varchar(50) NOT NULL
 );
 
