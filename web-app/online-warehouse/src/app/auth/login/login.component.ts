@@ -5,7 +5,8 @@ import {AuthenticationService} from '../_services';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({
-  templateUrl: 'login.component.html'
+  templateUrl: 'login.component.html',
+  styleUrls: ['./login.component.css']
 })
 
 export class LoginComponent implements OnInit {
@@ -54,6 +55,7 @@ export class LoginComponent implements OnInit {
           this.connectionError = true;
         }
         if (error.status === 401) {
+          console.log(121);
           this.credError = true;
         }
         this.loading = false;

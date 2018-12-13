@@ -1,10 +1,10 @@
 package by.itechart.web.controller;
 
+import by.itechart.common.dto.UserActivationDto;
+import by.itechart.common.entity.User;
 import by.itechart.common.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class ActivationController {
@@ -16,11 +16,13 @@ public class ActivationController {
         this.userService = userService;
     }
 
-    @GetMapping("/login/{code}")
-    public String activateUser(@PathVariable String code) {
-        boolean isActivated = userService.activateUser(code);
+    @GetMapping("/activate/{code}")
+    public UserActivationDto activateUser(@PathVariable String code) {
+        return userService.activateUser(code);
+    }
 
-        System.out.println(isActivated);
-        return null;
+    @PostMapping("/reset-password")
+    public void resetPassword(@RequestBody UserActivationDto user) {
+        userService.setPassword(user);
     }
 }

@@ -41,7 +41,7 @@ public class BirthdayTask {
     /**
      * Scheduled method executes in 7:00AM each morning
      */
-    @Scheduled(cron = "0 0 7 * * *")
+    @Scheduled(cron = "0 0 12 * * *")
     public void happyBirthday() {
         companyService.getCompanies(Pageable.unpaged()).stream().parallel().forEach(c -> {
             BirthdayMailTemplate birthdayMailTemplate = mailTemplateService.getTemplate(c.getId());

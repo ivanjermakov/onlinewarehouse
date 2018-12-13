@@ -1,9 +1,6 @@
 package by.itechart.common.service;
 
-import by.itechart.common.dto.AuthorityDto;
-import by.itechart.common.dto.CreateUserDto;
-import by.itechart.common.dto.UserDto;
-import by.itechart.common.dto.UserFilter;
+import by.itechart.common.dto.*;
 import by.itechart.common.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -42,5 +39,8 @@ public interface UserService {
 
     Long resetPassword(long userId, long companyId);
 
-    boolean activateUser(String code);
+    UserActivationDto activateUser(String code);
+
+    void setPassword(UserActivationDto user);
+
 }

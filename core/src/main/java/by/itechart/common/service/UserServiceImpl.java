@@ -1,9 +1,6 @@
 package by.itechart.common.service;
 
-import by.itechart.common.dto.AuthorityDto;
-import by.itechart.common.dto.CreateUserDto;
-import by.itechart.common.dto.UserDto;
-import by.itechart.common.dto.UserFilter;
+import by.itechart.common.dto.*;
 import by.itechart.common.entity.Address;
 import by.itechart.common.entity.Authority;
 import by.itechart.common.entity.User;
@@ -204,13 +201,22 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean activateUser(String code) {
+    public UserActivationDto activateUser(String code) {
         User user = userRepository.findUserByActivationCode(code);
+//
+//        if(user == null) return false;
+//
+//        user.setActivationCode(null);
 
-        if(user == null) return false;
+        return ObjectMapperUtils.map(user, UserActivationDto.class);
+    }
 
-        user.setActivationCode(null);
+    @Override
+    public void setPassword(UserActivationDto userDto) {
+        User user = userRepository.getOne(userDto.getId());
 
-        return true;
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String newPassword = userDto.getPassword();
+        user.setPassword(passwordEncoder.encode(newPassword));
     }
 }
