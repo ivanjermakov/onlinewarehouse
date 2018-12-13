@@ -13,10 +13,12 @@ import org.springframework.web.bind.annotation.*;
 public class ConsignmentNoteController {
 
     private ConsignmentNoteService consignmentNoteService;
+    private WebSocketController webSocketController;
 
     @Autowired
-    public ConsignmentNoteController(ConsignmentNoteService consignmentNoteService) {
+    public ConsignmentNoteController(ConsignmentNoteService consignmentNoteService, WebSocketController webSocketController) {
         this.consignmentNoteService = consignmentNoteService;
+        this.webSocketController = webSocketController;
     }
 
     @GetMapping
@@ -34,7 +36,10 @@ public class ConsignmentNoteController {
     @PostMapping
     public Long saveConsignmentNote(@PathVariable long companyId,
                                     @RequestBody CreateConsignmentNoteDto consignmentNote) {
-        return consignmentNoteService.saveConsignmentNote(consignmentNote, companyId);
+        Long id = consignmentNoteService.saveConsignmentNote(consignmentNote, companyId);
+        webSocketController.processManagerConsignmentNote(companyId);
+        webSocketController.processInspectorConsignmentNote(companyId);
+        return id;
     }
 
     @PutMapping("/{consignmentNoteId}")

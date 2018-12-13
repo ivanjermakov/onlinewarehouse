@@ -16,10 +16,12 @@ import org.springframework.web.bind.annotation.*;
 public class WarehouseController {
 
     private WarehouseService warehouseService;
+    private WebSocketController webSocketController;
 
     @Autowired
-    public WarehouseController(WarehouseService warehouseService) {
+    public WarehouseController(WarehouseService warehouseService, WebSocketController webSocketController) {
         this.warehouseService = warehouseService;
+        this.webSocketController = webSocketController;
     }
 
     @GetMapping
@@ -30,7 +32,9 @@ public class WarehouseController {
 
     @PostMapping
     public Long saveWarehouse(@PathVariable long companyId, @RequestBody CreateWarehouseDto warehouse) {
-        return warehouseService.saveWarehouse(warehouse, companyId);
+        Long id = warehouseService.saveWarehouse(warehouse, companyId);
+        webSocketController.processManagerWarehouse(companyId);
+        return id;
     }
 
     @GetMapping("/{warehouseId}")

@@ -74,10 +74,12 @@ public class CommodityLotServiceImpl implements CommodityLotService {
 
     @Transactional
     @Override
-    public Long setCommodityLotStatus(long commodityLotId, long companyId, CommodityLotStatus status) {
+    public CommodityLot setCommodityLotStatus(long commodityLotId, long companyId, CommodityLotStatus status) {
         LOGGER.info("Commodity lot status change to: {}", status);
+        CommodityLot commodityLot = commodityLotRepository.findByCompanyIdAndId(companyId, commodityLotId)
+                .orElseThrow(() -> new NotFoundEntityException("CommodityLot"));
         commodityLotRepository.changeCommodityLotStatus(status, commodityLotId, companyId);
-        return commodityLotId;
+        return commodityLot;
     }
 
     @Override

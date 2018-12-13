@@ -11,9 +11,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.validation.annotation.Validated;
 
-import java.util.List;
-
 import javax.validation.Valid;
+import java.util.List;
 
 @Validated
 public interface CommodityLotService {
@@ -24,7 +23,7 @@ public interface CommodityLotService {
 
     CommodityLotDto getCommodityLot(Long commodityLotId, Long companyId);
 
-    Long setCommodityLotStatus(long commodityLotId, long companyId, CommodityLotStatus status);
+    CommodityLot setCommodityLotStatus(long commodityLotId, long companyId, CommodityLotStatus status);
 
     List<CommodityLot> getAllByCommodityLotType(CommodityLotType commodityLotType);
 

@@ -17,10 +17,12 @@ import org.springframework.web.bind.annotation.*;
 public class WriteOffActController {
 
     private final WriteOffActService writeOffActService;
+    private final WebSocketController webSocketController;
 
     @Autowired
-    public WriteOffActController(WriteOffActService writeOffActService) {
+    public WriteOffActController(WriteOffActService writeOffActService, WebSocketController webSocketController) {
         this.writeOffActService = writeOffActService;
+        this.webSocketController = webSocketController;
     }
 
     @GetMapping
@@ -37,7 +39,9 @@ public class WriteOffActController {
 
     @PostMapping
     public Long saveWriteOffAct(@PathVariable long companyId, @RequestBody CreateWriteOffActDto createWriteOffActDto) {
-        return writeOffActService.saveWriteOffAct(createWriteOffActDto, companyId);
+        Long id = writeOffActService.saveWriteOffAct(createWriteOffActDto, companyId);
+        webSocketController.processManagerWriteOffCase(companyId);
+        return id;
     }
 
     @PutMapping("/create-commodity-lot")
