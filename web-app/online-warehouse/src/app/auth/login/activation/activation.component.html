@@ -26,7 +26,7 @@
                    autocomplete="current-password"
                    required/>
             <mat-error *ngIf="resetForm.controls['confirmPassword'].hasError('required')">Password is required</mat-error>
-            <!--<mat-error *ngIf="resetForm.controls['confirmPassword']">{{getPasswordErrors()}}</mat-error>-->
+            <mat-error *ngIf="resetForm.controls['confirmPassword'].hasError('MatchPassword')">The passwords don't match</mat-error>
           </mat-form-field>
           <mat-error *ngIf="credError">Credentials incorrect, please check login and password</mat-error>
           <mat-error *ngIf="connectionError">Connection refused, please try later</mat-error>

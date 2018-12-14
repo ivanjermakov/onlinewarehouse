@@ -1,9 +1,5 @@
 package by.itechart.config;
 
-import static org.quartz.JobBuilder.newJob;
-
-import javax.annotation.PostConstruct;
-
 import by.itechart.profit.service.PaymentJob;
 import org.quartz.*;
 import org.slf4j.Logger;
@@ -13,6 +9,8 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import javax.annotation.PostConstruct;
 
 @Configuration
 @ConditionalOnExpression("'${using.spring.schedulerFactory}'=='false'")

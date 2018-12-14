@@ -9,13 +9,12 @@ import by.itechart.writeoffact.dto.WriteOffActListDto;
 import by.itechart.writeoffact.entity.WriteOffAct;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDate;
-import java.util.List;
+import org.springframework.validation.annotation.Validated;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
+import java.util.List;
 
 @Validated
 public interface WriteOffActService {

@@ -1,7 +1,6 @@
 package by.itechart.web.controller;
 
 import by.itechart.common.dto.UserActivationDto;
-import by.itechart.common.entity.User;
 import by.itechart.common.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

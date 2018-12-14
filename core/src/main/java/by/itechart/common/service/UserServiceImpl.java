@@ -202,11 +202,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserActivationDto activateUser(String code) {
-        User user = userRepository.findUserByActivationCode(code);
-//
-//        if(user == null) return false;
-//
-//        user.setActivationCode(null);
+        User user = userRepository.findUserByActivationCode(code).orElseThrow(NotFoundEntityException::new);
 
         return ObjectMapperUtils.map(user, UserActivationDto.class);
     }
@@ -218,5 +214,6 @@ public class UserServiceImpl implements UserService {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String newPassword = userDto.getPassword();
         user.setPassword(passwordEncoder.encode(newPassword));
+        user.setActivationCode(null);
     }
 }

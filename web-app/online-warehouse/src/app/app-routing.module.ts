@@ -33,7 +33,7 @@ import {CreateUserComponent} from "./user/create-user/create-user.component";
 import {CreateGoodsComponent} from "./shared/goods/create-goods/create-goods.component";
 import {RoleGuardService as RoleGuard} from "./auth/_guards/role.guard";
 import {CreateHomeComponent} from "./home/create-home/create-home.component";
-import {ActivationComponent} from "./auth/login/activation.component";
+import {ActivationComponent} from "./auth/login/activation/activation.component";
 
 export const routes: Routes = [
   {

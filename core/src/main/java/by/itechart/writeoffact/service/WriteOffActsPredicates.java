@@ -7,7 +7,6 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 final class WriteOffActsPredicates {
 
