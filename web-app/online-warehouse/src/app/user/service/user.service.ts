@@ -10,6 +10,8 @@ import {UserFilter} from "../dto/user-filter";
 import {AuthenticationService} from "../../auth/_services";
 import {CreateUserDto} from "../dto/create-user.dto";
 import {AuthorityDto} from "../dto/authority.dto";
+import {User} from "../../auth/_models";
+import {UserActivationDto} from "../dto/user-activation.dto";
 
 
 @Injectable({
@@ -68,5 +70,8 @@ export class UserService {
     return this.http.post<number>(path, null);
   }
 
-
+  setPassword(user: UserActivationDto): Observable<boolean> {
+    const path: string = API_BASE_URL + "/reset-password";
+    return this.http.post<boolean>(path, user);
+  }
 }

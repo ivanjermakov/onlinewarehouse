@@ -33,6 +33,7 @@ import {CreateUserComponent} from "./user/create-user/create-user.component";
 import {CreateGoodsComponent} from "./shared/goods/create-goods/create-goods.component";
 import {RoleGuardService as RoleGuard} from "./auth/_guards/role.guard";
 import {CreateHomeComponent} from "./home/create-home/create-home.component";
+import {ActivationComponent} from "./auth/login/activation/activation.component";
 
 export const routes: Routes = [
   {
@@ -91,6 +92,7 @@ export const routes: Routes = [
   {path: 'list-counterparties', component: CounterpartyListViewComponent, canActivate: [AuthGuard]},
   {path: 'counterparty/:id', component: GetCounterpartyComponent, canActivate: [AuthGuard]},
   {path: 'login', component: LoginComponent},
+  {path: 'login/:code', component: ActivationComponent},
   {path: '', component: HomeComponent, canActivate: [AuthGuard]},
   {path: 'register-consignment-note/:id', component: RegisterConsignmentNoteComponent, canActivate: [AuthGuard]},
   {path: 'consignment-notes', component: ConsignmentNoteListComponent, canActivate: [AuthGuard]},

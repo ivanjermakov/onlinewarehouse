@@ -1,4 +1,4 @@
-import {FormControl} from "@angular/forms";
+import {AbstractControl, FormControl} from "@angular/forms";
 import {Injectable} from "@angular/core";
 import {UserService} from "./user.service";
 
@@ -33,5 +33,4 @@ export class UsernameValidator {
 
     });
   }
-
 }

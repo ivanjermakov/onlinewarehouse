@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 public interface UserRepository extends JpaRepository<User, Long>, QuerydslPredicateExecutor<User> {
@@ -28,5 +29,7 @@ public interface UserRepository extends JpaRepository<User, Long>, QuerydslPredi
     Set<User> findAllById(List<Long> id);
 
     User findUserByUsername(String username);
+
+    Optional<User> findUserByActivationCode(String code);
 
 }

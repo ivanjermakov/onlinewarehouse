@@ -1,9 +1,6 @@
 package by.itechart.common.service;
 
-import by.itechart.common.dto.AuthorityDto;
-import by.itechart.common.dto.CreateUserDto;
-import by.itechart.common.dto.UserDto;
-import by.itechart.common.dto.UserFilter;
+import by.itechart.common.dto.*;
 import by.itechart.common.entity.Address;
 import by.itechart.common.entity.Authority;
 import by.itechart.common.entity.User;
@@ -17,6 +14,7 @@ import by.itechart.mail.service.MailService;
 import com.google.common.collect.Lists;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -25,15 +23,24 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
     private final static Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
+
+    @Value("${spring.activation.url}")
+    private String url;
+
+    @Value("${spring.activation.mail.subject}")
+    private String subject;
+
+    @Value("${spring.activation.mail.message}")
+    private String message;
+
+    @Value("${spring.activation.mail.resetMessage}")
+    private String resetMessage;
 
     private final UserRepository userRepository;
     private final MailService mailService;
@@ -85,13 +92,20 @@ public class UserServiceImpl implements UserService {
         user.setAddress(new Address(addressId));
         user.setEnabled(true);
         user.setLastPasswordResetDate(new Date());
+
+        String activationCode = UUID.randomUUID().toString();
+        user.setActivationCode(activationCode);
         Long userId = saveUser(user);
-        String subject = "\"Online warehouse\" account";
-        String createUserEmailMessage = "\"Online warehouse\"\n" +
-                "Your account has been successfully created.\n" +
-                "Login: " + user.getUsername() + " \n" +
-                "Password:" + originalPassword;
+
+        String createUserEmailMessage = String.format(
+                message,
+                user.getFirstname(),
+                user.getLastname(),
+                user.getUsername(),
+                url,
+                activationCode);
         mailService.send(user.getEmail(), subject, createUserEmailMessage);
+
         return userId;
     }
 
@@ -106,8 +120,8 @@ public class UserServiceImpl implements UserService {
         if (user == null) {
             throw new NotFoundEntityException("User");
         }
-        UserDto userDto = ObjectMapperUtils.map(user, UserDto.class);
-        return userDto;
+
+        return ObjectMapperUtils.map(user, UserDto.class);
     }
 
     @Override
@@ -170,15 +184,36 @@ public class UserServiceImpl implements UserService {
         user.setPassword(encodedPassword);
         user.setLastPasswordResetDate(new Date());
         userRepository.save(user);
-        String subject = "\"Online warehouse\" account";
-        String createUserEmailMessage = "\"Online warehouse\"\n" +
-                "Password for your account has been successfully changed.\n" +
-                "New password:" + password;
+
+        String createUserEmailMessage = String.format(
+                resetMessage,
+                user.getFirstname(),
+                user.getLastname(),
+                password
+        );
         mailService.send(user.getEmail(), subject, createUserEmailMessage);
+
         return userId;
     }
 
     private List<Authority> getAllAuthorities() {
         return Lists.newArrayList(authorityRepository.findAll());
+    }
+
+    @Override
+    public UserActivationDto activateUser(String code) {
+        User user = userRepository.findUserByActivationCode(code).orElseThrow(NotFoundEntityException::new);
+
+        return ObjectMapperUtils.map(user, UserActivationDto.class);
+    }
+
+    @Override
+    public void setPassword(UserActivationDto userDto) {
+        User user = userRepository.getOne(userDto.getId());
+
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String newPassword = userDto.getPassword();
+        user.setPassword(passwordEncoder.encode(newPassword));
+        user.setActivationCode(null);
     }
 }

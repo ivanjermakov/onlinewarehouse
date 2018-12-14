@@ -2,7 +2,6 @@ package by.itechart.profit.repository;
 
 import by.itechart.company.enums.CompanySize;
 import by.itechart.profit.Rate;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 

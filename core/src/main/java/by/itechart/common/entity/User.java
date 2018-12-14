@@ -47,6 +47,9 @@ public class User extends BaseEntity {
     @Size(min = 4, max = 50)
     private String email;
 
+    @JoinColumn(name = "activation_code")
+    private String activationCode;
+
     @ManyToOne
     @JoinColumn(name = "company_id")
     private Company company;
