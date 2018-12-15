@@ -88,7 +88,7 @@ export class DistributeGoodsWarehouseComponent implements OnInit {
 
   saveUpdatedWarehouse() {
     this.joinPlacementDropGroupAndWarehouse(this.placementDropListArray, this.warehouses[this.warehouseControl.value]);
-    this.warehouseService.updateWarehouse(this.warehouses[this.warehouseControl.value])
+    this.warehouseService.updateWarehouse(this.warehouses[this.warehouseControl.value], this.countCommodityLotProfit())
       .subscribe(() => {
           this.errorToast.handleSuccess('Commodity lot distributed successfully', 'Saved successfully');
         }, (err: any) => {
@@ -226,6 +226,24 @@ export class DistributeGoodsWarehouseComponent implements OnInit {
       p1.storageTimeDays == p2.storageTimeDays);
     return b;
   }
+
+  private countCommodityLotProfit(): Array<CommodityLotProfit> {
+    let commodityLotProfitList: Array<CommodityLotProfit> = [];
+    this.placementDropListArray.forEach((placementDropListValue) => {
+      let amount: number = 0;
+      placementDropListValue.arr.forEach((commodityLotGoodsDto) =>
+        amount = +commodityLotGoodsDto.amount * placementDropListValue.storageCost * this.distributeGoodsForm.controls['storageTime'].value
+      );
+      if (amount > 0) {
+        commodityLotProfitList.push(new CommodityLotProfit(
+          placementDropListValue.id,
+          new Date(),
+          amount
+        ))
+      }
+    });
+    return commodityLotProfitList;
+  }
 }
 
 class PlacementDropList {
@@ -246,5 +264,17 @@ class PlacementDropList {
     this.placementLoad = placementLoad;
     this.storageCost = storageCost;
     this.arr = arr;
+  }
+}
+
+export class CommodityLotProfit {
+  placementId: number;
+  creation: Date;
+  amount: number;
+
+  constructor(placementId: number, creation: Date, amount: number) {
+    this.placementId = placementId;
+    this.creation = creation;
+    this.amount = amount;
   }
 }

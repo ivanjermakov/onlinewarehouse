@@ -82,6 +82,10 @@ INSERT INTO placement_goods (goods_id, placement_id, counterparty_id, amount, st
 INSERT INTO placement_goods (goods_id, placement_id, counterparty_id, amount, storage_time_days, expiration_date) VALUES (2, 2, 1, 15, 10, '2018-10-24');
 INSERT INTO placement_goods (goods_id, placement_id, counterparty_id, amount, storage_time_days, expiration_date) VALUES (3, 2, 1, 6, 10, '2018-10-24');
 
+INSERT INTO payment_act (placement_id, creation, amount) VALUES (1,'2018-10-14', 450);
+INSERT INTO payment_act (placement_id, creation, amount) VALUES (2,'2018-10-14', 300);
+INSERT INTO payment_act (placement_id, creation, amount) VALUES (2,'2018-10-14', 120);
+
 --контролер решил перепроверить склад и обнаружил что кто-то украл 2 единицы товара 'Some goods 1 name' и составляет акт
 INSERT INTO write_off_act (company_id, creator_id, write_off_act_type, creation, total_amount, responsible_person) VALUES (2, 3, 'WAREHOUSE', '2018-10-24', 20, 'Somebody');
 -- указываем количество товаров и причину (на TEST забейте, нужно статусы описать)

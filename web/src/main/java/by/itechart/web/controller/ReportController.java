@@ -44,6 +44,24 @@ public class ReportController {
         return inputStreamToByteArrAndClose(personalLoss);
     }
 
+    @GetMapping(value = "/profit-report")
+    public byte[] profitReport(@PathVariable long companyId,
+                               ReportDateFilter filter,
+                               HttpServletResponse response) throws IOException {
+        InputStream profit = reportService.getPaymentStatistics(companyId, filter);
+        setExcelHeaders(response, "profit report.xlsx");
+        return inputStreamToByteArrAndClose(profit);
+    }
+
+    @GetMapping(value = "/write-off-report")
+    public byte[] writeOffReport(@PathVariable long companyId,
+                                 ReportDateFilter filter,
+                                 HttpServletResponse response) throws IOException {
+        InputStream writeOffStatistics = reportService.getWriteOffStatistics(companyId, filter);
+        setExcelHeaders(response, "write-off report.xlsx");
+        return inputStreamToByteArrAndClose(writeOffStatistics);
+    }
+
     @GetMapping
     public ResponseEntity getClientsReport(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,
                                            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to) {

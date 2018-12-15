@@ -1,14 +1,13 @@
 package by.itechart.profit;
 
 import by.itechart.common.entity.BaseEntity;
-import by.itechart.company.entity.Company;
+import by.itechart.warehouse.entity.Placement;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -17,14 +16,13 @@ import java.time.LocalDateTime;
 @Table(name = "payment_act")
 public class PaymentAct extends BaseEntity {
 
-    private LocalDateTime paymentDate;
+    @Column(name = "creation")
+    private LocalDate creation;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "company_id")
-    private Company company;
+    @JoinColumn(name = "placement_id")
+    private Placement placement;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "rate_id")
-    private Rate rateExacted;
-
+    @Column(name = "amount")
+    private Integer amount;
 }

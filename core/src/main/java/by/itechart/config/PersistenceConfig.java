@@ -70,8 +70,8 @@ public class PersistenceConfig {
         properties.setProperty("hibernate.dialect", dialect);
         properties.setProperty("hibernate.show_sql", showSql);
         properties.setProperty("hibernate.format_sql", formatSql);
-        //properties.setProperty("hibernate.hbm2ddl.auto", creationPolicy);
-        //properties.setProperty("hibernate.temp.use_jdbc_metadata_defaults", "false");
+        properties.setProperty("hibernate.hbm2ddl.auto", creationPolicy);
+        properties.setProperty("hibernate.temp.use_jdbc_metadata_defaults", "false");
         return properties;
     }
 

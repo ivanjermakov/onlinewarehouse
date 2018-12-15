@@ -2,6 +2,7 @@ package by.itechart.web.controller;
 
 import by.itechart.common.dto.Pair;
 import by.itechart.consignmentnote.dto.CreateConsignmentNoteDto;
+import by.itechart.profit.dto.PaymentActDto;
 import by.itechart.warehouse.dto.CreateWarehouseDto;
 import by.itechart.warehouse.dto.WarehouseDto;
 import by.itechart.warehouse.service.WarehouseService;
@@ -10,6 +11,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/companies/{companyId}/warehouses")
@@ -44,8 +47,8 @@ public class WarehouseController {
 
     @PutMapping("/{warehouseId}")
     public Long editWarehouse(@PathVariable long companyId, @PathVariable long warehouseId,
-                              @RequestBody WarehouseDto warehouseDto) {
-        return warehouseService.editWarehouse(warehouseDto, companyId, warehouseId);
+                              @RequestBody Pair<WarehouseDto, List<PaymentActDto>> warehouseDtoAndPaymentActDto) {
+        return warehouseService.editWarehouse(warehouseDtoAndPaymentActDto, companyId, warehouseId);
     }
 
     @PostMapping("/{warehouseId}/create-consignment-note")

@@ -11,8 +11,7 @@ import org.springframework.context.annotation.Import;
         UploadContextPathConfig.class,
         ElasticSearchConfig.class,
         ValidationConfig.class,
-        ElasticSearchConfig.class,
-        QuartzConfig.class})
+        ElasticSearchConfig.class})
 public class CoreConfig {
 
 }

@@ -17,6 +17,7 @@ import by.itechart.writeoffact.entity.WriteOffActGoods;
 import by.itechart.writeoffact.repository.PersonalLossStatistics;
 import by.itechart.writeoffact.repository.WriteOffActGoodsRepository;
 import by.itechart.writeoffact.repository.WriteOffActRepository;
+import by.itechart.writeoffact.repository.WriteOffStatistics;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -108,5 +109,10 @@ public class WriteOffActServiceImpl implements WriteOffActService {
     @Override
     public List<PersonalLossStatistics> getPersonalLossStatistics(Long companyId, ReportDateFilter filter) {
         return writeOffActRepository.getPersonalLossStatistics(companyId, filter.getFrom(), filter.getTo());
+    }
+
+    @Override
+    public List<WriteOffStatistics> getWriteOffStatistics(Long companyId, ReportDateFilter filter) {
+        return writeOffActGoodsRepository.getWriteOffStatistics(companyId, filter.getFrom(), filter.getTo());
     }
 }

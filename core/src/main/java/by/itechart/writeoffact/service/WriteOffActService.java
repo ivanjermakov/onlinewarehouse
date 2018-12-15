@@ -9,6 +9,7 @@ import by.itechart.writeoffact.dto.WriteOffActFilter;
 import by.itechart.writeoffact.dto.WriteOffActListDto;
 import by.itechart.writeoffact.entity.WriteOffAct;
 import by.itechart.writeoffact.repository.PersonalLossStatistics;
+import by.itechart.writeoffact.repository.WriteOffStatistics;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,5 +34,7 @@ public interface WriteOffActService {
     Pair<Long, Long> saveWriteOffActAndCommodityLot(Pair<CreateWriteOffActDto, CreateCommodityLotDto> writeOffActAndCommodityLot, Long companyId);
 
     List<PersonalLossStatistics> getPersonalLossStatistics(Long companyId, ReportDateFilter filter);
+
+    List<WriteOffStatistics> getWriteOffStatistics(Long companyId, ReportDateFilter filter);
 
 }

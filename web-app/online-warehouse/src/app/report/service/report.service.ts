@@ -38,6 +38,24 @@ export class ReportService {
     });
   }
 
+  getProfitReport(): void {
+    const path: string = `${this.baseApi}/${this.companyId}/reports/profit-report`;
+    this.toast.handleInfo('Please wait a moment. Download start just now.', 'Info');
+    this.http.get(path).subscribe((byteArr: string) => {
+      let blob = this.b64toBlob(byteArr, this.excelContentType);
+      saveAs(blob, 'profit report.xlsx');
+    });
+  }
+
+  getWriteOffReport(): void {
+    const path: string = `${this.baseApi}/${this.companyId}/reports/write-off-report`;
+    this.toast.handleInfo('Please wait a moment. Download start just now.', 'Info');
+    this.http.get(path).subscribe((byteArr: string) => {
+      let blob = this.b64toBlob(byteArr, this.excelContentType);
+      saveAs(blob, 'write-off report.xlsx');
+    });
+  }
+
 
   private b64toBlob(b64Data, contentType = '', sliceSize = 512) {
     const byteCharacters = atob(b64Data);

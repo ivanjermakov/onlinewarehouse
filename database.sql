@@ -117,6 +117,13 @@ create table placement (
   deleted               date
 );
 
+create table payment_act (
+  id           bigserial PRIMARY KEY,
+  placement_id bigint references placement (id),
+  creation     date    NOT NULL,
+  amount integer NOT NULL
+);
+
 -- refactor table: add driver_id, consignment_note_status, description
 create table consignment_note (
   id                    bigserial PRIMARY KEY,

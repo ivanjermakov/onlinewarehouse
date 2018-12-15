@@ -7,6 +7,8 @@ import by.itechart.common.utils.ObjectMapperUtils;
 import by.itechart.company.entity.Company;
 import by.itechart.consignmentnote.dto.CreateConsignmentNoteDto;
 import by.itechart.consignmentnote.service.ConsignmentNoteService;
+import by.itechart.profit.dto.PaymentActDto;
+import by.itechart.profit.service.PaymentService;
 import by.itechart.warehouse.dto.CreateWarehouseDto;
 import by.itechart.warehouse.dto.WarehouseDto;
 import by.itechart.warehouse.entity.Placement;
@@ -36,19 +38,22 @@ public class WarehouseServiceImpl implements WarehouseService {
     private AddressRepository addressRepository;
     private ConsignmentNoteService consignmentNoteService;
     private final WarehouseElasticRepository warehouseElasticRepository;
+    private final PaymentService paymentService;
 
     public WarehouseServiceImpl(WarehouseRepository warehouseRepository,
                                 PlacementRepository placementRepository,
                                 PlacementGoodsRepository placementGoodsRepository,
                                 AddressRepository addressRepository,
                                 ConsignmentNoteService consignmentNoteService,
-                                WarehouseElasticRepository warehouseElasticRepository) {
+                                WarehouseElasticRepository warehouseElasticRepository,
+                                PaymentService paymentService) {
         this.warehouseRepository = warehouseRepository;
         this.placementRepository = placementRepository;
         this.placementGoodsRepository = placementGoodsRepository;
         this.addressRepository = addressRepository;
         this.consignmentNoteService = consignmentNoteService;
         this.warehouseElasticRepository = warehouseElasticRepository;
+        this.paymentService = paymentService;
     }
 
     @Transactional(readOnly = true)
@@ -83,7 +88,12 @@ public class WarehouseServiceImpl implements WarehouseService {
 
     @Transactional
     @Override
-    public Long editWarehouse(WarehouseDto warehouseDto, long companyId, long warehouseId) {
+    public Long editWarehouse(Pair<WarehouseDto, List<PaymentActDto>> warehouseDtoAndPaymentActDto, long companyId, long warehouseId) {
+        paymentService.savePaymentActList(warehouseDtoAndPaymentActDto.getValue2());
+        return editWarehouse(warehouseDtoAndPaymentActDto.getValue1(), companyId, warehouseId);
+    }
+
+    private Long editWarehouse(WarehouseDto warehouseDto, long companyId, long warehouseId) {
         List<Placement> placementList = warehouseDto.getPlacements().stream().map((placementDto -> {
             List<PlacementGoods> emptyPlacementGoodsList = placementDto.getPlacementGoodsList()
                     .stream()

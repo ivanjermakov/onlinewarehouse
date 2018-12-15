@@ -12,6 +12,7 @@ import {PlacementDto} from "../dto/placement.dto";
 import {CreateConsignmentNoteDto} from "../../consignment-note/dto/create-consignment-note-dto";
 import {CreateWriteOffActDto} from "../../write-off-act/dto/create-write-off-act.dto";
 import {PlacementCreateWriteOffActDto} from "../../write-off-act/dto/placement-create-write-off-act.dto";
+import {CommodityLotProfit} from "../distribute-goods-warehouse/distribute-goods-warehouse.component";
 
 @Injectable({
   providedIn: 'root'
@@ -44,9 +45,9 @@ export class WarehouseService {
     return this.http.post<number>(path, createWarehouseDto);
   }
 
-  updateWarehouse(warehouseDto: WarehouseDto): Observable<number> {
+  updateWarehouse(warehouseDto: WarehouseDto, commodityLotProfitList: Array<CommodityLotProfit>): Observable<number> {
     const path: string = this.baseApi + '/' + this.companyId + '/warehouses/' + warehouseDto.id;
-    return this.http.put<number>(path, warehouseDto);
+    return this.http.put<number>(path, {value1: warehouseDto, value2: commodityLotProfitList});
   }
 
   getPlacement(warehouseId: number, placementId: number): Observable<PlacementDto> {

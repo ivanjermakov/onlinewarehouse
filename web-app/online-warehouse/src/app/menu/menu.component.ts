@@ -81,4 +81,12 @@ export class MenuComponent implements OnInit {
   getPersonalLossReport() {
     this.report.getPersonalLossReport();
   }
+
+  getProfitReport() {
+    this.report.getProfitReport();
+  }
+
+  getWriteOffReport() {
+    this.report.getWriteOffReport();
+  }
 }

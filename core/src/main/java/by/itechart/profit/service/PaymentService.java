@@ -1,19 +1,15 @@
 package by.itechart.profit.service;
 
-import by.itechart.profit.PaymentAct;
+import by.itechart.profit.dto.PaymentActDto;
+import by.itechart.profit.repository.PaymentStatistics;
+import by.itechart.reports.dto.ReportDateFilter;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 public interface PaymentService {
 
-    List<PaymentAct> getPaymentForPeriod(LocalDateTime start, LocalDateTime end);
+    void savePaymentActList(List<PaymentActDto> paymentActDtoList);
 
-    PaymentAct persist(PaymentAct paymentAct);
-
-    List<PaymentAct> makePayments();
-
-    Long getDamages(LocalDate start, LocalDate end);
+    List<PaymentStatistics> getPaymentStatistics(ReportDateFilter filter, Long companyId);
 
 }
