@@ -65,9 +65,9 @@ INSERT INTO consignment_note_goods (goods_id, consignment_note_id, amount) VALUE
 INSERT INTO consignment_note_goods (goods_id, consignment_note_id, amount) VALUES (3, 1, 6);
 
 --Контролер увидел созданную ТТНку и пошел проверять, нашел косяк, нету 1 товара "Some goods 1 name" из 10 и создает акт
-INSERT INTO write_off_act (company_id, creator_id, write_off_act_type, creation, total_amount, responsible_person) VALUES (2, 3, 'SHORTFALL', '2018-10-24', 10, 'Somebody');
+INSERT INTO write_off_act (company_id, creator_id, write_off_act_type, creation, total_amount, responsible_person) VALUES (2, 3, 'CARRIER', '2018-10-24', 10, 'Somebody');
 -- указываем количество товаров и причину (на TEST забейте, нужно статусы описать)
-INSERT INTO write_off_act_goods(goods_id, write_off_act_id, write_off_type, amount) VALUES (1, 1, 'CARRIER_LOSS', 1);
+INSERT INTO write_off_act_goods(goods_id, write_off_act_id, write_off_type, amount) VALUES (1, 1, 'LOSS', 1);
 --одновременно создается товарая партия
 INSERT INTO commodity_lot (company_id, counterparty_id, creation, commodity_lot_type, commodity_lot_status) VALUES (2, 1, '2018-10-24', 'IN', 'NOT_PROCESSED');
 --c товарами (вычитаем единицу товара "Some goods 1 name" из акта итого 9 товара "Some goods 1 name")
@@ -83,9 +83,9 @@ INSERT INTO placement_goods (goods_id, placement_id, counterparty_id, amount, st
 INSERT INTO placement_goods (goods_id, placement_id, counterparty_id, amount, storage_time_days, expiration_date) VALUES (3, 2, 1, 6, 10, '2018-10-24');
 
 --контролер решил перепроверить склад и обнаружил что кто-то украл 2 единицы товара 'Some goods 1 name' и составляет акт
-INSERT INTO write_off_act (company_id, creator_id, write_off_act_type, creation, total_amount, responsible_person) VALUES (2, 3, 'LOSS', '2018-10-24', 20, 'Somebody');
+INSERT INTO write_off_act (company_id, creator_id, write_off_act_type, creation, total_amount, responsible_person) VALUES (2, 3, 'WAREHOUSE', '2018-10-24', 20, 'Somebody');
 -- указываем количество товаров и причину (на TEST забейте, нужно статусы описать)
-INSERT INTO write_off_act_goods(goods_id, write_off_act_id, write_off_type, amount) VALUES (1, 1, 'WAREHOUSE_THEFT', 2);
+INSERT INTO write_off_act_goods(goods_id, write_off_act_id, write_off_type, amount) VALUES (1, 1, 'THEFT', 2);
 -- и тут должна заапдейтиться таблица с товарами на складе (9 - 2 = 7)
 UPDATE placement_goods SET amount = 7 WHERE goods_id = 1 AND placement_id = 1 AND counterparty_id = 1 AND storage_time_days = 10;
 

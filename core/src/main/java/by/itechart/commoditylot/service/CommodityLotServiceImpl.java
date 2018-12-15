@@ -10,9 +10,11 @@ import by.itechart.commoditylot.enums.CommodityLotStatus;
 import by.itechart.commoditylot.enums.CommodityLotType;
 import by.itechart.commoditylot.repository.CommodityLotGoodsRepository;
 import by.itechart.commoditylot.repository.CommodityLotRepository;
+import by.itechart.commoditylot.repository.InputGoodsStatistics;
 import by.itechart.common.utils.ObjectMapperUtils;
 import by.itechart.company.entity.Company;
 import by.itechart.exception.NotFoundEntityException;
+import by.itechart.reports.dto.ReportDateFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -85,5 +87,10 @@ public class CommodityLotServiceImpl implements CommodityLotService {
     @Override
     public List<CommodityLot> getAllByCommodityLotType(CommodityLotType commodityLotType) {
         return  commodityLotRepository.getAllByCommodityLotType(commodityLotType);
+    }
+
+    @Override
+    public List<InputGoodsStatistics> getIncomeStatistics(Long companyId, ReportDateFilter filter) {
+        return commodityLotRepository.getInputGoodsStatistics(companyId, filter.getFrom(), filter.getTo());
     }
 }

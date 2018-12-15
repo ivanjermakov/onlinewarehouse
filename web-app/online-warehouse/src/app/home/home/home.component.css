@@ -8,3 +8,7 @@
   flex-wrap: wrap;
   justify-content: center;
 }
+
+.card-content > p {
+  font-size: 16px;
+}

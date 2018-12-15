@@ -7,12 +7,14 @@ import by.itechart.common.service.GoodsService;
 import by.itechart.common.utils.ObjectMapperUtils;
 import by.itechart.company.entity.Company;
 import by.itechart.exception.NotFoundEntityException;
+import by.itechart.reports.dto.ReportDateFilter;
 import by.itechart.writeoffact.dto.CreateWriteOffActDto;
 import by.itechart.writeoffact.dto.WriteOffActDto;
 import by.itechart.writeoffact.dto.WriteOffActFilter;
 import by.itechart.writeoffact.dto.WriteOffActListDto;
 import by.itechart.writeoffact.entity.WriteOffAct;
 import by.itechart.writeoffact.entity.WriteOffActGoods;
+import by.itechart.writeoffact.repository.PersonalLossStatistics;
 import by.itechart.writeoffact.repository.WriteOffActGoodsRepository;
 import by.itechart.writeoffact.repository.WriteOffActRepository;
 import org.slf4j.Logger;
@@ -23,7 +25,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -102,5 +103,10 @@ public class WriteOffActServiceImpl implements WriteOffActService {
         Long writeOffActId = saveWriteOffAct(writeOffActAndCommodityLot.getValue1(), companyId);
         Long commodityLotId = commodityLotService.saveCommodityLot(writeOffActAndCommodityLot.getValue2(), companyId);
         return new Pair<>(writeOffActId, commodityLotId);
+    }
+
+    @Override
+    public List<PersonalLossStatistics> getPersonalLossStatistics(Long companyId, ReportDateFilter filter) {
+        return writeOffActRepository.getPersonalLossStatistics(companyId, filter.getFrom(), filter.getTo());
     }
 }

@@ -42,8 +42,11 @@
     <a class="menu-collapse text-dark" (click)="toggle(2)">Owner</a>
     <div [@openClose]="isOpenArr[2] ? 'open' : 'closed'"
          class="menu-a-container">
-      <a class="menu-a text-dark" routerLink="" routerLinkActive="action-active">
-        Earnings report
+      <a class="menu-a text-dark" (click)="getIncomeReport()">
+        Income report
+      </a>
+      <a class="menu-a text-dark" (click)="getPersonalLossReport()">
+        Personal loss report
       </a>
       <a class="menu-a text-dark" routerLink="" routerLinkActive="action-active">
         Theft report

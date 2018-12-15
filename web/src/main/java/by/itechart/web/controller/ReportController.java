@@ -1,16 +1,48 @@
 package by.itechart.web.controller;
 
+import by.itechart.reports.dto.ReportDateFilter;
+import by.itechart.reports.service.ReportService;
+import org.apache.poi.util.IOUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDate;
 
 @RestController
-@RequestMapping("/reports/companies")
+@RequestMapping("/companies/{companyId}/reports")
 public class ReportController {
+
+    private final ReportService reportService;
+
+    @Autowired
+    public ReportController(ReportService reportService) {
+        this.reportService = reportService;
+    }
+
+    @GetMapping(value = "/income-report")
+    public byte[] incomeReport(@PathVariable long companyId,
+                               ReportDateFilter filter,
+                               HttpServletResponse response) throws IOException {
+        InputStream incomeGoods = reportService.getIncomeGoods(companyId, filter);
+        setExcelHeaders(response, "income report.xlsx");
+        return inputStreamToByteArrAndClose(incomeGoods);
+    }
+
+    @GetMapping(value = "/personal-loss-report")
+    public byte[] personalLossReport(@PathVariable long companyId,
+                                     ReportDateFilter filter,
+                                     HttpServletResponse response) throws IOException {
+        InputStream personalLoss = reportService.getPersonalLoss(companyId, filter);
+        setExcelHeaders(response, "personal loss report.xlsx");
+        return inputStreamToByteArrAndClose(personalLoss);
+    }
 
     @GetMapping
     public ResponseEntity getClientsReport(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,
@@ -22,7 +54,7 @@ public class ReportController {
         return ResponseEntity.status(HttpStatus.OK).headers(fileHeaders).body(new byte[100]);
     }
 
-    @GetMapping("/{companyId}/warehouses/{warehouseId}/arrival")
+    @GetMapping("/warehouses/{warehouseId}/arrival")
     public ResponseEntity getWarehouseArrival(@PathVariable long companyId, @PathVariable long warehouseId,
                                               @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,
                                               @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to) {
@@ -64,5 +96,16 @@ public class ReportController {
         fileHeaders.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=warehouseProfit.xls");
         // xls report with profit of warehouse
         return ResponseEntity.status(HttpStatus.OK).headers(fileHeaders).body(new byte[100]);
+    }
+
+    private void setExcelHeaders(HttpServletResponse response, String filename) {
+        response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        response.setHeader(HttpHeaders.CONTENT_TYPE, "attachment; filename=\"" + filename + "\"");
+    }
+
+    private byte[] inputStreamToByteArrAndClose(InputStream inputStream) throws IOException {
+        byte[] bytes = IOUtils.toByteArray(inputStream);
+        inputStream.close();
+        return bytes;
     }
 }

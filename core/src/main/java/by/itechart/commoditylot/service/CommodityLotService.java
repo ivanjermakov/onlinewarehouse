@@ -7,6 +7,8 @@ import by.itechart.commoditylot.dto.CreateCommodityLotDto;
 import by.itechart.commoditylot.entity.CommodityLot;
 import by.itechart.commoditylot.enums.CommodityLotStatus;
 import by.itechart.commoditylot.enums.CommodityLotType;
+import by.itechart.commoditylot.repository.InputGoodsStatistics;
+import by.itechart.reports.dto.ReportDateFilter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.validation.annotation.Validated;
@@ -27,4 +29,5 @@ public interface CommodityLotService {
 
     List<CommodityLot> getAllByCommodityLotType(CommodityLotType commodityLotType);
 
+    List<InputGoodsStatistics> getIncomeStatistics(Long companyId, ReportDateFilter filter);
 }

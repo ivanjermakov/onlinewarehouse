@@ -3,6 +3,7 @@ import {AuthenticationService} from "../auth/_services";
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {Router} from "@angular/router";
 import {WebSocketService} from "../auth/_services/web-socket.service";
+import {ReportService} from "../report/service/report.service";
 
 @Component({
   selector: 'app-menu',
@@ -39,8 +40,8 @@ export class MenuComponent implements OnInit {
   constructor(
     private auth: AuthenticationService,
     private router: Router,
-    private webSocket: WebSocketService,
-    private authenticationService: AuthenticationService
+    private report: ReportService,
+    private webSocket: WebSocketService
   ) {
   }
 
@@ -68,9 +69,16 @@ export class MenuComponent implements OnInit {
   }
 
   logout() {
-    this.authenticationService.logout();
+    this.auth.logout();
     this.router.navigate(['/login']);
     this.webSocket.disconnect();
   }
 
+  getIncomeReport() {
+    this.report.getIncomeReport();
+  }
+
+  getPersonalLossReport() {
+    this.report.getPersonalLossReport();
+  }
 }
