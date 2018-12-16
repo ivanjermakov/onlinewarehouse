@@ -18,7 +18,7 @@ export class CompanyListComponent implements OnInit {
 
   private actionType = ActionTypeEnum;
 
-  private displayedColumns = ["id", "name", "sizeType", "actionType", "change", "changeStatus"];
+  private displayedColumns = ["name", "sizeType", "actionType", "change", "changeStatus"];
   private loadingSubject = new BehaviorSubject<boolean>(false);
   loading$ = this.loadingSubject.asObservable();
   private page: Page<CompanyDto>;

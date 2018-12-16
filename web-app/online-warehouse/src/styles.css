@@ -33,6 +33,11 @@ body {
   background-color: #fff;
 }
 
+button {
+  color: #000000;
+  background-color: rgba(34, 111, 138, 0.22);
+}
+
 /*CONTENT MAIN*/
 /*.content {*/
 /*display: grid;*/

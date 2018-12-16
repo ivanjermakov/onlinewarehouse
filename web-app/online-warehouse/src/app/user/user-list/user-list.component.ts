@@ -19,7 +19,7 @@ import {RequestErrorToastHandlerService} from "../../shared/toast/request-error-
 })
 export class UserListComponent implements OnInit {
 
-  private displayedColumns = ["id", "username", "name", "address", "birth", "enabled", "authorities"];
+  private displayedColumns = ["username", "name", "address", "birth", "enabled", "authorities"];
   private loadingSubject = new BehaviorSubject<boolean>(false);
   loading$ = this.loadingSubject.asObservable();
   private pageable: Pageable = new Pageable(0, 10);
