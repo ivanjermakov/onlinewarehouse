@@ -1,0 +1,23 @@
+.enable, .disable {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.enable {
+  background-color: rgba(181, 0, 10, 0.29);
+  border-radius: 2%;
+}
+
+.disable {
+  background-color: rgba(0, 128, 0, 0.25);
+  border-radius: 2%;
+}
+
+.enable:hover {
+  background-color: rgba(177, 0, 10, 0.35);
+}
+
+.disable:hover {
+  background-color: #abc0a8;
+}

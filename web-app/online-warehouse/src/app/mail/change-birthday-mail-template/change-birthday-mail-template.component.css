@@ -1,3 +1,9 @@
+.birthday-template {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 #birthday-template-from {
   display: flex;
   flex-direction: column;
@@ -13,4 +19,8 @@
   display: flex;
   align-items: center;
   justify-content: space-around;
+}
+
+.birthday-template textarea {
+  height: 200px !important;
 }

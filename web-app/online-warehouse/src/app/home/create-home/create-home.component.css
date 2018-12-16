@@ -1,4 +1,37 @@
+.main-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .form-container {
   display: flex;
   flex-direction: column;
+}
+
+.mat-form-field {
+  width: 700px;
+}
+
+.form-container button {
+  height: 3em;
+  width: 10em;
+  color: #000000;
+  margin: 1em 1em 1em 1em;
+}
+
+.clear {
+  background-color: rgba(45, 149, 181, 0.36);
+}
+
+.clear:hover {
+  background-color: rgba(37, 119, 146, 0.4);
+}
+
+.submit {
+  background-color: rgba(0, 133, 0, 0.36);
+}
+
+.submit:hover {
+  background-color: rgba(0, 111, 0, 0.38);
 }

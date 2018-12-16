@@ -5,3 +5,35 @@
   justify-content: center;
   align-items: center;
 }
+
+.mat-card-title {
+  font-size: 24pt;
+  margin-bottom: 5em;
+}
+
+.mat-card-header, .mat-error, .submit-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mat-error {
+  font-size: 12pt;
+  margin-bottom: 1em;
+}
+
+.login button {
+  height: 3.5em;
+  width: 15em;
+  color: #000000;
+  background-color: rgba(0, 128, 0, 0.22);
+  margin-top: 0.5em;
+}
+
+.login button:hover {
+  background-color: rgba(0, 133, 0, 0.31);
+}
+
+.login img {
+  margin-bottom: 0.5em;
+}
