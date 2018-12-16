@@ -15,6 +15,9 @@
       <a class="menu-a text-dark" routerLink="create-company" routerLinkActive="action-active">
         Create company
       </a>
+      <a class="menu-a text-dark" (click)="getClientReport()">
+        Clients report
+      </a>
     </div>
   </div>
   <div *ngIf="userAuthorities.includes('ROLE_COMPANY_ADMIN')">
@@ -42,20 +45,8 @@
     <a class="menu-collapse text-dark" (click)="toggle(2)">Owner</a>
     <div [@openClose]="isOpenArr[2] ? 'open' : 'closed'"
          class="menu-a-container">
-      <a class="menu-a text-dark" (click)="getIncomeReport()">
-        Income report
-      </a>
-      <a class="menu-a text-dark" (click)="getPersonalLossReport()">
-        Personal loss report
-      </a>
-      <a class="menu-a text-dark" (click)="getProfitReport()">
-        Profit report
-      </a>
-      <a class="menu-a text-dark" (click)="getWriteOffReport()">
-        Write-off report
-      </a>
-      <a class="menu-a text-dark" routerLink="" routerLinkActive="action-active">
-        Some other report
+      <a class="menu-a text-dark" routerLink="reports" routerLinkActive="action-active">
+        Reports
       </a>
     </div>
   </div>

@@ -1,7 +1,6 @@
 package by.itechart.company.entity;
 
 import by.itechart.common.entity.BaseEntity;
-import by.itechart.company.enums.ActionType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,10 +18,9 @@ public class CompanyAction extends BaseEntity {
     @JoinColumn(name = "company_id")
     private Company company;
 
-    @Column(name = "change")
-    private LocalDateTime change;
+    @Column(name = "date_start")
+    private LocalDateTime start;
 
-    @Column(name = "action_type")
-    @Enumerated(EnumType.STRING)
-    private ActionType actionType;
+    @Column(name = "date_end")
+    private LocalDateTime end;
 }

@@ -14,4 +14,6 @@ public interface ReportService {
     InputStream getPaymentStatistics(Long companyId, ReportDateFilter filter) throws IOException;
 
     InputStream getWriteOffStatistics(Long companyId, ReportDateFilter filter) throws IOException;
+
+    InputStream getClientsStatistics(ReportDateFilter filter) throws IOException;
 }

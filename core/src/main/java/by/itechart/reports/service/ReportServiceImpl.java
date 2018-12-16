@@ -2,6 +2,8 @@ package by.itechart.reports.service;
 
 import by.itechart.commoditylot.repository.InputGoodsStatistics;
 import by.itechart.commoditylot.service.CommodityLotService;
+import by.itechart.company.entity.CompanyAction;
+import by.itechart.company.service.CompanyService;
 import by.itechart.profit.repository.PaymentStatistics;
 import by.itechart.profit.service.PaymentService;
 import by.itechart.reports.dto.ReportDateFilter;
@@ -25,7 +27,9 @@ import org.springframework.util.ResourceUtils;
 
 import java.io.*;
 import java.time.LocalDate;
-import java.util.List;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 @Service
 @Transactional
@@ -35,14 +39,21 @@ public class ReportServiceImpl implements ReportService {
     private final CommodityLotService commodityLotService;
     private final WriteOffActService writeOffActService;
     private final PaymentService paymentService;
+    private final CompanyService companyService;
+
+    private final LocalDateTime MAX_DATE_TIME = LocalDateTime.of(2100, 1, 1, 0, 0, 0, 0);
+    private final LocalDate MAX_DATE = LocalDate.of(2100, 1, 1);
+    private final LocalDate MIN_DATE = LocalDate.of(2000, 1, 1);
 
     @Autowired
     public ReportServiceImpl(CommodityLotService commodityLotService,
                              WriteOffActService writeOffActService,
-                             PaymentService paymentService) {
+                             PaymentService paymentService,
+                             CompanyService companyService) {
         this.commodityLotService = commodityLotService;
         this.writeOffActService = writeOffActService;
         this.paymentService = paymentService;
+        this.companyService = companyService;
     }
 
     public InputStream getIncomeGoods(Long companyId, ReportDateFilter filter) throws IOException {
@@ -465,14 +476,180 @@ public class ReportServiceImpl implements ReportService {
         return new FileInputStream(System.getProperty("java.io.tmpdir") + File.separator + "write-off report" + companyId + ".xlsx");
     }
 
+    @Override
+    public InputStream getClientsStatistics(ReportDateFilter filter) throws IOException {
+        File file = ResourceUtils.getFile("classpath:exceltemplates/clients report.xlsx");
+        FileInputStream inputStream = new FileInputStream(file);
+
+        XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
+
+        ReportDateFilter checkFilter = checkFilter(filter);
+
+        List<CompanyAction> clientsStatistics = companyService.getClientsStatistics(checkFilter);
+
+        XSSFSheet sheet = workbook.getSheet("datasheet");
+
+        int rownum = 0;
+
+        XSSFRow row;
+        XSSFCell cell;
+
+        row = sheet.createRow(rownum);
+        cell = row.createCell(0, CellType.STRING);
+        cell.setCellValue("Report period:");
+
+        cell = row.createCell(1, CellType.STRING);
+        cell.setCellValue((filter.getFrom() == null ? "" : filter.getFrom().toString()));
+
+        cell = row.createCell(2, CellType.STRING);
+        cell.setCellValue((filter.getTo() == null ? "" : filter.getTo().toString()));
+
+        rownum++;
+
+        int startClientsCount = 0;
+        int endClientsCount = 0;
+
+        for (CompanyAction clientsStatistic : clientsStatistics) {
+            if (clientsStatistic.getEnd().toLocalDate().isAfter(filter.getTo()) || clientsStatistic.getEnd().toLocalDate().equals(filter.getTo())) {
+                endClientsCount++;
+            } else if (clientsStatistic.getStart().toLocalDate().isBefore(filter.getFrom()) || clientsStatistic.getStart().toLocalDate().equals(filter.getFrom())) {
+                startClientsCount++;
+            }
+        }
+
+        row = sheet.createRow(rownum);
+        cell = row.createCell(0, CellType.STRING);
+        cell.setCellValue("Count of clients:");
+
+        cell = row.createCell(1, CellType.NUMERIC);
+        cell.setCellValue(startClientsCount);
+
+        cell = row.createCell(2, CellType.NUMERIC);
+        cell.setCellValue(endClientsCount);
+
+        rownum = 3;
+
+        HashMap<String, Integer> lostClientCountByMonth = new HashMap<>();
+        HashMap<String, Integer> newClientCountByMonth = new HashMap<>();
+//        HashMap<String, Integer> clientProfitByMonth = new HashMap<>();
+
+        for (CompanyAction clientsStatistic : clientsStatistics) {
+            if (!clientsStatistic.getEnd().equals(MAX_DATE_TIME)) {
+                int monthValue = clientsStatistic.getEnd().getMonthValue();
+                int year = clientsStatistic.getEnd().getYear();
+                putOrUpdateMapKeyValue(lostClientCountByMonth, generateStringFromMonthAndYear(monthValue, year), 1);
+            }
+            if (clientsStatistic.getStart().toLocalDate().isAfter(filter.getFrom())) {
+                int monthValue = clientsStatistic.getStart().getMonthValue();
+                int year = clientsStatistic.getStart().getYear();
+                putOrUpdateMapKeyValue(newClientCountByMonth, generateStringFromMonthAndYear(monthValue, year), 1);
+            }
+
+//            long between = ChronoUnit.MONTHS.between(clientsStatistic.getStart().toLocalDate(), clientsStatistic.getEnd().toLocalDate() == MAX_DATE ? LocalDate.now() : clientsStatistic.getEnd().toLocalDate());
+//            initProfitMap(clientProfitByMonth, between, clientsStatistic.getStart().toLocalDate());
+//            Period between = Period.between(clientsStatistic.getStart().toLocalDate(), clientsStatistic.getEnd().toLocalDate());
+//            int months = between.getMonths();
+//            between.ge
+//            for (int i = 0; i < months; i++) {
+//
+//            }
+
+        }
+
+        Set<String> lostMounts = lostClientCountByMonth.keySet();
+        Set<String> newMounts = newClientCountByMonth.keySet();
+
+        Set<String> allMounts = new HashSet<>();
+        allMounts.addAll(newMounts);
+        allMounts.addAll(lostMounts);
+
+        List<String> allMountsList = new ArrayList<>(allMounts);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        allMountsList.sort(Comparator.comparing(s -> LocalDate.parse(s + "-01", formatter)));
+
+        for (String mount : allMountsList) {
+            row = sheet.createRow(rownum);
+            rownum++;
+            //A // mount
+            cell = row.createCell(0, CellType.STRING);
+            cell.setCellValue(mount);
+            //B
+            cell = row.createCell(1, CellType.STRING);
+            cell.setCellValue("New");
+            //C
+            int newClients = newClientCountByMonth.get(mount) == null ? 0 : newClientCountByMonth.get(mount);
+            cell = row.createCell(2, CellType.NUMERIC);
+            cell.setCellValue(newClients);
+
+            row = sheet.createRow(rownum);
+            rownum++;
+            //B
+            cell = row.createCell(1, CellType.STRING);
+            cell.setCellValue("Lost");
+            //C
+            int lostClients = lostClientCountByMonth.get(mount) == null ? 0 : lostClientCountByMonth.get(mount);
+            cell = row.createCell(2, CellType.NUMERIC);
+            cell.setCellValue(lostClients);
+
+            row = sheet.createRow(rownum);
+            rownum++;
+            //B
+            cell = row.createCell(1, CellType.STRING);
+            cell.setCellValue("Total");
+            //C
+            startClientsCount = startClientsCount + newClients - lostClients;
+            cell = row.createCell(2, CellType.NUMERIC);
+            cell.setCellValue(startClientsCount);
+        }
+
+        Name count = workbook.getName("count");
+        String reference = "datasheet!$C$3:$C$" + (rownum + 1);
+        count.setRefersToFormula(reference);
+
+        Name monthAndClients = workbook.getName("monthAndClients");
+        reference = "datasheet!$A$3:$B$" + (rownum + 1);
+        monthAndClients.setRefersToFormula(reference);
+
+        for (int i = 0; i < 3; i++) {
+            sheet.autoSizeColumn(i);
+        }
+
+        inputStream.close();
+
+        FileOutputStream fileOut = new FileOutputStream(System.getProperty("java.io.tmpdir") + File.separator + "clients report.xlsx");
+        workbook.write(fileOut);
+        fileOut.close();
+        return new FileInputStream(System.getProperty("java.io.tmpdir") + File.separator + "clients report.xlsx");
+    }
+
+//    private void initProfitMap(HashMap<String, Integer> clientProfitByMonth, long countOfMonth, LocalDate startDate) {
+//        int monthValue = startDate.getMonthValue();
+//        int year = startDate.getYear();
+//        putOrUpdateMapKeyValue(clientProfitByMonth, generateStringFromMonthAndYear(monthValue, year), 0);
+//        for (int i = 0; i < countOfMonth; i++) {
+//            monthValue
+//        }
+//    }
+
 
     private ReportDateFilter checkFilter(ReportDateFilter filter) {
         if (filter.getFrom() == null) {
-            filter.setFrom(LocalDate.of(2000, 1, 1));
+            filter.setFrom(MIN_DATE);
         }
         if (filter.getTo() == null) {
-            filter.setTo(LocalDate.of(2100, 1, 1));
+            filter.setTo(MAX_DATE);
         }
         return filter;
+    }
+
+    private void putOrUpdateMapKeyValue(Map<String, Integer> map, String key, Integer value) {
+        if (map.containsKey(key)) {
+            map.replace(key, map.get(key) + value);
+        } else map.put(key, value);
+    }
+
+    private String generateStringFromMonthAndYear(int month, int year) {
+        return year + "-" + (month < 10 ? ("0" + month) : month);
     }
 }

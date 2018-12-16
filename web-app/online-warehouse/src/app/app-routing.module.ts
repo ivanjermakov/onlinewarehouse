@@ -33,6 +33,7 @@ import {CreateUserComponent} from "./user/create-user/create-user.component";
 import {CreateGoodsComponent} from "./shared/goods/create-goods/create-goods.component";
 import {RoleGuardService as RoleGuard} from "./auth/_guards/role.guard";
 import {CreateHomeComponent} from "./home/create-home/create-home.component";
+import {ReportOwnerComponent} from "./report/report-owner/report-owner.component";
 
 export const routes: Routes = [
   {
@@ -104,7 +105,8 @@ export const routes: Routes = [
   {path: 'manager-commodity-lots', component: CommodityLotListComponent, canActivate: [AuthGuard]},
   {path: 'warehouse/:id/create-placement', component: CreatePlacementComponent, canActivate: [AuthGuard]},
   {path: 'create-goods', component: CreateGoodsComponent, canActivate: [AuthGuard]},
-  {path: 'create-home-card', component: CreateHomeComponent, canActivate: [AuthGuard]}
+  {path: 'create-home-card', component: CreateHomeComponent, canActivate: [AuthGuard]},
+  {path: 'reports', component: ReportOwnerComponent, canActivate: [AuthGuard]}
 
   // { path: 'heroes', component:  }
 ];

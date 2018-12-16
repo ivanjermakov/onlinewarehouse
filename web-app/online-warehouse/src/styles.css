@@ -185,3 +185,7 @@ a {
 .mat-error {
   font-size: 12px;
 }
+
+a:hover {
+  cursor: pointer;
+}

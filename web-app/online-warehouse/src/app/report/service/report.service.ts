@@ -4,6 +4,8 @@ import {HttpClient} from "@angular/common/http";
 import {AuthenticationService} from "../../auth/_services";
 import saveAs from 'file-saver';
 import {RequestErrorToastHandlerService} from "../../shared/toast/request-error-handler/request-error-toast-handler.service";
+import {ReportDateFilter} from "../dto/report-date.filter";
+import HttpParamsBuilder from "../../shared/http/http-params-builder";
 
 @Injectable({
   providedIn: 'root'
@@ -20,39 +22,69 @@ export class ReportService {
     this.companyId = auth.getCompanyId();
   }
 
-  getIncomeReport(): void {
+
+  getIncomeReport(filter: ReportDateFilter): void {
     const path: string = `${this.baseApi}/${this.companyId}/reports/income-report`;
     this.toast.handleInfo('Please wait a moment. Download start just now.', 'Info');
-    this.http.get(path).subscribe((byteArr: string) => {
+    let paramsBuilder = new HttpParamsBuilder();
+    if (filter) {
+      paramsBuilder.addObject(filter);
+    }
+    this.http.get(path, {params: paramsBuilder.getHttpParams()}).subscribe((byteArr: string) => {
       let blob = this.b64toBlob(byteArr, this.excelContentType);
       saveAs(blob, 'income report.xlsx');
     });
   }
 
-  getPersonalLossReport(): void {
+  getPersonalLossReport(filter: ReportDateFilter): void {
     const path: string = `${this.baseApi}/${this.companyId}/reports/personal-loss-report`;
     this.toast.handleInfo('Please wait a moment. Download start just now.', 'Info');
-    this.http.get(path).subscribe((byteArr: string) => {
+    let paramsBuilder = new HttpParamsBuilder();
+    if (filter) {
+      paramsBuilder.addObject(filter);
+    }
+    this.http.get(path, {params: paramsBuilder.getHttpParams()}).subscribe((byteArr: string) => {
       let blob = this.b64toBlob(byteArr, this.excelContentType);
       saveAs(blob, 'personal loss report.xlsx');
     });
   }
 
-  getProfitReport(): void {
+  getProfitReport(filter: ReportDateFilter): void {
     const path: string = `${this.baseApi}/${this.companyId}/reports/profit-report`;
     this.toast.handleInfo('Please wait a moment. Download start just now.', 'Info');
-    this.http.get(path).subscribe((byteArr: string) => {
+    let paramsBuilder = new HttpParamsBuilder();
+    if (filter) {
+      paramsBuilder.addObject(filter);
+    }
+    this.http.get(path, {params: paramsBuilder.getHttpParams()}).subscribe((byteArr: string) => {
       let blob = this.b64toBlob(byteArr, this.excelContentType);
       saveAs(blob, 'profit report.xlsx');
     });
   }
 
-  getWriteOffReport(): void {
+  getWriteOffReport(filter: ReportDateFilter): void {
     const path: string = `${this.baseApi}/${this.companyId}/reports/write-off-report`;
     this.toast.handleInfo('Please wait a moment. Download start just now.', 'Info');
-    this.http.get(path).subscribe((byteArr: string) => {
+    let paramsBuilder = new HttpParamsBuilder();
+    if (filter) {
+      paramsBuilder.addObject(filter);
+    }
+    this.http.get(path, {params: paramsBuilder.getHttpParams()}).subscribe((byteArr: string) => {
       let blob = this.b64toBlob(byteArr, this.excelContentType);
       saveAs(blob, 'write-off report.xlsx');
+    });
+  }
+
+  getClientReport(filter: ReportDateFilter): void {
+    const path: string = `${this.baseApi}/report`;
+    this.toast.handleInfo('Please wait a moment. Download start just now.', 'Info');
+    let paramsBuilder = new HttpParamsBuilder();
+    if (filter) {
+      paramsBuilder.addObject(filter);
+    }
+    this.http.get(path, {params: paramsBuilder.getHttpParams()}).subscribe((byteArr: string) => {
+      let blob = this.b64toBlob(byteArr, this.excelContentType);
+      saveAs(blob, 'client report.xlsx');
     });
   }
 

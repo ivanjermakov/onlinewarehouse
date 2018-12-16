@@ -74,19 +74,8 @@ export class MenuComponent implements OnInit {
     this.webSocket.disconnect();
   }
 
-  getIncomeReport() {
-    this.report.getIncomeReport();
-  }
 
-  getPersonalLossReport() {
-    this.report.getPersonalLossReport();
-  }
-
-  getProfitReport() {
-    this.report.getProfitReport();
-  }
-
-  getWriteOffReport() {
-    this.report.getWriteOffReport();
+  getClientReport() {
+    this.report.getClientReport();
   }
 }
