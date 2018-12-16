@@ -1,0 +1,37 @@
+<div class="charts-container">
+  <div *ngIf="showUserRolesStatisticsChart">
+    <highcharts-chart
+      [Highcharts]="Highcharts"
+      [options]="getUserRolesStatistics()"
+      style="width: 440px; display: block; all: revert;"
+    ></highcharts-chart>
+  </div>
+  <div *ngIf="showActCreatorsStatisticsChart">
+    <highcharts-chart
+      [Highcharts]="Highcharts"
+      [options]="getActCreatorsStatistics()"
+      style="width: 440px; display: block; all: revert;"
+    ></highcharts-chart>
+  </div>
+  <div *ngIf="showInCounterpartiesGoodsCostStatisticsChart">
+    <highcharts-chart
+      [Highcharts]="Highcharts"
+      [options]="getInCounterpartiesGoodsCostStatistics()"
+      style="width: 440px; display: block; all: revert;"
+    ></highcharts-chart>
+  </div>
+  <div *ngIf="showOutCounterpartiesGoodsCostStatisticsChart">
+    <highcharts-chart
+      [Highcharts]="Highcharts"
+      [options]="getOutCounterpartiesGoodsCostStatistics()"
+      style="width: 440px; display: block; all: revert;"
+    ></highcharts-chart>
+  </div>
+</div>
+<div *ngIf="loading$ | async"
+     style="display: flex; justify-content: center; align-items: center">
+  <mat-progress-spinner
+    color="primary"
+    mode="indeterminate">
+  </mat-progress-spinner>
+</div>

@@ -1,5 +1,7 @@
 package by.itechart.web.controller;
 
+import by.itechart.profit.repository.PaymentStatistics;
+import by.itechart.profit.service.PaymentService;
 import by.itechart.reports.dto.ReportDateFilter;
 import by.itechart.reports.service.ReportService;
 import org.apache.poi.util.IOUtils;
@@ -14,16 +16,19 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
+import java.util.List;
 
 @RestController
 @RequestMapping("/companies/{companyId}/reports")
 public class ReportController {
 
     private final ReportService reportService;
+    private final PaymentService paymentService;
 
     @Autowired
-    public ReportController(ReportService reportService) {
+    public ReportController(ReportService reportService, PaymentService paymentService) {
         this.reportService = reportService;
+        this.paymentService = paymentService;
     }
 
     @GetMapping(value = "/income-report")
@@ -60,6 +65,14 @@ public class ReportController {
         InputStream writeOffStatistics = reportService.getWriteOffStatistics(companyId, filter);
         setExcelHeaders(response, "write-off report.xlsx");
         return inputStreamToByteArrAndClose(writeOffStatistics);
+    }
+
+    @GetMapping("/payment-statistics")
+    public List<PaymentStatistics> getPaymentStatistics(@PathVariable long companyId) {
+        ReportDateFilter reportDateFilter = new ReportDateFilter();
+        reportDateFilter.setFrom(LocalDate.of(2010, 1, 1));
+        reportDateFilter.setTo(LocalDate.of(2100, 1, 1));
+        return paymentService.getPaymentStatistics(reportDateFilter, companyId);
     }
 
     @GetMapping

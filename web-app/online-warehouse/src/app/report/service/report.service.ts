@@ -6,6 +6,8 @@ import saveAs from 'file-saver';
 import {RequestErrorToastHandlerService} from "../../shared/toast/request-error-handler/request-error-toast-handler.service";
 import {ReportDateFilter} from "../dto/report-date.filter";
 import HttpParamsBuilder from "../../shared/http/http-params-builder";
+import {PieChartDto} from "../dto/pie-chart.dto";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -87,6 +89,31 @@ export class ReportService {
       saveAs(blob, 'client report.xlsx');
     });
   }
+
+  getUserRolesStatistics(): Observable<PieChartDto[]> {
+    const path: string = `${API_BASE_URL}/companies/${this.companyId}/users/role-statistics`;
+    return this.http.get<PieChartDto[]>(path);
+  }
+
+  getInCounterpartiesGoodsCostStatistics(): Observable<PieChartDto[]> {
+    const path: string = `${API_BASE_URL}/companies/${this.companyId}/counterparties/goods-in-statistics`;
+    return this.http.get<PieChartDto[]>(path);
+  }
+
+  getOutCounterpartiesGoodsCostStatistics(): Observable<PieChartDto[]> {
+    const path: string = `${API_BASE_URL}/companies/${this.companyId}/counterparties/goods-out-statistics`;
+    return this.http.get<PieChartDto[]>(path);
+  }
+
+  getActCreatorsStatistics(): Observable<PieChartDto[]> {
+    const path: string = `${API_BASE_URL}/companies/${this.companyId}/write-off-acts/write-off-statistics`;
+    return this.http.get<PieChartDto[]>(path);
+  }
+
+  // getPaymentStatistics(): Observable<any[]> {
+  //     const path: string = `${API_BASE_URL}/companies/${this.companyId}/reports/payment-statistics`;
+  //   return this.http.get(path);
+  // }
 
 
   private b64toBlob(b64Data, contentType = '', sliceSize = 512) {

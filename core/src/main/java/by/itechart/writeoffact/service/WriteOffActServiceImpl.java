@@ -3,6 +3,7 @@ package by.itechart.writeoffact.service;
 import by.itechart.commoditylot.dto.CreateCommodityLotDto;
 import by.itechart.commoditylot.service.CommodityLotService;
 import by.itechart.common.dto.Pair;
+import by.itechart.common.repository.PieChartData;
 import by.itechart.common.service.GoodsService;
 import by.itechart.common.utils.ObjectMapperUtils;
 import by.itechart.company.entity.Company;
@@ -114,5 +115,10 @@ public class WriteOffActServiceImpl implements WriteOffActService {
     @Override
     public List<WriteOffStatistics> getWriteOffStatistics(Long companyId, ReportDateFilter filter) {
         return writeOffActGoodsRepository.getWriteOffStatistics(companyId, filter.getFrom(), filter.getTo());
+    }
+
+    @Override
+    public List<PieChartData> getActCreatorsStatistics(Long companyId) {
+        return writeOffActRepository.getActCreatorsStatistics(companyId);
     }
 }

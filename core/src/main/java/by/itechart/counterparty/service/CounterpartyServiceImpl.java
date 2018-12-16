@@ -1,8 +1,10 @@
 package by.itechart.counterparty.service;
 
 import by.itechart.common.entity.Address;
+import by.itechart.common.repository.PieChartData;
 import by.itechart.common.service.AddressService;
 import by.itechart.common.utils.ObjectMapperUtils;
+import by.itechart.consignmentnote.enums.ConsignmentNoteType;
 import by.itechart.counterparty.dto.CounterpartyDto;
 import by.itechart.counterparty.dto.CounterpartyFilter;
 import by.itechart.counterparty.dto.CreateCounterpartyDto;
@@ -15,6 +17,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class CounterpartyServiceImpl implements CounterpartyService {
@@ -64,5 +68,10 @@ public class CounterpartyServiceImpl implements CounterpartyService {
     public void deleteCounterparty(Long counterpartyId) {
         LOGGER.info("Delete counterparty with id: {}", counterpartyId);
         counterpartyRepository.setDeleted(counterpartyId);
+    }
+
+    @Override
+    public List<PieChartData> getCounterpartiesGoodsCostStatistics(ConsignmentNoteType consignmentNoteType, long companyId) {
+        return counterpartyRepository.getCounterpartiesGoodsCostStatistics(consignmentNoteType.toString(), companyId);
     }
 }

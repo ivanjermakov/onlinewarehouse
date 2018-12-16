@@ -2,6 +2,7 @@ package by.itechart.common.service;
 
 import by.itechart.common.dto.*;
 import by.itechart.common.entity.User;
+import by.itechart.common.repository.PieChartData;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.validation.annotation.Validated;
@@ -40,6 +41,8 @@ public interface UserService {
     Long resetPassword(long userId, long companyId);
 
     UserActivationDto activateUser(String code);
+
+    List<PieChartData> getUserRoleStatistics(long companyId);
 
     void setPassword(UserActivationDto user);
 

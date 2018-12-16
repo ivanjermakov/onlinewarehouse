@@ -5,6 +5,7 @@ import by.itechart.common.entity.Address;
 import by.itechart.common.entity.Authority;
 import by.itechart.common.entity.User;
 import by.itechart.common.repository.AuthorityRepository;
+import by.itechart.common.repository.PieChartData;
 import by.itechart.common.repository.UserRepository;
 import by.itechart.common.utils.ObjectMapperUtils;
 import by.itechart.common.utils.PasswordGenerator;
@@ -205,6 +206,11 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findUserByActivationCode(code).orElseThrow(NotFoundEntityException::new);
 
         return ObjectMapperUtils.map(user, UserActivationDto.class);
+    }
+
+    @Override
+    public List<PieChartData> getUserRoleStatistics(long companyId) {
+        return userRepository.getUserRolesStatistics(companyId);
     }
 
     @Override

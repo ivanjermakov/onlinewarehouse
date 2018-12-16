@@ -2,6 +2,7 @@ package by.itechart.writeoffact.service;
 
 import by.itechart.commoditylot.dto.CreateCommodityLotDto;
 import by.itechart.common.dto.Pair;
+import by.itechart.common.repository.PieChartData;
 import by.itechart.reports.dto.ReportDateFilter;
 import by.itechart.writeoffact.dto.CreateWriteOffActDto;
 import by.itechart.writeoffact.dto.WriteOffActDto;
@@ -36,5 +37,7 @@ public interface WriteOffActService {
     List<PersonalLossStatistics> getPersonalLossStatistics(Long companyId, ReportDateFilter filter);
 
     List<WriteOffStatistics> getWriteOffStatistics(Long companyId, ReportDateFilter filter);
+
+    List<PieChartData> getActCreatorsStatistics(Long companyId);
 
 }

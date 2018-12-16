@@ -5,6 +5,7 @@ import by.itechart.common.dto.CreateUserDto;
 import by.itechart.common.dto.UserDto;
 import by.itechart.common.dto.UserFilter;
 import by.itechart.common.entity.User;
+import by.itechart.common.repository.PieChartData;
 import by.itechart.common.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -29,6 +30,11 @@ public class UserController {
                                       UserFilter userFilter,
                                       Pageable pageable) {
         return userService.getUsers(companyId, userFilter, pageable);
+    }
+
+    @GetMapping("/role-statistics")
+    public List<PieChartData> getUserRolesStatistics(@PathVariable long companyId) {
+        return userService.getUserRoleStatistics(companyId);
     }
 
     @PostMapping

@@ -32,4 +32,11 @@ public interface UserRepository extends JpaRepository<User, Long>, QuerydslPredi
 
     Optional<User> findUserByActivationCode(String code);
 
+    @Query(value = "select a.name as name, count(ua.user_id) as y from users u " +
+            "inner join user_authority ua on u.id = ua.user_id " +
+            "inner join authority a on ua.authority_id = a.id " +
+            "where u.company_id = :companyId " +
+            "group by a.name", nativeQuery = true)
+    List<PieChartData> getUserRolesStatistics(@Param("companyId") Long companyId);
+
 }

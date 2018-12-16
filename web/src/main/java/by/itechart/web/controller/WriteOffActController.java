@@ -2,6 +2,7 @@ package by.itechart.web.controller;
 
 import by.itechart.commoditylot.dto.CreateCommodityLotDto;
 import by.itechart.common.dto.Pair;
+import by.itechart.common.repository.PieChartData;
 import by.itechart.writeoffact.dto.CreateWriteOffActDto;
 import by.itechart.writeoffact.dto.WriteOffActDto;
 import by.itechart.writeoffact.dto.WriteOffActFilter;
@@ -11,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/companies/{companyId}/write-off-acts")
@@ -30,6 +33,11 @@ public class WriteOffActController {
                                                     WriteOffActFilter filter,
                                                     Pageable pageable) {
         return writeOffActService.getWriteOffActs(companyId, pageable, filter);
+    }
+
+    @GetMapping("/write-off-statistics")
+    public List<PieChartData> getActCreatorsStatistics(@PathVariable long companyId) {
+        return writeOffActService.getActCreatorsStatistics(companyId);
     }
 
     @GetMapping("/{writeOffActId}")

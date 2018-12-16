@@ -1,5 +1,6 @@
 package by.itechart.writeoffact.repository;
 
+import by.itechart.common.repository.PieChartData;
 import by.itechart.writeoffact.entity.WriteOffAct;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -24,5 +25,12 @@ public interface WriteOffActRepository extends JpaRepository<WriteOffAct, Long>,
     List<PersonalLossStatistics> getPersonalLossStatistics(@Param("companyId") Long companyId,
                                                            @Param("dateFrom") LocalDate from,
                                                            @Param("dateTo") LocalDate to);
+
+    @Query(value = "select concat(u.first_name, ' ', u.last_name, ' ', u.patronymic) as name, count(woa.id) as y " +
+            "from write_off_act woa " +
+            "       inner join users u on woa.creator_id = u.id " +
+            "where woa.company_id = :companyId " +
+            "group by u.first_name, u.last_name, u.patronymic", nativeQuery = true)
+    List<PieChartData> getActCreatorsStatistics(@Param("companyId") Long companyId);
 
 }

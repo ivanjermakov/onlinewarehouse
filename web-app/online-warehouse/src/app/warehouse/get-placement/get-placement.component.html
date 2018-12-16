@@ -38,7 +38,7 @@
         <highcharts-chart
           [Highcharts]="Highcharts"
           [options]="chartOptionsLoadPercentage"
-          (load)="saveInstance($event.context, chartOptionsLoadPercentage)">
+          (load)="saveInstance($event.context, chartOptionsLoadPercentage)"
           style="width: 400px; display: block; all: revert;"
         ></highcharts-chart>
       </div>
@@ -46,7 +46,7 @@
         <highcharts-chart
           [Highcharts]="Highcharts"
           [options]="chartOptionsLoadDate"
-          (load)="saveInstance($event.context, chartOptionsLoadDate)">
+          (load)="saveInstance($event.context, chartOptionsLoadDate)"
           style="width: 600px;  display: block;  all: revert;"
         ></highcharts-chart>
       </div>
