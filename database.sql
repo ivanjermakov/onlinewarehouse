@@ -19,8 +19,8 @@ create table company (
 create table company_action (
   id          bigserial PRIMARY KEY,
   company_id  bigint references company (id),
-  change      timestamp   NOT NULL,
-  action_type varchar(20) NOT NULL
+  date_start  timestamp   NOT NULL,
+  date_end    timestamp   NOT NULL
 );
 
 create table goods (

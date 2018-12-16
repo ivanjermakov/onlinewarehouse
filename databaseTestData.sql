@@ -17,7 +17,7 @@ VALUES (1, 1, 'Admin', 'Admin', 'Admin', '2018-10-10', 'companyemail@mail.ru', '
 -- Зарегали компанию
 INSERT INTO company (name, size_type) values ('First Company', 'LARGE');
 -- одноверменно указали что создали
-INSERT INTO company_action (company_id, change, action_type) VALUES (2, current_timestamp, 'ENABLED');
+INSERT INTO company_action (company_id, date_start, date_end) VALUES (2, current_timestamp, '2100-01-01');
 -- одновременно создали админа компании
 INSERT INTO address (country, region, locality) VALUES ('Belarus', 'Minsk', 'Tolstogo str. 10');
 INSERT INTO users (company_id, address_id, first_name, last_name, patronymic, birth, email, username, password, enabled)
