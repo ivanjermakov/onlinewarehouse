@@ -73,10 +73,12 @@ import {CreateGoodsDialogComponent} from './shared/goods/create-goods-dialog/cre
 import {RoleGuardService} from "./auth/_guards/role.guard";
 import {CreateHomeComponent} from './home/create-home/create-home.component';
 import {ReportOwnerComponent} from './report/report-owner/report-owner.component';
+import {ActivationComponent} from "./auth/login/activation/activation.component";
 
 const routes: Routes = [
   {path: 'app', component: AppComponent, canActivate: [AuthGuard], children: appRoutes},
   {path: 'login', component: LoginComponent},
+  {path: 'login/:code', component: ActivationComponent},
   {path: '**', redirectTo: 'app'}
 ];
 
@@ -139,7 +141,8 @@ const routes: Routes = [
     CreateGoodsComponent,
     CreateGoodsDialogComponent,
     CreateHomeComponent,
-    ReportOwnerComponent
+    ReportOwnerComponent,
+    ActivationComponent
   ],
   imports: [
     BrowserModule,

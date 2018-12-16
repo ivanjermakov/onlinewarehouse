@@ -56,6 +56,7 @@ create table users (
   lastpasswordresrtdate timestamp,
   birth                 date         NOT NULL,
   email                 varchar(50),
+  activation_code       varchar(255),
   deleted               date
 );
 
