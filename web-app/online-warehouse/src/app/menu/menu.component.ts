@@ -76,6 +76,6 @@ export class MenuComponent implements OnInit {
 
 
   getClientReport() {
-    this.report.getClientReport();
+    this.report.getClientReport(null);
   }
 }
