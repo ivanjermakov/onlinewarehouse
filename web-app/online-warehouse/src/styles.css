@@ -75,6 +75,9 @@ button {
 
   .company-name {
     margin-right: auto !important;
+    font-size: 24px;
+    font-weight: 700;
+    font-family: Segoe UI;
   }
 }
 
@@ -85,6 +88,9 @@ button {
 
   .company-name {
     margin-right: auto !important;
+    font-size: 24px;
+    font-weight: 700;
+    font-family: Segoe UI;
   }
 }
 
