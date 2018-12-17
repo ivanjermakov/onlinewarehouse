@@ -36,17 +36,17 @@ export class CreateUserComponent implements OnInit {
       "username": ['',
         Validators.compose(
           [Validators.maxLength(50),
-            Validators.required]),
+            Validators.required, Validators.minLength(3)]),
         usernameValidator.checkUsername.bind(usernameValidator)],
       "password": ['', [Validators.required, Validators.minLength(3)]],
-      "firstname": ['', [Validators.required]],
-      "lastname": ['', [Validators.required]],
+      "firstname": ['', [Validators.required, Validators.maxLength(40)]],
+      "lastname": ['', [Validators.required, Validators.maxLength(40)]],
       "patronymic": [''],
-      "email": ['', [Validators.required, Validators.email]],
+      "email": ['', [Validators.required, Validators.email, Validators.maxLength(50)]],
       "address": fb.group({
-        "country": ['', Validators.required],
-        "region": ['', Validators.required],
-        "locality": ['', Validators.required]
+        country: ['', [Validators.required, Validators.maxLength(40)]],
+        region: ['', [Validators.required, Validators.maxLength(55)]],
+        locality: ['', [Validators.required, Validators.maxLength(50)]]
       }),
       "birth": ['', [Validators.required]],
       "authorities": ['', [Validators.required]]
@@ -81,7 +81,8 @@ export class CreateUserComponent implements OnInit {
   getUsernameErrors() {
     return this.createUserDto.controls['username'].hasError('usernameInUse') ? 'Username is used' :
       this.createUserDto.controls['username'].hasError('required') ? 'Username is required' :
-        this.createUserDto.controls['username'].hasError('maxlength') ? 'Username must be shorter than 50 characters' : '';
+        this.createUserDto.controls['username'].hasError('maxlength') ? 'Username must be shorter than 50 characters' :
+          this.createUserDto.controls['username'].hasError('minlength') ? 'Username must be longer than 3 characters' : '';
   }
 
   getPasswordErrors() {
@@ -91,7 +92,8 @@ export class CreateUserComponent implements OnInit {
 
   getEmailErrors() {
     return this.createUserDto.controls['email'].hasError('required') ? 'Email is required' :
-      this.createUserDto.controls['email'].hasError('email') ? 'Please enter a valid email address' : '';
+      this.createUserDto.controls['email'].hasError('email') ? 'Please enter a valid email address' :
+        this.createUserDto.controls['email'].hasError('maxlength') ? 'Email must be shorter than 50 characters' : '';
   }
 
   onSubmit() {

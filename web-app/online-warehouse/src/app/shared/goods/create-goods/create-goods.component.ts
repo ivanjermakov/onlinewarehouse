@@ -21,12 +21,12 @@ export class CreateGoodsComponent implements OnInit {
               private goodsService: GoodService,
               private errorToast: RequestErrorToastHandlerService) {
     this.createGoodsForm = fb.group({
-      "name": ['', [Validators.required]],
+      "name": ['', [Validators.required, Validators.maxLength(70)]],
       "placementType": ['', [Validators.required]],
       "measurementUnit": ['', [Validators.required]],
       "cost": ['', [Validators.required, Validators.min(0)]],
       "weight": ['', [Validators.required, Validators.min(0)]],
-      "labelling": ['', [Validators.required]],
+      "labelling": ['', [Validators.required], Validators.maxLength(50)],
       "description": ['']
     })
   }

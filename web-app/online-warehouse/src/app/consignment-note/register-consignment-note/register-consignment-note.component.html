@@ -4,6 +4,8 @@
     <ng-template matStepLabel>Fill number consignment note</ng-template>
     <mat-form-field>
       <input matInput placeholder="CN Number" [formControl]="consignmentNoteForm.controls['number']" required>
+      <mat-error *ngIf="consignmentNoteForm.controls['number'].hasError('required')">This field is required</mat-error>
+      <mat-error *ngIf="consignmentNoteForm.controls['number'].hasError('maxlength')">Must be shorter than 15 characters</mat-error>
     </mat-form-field>
     <div>
       <button mat-button matStepperNext>Next</button>
@@ -113,6 +115,7 @@
     <mat-form-field>
       <input matInput placeholder="Vehicle number" [formControl]="consignmentNoteForm.controls['vehicleNumber']"
              required>
+      <mat-error *ngIf="consignmentNoteForm.controls['vehicleNumber'].hasError('vehicleNumber')">Must be shorter than 15 characters</mat-error>
     </mat-form-field>
     <div>
       <button mat-button matStepperPrevious>Back</button>

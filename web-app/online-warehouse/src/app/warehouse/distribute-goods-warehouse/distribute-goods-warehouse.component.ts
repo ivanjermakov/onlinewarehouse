@@ -56,7 +56,7 @@ export class DistributeGoodsWarehouseComponent implements OnInit {
         }
       );
     this.distributeGoodsForm = this.fb.group({
-      storageTime: ['', Validators.required]
+      storageTime: ['', [Validators.required, Validators.min(1)]]
     });
     this.warehouseControl = this.fb.control('', Validators.required);
 

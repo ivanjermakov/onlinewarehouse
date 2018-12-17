@@ -32,12 +32,16 @@
                placeholder="First name"
                [formControl]="createUserDto.controls['firstname']"
                required>
+        <mat-error *ngIf="createUserDto.controls['firstname'].hasError('required')">This field is required</mat-error>
+        <mat-error *ngIf="createUserDto.controls['firstname'].hasError('maxlength')">Must be shorter than 40 characters</mat-error>
       </mat-form-field>
       <mat-form-field>
         <input matInput
                placeholder="Last name"
                [formControl]="createUserDto.controls['lastname']"
                required>
+        <mat-error *ngIf="createUserDto.controls['lastname'].hasError('required')">This field is required</mat-error>
+        <mat-error *ngIf="createUserDto.controls['lastname'].hasError('maxlength')">Must be shorter than 40 characters</mat-error>
       </mat-form-field>
       <mat-form-field>
         <input matInput
@@ -52,6 +56,8 @@
                [matAutocomplete]="countryAuto"
                [formControl]="createUserDto.controls['address'].controls['country']"
                required>
+        <mat-error *ngIf="createUserDto.controls['address'].controls['country'].hasError('required')">This field is required</mat-error>
+        <mat-error *ngIf="createUserDto.controls['address'].controls['country'].hasError('maxlength')">Must be shorter than 40 characters</mat-error>
         <mat-autocomplete #countryAuto="matAutocomplete"
                           (optionSelected)="getRegions($event)">
           <mat-option *ngFor="let option of countryFilteredOptions | async" [value]="option">
@@ -65,6 +71,8 @@
                [matAutocomplete]="regionAuto"
                [formControl]="createUserDto.controls['address'].controls['region']"
                required>
+        <mat-error *ngIf="createUserDto.controls['address'].controls['region'].hasError('required')">This field is required</mat-error>
+        <mat-error *ngIf="createUserDto.controls['address'].controls['region'].hasError('maxlength')">Must be shorter than 55 characters</mat-error>
         <mat-autocomplete #regionAuto="matAutocomplete" [displayWith]="regionDisplayFn">
           <mat-option *ngFor="let option of regionFilteredOptions | async" [value]="option.title">
             {{option.title}}
@@ -76,6 +84,8 @@
                placeholder="Locality"
                [formControl]="createUserDto.controls['address'].controls['locality']"
                required>
+        <mat-error *ngIf="createUserDto.controls['address'].controls['locality'].hasError('required')">This field is required</mat-error>
+        <mat-error *ngIf="createUserDto.controls['address'].controls['locality'].hasError('maxlength')">Must be shorter than 50 characters</mat-error>
       </mat-form-field>
     </div>
     <mat-form-field style="width: 180px">

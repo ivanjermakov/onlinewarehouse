@@ -3,6 +3,8 @@
     <ng-template matStepLabel>Fill carrier name</ng-template>
     <mat-form-field>
       <input matInput placeholder="Carrier name" [formControl]="createCarrierForm.controls['name']" required>
+      <mat-error *ngIf="createCarrierForm.controls['name'].hasError('required')">This field is required</mat-error>
+      <mat-error *ngIf="createCarrierForm.controls['name'].hasError('maxlength')">Must be shorter than 50 characters</mat-error>
     </mat-form-field>
     <mat-checkbox [formControl]="createCarrierForm.controls['trusted']"
                   [color]="'primary'">Trusted
@@ -37,6 +39,8 @@
     <ng-template matStepLabel>Fill tax number</ng-template>
     <mat-form-field>
       <input matInput placeholder="Tax number" [formControl]="createCarrierForm.controls['taxNumber']" required>
+      <mat-error *ngIf="createCarrierForm.controls['taxNumber'].hasError('required')">This field is required</mat-error>
+      <mat-error *ngIf="createCarrierForm.controls['taxNumber'].hasError('maxlength')">Must be shorter than 15 characters</mat-error>
     </mat-form-field>
     <div>
       <button mat-button matStepperPrevious>Back</button>
@@ -51,6 +55,8 @@
              [matAutocomplete]="countryAuto"
              [formControl]="createCarrierForm.controls['address'].controls['country']"
              required>
+      <mat-error *ngIf="createCarrierForm.controls['address'].controls['country'].hasError('required')">This field is required</mat-error>
+      <mat-error *ngIf="createCarrierForm.controls['address'].controls['country'].hasError('maxlength')">Must be shorter than 40 characters</mat-error>
       <mat-autocomplete #countryAuto="matAutocomplete"
                         (optionSelected)="getRegions($event)">
         <mat-option *ngFor="let option of countryFilteredOptions | async" [value]="option">
@@ -64,6 +70,8 @@
              [matAutocomplete]="regionAuto"
              [formControl]="createCarrierForm.controls['address'].controls['region']"
              required>
+      <mat-error *ngIf="createCarrierForm.controls['address'].controls['region'].hasError('required')">This field is required</mat-error>
+      <mat-error *ngIf="createCarrierForm.controls['address'].controls['region'].hasError('maxlength')">Must be shorter than 55 characters</mat-error>
       <mat-autocomplete #regionAuto="matAutocomplete" [displayWith]="regionDisplayFn">
         <mat-option *ngFor="let option of regionFilteredOptions | async" [value]="option.title">
           {{option.title}}
@@ -73,6 +81,8 @@
     <mat-form-field>
       <input matInput placeholder="Locality"
              [formControl]="createCarrierForm.controls['address'].controls['locality']" required>
+      <mat-error *ngIf="createCarrierForm.controls['address'].controls['locality'].hasError('required')">This field is required</mat-error>
+      <mat-error *ngIf="createCarrierForm.controls['address'].controls['locality'].hasError('maxlength')">Must be shorter than 50 characters</mat-error>
     </mat-form-field>
     <div>
       <button mat-button matStepperPrevious>Back</button>

@@ -52,12 +52,12 @@ export class RegisterConsignmentNoteComponent implements OnInit {
               private router: Router,
               private errorToast: RequestErrorToastHandlerService) {
     this.consignmentNoteForm = fb.group({
-      "number": [''],
+      "number": ['', [Validators.required, Validators.maxLength(15)]],
       "shipment": [''],
       "counterparty": ['', Validators.required],
       "carrier": ['', Validators.required],
       "driver": ['', Validators.required],
-      "vehicleNumber": [''],
+      "vehicleNumber": ['', Validators.maxLength(15)],
       "consignmentNoteGoodsList": fb.array([], Validators.required),
       "consignmentNoteType": [''],
       "description": ['']
