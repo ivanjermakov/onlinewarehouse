@@ -48,7 +48,7 @@ create table users (
   company_id            bigint references company (id),
   address_id            bigint references address (id),
   username              varchar(50)  NOT NULL UNIQUE,
-  password              varchar(100) NOT NULL,
+  password              varchar(100),
   first_name            varchar(30)  NOT NULL,
   last_name             varchar(30)  NOT NULL,
   patronymic            varchar(255),

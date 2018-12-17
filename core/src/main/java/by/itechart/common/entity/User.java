@@ -25,20 +25,20 @@ public class User extends BaseEntity {
     private String username;
 
     @Column(name = "password", length = 100)
-    @NotNull
+//    @NotNull
     @Size(min = 4, max = 100)
     private String password;
 
     //    TODO: should be firstName
     @Column(name = "first_name", length = 50)
     @NotNull
-    @Size(min = 4, max = 50)
+    @Size(max = 50)
     private String firstname;
 
     //    TODO: should be lastName
     @Column(name = "last_name", length = 50)
     @NotNull
-    @Size(min = 4, max = 50)
+    @Size(max = 50)
     private String lastname;
 
     @Column(name = "email", length = 50)
@@ -73,7 +73,7 @@ public class User extends BaseEntity {
 
     @Column(name = "lastpasswordresrtdate")
     @Temporal(TemporalType.TIMESTAMP)
-    @NotNull
+//    @NotNull
     private Date lastPasswordResetDate;
 
     @ManyToMany(fetch = FetchType.EAGER)

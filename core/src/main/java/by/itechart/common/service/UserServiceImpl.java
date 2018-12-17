@@ -86,13 +86,13 @@ public class UserServiceImpl implements UserService {
         });
         user.setAuthorities(userPersistentAuthoritiesList);
 
-        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String originalPassword = user.getPassword();
-        user.setPassword(passwordEncoder.encode(originalPassword));
+//        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+//        String originalPassword = user.getPassword();
+//        user.setPassword(passwordEncoder.encode(originalPassword));
         user.setCompany(new Company(companyId));
         user.setAddress(new Address(addressId));
         user.setEnabled(true);
-        user.setLastPasswordResetDate(new Date());
+//        user.setLastPasswordResetDate(new Date());
 
         String activationCode = UUID.randomUUID().toString();
         user.setActivationCode(activationCode);
@@ -220,6 +220,7 @@ public class UserServiceImpl implements UserService {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String newPassword = userDto.getPassword();
         user.setPassword(passwordEncoder.encode(newPassword));
+        user.setLastPasswordResetDate(new Date());
         user.setActivationCode(null);
     }
 }
