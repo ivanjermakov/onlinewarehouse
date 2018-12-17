@@ -34,3 +34,7 @@ tr.mat-footer-row {
 .mat-footer-cell {
   font-size: 20px;
 }
+
+.button-spacer {
+  margin: 10px;
+}

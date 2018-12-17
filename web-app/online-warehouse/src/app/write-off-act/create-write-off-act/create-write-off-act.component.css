@@ -44,3 +44,7 @@
   border: none;
   border-bottom: 1px solid #ccc
 }
+
+.button-spacer {
+  margin-bottom: 20px;
+}

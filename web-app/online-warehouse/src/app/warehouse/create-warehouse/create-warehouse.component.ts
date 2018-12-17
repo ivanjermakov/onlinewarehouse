@@ -26,11 +26,11 @@ export class CreateWarehouseComponent implements OnInit {
               private addressService: AddressService,
               private errorToast: RequestErrorToastHandlerService) {
     this.createWarehouseForm = fb.group({
-      name: [[''], Validators.required],
+      name: [[''], [Validators.required, Validators.maxLength(20)]],
       address: fb.group({
-        country: ['', Validators.required],
-        region: ['', Validators.required],
-        locality: ['', Validators.required]
+        country: ['', [Validators.required, Validators.maxLength(40)]],
+        region: ['', [Validators.required, Validators.maxLength(55)]],
+        locality: ['', [Validators.required, Validators.maxLength(50)]]
       })
     });
   }

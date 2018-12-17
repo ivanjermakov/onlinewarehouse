@@ -39,4 +39,8 @@ export class CreateHomeComponent implements OnInit {
       );
   }
 
+  clearForm() {
+    this.createHomeCardForm.reset()
+  }
+
 }

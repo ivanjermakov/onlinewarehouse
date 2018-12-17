@@ -31,14 +31,14 @@ export class CreateCarrierComponent implements OnInit {
               private addressService: AddressService,
               private errorToast: RequestErrorToastHandlerService) {
     this.createCarrierForm = fb.group({
-      name: ['', Validators.required],
-      carrierType: ['', Validators.required],
+      name: ['', [Validators.required, Validators.maxLength(50)]],
+      carrierType: ['', [Validators.required, Validators.maxLength(50)]],
       trusted: [false, Validators.required],
-      taxNumber: ['', Validators.required],
+      taxNumber: ['', [Validators.required, Validators.maxLength(15)]],
       address: fb.group({
-        country: ['', Validators.required],
-        region: ['', Validators.required],
-        locality: ['', Validators.required]
+        country: ['', [Validators.required, Validators.maxLength(40)]],
+        region: ['', [Validators.required, Validators.maxLength(55)]],
+        locality: ['', [Validators.required, Validators.maxLength(50)]],
       })
     });
   }

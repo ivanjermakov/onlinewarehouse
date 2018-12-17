@@ -23,6 +23,8 @@
       <input matInput type="number" placeholder="Storage period"
              [formControl]="distributeGoodsForm.controls['storageTime']"
              required>
+      <mat-error *ngIf="distributeGoodsForm.controls['storageTime'].hasError('min')">Must be bigger than 0</mat-error>
+      <span matSuffix>days</span>
     </mat-form-field>
     <div>
       <button mat-button matStepperPrevious>Back</button>
