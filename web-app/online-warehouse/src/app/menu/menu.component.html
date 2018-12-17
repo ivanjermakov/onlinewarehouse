@@ -1,12 +1,13 @@
 <nav>
   <div>
-    <a class="menu-collapse text-dark" routerLink="" routerLinkActive="action-active"
+    <a routerLink="" routerLinkActive="action-active"
+       [ngClass]="{'text-dark': true, 'menu-collapse': !oneRole, 'menu-home': oneRole}"
        [routerLinkActiveOptions]="{exact: true}"
        (click)="closeAll()">Home
     </a>
   </div>
   <div *ngIf="userAuthorities.includes('ROLE_ADMIN')">
-    <a class="menu-collapse text-dark" (click)="toggle(0)">Admin</a>
+    <a class="menu-collapse text-dark" (click)="toggle(0)" *ngIf="!oneRole">Admin</a>
     <div [@openClose]="isOpenArr[0] ? 'open' : 'closed'"
          class="menu-a-container">
       <a class="menu-a text-dark" routerLink="list-companies" routerLinkActive="action-active">
@@ -21,7 +22,7 @@
     </div>
   </div>
   <div *ngIf="userAuthorities.includes('ROLE_COMPANY_ADMIN')">
-    <a class="menu-collapse text-dark" (click)="toggle(1)">Company Admin</a>
+    <a class="menu-collapse text-dark" (click)="toggle(1)" *ngIf="!oneRole">Company Admin</a>
     <div [@openClose]="isOpenArr[1] ? 'open' : 'closed'"
          class="menu-a-container">
       <a class="menu-a text-dark" routerLink="change-birthday-mail-template" routerLinkActive="action-active">
@@ -42,7 +43,7 @@
     </div>
   </div>
   <div *ngIf="userAuthorities.includes('ROLE_WAREHOUSE_OWNER')">
-    <a class="menu-collapse text-dark" (click)="toggle(2)">Owner</a>
+    <a class="menu-collapse text-dark" (click)="toggle(2)" *ngIf="!oneRole">Owner</a>
     <div [@openClose]="isOpenArr[2] ? 'open' : 'closed'"
          class="menu-a-container">
       <a class="menu-a text-dark" routerLink="reports" routerLinkActive="action-active">
@@ -51,7 +52,7 @@
     </div>
   </div>
   <div *ngIf="userAuthorities.includes('ROLE_DISPATCHER')">
-    <a class="menu-collapse text-dark" (click)="toggle(3)">Dispatcher</a>
+    <a class="menu-collapse text-dark" (click)="toggle(3)" *ngIf="!oneRole">Dispatcher</a>
     <div [@openClose]="isOpenArr[3] ? 'open' : 'closed'"
          class="menu-a-container">
       <a class="menu-a text-dark" routerLink="register-consignment-note" routerLinkActive="action-active">
@@ -66,7 +67,7 @@
     </div>
   </div>
   <div *ngIf="userAuthorities.includes('ROLE_MANAGER')">
-    <a class="menu-collapse text-dark" (click)="toggle(4)">Manager</a>
+    <a class="menu-collapse text-dark" (click)="toggle(4)" *ngIf="!oneRole">Manager</a>
     <div [@openClose]="isOpenArr[4] ? 'open' : 'closed'"
          class="menu-a-container">
       <a class="menu-a text-dark" routerLink="list-goods" routerLinkActive="action-active">
@@ -96,7 +97,7 @@
     </div>
   </div>
   <div *ngIf="userAuthorities.includes('ROLE_INSPECTOR')">
-    <a class="menu-collapse text-dark" (click)="toggle(5)">Inspector</a>
+    <a class="menu-collapse text-dark" (click)="toggle(5)" *ngIf="!oneRole">Inspector</a>
     <div [@openClose]="isOpenArr[5] ? 'open' : 'closed'"
          class="menu-a-container">
       <a class="menu-a text-dark" routerLink="list-warehouse" routerLinkActive="action-active">

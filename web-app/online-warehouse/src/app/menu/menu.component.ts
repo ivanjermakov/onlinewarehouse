@@ -37,6 +37,8 @@ export class MenuComponent implements OnInit {
 
   private userAuthorities: Array<String> = new Array<String>();
 
+  private oneRole: boolean = false;
+
   constructor(
     private auth: AuthenticationService,
     private router: Router,
@@ -49,13 +51,19 @@ export class MenuComponent implements OnInit {
     this.auth.getAuthorities().forEach(auth =>
       this.userAuthorities.push(auth.authority)
     );
+    if (this.userAuthorities.length === 1) {
+      this.isOpenArr = [true, true, true, true, true, true];
+      this.oneRole = true;
+    }
     this.webSocket.connect();
   }
 
   closeAll(){
-    this.isOpenArr.forEach((value, index, array) => {
-      array[index] = false;
-    });
+    if (!this.oneRole) {
+      this.isOpenArr.forEach((value, index, array) => {
+        array[index] = false;
+      });
+    }
   }
 
   toggle(toggle: number) {
