@@ -1,17 +1,12 @@
-<div class="content-wrapper">
-  <app-auth *ngIf="isAuth === true"></app-auth>
-
-  <div class="content" *ngIf="isAuth === false">
-    <header class="header-left">
-      <img class="logo" src="#">
-      <div class="logo-name">Имя компании</div>
-    </header>
-
-    <header class="header-right">
-      <div *ngIf="currentMenuName !== null" class="action-name">{{currentMenuName}}</div>
-    </header>
-
-    <app-left [currentMenuName]="currentMenuName" (onClick)="changeCurrentMenu($event)"></app-left>
-    <app-right [currentMenuName]="currentMenuName"></app-right>
-  </div>
+<mat-toolbar>
+  <span class="logo">
+    <img *ngIf="companyLogo" [src]="companyLogo"/>
+  </span>
+  <span class="company-name">{{companyName ? companyName : 'Online warehouse'}}</span>
+  <app-menu style="padding-bottom: 0.5em"></app-menu>
+</mat-toolbar>
+<div class="container">
+  <router-outlet></router-outlet>
 </div>
+
+

@@ -1,67 +1,66 @@
 package by.itechart.web.controller;
 
-import by.itechart.carrier.entity.Carrier;
-import by.itechart.carrier.enums.CarrierType;
-import by.itechart.common.entity.Address;
+import by.itechart.carrier.dto.*;
+import by.itechart.carrier.service.CarrierService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 @RestController
 @RequestMapping("/companies/{companyId}/carriers")
 public class CarrierController {
 
+    final private CarrierService carrierService;
+
+    @Autowired
+    public CarrierController(CarrierService carrierService) {
+        this.carrierService = carrierService;
+    }
+
     @GetMapping
-    public List<Carrier> getCarriersList(@PathVariable long companyId, Pageable pageable) {
-        ArrayList<Carrier> carriers = new ArrayList<>();
-        //get carriers by pageable and return page. Pageable = ?page=1&size=5 for example
-        for (int i = 0; i < 10; i++) {
-            carriers.add(createCarrier(i));
-        }
-        return carriers;
+    public Page<CarrierListDto> getCarriersList(@PathVariable long companyId,
+                                                Pageable pageable,
+                                                CarrierFilter carrierFilter) {
+        return carrierService.getCarriers(carrierFilter, companyId, pageable);
     }
 
     @PostMapping
-    public Long saveCarrier(@PathVariable long companyId, @RequestBody Carrier carrier) {
-        //save carrier and return id
-        Long carrierId = new Long(15);
-        return carrierId;
+    public Long saveCarrier(@PathVariable long companyId, @RequestBody CreateCarrierDto createCarrierDto) {
+        return carrierService.saveCarrier(createCarrierDto, companyId);
     }
 
     @GetMapping("/{carrierId}")
-    public Carrier getCarrier(@PathVariable long companyId, @PathVariable long carrierId) {
-        //get carrier
-        Carrier carrier = createCarrier(carrierId);
-        return carrier;
+    public CarrierDto getCarrier(@PathVariable long companyId, @PathVariable long carrierId) {
+        return carrierService.getCarrier(companyId, carrierId);
     }
 
     @PutMapping("/{carrierId}")
-    public Long editCarrier(@PathVariable long companyId, @PathVariable long carrierId, @RequestBody Carrier carrier) {
-        //edit carrier
-        return carrierId;
+    public Long editCarrier(@PathVariable long companyId, @PathVariable long carrierId, @RequestBody CreateCarrierDto createCarrierDto) {
+        return carrierService.editCarrier(createCarrierDto, companyId, carrierId);
     }
 
     @DeleteMapping("/{carrierId}")
     @ResponseStatus(value = HttpStatus.OK)
     public void deleteCarrier(@PathVariable long companyId, @PathVariable long carrierId) {
-        // delete carrier
+        carrierService.deleteCarrier(companyId, carrierId);
     }
 
+    @GetMapping("/{carrierId}/drivers")
+    public Page<DriverDto> getCarriersList(@PathVariable long carrierId,
+                                           Pageable pageable) {
+        return carrierService.getDrivers(carrierId, pageable);
+    }
 
-    private Carrier createCarrier(long i) {
-        Address address = new Address();
-        address.setCountry("country");
-        address.setLocality("locality");
-        address.setRegion("region");
-        Carrier carrier = new Carrier();
-        carrier.setAddress(address);
-        carrier.setName("carrier" + i);
-        carrier.setCarrierType(CarrierType.values()[new Random().nextInt(4)]);
-        carrier.setTaxNumber("100003" + i);
-        return carrier;
+    @PostMapping("/{carrierId}/drivers")
+    public Long getCarriersList(@PathVariable long carrierId,
+                                @RequestBody DriverDto driverDto) {
+        return carrierService.saveDriver(carrierId, driverDto);
+    }
+
+    @PostMapping("/{carrierId}/change-trusted")
+    public Long changeCarrierTrustedValue(@PathVariable long carrierId) {
+        return carrierService.changeCarrierTrustedValue(carrierId);
     }
 }

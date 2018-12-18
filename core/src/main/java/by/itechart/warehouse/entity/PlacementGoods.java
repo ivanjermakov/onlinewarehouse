@@ -3,23 +3,28 @@ package by.itechart.warehouse.entity;
 import by.itechart.common.entity.BaseEntity;
 import by.itechart.common.entity.Goods;
 import by.itechart.counterparty.entity.Counterparty;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "placement_goods")
 public class PlacementGoods extends BaseEntity {
-
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "goods_id")
     private Goods goods;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "placement_id")
     private Placement placement;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "counterparty_id")
     private Counterparty counterparty;
 
@@ -29,57 +34,10 @@ public class PlacementGoods extends BaseEntity {
     @Column(name = "storage_time_days")
     private Integer storageTimeDays;
 
+    @Column(name = "expiration_date")
+    private LocalDate expirationDate;
+
     @Column(name = "deleted")
     private LocalDate deleted;
 
-    public PlacementGoods() {
-    }
-
-    public Goods getGoods() {
-        return goods;
-    }
-
-    public void setGoods(Goods goods) {
-        this.goods = goods;
-    }
-
-    public Placement getPlacement() {
-        return placement;
-    }
-
-    public void setPlacement(Placement placement) {
-        this.placement = placement;
-    }
-
-    public Integer getAmount() {
-        return amount;
-    }
-
-    public void setAmount(Integer amount) {
-        this.amount = amount;
-    }
-
-    public Integer getStorageTimeDays() {
-        return storageTimeDays;
-    }
-
-    public void setStorageTimeDays(Integer storageTimeDays) {
-        this.storageTimeDays = storageTimeDays;
-    }
-
-    public Counterparty getCounterparty() {
-        return counterparty;
-    }
-
-    public void setCounterparty(Counterparty counterparty) {
-        this.counterparty = counterparty;
-    }
-
-    public LocalDate getDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(LocalDate deleted) {
-        this.deleted = deleted;
-    }
 }

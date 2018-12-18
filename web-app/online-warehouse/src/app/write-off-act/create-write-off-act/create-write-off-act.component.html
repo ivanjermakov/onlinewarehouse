@@ -1,0 +1,130 @@
+<mat-horizontal-stepper [linear]="true" #stepper>
+  <mat-step [stepControl]="createWriteOffActForm.controls['writeOffActType']" #step1>
+    <ng-template matStepLabel>Fill write off act type</ng-template>
+    <mat-form-field>
+      <mat-select [formControl]="createWriteOffActForm.controls['writeOffActType']"
+                  placeholder="Write off act type" name="sizeType" required>
+        <mat-option>None</mat-option>
+        <mat-option *ngFor="let type of getWriteOffActsTypes()" [value]="type">
+          {{type}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
+  <mat-step [stepControl]="createWriteOffActForm.controls['responsiblePerson']" #step2>
+    <ng-template matStepLabel>Fill responsible person</ng-template>
+    <mat-form-field>
+      <input matInput placeholder="Responsible person"
+             [formControl]="createWriteOffActForm.controls['responsiblePerson']" required>
+    </mat-form-field>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
+  <mat-step
+    [stepControl]="createWriteOffActForm.controls['writeOffActGoodsDtoList']" #step3>
+    <ng-template matStepLabel>Fill goods</ng-template>
+    <div [formGroup]="createWriteOffActForm">
+      <table *ngIf="(placementGoodsDtoList.length > 0 || goodsDtoList.length > 0)"
+             formArrayName="writeOffActGoodsDtoList" class="mat-table">
+        <thead>
+        <tr class="mat-header-row">
+          <th class="mat-header-cell">Name</th>
+          <th class="mat-header-cell">Placement type</th>
+          <th class="mat-header-cell">Measurement Unit</th>
+          <th class="mat-header-cell">Cost</th>
+          <ng-container *ngIf="placementGoods !== undefined">
+            <th class="mat-header-cell">Storage time</th>
+            <th class="mat-header-cell">Expiration time</th>
+          </ng-container>
+          <th class="mat-header-cell">Write-off type</th>
+          <th class="mat-header-cell">Amount</th>
+          <th class="mat-header-cell"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <ng-container *ngIf="placementGoods === undefined">
+          <tr *ngFor="let goods of goodsDtoList; let i = index">
+            <td class="mat-cell">{{goods.name}}</td>
+            <td class="mat-cell">{{goods.placementType}}</td>
+            <td class="mat-cell">{{goods.measurementUnit}}</td>
+            <td class="mat-cell">{{goods.cost}}</td>
+            <ng-container formGroupName="{{i}}">
+              <input type="hidden" formControlName="goodsId">
+              <td class="mat-cell">
+                <mat-form-field>
+                  <mat-select formControlName="writeOffType"
+                              placeholder="Write off type" name="writeOffType" required>
+                    <mat-option>None</mat-option>
+                    <mat-option *ngFor="let type of getWriteOffTypes()" [value]="type">
+                      {{type}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </td>
+              <td class="mat-cell">
+                <mat-form-field>
+                  <input matInput placeholder="Amount" type="number" formControlName="amount" required>
+                </mat-form-field>
+              </td>
+            </ng-container>
+            <td class="mat-cell">
+              <button mat-button (click)="deleteItem(i)">&#10006;</button>
+            </td>
+          </tr>
+        </ng-container>
+        <ng-container *ngIf="placementGoods !== undefined">
+          <tr *ngFor="let goods of placementGoodsDtoList; let i = index">
+            <td class="mat-cell">{{goods.goods.name}}</td>
+            <td class="mat-cell">{{goods.goods.placementType}}</td>
+            <td class="mat-cell">{{goods.goods.measurementUnit}}</td>
+            <td class="mat-cell">{{goods.goods.cost}}</td>
+            <td class="mat-cell">{{goods.storageTimeDays}}</td>
+            <td class="mat-cell">{{goods.expirationDate}}</td>
+            <ng-container formGroupName="{{i}}">
+              <input type="hidden" formControlName="placementGoods">
+              <td class="mat-cell">
+                <mat-form-field>
+                  <mat-select formControlName="writeOffType"
+                              placeholder="Write off type" name="writeOffType" required>
+                    <mat-option>None</mat-option>
+                    <mat-option *ngFor="let type of getWriteOffTypes()" [value]="type">
+                      {{type}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </td>
+              <td class="mat-cell">
+                <mat-form-field>
+                  <input matInput placeholder="Amount" type="number" formControlName="amount" required>
+                </mat-form-field>
+              </td>
+            </ng-container>
+            <td class="mat-cell">
+              <button mat-button (click)="deletePlacementItem(i)">&#10006;</button>
+            </td>
+          </tr>
+        </ng-container>
+        </tbody>
+      </table>
+      <button class="button-spacer" mat-button (click)="openModal()">Add goods</button>
+    </div>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
+  <mat-step #step4>
+    <ng-template matStepLabel>Done</ng-template>
+    <p>Write off act type: {{createWriteOffActForm.controls['writeOffActType'].value}}</p>
+    <p>Responsible person: {{createWriteOffActForm.controls['responsiblePerson'].value}}</p>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button (click)="onSubmit(createWriteOffActForm); stepper.reset()">Submit</button>
+    </div>
+  </mat-step>
+</mat-horizontal-stepper>

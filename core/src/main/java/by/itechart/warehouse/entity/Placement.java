@@ -3,16 +3,21 @@ package by.itechart.warehouse.entity;
 import by.itechart.common.entity.BaseEntity;
 import by.itechart.common.enums.MeasurementUnit;
 import by.itechart.common.enums.PlacementType;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "placement")
 public class Placement extends BaseEntity {
-
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "warehouse_id")
     private Warehouse warehouse;
 
@@ -36,59 +41,7 @@ public class Placement extends BaseEntity {
     @Column(name = "deleted")
     private LocalDate deleted;
 
-    public Integer getSize() {
-        return size;
-    }
-
-    public void setSize(Integer size) {
-        this.size = size;
-    }
-
-    public Warehouse getWarehouse() {
-        return warehouse;
-    }
-
-    public void setWarehouse(Warehouse warehouse) {
-        this.warehouse = warehouse;
-    }
-
-    public PlacementType getPlacementType() {
-        return placementType;
-    }
-
-    public void setPlacementType(PlacementType placementType) {
-        this.placementType = placementType;
-    }
-
-    public MeasurementUnit getMeasurementUnit() {
-        return measurementUnit;
-    }
-
-    public void setMeasurementUnit(MeasurementUnit measurementUnit) {
-        this.measurementUnit = measurementUnit;
-    }
-
-    public Integer getStorageCost() {
-        return storageCost;
-    }
-
-    public void setStorageCost(Integer storageCost) {
-        this.storageCost = storageCost;
-    }
-
-    public List<PlacementGoods> getPlacementGoodsList() {
-        return placementGoodsList;
-    }
-
-    public void setPlacementGoodsList(List<PlacementGoods> placementGoodsList) {
-        this.placementGoodsList = placementGoodsList;
-    }
-
-    public LocalDate getDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(LocalDate deleted) {
-        this.deleted = deleted;
+    public Placement(Long id) {
+        super(id);
     }
 }

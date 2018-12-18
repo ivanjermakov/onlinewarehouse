@@ -1,0 +1,93 @@
+<div>
+  <form>
+    <mat-form-field appearance="outline">
+      <mat-label>Name</mat-label>
+      <input [formControl]="carrierFilterForm.controls['name']" matInput placeholder="Name">
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Tax number</mat-label>
+      <input [formControl]="carrierFilterForm.controls['taxNumber']" matInput placeholder="Tax number">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select [formControl]="carrierFilterForm.controls['carrierType']"
+                  placeholder="Carrier type" name="carrierType">
+        <mat-option>None</mat-option>
+        <mat-option *ngFor="let type of getCarrierTypes()" [value]="type">
+          {{type}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+
+  <div style="display: flex; justify-content: center; align-items: center">
+    <table mat-table [dataSource]="page ? page.content : null" class="hoverable-table">
+
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>#</th>
+        <td mat-cell *matCellDef="let carrier; let i = index">{{i + 1}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let carrier">{{carrier.name}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="taxNumber">
+        <th mat-header-cell *matHeaderCellDef>Tax number</th>
+        <td mat-cell *matCellDef="let carrier">{{carrier.taxNumber}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="carrierType">
+        <th mat-header-cell *matHeaderCellDef>Type</th>
+        <td mat-cell *matCellDef="let carrier">{{carrierTypeEnum[carrier.carrierType]}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="trusted">
+        <th mat-header-cell *matHeaderCellDef>Trusted</th>
+        <td mat-cell *matCellDef="let carrier">
+          <span
+            matTooltip="Trusted"
+            *ngIf="carrier.trusted">
+            <mat-icon>done</mat-icon>
+          </span>
+          <span
+            matTooltip="Not trusted"
+            *ngIf="!carrier.trusted">
+            <mat-icon>clear</mat-icon>
+          </span>
+        </td>
+      </ng-container>
+
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"
+          (click)="onRowClicked(row)"></tr>
+    </table>
+  </div>
+
+  <div *ngIf="page && page.content.length === 0"
+       style="display: flex; justify-content: center; align-items: center">
+    <p>Not found</p>
+  </div>
+
+  <div *ngIf="loading$ | async"
+       style="display: flex; justify-content: center; align-items: center">
+    <mat-progress-spinner
+      color="primary"
+      mode="indeterminate">
+    </mat-progress-spinner>
+  </div>
+
+  <div *ngIf="addButton && addButton === true"
+       style="display: flex; justify-content: center; align-items: center">
+    <button mat-stroked-button color="primary" (click)="addCarrierModal()">Add carrier</button>
+  </div>
+
+  <mat-paginator [length]="page ? page.totalElements : 0"
+                 [pageIndex]="pageable.page"
+                 [pageSize]="pageable.size"
+                 [pageSizeOptions]="pageSizeOptions"
+                 (page)="pageChanged($event)">
+  </mat-paginator>
+</div>

@@ -1,60 +1,58 @@
 package by.itechart.web.controller;
 
-import by.itechart.common.enums.PlacementType;
-import by.itechart.warehouse.entity.Placement;
+import by.itechart.warehouse.dto.CreatePlacementDto;
+import by.itechart.warehouse.dto.PlacementDto;
+import by.itechart.warehouse.service.PlacementService;
+import by.itechart.writeoffact.dto.PlacementCreateWriteOffActDto;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 @RestController
 @RequestMapping("/companies/{companyId}/warehouses/{warehouseId}/placements")
 public class PlacementController {
 
+    private PlacementService placementService;
+
+    @Autowired
+    public PlacementController(PlacementService placementService) {
+        this.placementService = placementService;
+    }
+
     @GetMapping
-    public List<Placement> getPlacementList(@PathVariable long companyId, @PathVariable long warehouseId,
-                                            Pageable pageable) {
-        ArrayList<Placement> placements = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            placements.add(createPlacement());
-        }
-        return placements;
+    public Page<PlacementDto> getPlacementList(@PathVariable long companyId, @PathVariable long warehouseId,
+                                               Pageable pageable) {
+        return placementService.getPlacements(companyId, warehouseId, pageable);
     }
 
     @PostMapping
     public Long savePlacement(@PathVariable long companyId, @PathVariable long warehouseId,
-                              @RequestBody Placement placement) {
-        Long placementId = new Long(7);
-        return placementId;
+                              @RequestBody CreatePlacementDto placement) {
+        return placementService.savePlacement(placement, companyId, warehouseId);
     }
 
     @GetMapping("/{placementId}")
-    public Placement getPlacement(@PathVariable long companyId, @PathVariable long warehouseId,
-                                  @PathVariable long placementId) {
-        Placement placement = createPlacement();
-        return placement;
+    public PlacementDto getPlacement(@PathVariable long companyId, @PathVariable long warehouseId,
+                                     @PathVariable long placementId) {
+        return placementService.getPlacement(companyId, warehouseId, placementId);
     }
 
     @PutMapping("/{placementId}")
-    public Long editPlacement(@PathVariable long companyId, @PathVariable long warehouseId,
-                              @PathVariable long placementId, @RequestBody Placement placement) {
-        return placementId;
+    public Long editPlacement(@RequestBody PlacementDto placement) {
+        return placementService.editPlacement(placement);
+    }
+
+    @PostMapping("/{placementId}/create-write-off-act")
+    public Long saveWriteOffAct(@PathVariable long companyId, @PathVariable long warehouseId,
+                                @PathVariable long placementId, @RequestBody PlacementCreateWriteOffActDto placementCreateWriteOffActDto) {
+        return placementService.savePlacementWriteOffAct(companyId, warehouseId, placementId, placementCreateWriteOffActDto);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("/{placementId}")
-    public void deletePlacement(@PathVariable long companyId, @PathVariable long warehouseId,
-                                @PathVariable long placementId) {
-    }
-
-    private Placement createPlacement() {
-        Placement placement = new Placement();
-        placement.setPlacementType(PlacementType.values()[new Random().nextInt(4)]);
-        placement.setSize(new Random().nextInt(100));
-        placement.setStorageCost(new Random().nextInt(100));
-        return placement;
+    public void deletePlacement(@PathVariable long placementId) {
+        placementService.deletePlacement(placementId);
     }
 }

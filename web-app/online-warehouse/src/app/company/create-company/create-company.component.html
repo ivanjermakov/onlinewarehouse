@@ -1,0 +1,170 @@
+<mat-horizontal-stepper linear #stepper>
+  <mat-step [stepControl]="createCompanyForm.controls['name']">
+    <ng-template matStepLabel>Fill company name</ng-template>
+    <mat-form-field>
+      <input matInput placeholder="Company name" [formControl]="createCompanyForm.controls['name']" required>
+      <mat-error *ngIf="createCompanyForm.controls['name'].hasError('required')">This field is required</mat-error>
+      <mat-error *ngIf="createCompanyForm.controls['name'].hasError('maxlength')">Must be shorter than 40 characters</mat-error>
+    </mat-form-field>
+    <div>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
+  <mat-step [stepControl]="createCompanyForm.controls['sizeType']" [optional]="isOptional">
+    <ng-template matStepLabel>Fill company plan</ng-template>
+    <mat-form-field>
+      <mat-select [formControl]="createCompanyForm.controls['sizeType']"
+                  placeholder="Company plan" name="sizeType">
+        <mat-option>None</mat-option>
+        <mat-option *ngFor="let type of getSizeTypes()" [value]="type">
+          {{type}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
+  <mat-step [stepControl]="createCompanyForm.controls['createUserDto']">
+    <ng-template matStepLabel>Fill user info</ng-template>
+    <div class="form-container">
+      <mat-form-field>
+        <input matInput
+               placeholder="Username"
+               [formControl]="createCompanyForm.controls['createUserDto'].controls['username']"
+               required>
+        <mat-error *ngIf="createCompanyForm.controls['createUserDto'].controls['username']">{{getUsernameErrors()}}
+        </mat-error>
+      </mat-form-field>
+      <!--<mat-form-field>-->
+        <!--<input matInput-->
+               <!--type="password"-->
+               <!--placeholder="Password"-->
+               <!--[formControl]="createCompanyForm.controls['createUserDto'].controls['password']"-->
+               <!--required>-->
+        <!--<mat-error *ngIf="createCompanyForm.controls['createUserDto'].controls['password']">{{getPasswordErrors()}}-->
+        <!--</mat-error>-->
+      <!--</mat-form-field>-->
+      <mat-form-field>
+        <input matInput
+               placeholder="Email"
+               [formControl]="createCompanyForm.controls['createUserDto'].controls['email']"
+               required>
+        <mat-error *ngIf="createCompanyForm.controls['createUserDto'].controls['email']">{{getEmailErrors()}}
+        </mat-error>
+      </mat-form-field>
+      <div>
+        <mat-form-field>
+          <input matInput
+                 placeholder="First name"
+                 [formControl]="createCompanyForm.controls['createUserDto'].controls['firstname']"
+                 required>
+          <mat-error *ngIf="createCompanyForm.controls['createUserDto'].controls['firstname'].hasError('required')">This field is required</mat-error>
+          <mat-error *ngIf="createCompanyForm.controls['createUserDto'].controls['firstname'].hasError('maxlength')">Must be shorter than 40 characters</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput
+                 placeholder="Last name"
+                 [formControl]="createCompanyForm.controls['createUserDto'].controls['lastname']"
+                 required>
+          <mat-error *ngIf="createCompanyForm.controls['createUserDto'].controls['lastname'].hasError('required')">This field is required</mat-error>
+          <mat-error *ngIf="createCompanyForm.controls['createUserDto'].controls['lastname'].hasError('maxlength')">Must be shorter than 40 characters</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput
+                 placeholder="Patronymic"
+                 [formControl]="createCompanyForm.controls['createUserDto'].controls['patronymic']">
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field>
+          <input matInput
+                 placeholder="Country"
+                 [matAutocomplete]="countryAuto"
+                 [formControl]="createCompanyForm.controls['createUserDto'].controls['address'].controls['country']"
+                 required>
+          <mat-error *ngIf="createCompanyForm.controls['createUserDto'].controls['address'].controls['country'].hasError('required')">This field is required</mat-error>
+          <mat-error *ngIf="createCompanyForm.controls['createUserDto'].controls['address'].controls['country'].hasError('maxlength')">Must be shorter than 40 characters</mat-error>
+          <mat-autocomplete #countryAuto="matAutocomplete"
+                            (optionSelected)="getRegions($event)">
+            <mat-option *ngFor="let option of countryFilteredOptions | async" [value]="option">
+              {{option.title}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput
+                 placeholder="Region"
+                 [matAutocomplete]="regionAuto"
+                 [formControl]="createCompanyForm.controls['createUserDto'].controls['address'].controls['region']"
+                 required>
+          <mat-error *ngIf="createCompanyForm.controls['createUserDto'].controls['address'].controls['region'].hasError('required')">This field is required</mat-error>
+          <mat-error *ngIf="createCompanyForm.controls['createUserDto'].controls['address'].controls['region'].hasError('maxlength')">Must be shorter than 55 characters</mat-error>
+          <mat-autocomplete #regionAuto="matAutocomplete" [displayWith]="regionDisplayFn">
+            <mat-option *ngFor="let option of regionFilteredOptions | async" [value]="option.title">
+              {{option.title}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput
+                 placeholder="Locality"
+                 [formControl]="createCompanyForm.controls['createUserDto'].controls['address'].controls['locality']"
+                 required>
+          <mat-error *ngIf="createCompanyForm.controls['createUserDto'].controls['address'].controls['locality'].hasError('required')">This field is required</mat-error>
+          <mat-error *ngIf="createCompanyForm.controls['createUserDto'].controls['address'].controls['locality'].hasError('maxlength')">Must be shorter than 50 characters</mat-error>
+        </mat-form-field>
+      </div>
+      <mat-form-field style="width: 180px">
+        <input matInput
+               [matDatepicker]="pickerTo"
+               [formControl]="createCompanyForm.controls['createUserDto'].controls['birth']"
+               [max]="today"
+               placeholder="Birth"
+               required>
+        <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
+        <mat-datepicker #pickerTo startView="multi-year"></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
+  <!--<mat-step [stepControl]="createCompanyForm.controls['password']">-->
+  <!--<ng-template matStepLabel>Fill password</ng-template>-->
+  <!--<mat-form-field>-->
+  <!--<input matInput type="password" placeholder="Password" [formControl]="createCompanyForm.controls['password']"-->
+  <!--required>-->
+  <!--</mat-form-field>-->
+  <!--<div>-->
+  <!--<button mat-button matStepperPrevious>Back</button>-->
+  <!--<button mat-button matStepperNext>Next</button>-->
+  <!--</div>-->
+  <!--</mat-step>-->
+  <mat-step [stepControl]="createCompanyForm.controls['logo']">
+    <ng-template matStepLabel>Choose company logotipo</ng-template>
+    <div>
+      <img [src]="imageSrc" style="max-width:300px;max-height:300px"/>
+    </div>
+    <div class="upload-btn-wrapper">
+      <button class="btn">Choose file</button>
+      <input name="imageUrl" type="file" accept="image/*"
+             [formControl]="createCompanyForm.controls['logo']"
+             (change)="handleInputChange($event)">
+    </div>
+    <div>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Done</ng-template>
+    <p>Company name: {{createCompanyForm.controls['name'].value}}</p>
+    <p>Company plan: {{createCompanyForm.controls['sizeType'].value}}</p>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button (click)="onSubmit(createCompanyForm); stepper.reset()">Submit</button>
+    </div>
+  </mat-step>
+</mat-horizontal-stepper>

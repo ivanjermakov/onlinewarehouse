@@ -1,0 +1,68 @@
+<div class="form-container">
+  <mat-form-field appearance="outline">
+    <input matInput
+           placeholder="Name"
+           [formControl]="createGoodsForm.controls['name']"
+           required>
+    <mat-error *ngIf="createGoodsForm.controls['name'].hasError('required')">This field is required</mat-error>
+    <mat-error *ngIf="createGoodsForm.controls['name'].hasError('maxlength')">Must be shorter than 70 characters</mat-error>
+  </mat-form-field>
+  <div>
+    <mat-form-field appearance="outline">
+      <mat-select [formControl]="createGoodsForm.controls['placementType']"
+                  placeholder="Placement type">
+        <mat-option *ngFor="let type of getPlacementTypes()" [value]="type">
+          {{placementTypeEnum[type]}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="createGoodsForm.controls['placementType'].hasError('required')">This field is required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-select [formControl]="createGoodsForm.controls['measurementUnit']"
+                  placeholder="Measurement unit">
+        <mat-option *ngFor="let unit of getMeasurementUnits()" [value]="unit">
+          {{unit}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="createGoodsForm.controls['measurementUnit'].hasError('required')">This field is required</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <input matInput
+             type="number"
+             placeholder="Cost"
+             [formControl]="createGoodsForm.controls['cost']"
+             required>
+      <span matPrefix>$&nbsp;</span>
+      <mat-error *ngIf="createGoodsForm.controls['cost'].hasError('required')">This field is required</mat-error>
+      <mat-error *ngIf="createGoodsForm.controls['cost'].hasError('min')">Must be a positive number</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <input matInput
+             type="number"
+             placeholder="Weight"
+             [formControl]="createGoodsForm.controls['weight']"
+             required>
+      <span matSuffix>kg</span>
+      <mat-error *ngIf="createGoodsForm.controls['weight'].hasError('required')">This field is required</mat-error>
+      <mat-error *ngIf="createGoodsForm.controls['weight'].hasError('min')">Must be a positive number</mat-error>
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-form-field appearance="outline">
+      <input matInput
+             placeholder="Labelling"
+             [formControl]="createGoodsForm.controls['labelling']"
+             required>
+      <mat-error *ngIf="createGoodsForm.controls['labelling'].hasError('required')">This field is required</mat-error>
+      <mat-error *ngIf="createGoodsForm.controls['labelling'].hasError('maxlength')">Must be shorter than 50 characters</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <textarea matInput
+                placeholder="Description"
+                [formControl]="createGoodsForm.controls['description']">
+      </textarea>
+    </mat-form-field>
+  </div>
+  <button mat-raised-button (click)="onSubmit()" [disabled]="!createGoodsForm.valid">Submit</button>
+</div>

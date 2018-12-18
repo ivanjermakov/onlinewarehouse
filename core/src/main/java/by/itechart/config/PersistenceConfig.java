@@ -60,6 +60,7 @@ public class PersistenceConfig {
         factory.setPackagesToScan("by.itechart");
         factory.setDataSource(dataSource());
         factory.setJpaProperties(jpaProperties());
+
         return factory;
     }
 
@@ -70,6 +71,7 @@ public class PersistenceConfig {
         properties.setProperty("hibernate.show_sql", showSql);
         properties.setProperty("hibernate.format_sql", formatSql);
         properties.setProperty("hibernate.hbm2ddl.auto", creationPolicy);
+        properties.setProperty("hibernate.temp.use_jdbc_metadata_defaults", "false");
         return properties;
     }
 
@@ -80,5 +82,3 @@ public class PersistenceConfig {
         return transactionManager;
     }
 }
-
-

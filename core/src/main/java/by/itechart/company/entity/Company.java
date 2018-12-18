@@ -2,16 +2,24 @@ package by.itechart.company.entity;
 
 import by.itechart.common.entity.BaseEntity;
 import by.itechart.common.entity.User;
+import by.itechart.company.dto.CompanyDto;
 import by.itechart.company.enums.CompanySize;
 import by.itechart.warehouse.entity.Warehouse;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.data.elasticsearch.annotations.Document;
 
 import javax.persistence.*;
 import java.util.List;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "company")
+@Document(indexName = "warehouse", type = "companies")
 public class Company extends BaseEntity {
-
     @Column(name = "name")
     private String name;
 
@@ -19,44 +27,25 @@ public class Company extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private CompanySize sizeType;
 
-    @OneToMany(mappedBy = "company")
+    @Column(name = "logo")
+    private String logo;
+
+    @OneToMany(mappedBy = "company", fetch = FetchType.LAZY)
     private List<Warehouse> warehouses;
 
-    @OneToMany(mappedBy = "company")
+    @OneToMany(mappedBy = "company", fetch = FetchType.LAZY)
     private List<User> users;
 
-    public Company() {
+    @OneToMany(mappedBy = "company", fetch = FetchType.LAZY)
+    private List<CompanyAction> companyActions;
+
+    public Company(Long id) {
+        super(id);
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public CompanySize getSizeType() {
-        return sizeType;
-    }
-
-    public void setSizeType(CompanySize sizeType) {
-        this.sizeType = sizeType;
-    }
-
-    public List<Warehouse> getWarehouses() {
-        return warehouses;
-    }
-
-    public void setWarehouses(List<Warehouse> warehouses) {
-        this.warehouses = warehouses;
-    }
-
-    public List<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(List<User> users) {
-        this.users = users;
+    public Company(CompanyDto company) {
+        setId(company.getId());
+        setName(company.getName());
+        setSizeType(company.getSizeType());
     }
 }

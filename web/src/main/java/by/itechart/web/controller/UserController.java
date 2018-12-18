@@ -1,66 +1,85 @@
 package by.itechart.web.controller;
 
-import by.itechart.common.entity.Address;
+import by.itechart.common.dto.AuthorityDto;
+import by.itechart.common.dto.CreateUserDto;
+import by.itechart.common.dto.UserDto;
+import by.itechart.common.dto.UserFilter;
 import by.itechart.common.entity.User;
-import org.springframework.http.ResponseEntity;
+import by.itechart.common.repository.PieChartData;
+import by.itechart.common.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
-import java.awt.print.Pageable;
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("/companies/{companyId}/users")
 public class UserController {
 
+    private final UserService userService;
+
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+
     @GetMapping
-    public List<User> getUsersList(@PathVariable long companyId, @RequestParam(required = false) Pageable pageable) {
-        ArrayList<User> users = new ArrayList<>();
-        //get users by pageable and return page. Pageable = ?page=1&size=5 for example
-        for (int i = 0; i < 10; i++) {
-            users.add(createUser(i));
-        }
-        return users;
+    public Page<UserDto> getUsersList(@PathVariable long companyId,
+                                      UserFilter userFilter,
+                                      Pageable pageable) {
+        return userService.getUsers(companyId, userFilter, pageable);
+    }
+
+    @GetMapping("/role-statistics")
+    public List<PieChartData> getUserRolesStatistics(@PathVariable long companyId) {
+        return userService.getUserRoleStatistics(companyId);
     }
 
     @PostMapping
-    public Long saveUser(@PathVariable long companyId, @RequestBody User user) {
-        //save user and return id
-        Long userId = new Long(15);
-        return userId;
+    public Long saveUser(@PathVariable long companyId, @RequestBody CreateUserDto createUserDto) {
+        return userService.saveUser(companyId, createUserDto);
     }
 
     @GetMapping("/{userId}")
-    public User getUser(@PathVariable long companyId, @PathVariable long userId) {
-        //get user
-        User user = createUser(userId);
-        return user;
+    public UserDto getUser(@PathVariable long companyId, @PathVariable long userId) {
+        return userService.getUser(userId, companyId);
     }
 
     @PutMapping("/{userId}")
     public Long editUser(@PathVariable long companyId, @PathVariable long userId, @RequestParam User user) {
-        //edit user
-        return userId;
+        return userService.saveUser(user);
     }
 
-    @DeleteMapping("/{userId}")
-    public ResponseEntity deleteUser(@PathVariable long companyId, @PathVariable long userId) {
-        //delete user
-        return ResponseEntity.ok(null);
+    @PutMapping("/{userId}/authorities")
+    public Long changeUserAuthorities(@PathVariable long companyId,
+                                      @PathVariable long userId,
+                                      @RequestBody List<AuthorityDto> authorities) {
+        return userService.changeUserAuthorities(userId, companyId, authorities);
     }
 
-    private User createUser(long i) {
-        Address address = new Address();
-        address.setCountry("country");
-        address.setLocality("locality");
-        address.setRegion("region");
-        User user = new User();
-        user.setFirstName("name_" + i);
-        user.setLastName("last_name");
-        user.setBirth(LocalDate.now());
-        user.setEmail("email@email.com");
-        user.setAddress(address);
-        return user;
+    @PostMapping("/{userId}/change-enabled")
+    public Long changeEnabledValue(@PathVariable long companyId,
+                                   @PathVariable long userId) {
+        return userService.changeEnabledValue(userId, companyId);
+    }
+
+    @PostMapping("/{userId}/set-deleted")
+    public Long setDeleted(@PathVariable long companyId,
+                           @PathVariable long userId) {
+        return userService.setDeleted(userId, companyId);
+    }
+
+    @PostMapping("/{userId}/reset-password")
+    public Long resetPassword(@PathVariable long companyId,
+                              @PathVariable long userId) {
+        return userService.resetPassword(userId, companyId);
+    }
+
+
+    @GetMapping("/validate-username")
+    public Boolean validateUsername(String username) {
+        return userService.canUseUsername(username);
     }
 }

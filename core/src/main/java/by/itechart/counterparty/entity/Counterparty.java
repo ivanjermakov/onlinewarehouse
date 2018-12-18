@@ -4,19 +4,26 @@ import by.itechart.common.entity.Address;
 import by.itechart.common.entity.BaseEntity;
 import by.itechart.company.entity.Company;
 import by.itechart.counterparty.enums.CounterpartyType;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.data.elasticsearch.annotations.Document;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "counterparty")
+@Document(indexName = "warehouse", type = "counterparties")
 public class Counterparty extends BaseEntity {
-
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "address_id")
     private Address address;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id")
     private Company company;
 
@@ -32,55 +39,4 @@ public class Counterparty extends BaseEntity {
 
     @Column(name = "deleted")
     private LocalDate deleted;
-
-    public Counterparty() {
-    }
-
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
-    }
-
-    public Company getCompany() {
-        return company;
-    }
-
-    public void setCompany(Company company) {
-        this.company = company;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public CounterpartyType getCounterpartyType() {
-        return counterpartyType;
-    }
-
-    public void setCounterpartyType(CounterpartyType counterpartyType) {
-        this.counterpartyType = counterpartyType;
-    }
-
-    public String getTaxNumber() {
-        return taxNumber;
-    }
-
-    public void setTaxNumber(String taxNumber) {
-        this.taxNumber = taxNumber;
-    }
-
-    public LocalDate getDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(LocalDate deleted) {
-        this.deleted = deleted;
-    }
 }

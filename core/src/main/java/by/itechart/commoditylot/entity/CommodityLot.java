@@ -1,22 +1,29 @@
 package by.itechart.commoditylot.entity;
 
+import by.itechart.commoditylot.enums.CommodityLotStatus;
 import by.itechart.commoditylot.enums.CommodityLotType;
 import by.itechart.common.entity.BaseEntity;
 import by.itechart.company.entity.Company;
 import by.itechart.counterparty.entity.Counterparty;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.List;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "commodity_lot")
 public class CommodityLot extends BaseEntity {
-
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id")
     private Company company;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "counterparty_id")
     private Counterparty counterparty;
 
@@ -24,41 +31,13 @@ public class CommodityLot extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private CommodityLotType commodityLotType;
 
-    @OneToMany(mappedBy = "commodityLot")
+    @Column(name = "commodity_lot_status")
+    @Enumerated(EnumType.STRING)
+    private CommodityLotStatus commodityLotStatus;
+
+    @Column(name = "creation")
+    private LocalDate creation;
+
+    @OneToMany(mappedBy = "commodityLot", fetch = FetchType.LAZY)
     private List<CommodityLotGoods> commodityLotGoodsList;
-
-    public CommodityLot() {
-    }
-
-    public Company getCompany() {
-        return company;
-    }
-
-    public void setCompany(Company company) {
-        this.company = company;
-    }
-
-    public Counterparty getCounterparty() {
-        return counterparty;
-    }
-
-    public void setCounterparty(Counterparty counterparty) {
-        this.counterparty = counterparty;
-    }
-
-    public CommodityLotType getCommodityLotType() {
-        return commodityLotType;
-    }
-
-    public void setCommodityLotType(CommodityLotType commodityLotType) {
-        this.commodityLotType = commodityLotType;
-    }
-
-    public List<CommodityLotGoods> getCommodityLotGoodsList() {
-        return commodityLotGoodsList;
-    }
-
-    public void setCommodityLotGoodsList(List<CommodityLotGoods> commodityLotGoodsList) {
-        this.commodityLotGoodsList = commodityLotGoodsList;
-    }
 }

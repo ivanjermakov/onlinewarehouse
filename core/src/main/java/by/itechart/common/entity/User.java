@@ -1,120 +1,89 @@
 package by.itechart.common.entity;
 
 import by.itechart.company.entity.Company;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "\"user\"")
+@Table(name = "users")
+@Getter
+@Setter
+@NoArgsConstructor
 public class User extends BaseEntity {
+    @Column(name = "username", length = 50, unique = true)
+    @NotNull
+    @Size(min = 4, max = 50)
+    private String username;
+
+    @Column(name = "password", length = 100)
+//    @NotNull
+    @Size(min = 4, max = 100)
+    private String password;
+
+    //    TODO: should be firstName
+    @Column(name = "first_name", length = 50)
+    @NotNull
+    @Size(max = 50)
+    private String firstname;
+
+    //    TODO: should be lastName
+    @Column(name = "last_name", length = 50)
+    @NotNull
+    @Size(max = 50)
+    private String lastname;
+
+    @Column(name = "email", length = 50)
+    @NotNull
+    @Email
+    @Size(min = 4, max = 50)
+    private String email;
+
+    @Column(name = "activation_code")
+    private String activationCode;
 
     @ManyToOne
     @JoinColumn(name = "company_id")
     private Company company;
 
-    @OneToOne
-    @JoinColumn(name = "address_id")
-    private Address address;
-
-    @Column(name = "first_name")
-    private String firstName;
-
-    @Column(name = "last_name")
-    private String lastName;
-
     @Column(name = "patronymic")
     private String patronymic;
-
-    @Column(name = "birth")
-    private LocalDate birth;
-
-    @Column(name = "email")
-    private String email;
-
-    @ManyToMany
-    @JoinTable(name = "user_role",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
-    )
-    private List<Role> roles;
 
     @Column(name = "deleted")
     private LocalDate deleted;
 
-    public User() {
-    }
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "address_id")
+    private Address address;
 
-    public Company getCompany() {
-        return company;
-    }
+    @Column(name = "birth")
+    private LocalDate birth;
 
-    public void setCompany(Company company) {
-        this.company = company;
-    }
+    @Column(name = "enabled")
+    @NotNull
+    private Boolean enabled;
 
-    public Address getAddress() {
-        return address;
-    }
+    @Column(name = "lastpasswordresrtdate")
+    @Temporal(TemporalType.TIMESTAMP)
+//    @NotNull
+    private Date lastPasswordResetDate;
 
-    public void setAddress(Address address) {
-        this.address = address;
-    }
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_authority",
+            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "authority_id", referencedColumnName = "id")})
+    private List<Authority> authorities;
 
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getPatronymic() {
-        return patronymic;
-    }
-
-    public void setPatronymic(String patronymic) {
-        this.patronymic = patronymic;
-    }
-
-    public LocalDate getBirth() {
-        return birth;
-    }
-
-    public void setBirth(LocalDate birth) {
-        this.birth = birth;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public List<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
-    }
-
-    public LocalDate getDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(LocalDate deleted) {
-        this.deleted = deleted;
+    public void addAuthority(Authority authority) {
+        this.authorities.add(authority);
     }
 }

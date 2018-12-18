@@ -1,0 +1,13 @@
+<div class="create-driver">
+  <mat-form-field class="full-width">
+    <input matInput placeholder="Driver info" [formControl]="driverControl" required>
+    <mat-error *ngIf="driverControl.hasError('required') && !driverControl.hasError('maxlength')">
+      Value is required
+    </mat-error>
+    <mat-error *ngIf="driverControl.hasError('maxlength')">
+      Must be less than 70 characters, now {{driverControl.value.length}}
+    </mat-error>
+  </mat-form-field>
+  <br>
+  <button mat-raised-button (click)="submitted()" [disabled]="!driverControl.valid">Submit</button>
+</div>

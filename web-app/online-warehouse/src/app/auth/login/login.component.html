@@ -1,0 +1,40 @@
+﻿<div class="login">
+  <mat-card style="width: 30vw">
+    <mat-card-header>
+      <mat-card-title>SIGN IN</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form (submit)="login()">
+        <div>
+          <mat-form-field appearance="outline" style="width: 95%">
+            <mat-label>Username</mat-label>
+            <input matInput placeholder="Username" type="text"
+                   [formControl]="loginForm.controls['login']"
+                   autocomplete="username"
+                   required/>
+            <mat-error *ngIf="loginForm.controls['login'].hasError('required')">Username is required</mat-error>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field appearance="outline" style="width: 95%">
+            <mat-label>Password</mat-label>
+            <input matInput placeholder="Password" type="password"
+                   [formControl]="loginForm.controls['password']"
+                   autocomplete="current-password"
+                   required/>
+            <mat-error *ngIf="loginForm.controls['password'].hasError('required')">Password is required</mat-error>
+          </mat-form-field>
+          <mat-error *ngIf="credError">Credentials incorrect, please check login and password</mat-error>
+          <mat-error *ngIf="connectionError">Connection refused, please try later</mat-error>
+        </div>
+        <div class="submit-content">
+          <img *ngIf="loading"
+               src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="/>
+        </div>
+        <div class="submit-content">
+          <button mat-button [disabled]="loading || !loginForm.valid">LOGIN</button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

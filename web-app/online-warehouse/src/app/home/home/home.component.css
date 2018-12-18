@@ -1,0 +1,14 @@
+.card {
+  width: 330px;
+  margin: 20px;
+}
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.card-content > p {
+  font-size: 16px;
+}

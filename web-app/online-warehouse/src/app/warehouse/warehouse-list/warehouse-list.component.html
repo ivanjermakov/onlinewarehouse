@@ -1,0 +1,147 @@
+<div class="view-toggle-container">
+  <mat-slide-toggle class="view-toggle" (change)="tableView = !tableView">Table view</mat-slide-toggle>
+</div>
+<div *ngIf="!tableView">
+  <div *ngIf="page" style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center">
+    <mat-card *ngFor="let warehouse of page.content" style="width: 430px; margin: 15px">
+      <mat-card-header>
+        <mat-card-title>{{warehouse.name}}</mat-card-title>
+        <mat-card-subtitle>
+          {{warehouse.address.country}}, {{warehouse.address.region}}, {{warehouse.address.locality}}
+        </mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p>Count of placements - {{warehouse.placements.length}}</p>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Placements
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <span *ngIf="warehouse.placements.length === 0">No placements</span>
+          <ng-container *ngIf="warehouse.placements.length > 0">
+            <mat-tab-group>
+              <mat-tab [label]="'#' + (i+1)" *ngFor="let placement of warehouse.placements; let i = index">
+                <table class="mat-table">
+                  <tbody>
+                  <tr class="mat-row">
+                    <td class="mat-cell border-right">Size</td>
+                    <td class="mat-cell">{{placement.size}}</td>
+                  </tr>
+                  <tr class="mat-row">
+                    <td class="mat-cell border-right">Placement Type</td>
+                    <td class="mat-cell">{{placementType[placement.placementType]}}</td>
+                  </tr>
+                  <tr class="mat-row">
+                    <td class="mat-cell border-right">Measurement unit</td>
+                    <td class="mat-cell">{{placement.measurementUnit}}</td>
+                  </tr>
+                  <tr class="mat-row">
+                    <td class="mat-cell border-right">Storage cost</td>
+                    <td class="mat-cell">{{placement.storageCost}}</td>
+                  </tbody>
+                </table>
+                <button mat-raised-button (click)="placementDetails(warehouse.id, placement.id)">Details</button>
+              </mat-tab>
+            </mat-tab-group>
+          </ng-container>
+        </mat-expansion-panel>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button *ngIf="roleManager" (click)="createOutCN(warehouse.id)">Create CN</button>
+        <button mat-raised-button *ngIf="roleManager" (click)="addPlacement(warehouse.id)">Add placement</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+  <div *ngIf="page && page.content.length === 0"
+       style="display: flex; justify-content: center; align-items: center">
+    <p>Not found</p>
+  </div>
+
+  <div *ngIf="loading$ | async"
+       style="display: flex; justify-content: center; align-items: center">
+    <mat-progress-spinner
+      color="primary"
+      mode="indeterminate">
+    </mat-progress-spinner>
+  </div>
+</div>
+
+<div *ngIf="tableView">
+  <div>
+    <mat-expansion-panel *ngFor="let warehouse of page.content">
+      <mat-expansion-panel-header>
+        <mat-panel-title style="display: block">
+          {{warehouse.name}}<br>
+          <span class="sub-title">{{warehouse.address.country}}, {{warehouse.address.region}}, {{warehouse.address.locality}}</span>
+        </mat-panel-title>
+
+      </mat-expansion-panel-header>
+      <span *ngIf="warehouse.placements.length === 0">No placements</span>
+      <table class="mat-table" *ngIf="warehouse.placements.length > 0">
+        <thead>
+        <tr>
+          <th class="mat-header-cell">#</th>
+          <th class="mat-header-cell">Size</th>
+          <th class="mat-header-cell">Placement Type</th>
+          <th class="mat-header-cell">Measurement unit</th>
+          <th class="mat-header-cell">Storage cost</th>
+          <th class="mat-header-cell"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="mat-row" *ngFor="let placement of warehouse.placements; let i = index">
+          <td class="mat-cell">{{i+1}}</td>
+          <td class="mat-cell">{{placement.size}}</td>
+          <td class="mat-cell">{{placementType[placement.placementType]}}</td>
+          <td class="mat-cell">{{placement.measurementUnit}}</td>
+          <td class="mat-cell">{{placement.storageCost}}</td>
+          <td class="mat-cell">
+            <button mat-raised-button (click)="placementDetails(warehouse.id, placement.id)">Details</button>
+          </td>
+        </tbody>
+      </table>
+      <br>
+      <button mat-raised-button (click)="createOutCN(warehouse.id)">Create CN</button>
+      <button mat-raised-button (click)="addPlacement(warehouse.id)">Add placement</button>
+    </mat-expansion-panel>
+    <!--<table mat-table [dataSource]="page ? page.content : null" class="hoverable-table">-->
+
+    <!--<ng-container matColumnDef="name">-->
+    <!--<th mat-header-cell *matHeaderCellDef>Name</th>-->
+    <!--<td mat-cell *matCellDef="let warehouse">{{warehouse.name}}</td>-->
+    <!--</ng-container>-->
+
+    <!--<ng-container matColumnDef="placementsCount">-->
+    <!--<th mat-header-cell *matHeaderCellDef>Count of placements</th>-->
+    <!--<td mat-cell *matCellDef="let warehouse">{{warehouse.placements.length}}</td>-->
+    <!--</ng-container>-->
+
+    <!--<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>-->
+
+    <!--<tr mat-row *matRowDef="let row; columns: displayedColumns"-->
+    <!--(click)="onRowClicked(row)"></tr>-->
+    <!--</table>-->
+    <!--</div>-->
+
+    <div *ngIf="page && page.content.length === 0"
+         style="display: flex; justify-content: center; align-items: center">
+      <p>Not found</p>
+    </div>
+
+    <div *ngIf="loading$ | async"
+         style="display: flex; justify-content: center; align-items: center">
+      <mat-progress-spinner
+        color="primary"
+        mode="indeterminate">
+      </mat-progress-spinner>
+    </div>
+  </div>
+</div>
+<mat-paginator [length]="page ? page.totalElements : 0"
+               [pageIndex]="pageable.page"
+               [pageSize]="pageable.size"
+               [pageSizeOptions]="pageSizeOptions"
+               (page)="pageChanged($event)">
+</mat-paginator>
+

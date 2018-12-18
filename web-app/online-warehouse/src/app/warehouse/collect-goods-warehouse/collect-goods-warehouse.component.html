@@ -1,0 +1,35 @@
+<div class="example-container" *ngIf="warehouseDto && show">
+  <mat-expansion-panel *ngFor="let placement of warehouseDto.placements; let i = index">
+    <mat-expansion-panel-header>
+      <mat-panel-title style="display: block">
+        #{{i}}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <span *ngIf="warehouseDto.placements.length === 0">No placements</span>
+    <div class="example-list">
+      <div class="example-box" *ngFor="let item of placement.placementGoodsList; let j = index">
+        {{item.goods.name + ' ' + item.amount}}
+        <div *ngIf="item.amount > 0">
+          <button mat-button (click)="push(item, placement.placementGoodsList, j)">
+            <mat-icon>add_circle_outline</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+    <br>
+  </mat-expansion-panel>
+</div>
+
+<div class="example-container">
+  <div class="example-list">
+    <div class="example-box" *ngFor="let item of resultList; let i = index">
+      {{item.goods.name + ' ' + item.amount}}
+      <button mat-button (click)="remove(item, i)" *ngIf="show">
+        <mat-icon>remove_circle_outline</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>
+
+<button mat-button (click)="submit(); show = false" *ngIf="show">Submit</button>
+<button mat-button (click)="change(); show = true" *ngIf="!show">Change</button>

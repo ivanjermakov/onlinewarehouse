@@ -18,7 +18,8 @@
       "tsconfig": "tsconfig.json",
       "prefix": "app",
       "styles": [
-        "styles.css"
+        "styles.css",
+        "node_modules/ngx-toastr/toastr.css"
       ],
       "scripts": [],
       "environments": {
@@ -50,7 +51,7 @@
   },
   "defaults": {
     "serve": {
-      "port": 8080
+      "port": 4200
     },
     "styleExt": "css",
     "prefixInterfaces": false,

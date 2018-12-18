@@ -1,49 +1,57 @@
 package by.itechart.web.controller;
 
-import by.itechart.consignmentnote.entity.ConsignmentNote;
-import by.itechart.consignmentnote.enums.ConsignmentNoteType;
+import by.itechart.consignmentnote.dto.*;
+import by.itechart.consignmentnote.enums.ConsignmentNoteStatus;
+import by.itechart.consignmentnote.service.ConsignmentNoteService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @RequestMapping("/companies/{companyId}/consignment-notes")
 public class ConsignmentNoteController {
 
+    private ConsignmentNoteService consignmentNoteService;
+    private WebSocketController webSocketController;
+
+    @Autowired
+    public ConsignmentNoteController(ConsignmentNoteService consignmentNoteService, WebSocketController webSocketController) {
+        this.consignmentNoteService = consignmentNoteService;
+        this.webSocketController = webSocketController;
+    }
+
     @GetMapping
-    public List<ConsignmentNote> getConsignmentNotes(@PathVariable long companyId,
-                                                     @RequestParam ConsignmentNoteType consignmentNoteType,
-                                                     @RequestParam(value = "from", required = false) LocalDate from,
-                                                     @RequestParam(value = "to", required = false) LocalDate to) {
-        List<ConsignmentNote> consignmentNotes = new ArrayList<>();
-        // return list of consignmentNotes with ConsignmentNoteType and in this period of time
-        for (int i = 0; i < 10; i++) {
-            consignmentNotes.add(createConsignmentNote(i));
-        }
-        return consignmentNotes;
+    public Page<ConsignmentNoteListDto> getConsignmentNotes(@PathVariable long companyId,
+                                                            ConsignmentNoteFilter consignmentNoteFilter,
+                                                            Pageable pageable) {
+        return consignmentNoteService.getConsignmentNotes(companyId, consignmentNoteFilter, pageable);
     }
 
     @GetMapping("/{consignmentNoteId}")
-    public ConsignmentNote getConsignmentNote(@PathVariable long companyId, @PathVariable long consignmentNoteId) {
-        ConsignmentNote consignmentNote = createConsignmentNote(consignmentNoteId);
-        // return consignmentNote with companyId and consignmentNoteId
-        return consignmentNote;
+    public ConsignmentNoteDto getConsignmentNote(@PathVariable long companyId, @PathVariable long consignmentNoteId) {
+        return consignmentNoteService.getConsignmentNote(companyId, consignmentNoteId);
     }
 
     @PostMapping
-    public Long saveCompany(@PathVariable long companyId, @RequestBody ConsignmentNote consignmentNote) {
-        // save consignmentNote and return generated consignmentNote id
-        Long id = 10L;
+    public Long saveConsignmentNote(@PathVariable long companyId,
+                                    @RequestBody CreateConsignmentNoteDto consignmentNote) {
+        Long id = consignmentNoteService.saveConsignmentNote(consignmentNote, companyId);
+        webSocketController.processManagerConsignmentNote(companyId);
+        webSocketController.processInspectorConsignmentNote(companyId);
         return id;
     }
 
-    private ConsignmentNote createConsignmentNote(long id) {
-        ConsignmentNote consignmentNote = new ConsignmentNote();
-        consignmentNote.setId(id);
-        consignmentNote.setNumber("№" + id);
-        consignmentNote.setConsignmentNoteType(ConsignmentNoteType.OUT);
-        return consignmentNote;
+    @PutMapping("/{consignmentNoteId}")
+    public Long setConsignmentNoteStatus(@PathVariable long companyId,
+                                         @PathVariable long consignmentNoteId,
+                                         ConsignmentNoteStatus status) {
+        return consignmentNoteService.setConsignmentNoteStatus(consignmentNoteId, status, companyId);
+    }
+
+    @PutMapping
+    public Long updateConsignmentNote(@PathVariable long companyId,
+                                      @RequestBody UpdateConsignmentNoteDto consignmentNote) {
+        return consignmentNoteService.updateConsignmentNote(consignmentNote, companyId);
     }
 }

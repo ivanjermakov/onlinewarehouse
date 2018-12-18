@@ -1,0 +1,98 @@
+<form [formGroup]="writeOffActFilterForm">
+
+  <mat-form-field appearance="outline">
+    <mat-label>Type</mat-label>
+    <mat-select [formControl]="writeOffActFilterForm.controls['writeOffActType']"
+                placeholder="Type" name="writeOffActType">
+      <mat-option>None</mat-option>
+      <mat-option *ngFor="let type of getWriteOffActTypes()" [value]="type">
+        {{type}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>From</mat-label>
+    <input matInput [formControl]="writeOffActFilterForm.controls['from']"
+           [matDatepicker]="pickerFrom"
+           [min]="minDate"
+           [max]="writeOffActFilterForm.controls['to'].value !== '' ? writeOffActFilterForm.controls['to'].value : today"
+           placeholder="From">
+    <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+    <mat-datepicker #pickerFrom></mat-datepicker>
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>To</mat-label>
+    <input matInput [formControl]="writeOffActFilterForm.controls['to']"
+           [matDatepicker]="pickerTo"
+           [min]="writeOffActFilterForm.controls['from'].value !== '' ? writeOffActFilterForm.controls['from'].value : minDate"
+           [max]="today"
+           placeholder="To">
+    <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
+    <mat-datepicker #pickerTo></mat-datepicker>
+  </mat-form-field>
+</form>
+<div style="display: flex; justify-content: center; align-items: center">
+  <table mat-table [dataSource]="page ? page.content : null" class="hoverable-table">
+
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef>Id</th>
+      <td mat-cell *matCellDef="let writeOffAct">{{writeOffAct.id}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="creation">
+      <th mat-header-cell *matHeaderCellDef>Creation</th>
+      <td mat-cell *matCellDef="let writeOffAct">{{writeOffAct.creation}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="creatorId">
+      <th mat-header-cell *matHeaderCellDef>Creator</th>
+      <td mat-cell *matCellDef="let writeOffAct">{{writeOffAct.creator.firstname + ', ' +
+        writeOffAct.creator.lastname}}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="responsiblePerson">
+      <th mat-header-cell *matHeaderCellDef>Responsible Person</th>
+      <td mat-cell *matCellDef="let writeOffAct">{{writeOffAct.responsiblePerson}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="totalAmount">
+      <th mat-header-cell *matHeaderCellDef>Total Amount</th>
+      <td mat-cell *matCellDef="let writeOffAct">{{writeOffAct.totalAmount}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="writeOffActType">
+      <th mat-header-cell *matHeaderCellDef>Type</th>
+      <td mat-cell *matCellDef="let writeOffAct">{{writeOffActType[writeOffAct.writeOffActType]}}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"
+        (click)="onRowClicked(row)"></tr>
+  </table>
+</div>
+
+<div *ngIf="page && page.content.length === 0"
+     style="display: flex; justify-content: center; align-items: center">
+  <p>Not found</p>
+</div>
+
+<div *ngIf="loading$ | async"
+     style="display: flex; justify-content: center; align-items: center">
+  <mat-progress-spinner
+    color="primary"
+    mode="indeterminate">
+  </mat-progress-spinner>
+</div>
+
+<mat-paginator [length]="page ? page.totalElements : 0"
+               [pageIndex]="pageable.page"
+               [pageSize]="pageable.size"
+               [pageSizeOptions]="pageSizeOptions"
+               (page)="pageChanged($event)">
+</mat-paginator>
+
+
+
+

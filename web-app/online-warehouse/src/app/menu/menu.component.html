@@ -1,0 +1,211 @@
+<nav>
+  <div>
+    <a routerLink="" routerLinkActive="action-active"
+       [ngClass]="{'text-dark': true, 'menu-collapse': !oneRole, 'menu-home': oneRole}"
+       [routerLinkActiveOptions]="{exact: true}"
+       (click)="closeAll()">Home
+    </a>
+  </div>
+  <div *ngIf="userAuthorities.includes('ROLE_ADMIN')">
+    <a class="menu-collapse text-dark" (click)="toggle(0)" *ngIf="!oneRole">Admin</a>
+    <div [@openClose]="isOpenArr[0] ? 'open' : 'closed'"
+         class="menu-a-container">
+      <a class="menu-a text-dark" routerLink="list-companies" routerLinkActive="action-active">
+        Companies
+      </a>
+      <a class="menu-a text-dark" routerLink="create-company" routerLinkActive="action-active">
+        Create company
+      </a>
+      <a class="menu-a text-dark" (click)="getClientReport()">
+        Clients report
+      </a>
+    </div>
+  </div>
+  <div *ngIf="userAuthorities.includes('ROLE_COMPANY_ADMIN')">
+    <a class="menu-collapse text-dark" (click)="toggle(1)" *ngIf="!oneRole">Company Admin</a>
+    <div [@openClose]="isOpenArr[1] ? 'open' : 'closed'"
+         class="menu-a-container">
+      <a class="menu-a text-dark" routerLink="change-birthday-mail-template" routerLinkActive="action-active">
+        Birthday template
+      </a>
+      <a class="menu-a text-dark" routerLink="list-users" routerLinkActive="action-active">
+        Users
+      </a>
+      <a class="menu-a text-dark" routerLink="create-user" routerLinkActive="action-active">
+        New user
+      </a>
+      <a class="menu-a text-dark" routerLink="create-warehouse" routerLinkActive="action-active">
+        New warehouse
+      </a>
+      <a class="menu-a text-dark" routerLink="create-home-card" routerLinkActive="action-active">
+        New home card
+      </a>
+    </div>
+  </div>
+  <div *ngIf="userAuthorities.includes('ROLE_WAREHOUSE_OWNER')">
+    <a class="menu-collapse text-dark" (click)="toggle(2)" *ngIf="!oneRole">Owner</a>
+    <div [@openClose]="isOpenArr[2] ? 'open' : 'closed'"
+         class="menu-a-container">
+      <a class="menu-a text-dark" routerLink="reports" routerLinkActive="action-active">
+        Reports
+      </a>
+    </div>
+  </div>
+  <div *ngIf="userAuthorities.includes('ROLE_DISPATCHER')">
+    <a class="menu-collapse text-dark" (click)="toggle(3)" *ngIf="!oneRole">Dispatcher</a>
+    <div [@openClose]="isOpenArr[3] ? 'open' : 'closed'"
+         class="menu-a-container">
+      <a class="menu-a text-dark" routerLink="register-consignment-note" routerLinkActive="action-active">
+        New consignment note
+      </a>
+      <a class="menu-a text-dark" routerLink="consignment-notes" routerLinkActive="action-active">
+        Consignment note list
+      </a>
+      <a class="menu-a text-dark" routerLink="dispatcher-commodity-lots" routerLinkActive="action-active">
+        Commodity lots
+      </a>
+    </div>
+  </div>
+  <div *ngIf="userAuthorities.includes('ROLE_MANAGER')">
+    <a class="menu-collapse text-dark" (click)="toggle(4)" *ngIf="!oneRole">Manager</a>
+    <div [@openClose]="isOpenArr[4] ? 'open' : 'closed'"
+         class="menu-a-container">
+      <a class="menu-a text-dark" routerLink="list-goods" routerLinkActive="action-active">
+        Goods
+      </a>
+      <a class="menu-a text-dark" routerLink="list-warehouse" routerLinkActive="action-active">
+        Warehouses
+      </a>
+      <a class="menu-a text-dark" routerLink="list-carriers" routerLinkActive="action-active">
+        Carriers
+      </a>
+      <a class="menu-a text-dark" routerLink="list-counterparties" routerLinkActive="action-active">
+        Counterparties
+      </a>
+      <a class="menu-a text-dark" routerLink="list-write-off-acts" routerLinkActive="action-active">
+        Write-off cases
+      </a>
+      <a class="menu-a text-dark" routerLink="list-commodity-lots" routerLinkActive="action-active">
+        Commodity lots
+      </a>
+      <a class="menu-a text-dark" routerLink="manager-commodity-lots" routerLinkActive="action-active">
+        Commodity lots to distribute
+      </a>
+      <a class="menu-a text-dark" routerLink="consignment-notes" routerLinkActive="action-active">
+        Consignment note list
+      </a>
+    </div>
+  </div>
+  <div *ngIf="userAuthorities.includes('ROLE_INSPECTOR')">
+    <a class="menu-collapse text-dark" (click)="toggle(5)" *ngIf="!oneRole">Inspector</a>
+    <div [@openClose]="isOpenArr[5] ? 'open' : 'closed'"
+         class="menu-a-container">
+      <a class="menu-a text-dark" routerLink="list-warehouse" routerLinkActive="action-active">
+        Warehouses
+      </a>
+      <a class="menu-a text-dark" routerLink="registered-consignment-notes" routerLinkActive="action-active">
+        Consignment note list
+      </a>
+      <a class="menu-a text-dark" routerLink="list-write-off-acts" routerLinkActive="action-active">
+        Write-off cases
+      </a>
+    </div>
+  </div>
+  <div>
+    <a class="menu-collapse logout-btn" (click)="logout()">Log out</a>
+  </div>
+</nav>
+
+<!--<div class="menu" style="display: flex; flex-direction: column">-->
+<!--<a routerLink="" routerLinkActive="action-active" [routerLinkActiveOptions]="{exact: true}">-->
+<!--<button mat-button>Home</button>-->
+<!--</a>-->
+<!--<a *ngIf="userAuthorities.includes('ROLE_ADMIN')"-->
+<!--routerLink="list-companies" routerLinkActive="action-active">-->
+<!--<button mat-button>Посмотреть все компании</button>-->
+<!--</a>-->
+<!--<a *ngIf="userAuthorities.includes('ROLE_ADMIN')"-->
+<!--routerLink="create-company" routerLinkActive="action-active">-->
+<!--<button mat-button>Создать компанию</button>-->
+<!--</a>-->
+<!--<a *ngIf="userAuthorities.includes('ROLE_COMPANY_ADMIN' || 'ROLE_WAREHOUSE_OWNER')"-->
+<!--routerLink="list-users" routerLinkActive="action-active">-->
+<!--<button mat-button>Посмотреть пользователей</button>-->
+<!--</a>-->
+<!--<a *ngIf="userAuthorities.includes('ROLE_COMPANY_ADMIN' || 'ROLE_WAREHOUSE_OWNER')"-->
+<!--routerLink="user" routerLinkActive="action-active">-->
+<!--<button mat-button>Создать пользователя</button>-->
+<!--</a>-->
+<!--<a *ngIf="userAuthorities.includes('ROLE_COMPANY_ADMIN' || 'ROLE_WAREHOUSE_OWNER')"-->
+<!--routerLink="list-goods" routerLinkActive="action-active">-->
+<!--<button mat-button>Список товаров компании</button>-->
+<!--</a>-->
+<!--<a *ngIf="userAuthorities.includes('ROLE_COMPANY_ADMIN' || 'ROLE_WAREHOUSE_OWNER')"-->
+<!--routerLink="list-warehouse" routerLinkActive="action-active">-->
+<!--<button mat-button>Список складов</button>-->
+<!--</a>-->
+<!--<a *ngIf="userAuthorities.includes('ROLE_COMPANY_ADMIN' || 'ROLE_WAREHOUSE_OWNER')"-->
+<!--routerLink="create-warehouse" routerLinkActive="action-active">-->
+<!--<button mat-button>Создать склад</button>-->
+<!--</a>-->
+<!--<a *ngIf="userAuthorities.includes('ROLE_COMPANY_ADMIN' || 'ROLE_DISPATCHER')"-->
+<!--routerLink="list-commodity-lots" routerLinkActive="action-active">-->
+<!--<button mat-button>Список товарных партий</button>-->
+<!--</a>-->
+<!--<a *ngIf="userAuthorities.includes('ROLE_COMPANY_ADMIN' || 'ROLE_WAREHOUSE_OWNER')"-->
+<!--routerLink="" routerLinkActive="action-active">-->
+<!--<button mat-button>Отчет прибыли</button>-->
+<!--</a>-->
+<!--<a *ngIf="userAuthorities.includes('ROLE_COMPANY_ADMIN' || 'ROLE_WAREHOUSE_OWNER')"-->
+<!--routerLink="" routerLinkActive="action-active">-->
+<!--<button mat-button>Отчет краж</button>-->
+<!--</a>-->
+<!--<a *ngIf="userAuthorities.includes('ROLE_COMPANY_ADMIN' || 'ROLE_WAREHOUSE_OWNER')"-->
+<!--routerLink="" routerLinkActive="action-active">-->
+<!--<button mat-button>Еще какой-то отчет</button>-->
+<!--</a>-->
+<!--<a *ngIf="userAuthorities.includes('ROLE_COMPANY_ADMIN' || 'ROLE_DISPATCHER' || 'ROLE_MANAGER')"-->
+<!--routerLink="register-consignment-note" routerLinkActive="action-active">-->
+<!--<button mat-button>Зарегистрировать ТТН</button>-->
+<!--</a>-->
+<!--<a *ngIf="userAuthorities.includes('ROLE_COMPANY_ADMIN' || 'ROLE_DISPATCHER' || 'ROLE_MANAGER' || 'ROLE_INSPECTOR')"-->
+<!--routerLink="consignment-notes" routerLinkActive="action-active">-->
+<!--<button mat-button>Посмотреть ТТН</button>-->
+<!--</a>-->
+<!--<a *ngIf="userAuthorities.includes('ROLE_COMPANY_ADMIN' || 'ROLE_MANAGER')"-->
+<!--routerLink="registered-commodity-lots" routerLinkActive="action-active">-->
+<!--<button mat-button>Товарные партии к размещению</button>-->
+<!--</a>-->
+<!--<a *ngIf="userAuthorities.includes('ROLE_COMPANY_ADMIN' || 'ROLE_MANAGER' || 'ROLE_DISPATCHER')"-->
+<!--routerLink="list-carriers" routerLinkActive="action-active">-->
+<!--<button mat-button>Список перевозчиков</button>-->
+<!--</a>-->
+<!--<a *ngIf="userAuthorities.includes('ROLE_COMPANY_ADMIN' || 'ROLE_MANAGER' || 'ROLE_DISPATCHER')"-->
+<!--routerLink="list-counterparties" routerLinkActive="action-active">-->
+<!--<button mat-button>Список контрагентов</button>-->
+<!--</a>-->
+
+
+<!--<a *ngIf="userAuthorities.includes('ROLE_COMPANY_ADMIN' || 'ROLE_MANAGER' || 'ROLE_DISPATCHER')"-->
+<!--routerLink="create-counterparty" routerLinkActive="action-active">-->
+<!--<button mat-button>Создать контрагента</button>-->
+<!--</a>-->
+
+
+<!--<a *ngIf="userAuthorities.includes('ROLE_COMPANY_ADMIN' || 'ROLE_INSPECTOR')"-->
+<!--routerLink="registered-consignment-notes" routerLinkActive="action-active">-->
+<!--<button mat-button>Зарегистрированные ТТН</button>-->
+<!--</a>-->
+<!--<a *ngIf="userAuthorities.includes('ROLE_COMPANY_ADMIN' || 'ROLE_INSPECTOR')"-->
+<!--routerLink="create-write-off-act" routerLinkActive="action-active">-->
+<!--<button mat-button>Создать акт</button>-->
+<!--</a>-->
+<!--<a *ngIf="userAuthorities.includes('ROLE_COMPANY_ADMIN' || 'ROLE_DISPATCHER')"-->
+<!--routerLink="list-write-off-acts" routerLinkActive="action-active">-->
+<!--<button mat-button>Список актов</button>-->
+<!--</a>-->
+<!--<a *ngIf="userAuthorities.includes('ROLE_COMPANY_ADMIN')"-->
+<!--routerLink="change-birthday-mail-template" routerLinkActive="action-active">-->
+<!--<button mat-button>Шаблон поздравления с др</button>-->
+<!--</a>-->
+<!--</div>-->

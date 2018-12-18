@@ -1,0 +1,47 @@
+<div *ngIf="counterparty">
+  <h1 class="counterparty-header">Counterparty {{counterparty.name}}</h1>
+  <div style="display: flex; justify-content: center; align-items: center">
+    <table class="mat-table">
+      <tbody>
+      <tr class="mat-row">
+        <td class="mat-cell border-right">Name</td>
+        <td class="mat-cell">{{counterparty.name}}</td>
+      </tr>
+      <tr class="mat-row">
+        <td class="mat-cell border-right">Tax number</td>
+        <td class="mat-cell">{{counterparty.taxNumber}}</td>
+      </tr>
+      <tr class="mat-row">
+        <td class="mat-cell border-right">Address</td>
+        <td class="mat-cell">{{counterparty.address.country}}, {{counterparty.address.region}},
+          {{counterparty.address.locality}}
+        </td>
+      </tr>
+      <tr class="mat-row">
+        <td class="mat-cell border-right">Counterparty type</td>
+        <td class="mat-cell">
+          <span matTooltip="Consignee"
+                *ngIf="counterparty.counterpartyType === counterpartyType.CONSIGNEE">
+            <mat-icon>store</mat-icon>
+            <mat-icon>forward</mat-icon>
+            <mat-icon>mood</mat-icon>
+          </span>
+          <span matTooltip="Consignor"
+                *ngIf="counterparty.counterpartyType === counterpartyType.CONSIGNOR">
+            <mat-icon>mood</mat-icon>
+            <mat-icon>forward</mat-icon>
+            <mat-icon>store</mat-icon>
+          </span>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div *ngIf="loading$ | async"
+     style="display: flex; justify-content: center; align-items: center">
+  <mat-progress-spinner
+    color="primary"
+    mode="indeterminate">
+  </mat-progress-spinner>
+</div>

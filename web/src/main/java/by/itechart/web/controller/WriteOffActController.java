@@ -1,48 +1,60 @@
 package by.itechart.web.controller;
 
-import by.itechart.writeoffact.entity.WriteOffAct;
-import by.itechart.writeoffact.enums.WriteOffActType;
+import by.itechart.commoditylot.dto.CreateCommodityLotDto;
+import by.itechart.common.dto.Pair;
+import by.itechart.common.repository.PieChartData;
+import by.itechart.writeoffact.dto.CreateWriteOffActDto;
+import by.itechart.writeoffact.dto.WriteOffActDto;
+import by.itechart.writeoffact.dto.WriteOffActFilter;
+import by.itechart.writeoffact.dto.WriteOffActListDto;
+import by.itechart.writeoffact.service.WriteOffActService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("/companies/{companyId}/write-off-acts")
 public class WriteOffActController {
 
+    private final WriteOffActService writeOffActService;
+    private final WebSocketController webSocketController;
+
+    @Autowired
+    public WriteOffActController(WriteOffActService writeOffActService, WebSocketController webSocketController) {
+        this.writeOffActService = writeOffActService;
+        this.webSocketController = webSocketController;
+    }
+
     @GetMapping
-    public List<WriteOffAct> getWriteOffActs(@PathVariable long companyId,
-                                             @RequestParam WriteOffActType writeOffActType,
-                                             @RequestParam(value = "from", required = false) LocalDate from,
-                                             @RequestParam(value = "to", required = false) LocalDate to) {
-        List<WriteOffAct> writeOffActs = new ArrayList<>();
-        // return list of writeOffActs with WriteOffActType and in this period of time
-        for (int i = 0; i < 10; i++) {
-            writeOffActs.add(createWriteOffAct(i));
-        }
-        return writeOffActs;
+    public Page<WriteOffActListDto> getWriteOffActs(@PathVariable long companyId,
+                                                    WriteOffActFilter filter,
+                                                    Pageable pageable) {
+        return writeOffActService.getWriteOffActs(companyId, pageable, filter);
+    }
+
+    @GetMapping("/write-off-statistics")
+    public List<PieChartData> getActCreatorsStatistics(@PathVariable long companyId) {
+        return writeOffActService.getActCreatorsStatistics(companyId);
     }
 
     @GetMapping("/{writeOffActId}")
-    public WriteOffAct getWriteOffAct(@PathVariable long companyId, @PathVariable long writeOffActId) {
-        WriteOffAct writeOffAct = createWriteOffAct(writeOffActId);
-        // return writeOffAct with companyId and writeOffActId
-        return writeOffAct;
+    public WriteOffActDto getWriteOffAct(@PathVariable long companyId, @PathVariable long writeOffActId) {
+        return writeOffActService.getWriteOffAct(companyId, writeOffActId);
     }
 
     @PostMapping
-    public Long saveWriteOffAct(@PathVariable long companyId, @RequestBody WriteOffAct writeOffAct) {
-        // save writeOffAct and return generated writeOffAct id
-        Long id = 10L;
+    public Long saveWriteOffAct(@PathVariable long companyId, @RequestBody CreateWriteOffActDto createWriteOffActDto) {
+        Long id = writeOffActService.saveWriteOffAct(createWriteOffActDto, companyId);
+        webSocketController.processManagerWriteOffCase(companyId);
         return id;
     }
 
-    private WriteOffAct createWriteOffAct(long id) {
-        WriteOffAct writeOffAct = new WriteOffAct();
-        writeOffAct.setId(id);
-        writeOffAct.setTotalAmount(5);
-        return writeOffAct;
+    @PutMapping("/create-commodity-lot")
+    public Pair<Long, Long> saveWriteOffActAndCommodityLot(@PathVariable long companyId,
+                                                           @RequestBody Pair<CreateWriteOffActDto, CreateCommodityLotDto> writeOffActAndCommodityLot) {
+        return writeOffActService.saveWriteOffActAndCommodityLot(writeOffActAndCommodityLot, companyId);
     }
 }

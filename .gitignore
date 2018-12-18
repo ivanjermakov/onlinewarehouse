@@ -1,10 +1,4 @@
 .idea/
 onlinewarehouse.iml
-core/core.iml
-core/target
-web/.mvn/
-web/mvnw
-web/mvnw.cmd
-web/web.iml
-web/target
 online-warehouse.iml
+logs

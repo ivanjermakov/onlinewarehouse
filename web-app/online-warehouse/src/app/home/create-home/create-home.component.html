@@ -1,0 +1,29 @@
+<div class="main-container">
+  <div class="form-container">
+    <mat-form-field appearance="outline">
+      <input matInput
+             placeholder="Title"
+             [formControl]="createHomeCardForm.controls['title']"
+             required>
+      <mat-error *ngIf="createHomeCardForm.controls['title'].hasError('required')">This field is required</mat-error>
+      <mat-error *ngIf="createHomeCardForm.controls['title'].hasError('maxlength')">Must be shorter than 50 characters</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <input matInput
+             placeholder="Image url"
+             [formControl]="createHomeCardForm.controls['src']">
+      <mat-error *ngIf="createHomeCardForm.controls['src'].hasError('maxlength')">Must be shorter than 80 characters</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+    <textarea matInput
+              placeholder="Content"
+              [formControl]="createHomeCardForm.controls['content']"
+              required></textarea>
+      <mat-error *ngIf="createHomeCardForm.controls['title'].hasError('required')">This field is required</mat-error>
+    </mat-form-field>
+    <div>
+      <button class="submit" mat-button (click)="onSubmit()" [disabled]="!createHomeCardForm.valid">Submit</button>
+      <button class="clear" mat-button (click)="clearForm()">Clear</button>
+    </div>
+  </div>
+</div>

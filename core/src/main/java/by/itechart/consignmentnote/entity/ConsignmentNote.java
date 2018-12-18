@@ -1,21 +1,30 @@
 package by.itechart.consignmentnote.entity;
 
 import by.itechart.carrier.entity.Carrier;
+import by.itechart.carrier.entity.Driver;
 import by.itechart.common.entity.BaseEntity;
 import by.itechart.common.entity.User;
 import by.itechart.company.entity.Company;
+import by.itechart.consignmentnote.enums.ConsignmentNoteStatus;
 import by.itechart.consignmentnote.enums.ConsignmentNoteType;
 import by.itechart.counterparty.entity.Counterparty;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.data.elasticsearch.annotations.Document;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "consignment_note")
+@Document(indexName = "warehouse", type = "consignmentNotes")
 public class ConsignmentNote extends BaseEntity {
-
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id")
     private Company company;
 
@@ -25,108 +34,43 @@ public class ConsignmentNote extends BaseEntity {
     @Column(name = "shipment")
     private LocalDate shipment;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "counterparty_id")
     private Counterparty counterparty;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "carrier_id")
     private Carrier carrier;
 
     @Column(name = "vehicle_number")
     private String vehicleNumber;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "creator_id")
     private User creator;
 
     @Column(name = "registration")
     private LocalDate registration;
 
-    @OneToMany(mappedBy = "consignmentNote")
+    @OneToMany(mappedBy = "consignmentNote", fetch = FetchType.LAZY)
     private List<ConsignmentNoteGoods> consignmentNoteGoodsList;
 
     @Column(name = "consignment_note_type")
     @Enumerated(EnumType.STRING)
     private ConsignmentNoteType consignmentNoteType;
 
-    public Company getCompany() {
-        return company;
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "driver_id")
+    private Driver driver;
 
-    public void setCompany(Company company) {
-        this.company = company;
-    }
+    @Column(name = "consignment_note_status")
+    @Enumerated(EnumType.STRING)
+    private ConsignmentNoteStatus consignmentNoteStatus;
 
-    public String getNumber() {
-        return number;
-    }
+    @Column(name = "description")
+    private String description;
 
-    public void setNumber(String number) {
-        this.number = number;
-    }
-
-    public LocalDate getShipment() {
-        return shipment;
-    }
-
-    public void setShipment(LocalDate shipment) {
-        this.shipment = shipment;
-    }
-
-    public Counterparty getCounterparty() {
-        return counterparty;
-    }
-
-    public void setCounterparty(Counterparty counterparty) {
-        this.counterparty = counterparty;
-    }
-
-    public Carrier getCarrier() {
-        return carrier;
-    }
-
-    public void setCarrier(Carrier carrier) {
-        this.carrier = carrier;
-    }
-
-    public String getVehicleNumber() {
-        return vehicleNumber;
-    }
-
-    public void setVehicleNumber(String vehicleNumber) {
-        this.vehicleNumber = vehicleNumber;
-    }
-
-    public User getCreator() {
-        return creator;
-    }
-
-    public void setCreator(User creator) {
-        this.creator = creator;
-    }
-
-    public LocalDate getRegistration() {
-        return registration;
-    }
-
-    public void setRegistration(LocalDate registration) {
-        this.registration = registration;
-    }
-
-    public List<ConsignmentNoteGoods> getConsignmentNoteGoodsList() {
-        return consignmentNoteGoodsList;
-    }
-
-    public void setConsignmentNoteGoodsList(List<ConsignmentNoteGoods> consignmentNoteGoodsList) {
-        this.consignmentNoteGoodsList = consignmentNoteGoodsList;
-    }
-
-    public ConsignmentNoteType getConsignmentNoteType() {
-        return consignmentNoteType;
-    }
-
-    public void setConsignmentNoteType(ConsignmentNoteType consignmentNoteType) {
-        this.consignmentNoteType = consignmentNoteType;
+    public ConsignmentNote(Long id) {
+        super(id);
     }
 }

@@ -1,0 +1,114 @@
+<div class="main-container">
+  <div class="form-container">
+    <mat-form-field style="width: 600px">
+      <input matInput
+             placeholder="Username"
+             [formControl]="createUserDto.controls['username']"
+             required>
+      <mat-error *ngIf="createUserDto.controls['username']">{{getUsernameErrors()}}
+      </mat-error>
+    </mat-form-field>
+    <!--<mat-form-field style="width: 600px">-->
+      <!--<input matInput-->
+             <!--type="password"-->
+             <!--placeholder="Password"-->
+             <!--[formControl]="createUserDto.controls['password']"-->
+             <!--autocomplete="new-password"-->
+             <!--required>-->
+      <!--<mat-error *ngIf="createUserDto.controls['password']">{{getPasswordErrors()}}-->
+      <!--</mat-error>-->
+    <!--</mat-form-field>-->
+    <mat-form-field style="width: 600px">
+      <input matInput
+             placeholder="Email"
+             [formControl]="createUserDto.controls['email']"
+             required>
+      <mat-error *ngIf="createUserDto.controls['email']">{{getEmailErrors()}}
+      </mat-error>
+    </mat-form-field>
+    <div>
+      <mat-form-field>
+        <input matInput
+               placeholder="First name"
+               [formControl]="createUserDto.controls['firstname']"
+               required>
+        <mat-error *ngIf="createUserDto.controls['firstname'].hasError('required')">This field is required</mat-error>
+        <mat-error *ngIf="createUserDto.controls['firstname'].hasError('maxlength')">Must be shorter than 40 characters</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput
+               placeholder="Last name"
+               [formControl]="createUserDto.controls['lastname']"
+               required>
+        <mat-error *ngIf="createUserDto.controls['lastname'].hasError('required')">This field is required</mat-error>
+        <mat-error *ngIf="createUserDto.controls['lastname'].hasError('maxlength')">Must be shorter than 40 characters</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput
+               placeholder="Patronymic"
+               [formControl]="createUserDto.controls['patronymic']">
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field>
+        <input matInput
+               placeholder="Country"
+               [matAutocomplete]="countryAuto"
+               [formControl]="createUserDto.controls['address'].controls['country']"
+               required>
+        <mat-error *ngIf="createUserDto.controls['address'].controls['country'].hasError('required')">This field is required</mat-error>
+        <mat-error *ngIf="createUserDto.controls['address'].controls['country'].hasError('maxlength')">Must be shorter than 40 characters</mat-error>
+        <mat-autocomplete #countryAuto="matAutocomplete"
+                          (optionSelected)="getRegions($event)">
+          <mat-option *ngFor="let option of countryFilteredOptions | async" [value]="option">
+            {{option.title}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput
+               placeholder="Region"
+               [matAutocomplete]="regionAuto"
+               [formControl]="createUserDto.controls['address'].controls['region']"
+               required>
+        <mat-error *ngIf="createUserDto.controls['address'].controls['region'].hasError('required')">This field is required</mat-error>
+        <mat-error *ngIf="createUserDto.controls['address'].controls['region'].hasError('maxlength')">Must be shorter than 55 characters</mat-error>
+        <mat-autocomplete #regionAuto="matAutocomplete" [displayWith]="regionDisplayFn">
+          <mat-option *ngFor="let option of regionFilteredOptions | async" [value]="option.title">
+            {{option.title}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput
+               placeholder="Locality"
+               [formControl]="createUserDto.controls['address'].controls['locality']"
+               required>
+        <mat-error *ngIf="createUserDto.controls['address'].controls['locality'].hasError('required')">This field is required</mat-error>
+        <mat-error *ngIf="createUserDto.controls['address'].controls['locality'].hasError('maxlength')">Must be shorter than 50 characters</mat-error>
+      </mat-form-field>
+    </div>
+    <mat-form-field style="width: 180px">
+      <input matInput
+             [matDatepicker]="pickerTo"
+             [formControl]="createUserDto.controls['birth']"
+             [max]="today"
+             placeholder="Birth"
+             required>
+      <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
+      <mat-datepicker #pickerTo startView="multi-year"></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field style="width: 400px">
+      <mat-select placeholder="Authorities"
+                  [formControl]="createUserDto.controls['authorities']" multiple required>
+        <mat-option *ngFor="let authority of getAuthorities()" [value]="authority">{{authorityNameEnum[authority]}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div>
+      <button class="submit" mat-button (click)="onSubmit()" [disabled]="!createUserDto.valid">Submit</button>
+      <button class="clear" mat-button (click)="clearForm()">Clear</button>
+    </div>
+  </div>
+</div>

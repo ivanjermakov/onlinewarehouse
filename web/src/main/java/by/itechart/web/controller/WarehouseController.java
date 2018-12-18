@@ -1,61 +1,67 @@
 package by.itechart.web.controller;
 
-import by.itechart.common.enums.PlacementType;
-import by.itechart.warehouse.entity.Placement;
-import by.itechart.warehouse.entity.Warehouse;
+import by.itechart.common.dto.Pair;
+import by.itechart.consignmentnote.dto.CreateConsignmentNoteDto;
+import by.itechart.profit.dto.PaymentActDto;
+import by.itechart.warehouse.dto.CreateWarehouseDto;
+import by.itechart.warehouse.dto.WarehouseDto;
+import by.itechart.warehouse.service.WarehouseService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 @RestController
 @RequestMapping("/companies/{companyId}/warehouses")
 public class WarehouseController {
 
+    private WarehouseService warehouseService;
+    private WebSocketController webSocketController;
+
+    @Autowired
+    public WarehouseController(WarehouseService warehouseService, WebSocketController webSocketController) {
+        this.warehouseService = warehouseService;
+        this.webSocketController = webSocketController;
+    }
+
     @GetMapping
-    public List<Warehouse> getWarehouseList(@PathVariable long companyId, Pageable pageable) {
-        ArrayList<Warehouse> warehouses = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            warehouses.add(createWarehouse(i));
-        }
-        return warehouses;
+    public Page<WarehouseDto> getWarehouseList(@PathVariable long companyId, Pageable pageable) {
+        System.out.println(1);
+        return warehouseService.getWarehouses(companyId, pageable);
     }
 
     @PostMapping
-    public Long saveWarehouse(@PathVariable long companyId, @RequestBody Warehouse warehouse) {
-        Long warehouseId = new Long(14);
-        return warehouseId;
+    public Long saveWarehouse(@PathVariable long companyId, @RequestBody CreateWarehouseDto warehouse) {
+        Long id = warehouseService.saveWarehouse(warehouse, companyId);
+        webSocketController.processManagerWarehouse(companyId);
+        return id;
     }
 
     @GetMapping("/{warehouseId}")
-    public Warehouse getWarehouse(@PathVariable long companyId, @PathVariable long warehouseId) {
-        Warehouse warehouse = createWarehouse(warehouseId);
-        return warehouse;
+    public WarehouseDto getWarehouse(@PathVariable long companyId, @PathVariable long warehouseId) {
+        return warehouseService.getWarehouse(companyId, warehouseId);
     }
 
     @PutMapping("/{warehouseId}")
-    public Long editWarehouse(@PathVariable long companyId, @PathVariable long warehouseId) {
-        return warehouseId;
+    public Long editWarehouse(@PathVariable long companyId, @PathVariable long warehouseId,
+                              @RequestBody Pair<WarehouseDto, List<PaymentActDto>> warehouseDtoAndPaymentActDto) {
+        return warehouseService.editWarehouse(warehouseDtoAndPaymentActDto, companyId, warehouseId);
+    }
+
+    @PostMapping("/{warehouseId}/create-consignment-note")
+    public Long editWarehouseWithConsignmentNote(@PathVariable long companyId, @PathVariable long warehouseId,
+                                                 @RequestBody Pair<WarehouseDto, CreateConsignmentNoteDto> warehouseDtoAndCreateConsignmentNoteDto) {
+        Long id = warehouseService.editWarehouseWithConsignmentNote(warehouseDtoAndCreateConsignmentNoteDto, companyId, warehouseId);
+        webSocketController.processInspectorConsignmentNote(companyId);
+        return id;
     }
 
     @DeleteMapping("/{warehouseId}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteWarehouse(@PathVariable long companyId, @PathVariable long warehouseId) {
-    }
-
-    private Warehouse createWarehouse(long i) {
-        ArrayList<Placement> placements = new ArrayList<>();
-        for (int j = 0; j < 5; j++) {
-            Placement placement = new Placement();
-            placement.setPlacementType(PlacementType.values()[new Random().nextInt(4)]);
-            placements.add(placement);
-        }
-        Warehouse warehouse = new Warehouse();
-        warehouse.setName("warehouse" + i);
-        warehouse.setPlacements(placements);
-        return warehouse;
+    public void deleteWarehouse(@PathVariable long warehouseId) {
+        warehouseService.deleteWarehouse(warehouseId);
     }
 }

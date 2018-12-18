@@ -1,0 +1,81 @@
+<div class="card-container">
+  <mat-form-field appearance="outline">
+    <mat-label>From</mat-label>
+    <input matInput [formControl]="reportDateFilterForm.controls['from']"
+           [matDatepicker]="pickerFrom"
+           [min]="minDate"
+           [max]="reportDateFilterForm.controls['to'].value !== '' ? reportDateFilterForm.controls['to'].value : today"
+           placeholder="From">
+    <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+    <mat-datepicker #pickerFrom></mat-datepicker>
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>To</mat-label>
+    <input matInput [formControl]="reportDateFilterForm.controls['to']"
+           [matDatepicker]="pickerTo"
+           [min]="reportDateFilterForm.controls['from'].value !== '' ? reportDateFilterForm.controls['from'].value : minDate"
+           [max]="today"
+           placeholder="To">
+    <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
+    <mat-datepicker #pickerTo></mat-datepicker>
+  </mat-form-field>
+</div>
+<div class="card-container">
+  <mat-card class="card">
+    <mat-card-header>
+      <mat-card-title>Income report</mat-card-title>
+    </mat-card-header>
+    <img mat-card-image src="./assets/img/income-report-img.PNG">
+    <mat-card-content class="card-content">
+      <p>
+        Report with information about income goods
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button (click)="getIncomeReport()">Download</button>
+    </mat-card-actions>
+  </mat-card>
+  <mat-card class="card">
+    <mat-card-header>
+      <mat-card-title>Personal loss report</mat-card-title>
+    </mat-card-header>
+    <img mat-card-image src="./assets/img/personal-loss-report-img.PNG">
+    <mat-card-content class="card-content">
+      <p>
+        Report with information about personal loss
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button (click)="getPersonalLossReport()">Download</button>
+    </mat-card-actions>
+  </mat-card>
+  <mat-card class="card">
+    <mat-card-header>
+      <mat-card-title>Profit report</mat-card-title>
+    </mat-card-header>
+    <img mat-card-image src="./assets/img/profit-report-img.PNG">
+    <mat-card-content class="card-content">
+      <p>
+        Report with information about company profit
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button (click)="getProfitReport()">Download</button>
+    </mat-card-actions>
+  </mat-card>
+  <mat-card class="card">
+    <mat-card-header>
+      <mat-card-title>Write-off report</mat-card-title>
+    </mat-card-header>
+    <img mat-card-image src="./assets/img/write-off-report-img.PNG">
+    <mat-card-content class="card-content">
+      <p>
+        Report with information about write-off goods
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button (click)="getWriteOffReport()">Download</button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+<app-chart-owner></app-chart-owner>
