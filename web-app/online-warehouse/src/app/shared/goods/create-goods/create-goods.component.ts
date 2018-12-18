@@ -26,7 +26,7 @@ export class CreateGoodsComponent implements OnInit {
       "measurementUnit": ['', [Validators.required]],
       "cost": ['', [Validators.required, Validators.min(0)]],
       "weight": ['', [Validators.required, Validators.min(0)]],
-      "labelling": ['', [Validators.required], Validators.maxLength(50)],
+      "labelling": ['', [Validators.required, Validators.maxLength(50)] ],
       "description": ['']
     })
   }

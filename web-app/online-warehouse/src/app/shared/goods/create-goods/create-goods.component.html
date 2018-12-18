@@ -4,8 +4,8 @@
            placeholder="Name"
            [formControl]="createGoodsForm.controls['name']"
            required>
-    <mat-error *ngIf="createHomeCardForm.controls['name'].hasError('required')">This field is required</mat-error>
-    <mat-error *ngIf="createHomeCardForm.controls['name'].hasError('maxlength')">Must be shorter than 70 characters</mat-error>
+    <mat-error *ngIf="createGoodsForm.controls['name'].hasError('required')">This field is required</mat-error>
+    <mat-error *ngIf="createGoodsForm.controls['name'].hasError('maxlength')">Must be shorter than 70 characters</mat-error>
   </mat-form-field>
   <div>
     <mat-form-field appearance="outline">
@@ -15,7 +15,7 @@
           {{placementTypeEnum[type]}}
         </mat-option>
       </mat-select>
-      <mat-error *ngIf="createHomeCardForm.controls['placementType'].hasError('required')">This field is required</mat-error>
+      <mat-error *ngIf="createGoodsForm.controls['placementType'].hasError('required')">This field is required</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline">
@@ -25,7 +25,7 @@
           {{unit}}
         </mat-option>
       </mat-select>
-      <mat-error *ngIf="createHomeCardForm.controls['measurementUnit'].hasError('required')">This field is required</mat-error>
+      <mat-error *ngIf="createGoodsForm.controls['measurementUnit'].hasError('required')">This field is required</mat-error>
     </mat-form-field>
     <mat-form-field appearance="outline">
       <input matInput
@@ -34,8 +34,8 @@
              [formControl]="createGoodsForm.controls['cost']"
              required>
       <span matPrefix>$&nbsp;</span>
-      <mat-error *ngIf="createHomeCardForm.controls['cost'].hasError('required')">This field is required</mat-error>
-      <mat-error *ngIf="createHomeCardForm.controls['cost'].hasError('min')">Must be a positive number</mat-error>
+      <mat-error *ngIf="createGoodsForm.controls['cost'].hasError('required')">This field is required</mat-error>
+      <mat-error *ngIf="createGoodsForm.controls['cost'].hasError('min')">Must be a positive number</mat-error>
     </mat-form-field>
     <mat-form-field appearance="outline">
       <input matInput
@@ -44,8 +44,8 @@
              [formControl]="createGoodsForm.controls['weight']"
              required>
       <span matSuffix>kg</span>
-      <mat-error *ngIf="createHomeCardForm.controls['weight'].hasError('required')">This field is required</mat-error>
-      <mat-error *ngIf="createHomeCardForm.controls['weight'].hasError('min')">Must be a positive number</mat-error>
+      <mat-error *ngIf="createGoodsForm.controls['weight'].hasError('required')">This field is required</mat-error>
+      <mat-error *ngIf="createGoodsForm.controls['weight'].hasError('min')">Must be a positive number</mat-error>
     </mat-form-field>
   </div>
   <div>
@@ -54,8 +54,8 @@
              placeholder="Labelling"
              [formControl]="createGoodsForm.controls['labelling']"
              required>
-      <mat-error *ngIf="createHomeCardForm.controls['labelling'].hasError('required')">This field is required</mat-error>
-      <mat-error *ngIf="createHomeCardForm.controls['labelling'].hasError('maxlength')">Must be shorter than 50 characters</mat-error>
+      <mat-error *ngIf="createGoodsForm.controls['labelling'].hasError('required')">This field is required</mat-error>
+      <mat-error *ngIf="createGoodsForm.controls['labelling'].hasError('maxlength')">Must be shorter than 50 characters</mat-error>
     </mat-form-field>
     <mat-form-field appearance="outline">
       <textarea matInput
