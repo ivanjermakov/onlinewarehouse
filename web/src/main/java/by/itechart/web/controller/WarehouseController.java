@@ -54,7 +54,9 @@ public class WarehouseController {
     @PostMapping("/{warehouseId}/create-consignment-note")
     public Long editWarehouseWithConsignmentNote(@PathVariable long companyId, @PathVariable long warehouseId,
                                                  @RequestBody Pair<WarehouseDto, CreateConsignmentNoteDto> warehouseDtoAndCreateConsignmentNoteDto) {
-        return warehouseService.editWarehouseWithConsignmentNote(warehouseDtoAndCreateConsignmentNoteDto, companyId, warehouseId);
+        Long id = warehouseService.editWarehouseWithConsignmentNote(warehouseDtoAndCreateConsignmentNoteDto, companyId, warehouseId);
+        webSocketController.processInspectorConsignmentNote(companyId);
+        return id;
     }
 
     @DeleteMapping("/{warehouseId}")
